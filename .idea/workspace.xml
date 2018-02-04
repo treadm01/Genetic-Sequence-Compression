@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/Test/FindPatternTest.java" afterPath="$PROJECT_DIR$/Test/FindPatternTest.java" />
       <change beforePath="$PROJECT_DIR$/out/production/GeneticCompression/FindPattern.class" afterPath="$PROJECT_DIR$/out/production/GeneticCompression/FindPattern.class" />
       <change beforePath="$PROJECT_DIR$/src/FindPattern.java" afterPath="$PROJECT_DIR$/src/FindPattern.java" />
     </list>
@@ -15,7 +16,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -39,8 +40,8 @@
       <file leaf-file-name="FindPattern.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+            <state relative-caret-position="126">
+              <caret line="11" column="23" lean-forward="false" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -51,8 +52,8 @@
       <file leaf-file-name="FindPatternTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+            <state relative-caret-position="234">
+              <caret line="15" column="56" lean-forward="false" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -82,8 +83,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
-        <option value="$PROJECT_DIR$/Test/FindPatternTest.java" />
         <option value="$PROJECT_DIR$/src/FindPattern.java" />
+        <option value="$PROJECT_DIR$/Test/FindPatternTest.java" />
       </list>
     </option>
   </component>
@@ -117,7 +118,6 @@
     <panes>
       <pane id="Scratches" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -134,6 +134,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -166,7 +167,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.FindPatternTest.getRepeatOfPairs">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -196,6 +197,26 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="FindPatternTest" />
       <option name="METHOD_NAME" value="getRepeat" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="FindPatternTest.getRepeatOfPairs" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="GeneticCompression" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="FindPatternTest" />
+      <option name="METHOD_NAME" value="getRepeatOfPairs" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -268,9 +289,14 @@
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.FindPatternTest.getRepeat" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.FindPatternTest.getRepeatOfPairs" />
+    </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.FindPatternTest.getRepeat" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.FindPatternTest.getRepeatOfPairs" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.FindPatternTest.getRepeat" />
       </list>
     </recent_temporary>
   </component>
@@ -292,7 +318,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1517772743764</updated>
-      <workItem from="1517772745286" duration="2575000" />
+      <workItem from="1517772745286" duration="2704000" />
+      <workItem from="1517775523997" duration="1136000" />
     </task>
     <task id="LOCAL-00001" summary="trying to split up to pairs and check for repeats">
       <created>1517774688169</created>
@@ -308,25 +335,50 @@
       <option name="project" value="LOCAL" />
       <updated>1517775219713</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="getting correct but out of bounds">
+      <created>1517775332596</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1517775332596</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 19h 44m 59s.xml">
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 19m 37s.xml">
       <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 13m 19s.xml">
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 20m 00s.xml">
       <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 14m 29s.xml">
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 20m 49s.xml">
       <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 15m 00s.xml">
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 22m 36s.xml">
       <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 23m 27s.xml">
+      <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeatOfPairs - 2018.02.04 at 20h 24m 31s.xml">
+      <configuration name="FindPatternTest.getRepeatOfPairs" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeatOfPairs - 2018.02.04 at 20h 24m 54s.xml">
+      <configuration name="FindPatternTest.getRepeatOfPairs" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeatOfPairs - 2018.02.04 at 20h 25m 16s.xml">
+      <configuration name="FindPatternTest.getRepeatOfPairs" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeatOfPairs - 2018.02.04 at 20h 26m 33s.xml">
+      <configuration name="FindPatternTest.getRepeatOfPairs" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeatOfPairs - 2018.02.04 at 20h 37m 38s.xml">
+      <configuration name="FindPatternTest.getRepeatOfPairs" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2575000" />
+    <option name="totallyTimeSpent" value="3840000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -338,8 +390,8 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -347,8 +399,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -366,13 +418,48 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="trying to split up to pairs and check for repeats" />
     <MESSAGE value="getting d" />
-    <option name="LAST_COMMIT_MESSAGE" value="getting d" />
+    <MESSAGE value="getting correct but out of bounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="getting correct but out of bounds" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NonTerminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="42" lean-forward="false" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/NonTerminal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -391,8 +478,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+        <state relative-caret-position="126">
+          <caret line="11" column="23" lean-forward="false" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -401,8 +488,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="9" column="47" lean-forward="false" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+        <state relative-caret-position="234">
+          <caret line="15" column="56" lean-forward="false" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
           <folding />
         </state>
       </provider>

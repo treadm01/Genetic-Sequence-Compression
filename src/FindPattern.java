@@ -8,13 +8,22 @@ public class FindPattern {
     private Map<String, Integer> patternList = new HashMap<>();
 
     public String getRepeat(String input) {
-        String found;
+        String found = null;
         for (int i = 0; i < input.length(); i++ ) {
             String s = input.substring(i, i + 1);
-            patternList.add(s);
+            patternList.putIfAbsent(s, 1);
+
+            if (patternList.containsKey(s)) {
+                patternList.put(s, patternList.get(s) + 1);
+            }
         }
 
+        for (String s : patternList.keySet()) {
+            if (patternList.get(s) > 1) {
+                found = s;
+            }
+        }
 
-        return "";
+        return found;
     }
 }

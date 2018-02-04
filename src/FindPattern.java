@@ -8,8 +8,10 @@ public class FindPattern {
     private Map<String, String> grammars;
     private Map<String, Integer> patternList;
     private List<String> patterns;
+    private Integer count;
 
     public List<String> getRepeat(String input) {
+        // needs to be implemented properly, symbol by symbol checking, check all grammar, proper terminal symbols etc
         patternList = new HashMap<>();
         patterns = new ArrayList<>();
         String found = null;
@@ -32,8 +34,24 @@ public class FindPattern {
         return patterns;
     }
 
+    public void applyNonTerminals() {
+
+    }
+
+    public void addPattern() {
+        for (String x : getRepeat(grammars.get("1"))) {
+            count++;
+            grammars.putIfAbsent(count.toString(), x);
+        }
+    }
+
     public void initGrammar(String input) {
+        count = 1;
         grammars = new HashMap<>();
-        grammars.putIfAbsent("S", input);
+        grammars.putIfAbsent(count.toString(), input);
+    }
+
+    public Map<String, String> getGrammars() {
+        return this.grammars;
     }
 }

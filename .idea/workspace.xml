@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/out/production/GeneticCompression/FindPattern.class" afterPath="$PROJECT_DIR$/out/production/GeneticCompression/FindPattern.class" />
       <change beforePath="$PROJECT_DIR$/src/FindPattern.java" afterPath="$PROJECT_DIR$/src/FindPattern.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -39,8 +39,8 @@
       <file leaf-file-name="FindPattern.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+            <state relative-caret-position="54">
+              <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -292,7 +292,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1517772743764</updated>
-      <workItem from="1517772745286" duration="2467000" />
+      <workItem from="1517772745286" duration="2575000" />
     </task>
     <task id="LOCAL-00001" summary="trying to split up to pairs and check for repeats">
       <created>1517774688169</created>
@@ -301,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1517774688169</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="getting d">
+      <created>1517775219713</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1517775219713</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -311,9 +318,15 @@
     <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 13m 19s.xml">
       <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 14m 29s.xml">
+      <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FindPatternTest_getRepeat - 2018.02.04 at 20h 15m 00s.xml">
+      <configuration name="FindPatternTest.getRepeat" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2467000" />
+    <option name="totallyTimeSpent" value="2575000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -352,7 +365,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="trying to split up to pairs and check for repeats" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to split up to pairs and check for repeats" />
+    <MESSAGE value="getting d" />
+    <option name="LAST_COMMIT_MESSAGE" value="getting d" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -377,8 +391,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="10" column="27" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        <state relative-caret-position="54">
+          <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

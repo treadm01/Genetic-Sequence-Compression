@@ -10,7 +10,8 @@ public class FindPattern {
     public String getRepeat(String input) {
         String found = null;
         for (int i = 0; i < input.length(); i++ ) {
-            String s = input.substring(i, i + 1);
+            String s = input.substring(i, i + 2);
+            System.out.println(s);
             patternList.putIfAbsent(s, 1);
 
             if (patternList.containsKey(s)) {

@@ -1,5 +1,7 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FindPattern {
@@ -33,15 +35,36 @@ public class FindPattern {
         return previousSymbol;
     }
 
-    public int checkForPattern(String digram) {
-        int count = 0;
+    public List<Integer> checkForPattern(String digram) {
+        List listOfIndex = new ArrayList();
         for (int i = 0; i < grammars.get("S").length()-1; i++) {
             if (grammars.get("S").substring(i, i + 2).equals(digram)) {
-                count++;
+                listOfIndex.add(i);
             }
         }
-        return count;
+
+        if (listOfIndex.size() > 1) {
+            System.out.println("match");
+        }
+        return listOfIndex;
         // check other grammars first
         // check s
+    }
+
+    public void createRule() {
+
+    }
+
+    public void updateGrammar(String input) {
+        // add symbol
+        // check digram
+        //
+        addSymbol("S", input.substring(0, 1));
+        for (int i = 1; i < input.length(); i++) {
+            addSymbol("S", input.substring(i, i + 1));
+            checkForPattern(getDigram());
+            System.out.println(grammars.toString());
+            //checkForPattern(getDigram());
+        }
     }
 }

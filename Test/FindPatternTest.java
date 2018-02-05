@@ -43,6 +43,16 @@ public class FindPatternTest {
             fp.addSymbol("S", input.substring(i, i + 1));
         }
 
-        assertEquals(2, fp.checkForPattern(fp.getDigram()));
+        assertEquals(2, fp.checkForPattern(fp.getDigram()).size()   );
+    }
+
+    @Test
+    public void createRule() {
+    }
+
+    @Test
+    public void updateGrammar() {
+        String input = "abcdbc";
+        fp.updateGrammar(input);
     }
 }

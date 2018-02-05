@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FindPattern {
-    private Map<String, String> grammars;
+    private Map<String, String> grammars = new HashMap<>();;
     private Map<String, Integer> patternList;
     private List<String> patterns;
     private Integer count;
@@ -48,10 +48,19 @@ public class FindPattern {
     public void initGrammar(String input) {
         count = 1;
         grammars = new HashMap<>();
-        grammars.putIfAbsent(count.toString(), input);
+        grammars.putIfAbsent("S", input.substring(0, 1));
     }
 
     public Map<String, String> getGrammars() {
         return this.grammars;
+    }
+
+    public void addSymbol(String input) {
+        if (grammars.containsKey(input)) {
+            grammars.put("S", grammars.get("S") + input);
+        }
+        else {
+            grammars.putIfAbsent("S", input);
+        }
     }
 }

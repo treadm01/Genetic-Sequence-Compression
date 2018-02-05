@@ -33,4 +33,25 @@ public class FindPatternTest {
         fp.initGrammar("abcdbc");
         System.out.println(fp.getGrammars().toString());
     }
+
+    @Test
+    public void getRepeat() {
+    }
+
+    @Test
+    public void applyNonTerminals() {
+    }
+
+    @Test
+    public void getGrammars() {
+    }
+
+    @Test
+    public void addSymbol() {
+        String input = "abcdbc";
+        for (int i = 0; i < input.length(); i++) {
+            fp.addSymbol(input.substring(i, i + 1));
+        }
+        System.out.println(fp.getGrammars().toString());
+    }
 }

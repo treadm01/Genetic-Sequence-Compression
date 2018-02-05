@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 public class FindPatternTest {
     FindPattern fp = new FindPattern();
 
+
     @Test
     public void getGrammars() {
     }
@@ -42,8 +43,9 @@ public class FindPatternTest {
         for (int i = 0; i < input.length(); i++) {
             fp.addSymbol("S", input.substring(i, i + 1));
         }
+        Integer test = 2;
 
-        assertEquals(2, fp.checkForPattern(fp.getDigram()).size()   );
+        assertEquals(test, fp.checkForPattern(fp.getDigram()));
     }
 
     @Test
@@ -53,6 +55,16 @@ public class FindPatternTest {
     @Test
     public void updateGrammar() {
         String input = "abcdbc";
+        fp.updateGrammar(input);
+
+        fp = new FindPattern();
+        input = "abcdbcabc";
+        fp.updateGrammar(input);
+
+
+        // enforce rule utility
+        fp = new FindPattern();
+        input = "abcdbcabcd";
         fp.updateGrammar(input);
     }
 }

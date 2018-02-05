@@ -61,7 +61,6 @@ public class FindPatternTest {
         input = "abcdbcabc";
         fp.updateGrammar(input);
 
-
         // enforce rule utility
         fp = new FindPattern();
         input = "abcdbcabcd";

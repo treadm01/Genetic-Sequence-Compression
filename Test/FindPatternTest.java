@@ -14,7 +14,7 @@ public class FindPatternTest {
     public void addSymbol() {
         String input = "abcdbc";
         for (int i = 0; i < input.length(); i++) {
-            fp.addSymbol("S", input.substring(i, i + 1));
+            fp.addSymbol(0, input.substring(i, i + 1));
         }
         System.out.println(fp.getGrammars().toString());
     }
@@ -23,14 +23,14 @@ public class FindPatternTest {
     public void getDigram() {
         String input = "ab";
         for (int i = 0; i < input.length(); i++) {
-            fp.addSymbol("S", input.substring(i, i + 1));
+            fp.addSymbol(0, input.substring(i, i + 1));
         }
 
         assertEquals("ab", fp.getDigram());
 
         input = "abcdefgh";
         for (int i = 0; i < input.length(); i++) {
-            fp.addSymbol("S", input.substring(i, i + 1));
+            fp.addSymbol(0, input.substring(i, i + 1));
         }
 
         assertEquals("gh", fp.getDigram());
@@ -41,7 +41,7 @@ public class FindPatternTest {
     public void checkForPattern() {
         String input = "abcdbc";
         for (int i = 0; i < input.length(); i++) {
-            fp.addSymbol("S", input.substring(i, i + 1));
+            fp.addSymbol(0, input.substring(i, i + 1));
         }
         Integer test = 2;
 
@@ -57,13 +57,30 @@ public class FindPatternTest {
         String input = "abcdbc";
         fp.updateGrammar(input);
 
-        fp = new FindPattern();
-        input = "abcdbcabc";
-        fp.updateGrammar(input);
+//        fp = new FindPattern();
+//        input = "abcdbcabc";
+//        fp.updateGrammar(input);
+//
+//        // enforce rule utility
+//        fp = new FindPattern();
+//        input = "abcdbcabcd";
+//        fp.updateGrammar(input);
 
-        // enforce rule utility
-        fp = new FindPattern();
-        input = "abcdbcabcd";
-        fp.updateGrammar(input);
+//        fp = new FindPattern();
+//        input = "abcabdabcab";
+//        fp.updateGrammar(input);
+
+
+        //0 → 1 d 1
+        //1 → 2 c 2                                         abcab
+        //2 → a b
+
+        //{A=ab, B=Ac, S=BAdBB} //getting an extra c at the end here...
+
+        //abcabdabcab
+
+//        fp = new FindPattern();
+//        input = "abcabdabcabd";
+//        fp.updateGrammar(input);
     }
 }

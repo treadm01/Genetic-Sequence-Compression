@@ -48,8 +48,6 @@ public class FindPattern {
         }
 
         return count;
-        // check other grammars first
-        // check s
     }
 
     public Integer checkForFoundPattern(String digram) {
@@ -57,7 +55,7 @@ public class FindPattern {
         Integer symbol = FIRST_RULE;
         for (Integer s : grammars.keySet()) {
             if (s != FIRST_RULE) {
-                if (grammars.values().contains(digram)) {
+                if (grammars.get(s).contains(digram)) {
                     symbol = s;
                 }
             }
@@ -78,7 +76,6 @@ public class FindPattern {
         String digram = getDigram();
         // check for pattern within itself and update if necessary
         if (checkForPattern(digram) > 1) {
-            System.out.println(digram + " " + nextRule.toString());
             grammars.put(FIRST_RULE, grammars.get(FIRST_RULE).replaceAll(digram, nextRule.toString()));
             grammars.put(nextRule, digram); // made a new rule
             nextRule++; //update next grammar symbol
@@ -93,18 +90,17 @@ public class FindPattern {
             updateSequenceWithFoundPattern();
             updateSequence();
 
-//            // for all rules only used once where they are in the value replace with their terminal (should only happen once... so need for for loops?)
-//            for (Integer s : ruleUtility()) { // for every item in list of only occuring once terminals
-//                for (Integer k : grammars.keySet()) { // check to all other entries
-//                    if (grammars.get(k).contains(s.toString())) {
-//                        grammars.put(k, grammars.get(k).replaceAll(s.toString(), grammars.get(s))); // replace with the nonterminal
-//                    }
-//                }
-//                grammars.remove(s); // safe to have this here? or have a separate removal aspect.
-//            }
-
-            System.out.println(grammars.toString());
+            // for all rules only used once where they are in the value replace with their terminal (should only happen once... so need for for loops?)
+            for (Integer s : ruleUtility()) { // for every item in list of only occuring once terminals
+                for (Integer k : grammars.keySet()) { // check to all other entries
+                    if (grammars.get(k).contains(s.toString())) {
+                        grammars.put(k, grammars.get(k).replaceAll(s.toString(), grammars.get(s))); // replace with the nonterminal
+                    }
+                }
+                grammars.remove(s); // safe to have this here? or have a separate removal aspect.
+            }
         }
+        System.out.println(grammars.toString());
     }
 
     private List<Integer> ruleUtility() {
@@ -115,7 +111,7 @@ public class FindPattern {
         for (Integer s : grammars.keySet()) { // key
             for (String v : grammars.values()) { // every value
                 for (int i = 0; i < v.length(); i++) { // length of value
-                    if (v.substring(i, i + 1).equals(s)) {
+                    if (v.substring(i, i + 1).equals(s.toString())) {
                         count++; // how many times occur
                     }
                 }

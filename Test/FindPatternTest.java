@@ -57,30 +57,23 @@ public class FindPatternTest {
         String input = "abcdbc";
         fp.updateGrammar(input);
 
-//        fp = new FindPattern();
-//        input = "abcdbcabc";
-//        fp.updateGrammar(input);
-//
-//        // enforce rule utility
-//        fp = new FindPattern();
-//        input = "abcdbcabcd";
-//        fp.updateGrammar(input);
+        fp = new FindPattern();
+        input = "abcdbcabc";
+        fp.updateGrammar(input);
 
-//        fp = new FindPattern();
-//        input = "abcabdabcab";
-//        fp.updateGrammar(input);
+        // enforce rule utility
+        fp = new FindPattern();
+        input = "abcdbcabcd";
+        fp.updateGrammar(input);
 
+        fp = new FindPattern();
+        input = "abcabdabcab";
+        fp.updateGrammar(input);
 
-        //0 → 1 d 1
-        //1 → 2 c 2                                         abcab
-        //2 → a b
+        fp = new FindPattern();
+        input = "abcabdabcabdabcabdabcabd";
+        fp.updateGrammar(input);
 
-        //{A=ab, B=Ac, S=BAdBB} //getting an extra c at the end here...
-
-        //abcabdabcab
-
-//        fp = new FindPattern();
-//        input = "abcabdabcabd";
-//        fp.updateGrammar(input);
+        // getting duplicate abcabdabcabdabcabdabcabdabcabdabcabd
     }
 }

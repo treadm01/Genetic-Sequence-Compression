@@ -55,25 +55,50 @@ public class FindPatternTest {
     @Test
     public void updateGrammar() {
         String input = "abcdbc";
-        fp.updateGrammar(input);
+//        fp.updateGrammar(input);
+//        assertEquals("a1d1", fp.getGrammars().get(0));
+//
+//        fp = new FindPattern();
+//        input = "abcdbcabc";
+//        fp.updateGrammar(input);
+//        assertEquals("2d12", fp.getGrammars().get(0));
+//
+//        // enforce rule utility
+//        fp = new FindPattern();
+//        input = "abcdbcabcd";
+//        fp.updateGrammar(input);
+//        assertEquals("313", fp.getGrammars().get(0));
+//
+//        fp = new FindPattern();
+//        input = "abcabdabcab";
+//        fp.updateGrammar(input);
+//        assertEquals("3d3", fp.getGrammars().get(0));
 
-        fp = new FindPattern();
-        input = "abcdbcabc";
-        fp.updateGrammar(input);
-
-        // enforce rule utility
-        fp = new FindPattern();
-        input = "abcdbcabcd";
-        fp.updateGrammar(input);
-
-        fp = new FindPattern();
-        input = "abcabdabcab";
-        fp.updateGrammar(input);
-
+        // works but not in the most concise way, makes duplicate rules...
         fp = new FindPattern();
         input = "abcabdabcabdabcabdabcabd";
         fp.updateGrammar(input);
 
-        // getting duplicate abcabdabcabdabcabdabcabdabcabdabcabd
+//        //HANDLE SINGLE INPUT
+//        fp = new FindPattern();
+//        input = "a";
+//        fp.updateGrammar(input);
+
+
+        //{0=4466882222, 2=aa, 4=22, 6=22, 8=22}
+        //vs
+        //
+        //0 → 1 1
+        //1 → 2 2
+        //2 → 3 3
+        //3 → 4 4
+        //4 → a a
+
+        // does it again here, have to sort out the loop
+        fp = new FindPattern();
+        input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        fp.updateGrammar(input);
+
+
     }
 }

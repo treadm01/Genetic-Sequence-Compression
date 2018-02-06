@@ -55,7 +55,7 @@ public class FindPattern {
         Integer symbol = FIRST_RULE;
         for (Integer s : grammars.keySet()) {
             if (s != FIRST_RULE) {
-                if (grammars.get(s).contains(digram)) {
+                if (grammars.get(s).equals(digram)) {
                     symbol = s;
                 }
             }
@@ -87,6 +87,7 @@ public class FindPattern {
         addSymbol(FIRST_RULE, input.substring(0, 1));
         for (int i = 1; i < input.length(); i++) {
             addSymbol(FIRST_RULE, input.substring(i, i + 1));
+
             updateSequenceWithFoundPattern();
             updateSequence();
 
@@ -99,8 +100,24 @@ public class FindPattern {
                 }
                 grammars.remove(s); // safe to have this here? or have a separate removal aspect.
             }
+
+            // need a real way to check for duplicates and remove them, need to do a loop on
+            // new symbol whether from input or new digram...
+            for (Integer k : grammars.keySet()) {
+                for (Integer sk : grammars.keySet()) {
+                    if (grammars.get(k).equals(grammars.get(sk))
+                            && k != sk) {
+                        grammars.put(FIRST_RULE, grammars.get(FIRST_RULE).replaceAll(sk.toString(), k.toString()));
+                    }
+                }
+            }
+
+            updateSequenceWithFoundPattern();
+            updateSequence();
+
+            System.out.println(grammars.toString());
         }
-        System.out.println(grammars.toString());
+
     }
 
     private List<Integer> ruleUtility() {

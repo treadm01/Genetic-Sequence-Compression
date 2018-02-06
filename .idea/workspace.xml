@@ -31,8 +31,8 @@
       <file leaf-file-name="FindPattern.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="102" column="48" lean-forward="false" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
+            <state relative-caret-position="126">
+              <caret line="108" column="41" lean-forward="false" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#362#363#0" expanded="true" />
@@ -47,8 +47,8 @@
       <file leaf-file-name="FindPatternTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="76" column="65" lean-forward="false" selection-start-line="76" selection-start-column="65" selection-end-line="76" selection-end-column="65" />
+            <state relative-caret-position="251">
+              <caret line="96" column="56" lean-forward="false" selection-start-line="96" selection-start-column="56" selection-end-line="96" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -69,6 +69,7 @@
     <findStrings>
       <find>checkF</find>
       <find>get(&quot;S</find>
+      <find>contain</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -390,7 +391,7 @@
       <workItem from="1517844826949" duration="7276000" />
       <workItem from="1517917562654" duration="5001000" />
       <workItem from="1517928712946" duration="1164000" />
-      <workItem from="1517935703058" duration="1192000" />
+      <workItem from="1517935703058" duration="7525000" />
     </task>
     <task id="LOCAL-00001" summary="trying to split up to pairs and check for repeats">
       <created>1517774688169</created>
@@ -469,43 +470,50 @@
       <option name="project" value="LOCAL" />
       <updated>1517919176228</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="checking different length strings">
+      <created>1517936915124</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1517936915124</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 16h 51m 06s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 51m 21s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 16h 54m 41s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 52m 12s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 16h 55m 30s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 56m 06s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 16h 57m 12s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 56m 24s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 16h 57m 45s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 57m 08s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 16h 59m 04s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 57m 24s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 17h 00m 01s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 57m 47s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 17h 00m 48s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 21h 58m 19s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 17h 01m 07s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 22h 00m 01s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 17h 03m 09s.xml">
+    <history-entry file="FindPatternTest_updateGrammar - 2018.02.06 at 22h 00m 45s.xml">
       <configuration name="FindPatternTest.updateGrammar" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31648000" />
+    <option name="totallyTimeSpent" value="37981000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -554,7 +562,8 @@
     <MESSAGE value="getting there, can do some of the functionality of sequitur, need to clean up code" />
     <MESSAGE value="code needs even more cleaning but utility rule seems to work in one instance" />
     <MESSAGE value="rule utility removing rules used more than once" />
-    <option name="LAST_COMMIT_MESSAGE" value="rule utility removing rules used more than once" />
+    <MESSAGE value="checking different length strings" />
+    <option name="LAST_COMMIT_MESSAGE" value="checking different length strings" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -748,8 +757,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FindPattern.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="102" column="48" lean-forward="false" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
+        <state relative-caret-position="126">
+          <caret line="108" column="41" lean-forward="false" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#362#363#0" expanded="true" />
@@ -762,8 +771,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="76" column="65" lean-forward="false" selection-start-line="76" selection-start-column="65" selection-end-line="76" selection-end-column="65" />
+        <state relative-caret-position="251">
+          <caret line="96" column="56" lean-forward="false" selection-start-line="96" selection-start-column="56" selection-end-line="96" selection-end-column="56" />
           <folding />
         </state>
       </provider>

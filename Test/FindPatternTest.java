@@ -73,32 +73,36 @@ public class FindPatternTest {
 //        input = "abcabdabcab";
 //        fp.updateGrammar(input);
 //        assertEquals("3d3", fp.getGrammars().get(0));
-
-        // works but not in the most concise way, makes duplicate rules...
-        fp = new FindPattern();
-        input = "abcabdabcabdabcabdabcabd";
-        fp.updateGrammar(input);
-
-//        //HANDLE SINGLE INPUT
+//
+//        // works but not in the most concise way, makes duplicate rules...
 //        fp = new FindPattern();
-//        input = "a";
+//        input = "abcabdabcabdabcabdabcabd";
+//        fp.updateGrammar(input);
+//
+////        //HANDLE SINGLE INPUT
+////        fp = new FindPattern();
+////        input = "a";
+////        fp.updateGrammar(input);
+//
+//        //{0=4466882222, 2=aa, 4=22, 6=22, 8=22}
+//        //vs
+//        //
+//        //0 → 1 1
+//        //1 → 2 2
+//        //2 → 3 3
+//        //3 → 4 4
+//        //4 → a a
+//
+//        // does it again here, have to sort out the loop
+//        //NO PAIR OF ADJACENT SYMBOLS APPEAR MORE THAN ONCE IN THE GRAMMAR, NEEDS TO BE A CHECK
+//        //THROUGHOUT
+//        fp = new FindPattern();
+//        input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 //        fp.updateGrammar(input);
 
-
-        //{0=4466882222, 2=aa, 4=22, 6=22, 8=22}
-        //vs
-        //
-        //0 → 1 1
-        //1 → 2 2
-        //2 → 3 3
-        //3 → 4 4
-        //4 → a a
-
-        // does it again here, have to sort out the loop
         fp = new FindPattern();
-        input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        input = "pease porridge hot pease porridge hot";
         fp.updateGrammar(input);
-
 
     }
 }

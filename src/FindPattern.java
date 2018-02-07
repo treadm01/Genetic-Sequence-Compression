@@ -1,4 +1,5 @@
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,19 +47,31 @@ public class FindPattern {
                 count++;
             }
         }
-
+        //System.out.println(digram + " " + count);
         return count;
     }
 
     public Integer checkForFoundPattern(String digram) {
         // because S is part of the same map have to check al lbut one... replace S as a string on its own??
         Integer symbol = FIRST_RULE;
+        boolean CRAP = false;
         for (Integer s : grammars.keySet()) {
             if (s != FIRST_RULE) {
                 if (grammars.get(s).equals(digram)) {
                     symbol = s;
                 }
+                else if (grammars.get(s).contains(digram)) {
+                    grammars.put(s, grammars.get(s).replaceAll(digram, nextRule.toString()));
+                    grammars.put(FIRST_RULE, grammars.get(FIRST_RULE).replaceAll(digram, nextRule.toString()));
+                    CRAP = true;
+                }
             }
+        }
+
+        //adding a new rule when breaking up old rules has to be done outside the check
+        if (CRAP) {
+            grammars.put(nextRule, digram); // made a new rule
+            nextRule++;
         }
         return symbol;
     }
@@ -88,8 +101,10 @@ public class FindPattern {
         for (int i = 1; i < input.length(); i++) {
             addSymbol(FIRST_RULE, input.substring(i, i + 1));
 
+            //needs three like this
             updateSequenceWithFoundPattern();
             updateSequence();
+            updateSequenceWithFoundPattern();
 
             // for all rules only used once where they are in the value replace with their terminal (should only happen once... so need for for loops?)
             for (Integer s : ruleUtility()) { // for every item in list of only occuring once terminals
@@ -103,21 +118,27 @@ public class FindPattern {
 
             // need a real way to check for duplicates and remove them, need to do a loop on
             // new symbol whether from input or new digram...
-            for (Integer k : grammars.keySet()) {
-                for (Integer sk : grammars.keySet()) {
-                    if (grammars.get(k).equals(grammars.get(sk))
-                            && k != sk) {
-                        grammars.put(FIRST_RULE, grammars.get(FIRST_RULE).replaceAll(sk.toString(), k.toString()));
-                    }
-                }
-            }
-
-            updateSequenceWithFoundPattern();
-            updateSequence();
-
+//            for (Integer k : grammars.keySet()) {
+//                for (Integer sk : grammars.keySet()) {
+//                    if (grammars.get(k).equals(grammars.get(sk))
+//                            && k != sk) {
+//                        grammars.put(FIRST_RULE, grammars.get(FIRST_RULE).replaceAll(sk.toString(), k.toString()));
+//                    }
+//                }
+//            }
+//
+//            //REPEAT ABOVE
+//            updateSequenceWithFoundPattern();
+//            updateSequence();
             System.out.println(grammars.toString());
         }
+        //and a final check to catch all input sorted but matching digrams...
 
+        //THERE IS LIKELY AN ISSUE WHERE NON-TERMINALS COULD BE MISINTERPRETED FOR SYMBOLS
+        //IS 11 ELEVEN OR REPEATING ONES????
+        updateSequence(); // this doesn''t work depeninding on input, need a while loop until everything
+        // is sorted, not for input
+        //System.out.println(grammars.toString());
     }
 
     private List<Integer> ruleUtility() {

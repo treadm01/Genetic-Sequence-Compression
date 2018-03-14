@@ -55,8 +55,8 @@ public class FindPatternTest {
     @Test
     public void updateGrammar() {
         String input = "abcdbc";
-//        fp.updateGrammar(input);
-//        assertEquals("a1d1", fp.getGrammars().get(0));
+        fp.updateGrammar(input);
+        assertEquals("a1d1", fp.getGrammars().get(0));
 //
 //        fp = new FindPattern();
 //        input = "abcdbcabc";
@@ -96,13 +96,14 @@ public class FindPatternTest {
 //        // does it again here, have to sort out the loop
 //        //NO PAIR OF ADJACENT SYMBOLS APPEAR MORE THAN ONCE IN THE GRAMMAR, NEEDS TO BE A CHECK
 //        //THROUGHOUT
-//        fp = new FindPattern();
-//        input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-//        fp.updateGrammar(input);
-
         fp = new FindPattern();
-        input = "pease porridge hot pease porridge hot";
+        input = "aaaaaaaaaaaaaaaaa";
         fp.updateGrammar(input);
 
+
+//
+//        fp = new FindPattern();
+//        input = "pease porridge hot pease porridge hot";
+//        fp.updateGrammar(input);
     }
 }

@@ -15,8 +15,11 @@ public class terminal extends symbol {
     @Override
     public boolean equals(Object o) {
         terminal t = null;
-        if (!(o instanceof terminal)) {
-            throw new ClassCastException("Must be bigram. Received " + o.getClass());
+        if (!(o instanceof terminal) && !(o instanceof nonTerminal)) {
+            throw new ClassCastException("Must be terminal. Received " + o.getClass());
+        }
+        else if (o instanceof nonTerminal) {
+            return false;
         }
         else {
             t = (terminal) o;

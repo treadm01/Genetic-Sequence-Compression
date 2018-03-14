@@ -23,8 +23,11 @@ public class nonTerminal extends symbol {
     @Override
     public boolean equals(Object o) {
         nonTerminal t = null;
-        if (!(o instanceof nonTerminal)) {
-            throw new ClassCastException("Must be bigram. Received " + o.getClass());
+        if (!(o instanceof nonTerminal) && !(o instanceof terminal)) {
+            throw new ClassCastException("Must be nontermin. Received " + o.getClass());
+        }
+        else if (o instanceof terminal) {
+            return false;
         }
         else {
             t = (nonTerminal) o;

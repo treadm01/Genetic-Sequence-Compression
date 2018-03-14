@@ -16,42 +16,54 @@ public class rule {
         ruleNumber++;
     }
 
+    public List<bigram> getBigrams() {
+        List<bigram> lstB = new ArrayList<>();
+
+        for (int i = 0; i < values.size() - 2; i++) {
+            bigram b = new bigram(values.get(i), values.get(1 + i));
+            lstB.add(b);
+        }
+
+        return lstB;
+    }
+
     /**
      * check the last two values for repetition, false if nothing found
      * @return
      */
     public boolean checkBigram() {
-        // not enough to check return false
-        if (values.size() <= 1) {
+        if (values.size() <= 3) {
             return false;
         }
         else {
-            List<bigram> lstB = new ArrayList<>();
-
-            for (int i = 0; i < values.size() - 2; i++) {
-                bigram b = new bigram(values.get(i), values.get(1+i));
-                lstB.add(b);
-            }
-
             bigram actualB = new bigram(values.get(values.size() - 2), values.get(values.size() - 1));
             setCurrentBigram(actualB); // clean up
             // keep list of bigrams instead????
-
-            return lstB.contains(actualB); // if bigram is repeated return true
+            // YOU NEED TO LOOK INTO PROPER COMPARE AND EQUALS HASHCODE ETC
+            return getBigrams().contains(actualB); // if bigram is repeated return true
+            }
         }
-    }
+
 
     public void updateRule(rule r) {
         List<bigram> lstB = new ArrayList<>();
 
+        // this should be every bigram including current
+        // no, well it is but, it should be ones that don't overlap with
+        // the current bigram - or if overlapped one has been edited then remove
         for (int i = 0; i < values.size() - 1; i++) {
-            bigram bi = new bigram(values.get(i), values.get(1+i));
-            lstB.add(bi);
+            //if ((i + 1 != values.indexOf(getCurrentBigram().first))) { //trying to remove right elements
+                bigram bi = new bigram(values.get(i), values.get(1 + i));
+                lstB.add(bi);
+        }
+
+        for (bigram b : lstB) {
+          //  System.out.println("chugg");
         }
 
         bigram ruleBigram = r.currentBigram;
 
-        for (int i = lstB.size() -1; i > -1; i--) {
+        for (int i = lstB.size() -1; i > -1; i-=2) {
             if (lstB.get(i).equals(ruleBigram)) {
                 values.remove(i+1);
                 values.remove(i);

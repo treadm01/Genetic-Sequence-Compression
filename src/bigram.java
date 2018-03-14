@@ -28,6 +28,9 @@ public class bigram implements Comparable {
     @Override
     public boolean equals(Object o) {
         bigram b = null;
+        if (this == o) {
+            return true;
+        }
         if (!(o instanceof bigram)) {
             throw new ClassCastException("Must be bigram. Received " + o.getClass());
         }

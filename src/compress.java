@@ -14,76 +14,21 @@ public class compress {
     public void processInput(String input) {
         rule.ruleNumber = 0;
         rule firstRule = new rule();
-        //rules.add(firstRule);
         for (int i = 0; i < input.length(); i++) {
+            // add the element to string to first rule
             firstRule.addValues(input.charAt(i));
 
-            checkRepeat(firstRule);
+            checkRepeat(firstRule); // check for pattern in first rule
 
-            // took firstrule out of rules to make this run easier but could have other issues
             // if bigram in another rule update first rule again
-            for (rule r : rules) {
-                if (firstRule.getCurrentBigram().equals(r.getCurrentBigram())) {
-                    firstRule.updateRule(r);
-                }
-            }
+            existingBigram(firstRule);
 
             checkRepeat(firstRule);
 
-
-
-//TODO need to enforce rule utility - if a rule is used only once, take it out and replace with its link
-            //TODO got the nonterminal onlcy occuring once, but how to remove??
-            // either way will probably have to update the rules again afterwards...
-
-            List<symbol> allSymbols = new ArrayList<>();
-            allSymbols.addAll(firstRule.values);
-            for (rule r : rules) {
-                allSymbols.addAll(r.values);
-            }
-
-            List<symbol> ntList = allSymbols.stream()
-                    .filter(x -> x instanceof nonTerminal)
-                    .collect(Collectors.toList());
-
-            List<symbol> once = new ArrayList<>();
-            List<symbol> onceNoMore = new ArrayList<>();
-            for (symbol s : ntList) {
-                if (once.contains(s)){ // not the same objects....
-                    onceNoMore.add(s);
-                    once.remove(s);
-                }
-
-                if (!onceNoMore.contains(s)) {
-                    once.add(s);
-                }
-
-            }
-
-//
-            for (symbol s : once) {
-                System.out.println(s.getRepresentation());
-
-//                // remove single - // could happen in first rule remmber, only checkingthe others with rules
-//                for (rule r : rules) {
-//                    if (r.values.contains(s)) {
-//                        // should do this in rule? check for unigram??
-//                        r.values.addAll(r.values.indexOf(s), rules.get(Integer.valueOf(s.getRepresentation())).values);
-//                        r.values.remove(s);
-//                    }
-//                }
-            }
-
-
-
-
-
-
-            // as first rule has been updated need to check with new bigram
+            ruleUtility(firstRule);
         }
 
-
-
+        // print out the final values
         firstRule.getValues();
         for (rule r : rules) {
             r.getValues();
@@ -97,6 +42,59 @@ public class compress {
             rules.add(newRule);
             fr.updateRule(newRule);
         }
+    }
+
+    public void ruleUtility(rule fr){
+        List<symbol> allSymbols = new ArrayList<>();
+        allSymbols.addAll(fr.values);
+        for (rule r : rules) {
+            allSymbols.addAll(r.values);
+        }
+
+        List<symbol> ntList = allSymbols.stream()
+                .filter(x -> x instanceof nonTerminal)
+                .collect(Collectors.toList());
+
+        List<symbol> once = new ArrayList<>();
+        List<symbol> onceNoMore = new ArrayList<>();
+        for (symbol s : ntList) {
+            if (once.contains(s)){ // not the same objects....
+                onceNoMore.add(s);
+                once.remove(s);
+            }
+
+            if (!onceNoMore.contains(s)) {
+                once.add(s);
+            }
+        }
+
+        // remove the single rules
+        List<rule> removalList = new ArrayList<>();
+        for (symbol s : once) {
+            for (rule r : rules) {
+                if (r.values.contains(s)) {
+                    r.values.addAll(r.values.indexOf(s),
+                            rules.get(Integer.parseInt(String.valueOf(s.getRepresentation()))-1).values);
+                    //checkRepeat(r); check for repeat in rule????
+                    r.values.remove(s);
+                    removalList.add(rules.get(Integer.parseInt(String.valueOf(s.getRepresentation()))-1));
+                }
+            }
+        }
+
+        for (rule r : removalList) {
+            rules.remove(r);
+        }
+    }
+
+    // took firstrule out of rules to make this run easier but could have other issues
+    public void existingBigram(rule fr) {
+        for (rule r : rules) {
+            if (fr.getCurrentBigram().equals(r.getCurrentBigram())) {
+                fr.updateRule(r);
+            }
+        }
+
     }
 
 }

@@ -38,7 +38,7 @@ public class bigram implements Comparable {
             b = (bigram) o;
         }
 
-        return  (b.first.getRepresentation() == this.first.getRepresentation()
-                && b.second.getRepresentation() == this.second.getRepresentation());
+        return  (b.first.getRepresentation().equals(this.first.getRepresentation())
+                && b.second.getRepresentation().equals(this.second.getRepresentation()));
     }
 }

@@ -4,11 +4,11 @@
 
 public class terminal extends symbol {
 
-    public terminal(Character s) {
+    public terminal(String s) {
         this.representation = s;
     }
 
-    public Character getRepresentation() {
+    public String getRepresentation() {
         return this.representation;
     }
 

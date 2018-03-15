@@ -16,9 +16,21 @@ public class rule {
         ruleNumber++;
     }
 
+    public List<bigram> getAllBigrams() {
+        List<bigram> lstB = new ArrayList<>();
+        for (int i = 0; i < values.size() - 1; i++) {
+            bigram bi = new bigram(values.get(i), values.get(1 + i));
+            lstB.add(bi);
+        }
+        return lstB;
+    }
+
     public List<bigram> getBigrams() {
         List<bigram> lstB = new ArrayList<>();
 
+        // THIS DOES NOT GIVE BACK BIGRAMS FOR GROUPS OF THREE
+        // OR EVER THE LAST BIGRAM WHICH WAS THE ORIGINAL INTENTION
+        // BUT MESSES UP IF USED ELSEWHERE
         for (int i = 0; i < values.size() - 2; i++) {
             bigram b = new bigram(values.get(i), values.get(1 + i));
             lstB.add(b);
@@ -48,38 +60,35 @@ public class rule {
     public void updateRule(rule r) {
         List<bigram> lstB = new ArrayList<>();
 
-        // this should be every bigram including current
-        // no, well it is but, it should be ones that don't overlap with
-        // the current bigram - or if overlapped one has been edited then remove
         for (int i = 0; i < values.size() - 1; i++) {
-            //if ((i + 1 != values.indexOf(getCurrentBigram().first))) { //trying to remove right elements
                 bigram bi = new bigram(values.get(i), values.get(1 + i));
                 lstB.add(bi);
         }
 
-        for (bigram b : lstB) {
-          //  System.out.println("chugg");
-        }
-
         bigram ruleBigram = r.currentBigram;
 
-        for (int i = lstB.size() -1; i > -1; i-=2) {
+        for (int i = lstB.size() -1; i > -1; i--) {
+//            System.out.println(lstB.get(i).first.getRepresentation());
+  //          System.out.println(lstB.get(i).second.getRepresentation());
             if (lstB.get(i).equals(ruleBigram)) {
+
+                // really really bad, if half of a bigram has been changed alter the one made earlier
+                // in the list by setting it's right hand to ! or whatever, also have to check that
+                // not at the bottom of the list
+                if(i-1 >= 0 ) {
+                    lstB.get(i-1).second = new terminal("!");
+                }
+
                 values.remove(i+1);
                 values.remove(i);
-                char c = r.getRuleNumber().toString().toCharArray()[0];
+                String c = r.getRuleNumber().toString();
                 values.add(i, new nonTerminal(c));
             }
         }
-
-        // check bigrams to rule values,  form of bigram
-        // rewrite values of rule 1 where overlapped with rule number as nonterminal
-        //
-
     }
 
     // add a single non-terminal at the moment to the rule
-    public void addValues(char s) {
+    public void addValues(String s) {
         terminal t = new terminal(s);
         values.add(t);
     }
@@ -92,18 +101,21 @@ public class rule {
     }
 
     public void addValues(Integer i) {
-        char c = i.toString().toCharArray()[0];
+        int j = i;
+        //char c = (char) j;
+        String c = i.toString();
         nonTerminal nt = new nonTerminal(c);
     }
 
     //just a quick method to get the values, using for checking
     //MAKE A TO PRINT
-    public void getValues() {
-        System.out.print(this.getRuleNumber() + " -> ");
+    public String getValues() {
+        String valueOuput = "";
+        valueOuput += this.getRuleNumber() + " -> ";
         for (symbol i : values) {
-            System.out.print(i.getRepresentation() + " " );
+            valueOuput += i.getRepresentation() + " " ;
         }
-        System.out.println();
+        return valueOuput;
     }
 
     public bigram getCurrentBigram() {

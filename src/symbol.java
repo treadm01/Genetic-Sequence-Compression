@@ -3,9 +3,9 @@
  * nonTerminal or terminal, both of which extend from here
  */
 public class symbol {
-    Character representation;
+    String representation;
 
-    public Character getRepresentation() {
+    public String getRepresentation() {
         return representation;
     }
 }

@@ -7,7 +7,7 @@ public class nonTerminal extends symbol {
      * the actual symbol
      * @param s
      */
-    public nonTerminal(Character s) {
+    public nonTerminal(String s) {
         this.representation = s;
     }
 
@@ -15,7 +15,7 @@ public class nonTerminal extends symbol {
      * quick way to get the symbol
      * @return
      */
-    public Character getRepresentation() {
+    public String getRepresentation() {
         return this.representation;
     }
 

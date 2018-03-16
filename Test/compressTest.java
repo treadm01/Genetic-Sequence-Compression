@@ -43,13 +43,7 @@ public class compressTest {
 
         System.out.println();
         c = new compress();
-        c.processInput("\n" +
-                "GTGAAAGTAACACTGCCAACTACTGTGGTAATCACAAGCGTAGTTTACATGTGAGTGTGA\n" +
-                "GGGATTCTCTCCGCAAATTGCAAACTGATTGGATTGATATACTTTACGTTCACTGGTGGG\n" +
-                "ATTATATGAGTTCAATCGAAGAATTTATGGATAGTTTGCATATTCTGGTCCAGCAGGGCA\n" +
-                "AGGTCCTCTATTTGGGTGTATCTGATACACCTGCTTGGGTTGTTTCTGCGGCAAACTACT\n" +
-                "ACGCTACATCTTATGGTAAAACTCCCTTTAGTATCTACCAAGGTAAATGGAACGTGTTGA\n" +
-                "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC\n" +
+        c.processInput("ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC\n" +
                 "CATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA\n" +
                 "AGAATGGAGAGGGTATTCGTTCTTTCGTTGGCGCCTCCGAACAAACAGATGCAGAAATCA\n" +
                 "AGATTAGTGAAGCATTGGCCAAGATTGCTGAGGAACATGGCACTGAGTCTGTTACTGCTA\n" +
@@ -88,9 +82,31 @@ public class compressTest {
 
         System.out.println();
         c = new compress();
-        c.processInput("123456781122323232562");
+        c.processInput(c.readFile());
 
 
         //c.processInput("Sequitur is a method for inferring compositional hierarchies from strings. It detects repetition and factors it out of the string by f"); // this is the last time# of rules match
+    }
+
+    @Test
+    public void threeRule() {
+    }
+
+    @Test
+    public void readFile() {
+        compress c = new compress();
+        System.out.println(c.readFile());
+    }
+
+    @Test
+    public void checkRepeat() {
+    }
+
+    @Test
+    public void ruleUtility() {
+    }
+
+    @Test
+    public void existingBigram() {
     }
 }

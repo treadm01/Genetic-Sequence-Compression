@@ -56,6 +56,10 @@ public class compress {
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 
+            if (ch.equals("\n")) {
+                ch = "->";
+            }
+
             firstRule.addValues(ch);
 
 //            if (firstRule.values.size() >=4) {

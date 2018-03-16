@@ -49,7 +49,7 @@ public class compress {
     }
 
     // receives a string of whatever and works on it char by char
-    public void processInput(String input) {
+    public List<rule> processInput(String input) {
         rule.ruleNumber = 0;
         rule firstRule = new rule();
         for (int i = 0; i < input.length(); i++) {
@@ -72,14 +72,20 @@ public class compress {
         }
 
         // print out the final values
+
+        List<rule> finalRules = new ArrayList<>();
         System.out.println(firstRule.getValues());
+        finalRules.add(firstRule);
         for (rule r : rules) {
+            finalRules.add(r);
             System.out.println(r.getValues());
          //   System.out.println(r.getCurrentBigram().first.getRepresentation());
         //    System.out.println(r.getCurrentBigram().second.getRepresentation());
         }
 
         System.out.println(rules.size());
+
+        return finalRules;
     }
 
     public void checkRepeat(rule fr) {
@@ -132,18 +138,7 @@ public class compress {
                     int index = 0;
                     for (rule rx : rules) {
                         if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.getRepresentation()))) {
-
                             index = rules.indexOf(rx);
-//
-//                            System.out.println("index " + index);
-//                            System.out.println("rule number " + rx.getRuleNumber());
-//                            System.out.println("the one off rule " + s.getRepresentation());
-//
-//                            System.out.println(fr.getValues());
-//                            for (rule rz : rules) {
-//                                System.out.println(rz.getValues());
-//                            }
-
                         }
                     }
 

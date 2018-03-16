@@ -102,6 +102,14 @@ public class uncompressTest {
         rules = c.processInput(expected);
         u = new uncompress();
         assertEquals(expected, u.processInput(rules));
+
+        rules.clear();
+        c = new compress();
+        expected = c.readFile();
+        rules = c.processInput(expected);
+        u = new uncompress();
+
+        assertEquals(expected, u.processInput(rules));
     }
 
     @Test

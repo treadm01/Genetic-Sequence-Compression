@@ -79,10 +79,10 @@ public class compress {
         for (int i = 0; i < input.length(); i++) {
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
-
-            if (ch.equals("\n")) {
-                ch = "->";
-            }
+//
+//            if (ch.equals("\n")) {
+//                ch = "->";
+//            }
 
             firstRule.addValues(ch);
 

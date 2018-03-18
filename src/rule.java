@@ -7,8 +7,11 @@ import java.util.List;
 public class rule {
     static int ruleNumber = 0;
     Integer number;
+    Integer useNumber = 0;
+    Integer ruleSize;
     public List<symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
     bigram currentBigram;
+
 
     // number for the rule
     public rule() {
@@ -128,5 +131,9 @@ public class rule {
 
     public Integer getRuleNumber() {
         return this.number;
+    }
+
+    public void setRuleNumber(Integer rn) {
+        this.number = rn;
     }
 }

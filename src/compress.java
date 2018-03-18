@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,6 +96,8 @@ public class compress {
 
         }
 
+        reorderRules(firstRule);
+
         // print out the final values
 
         List<rule> finalRules = new ArrayList<>();
@@ -103,11 +106,8 @@ public class compress {
         for (rule r : rules) {
             finalRules.add(r);
             System.out.println(r.getValues());
-         //   System.out.println(r.getCurrentBigram().first.getRepresentation());
-        //    System.out.println(r.getCurrentBigram().second.getRepresentation());
+//            System.out.println(r.useNumber);
         }
-
-        System.out.println(rules.size());
 
         return finalRules;
     }
@@ -219,6 +219,46 @@ public class compress {
         for (rule r : newRuleLst) {
             rules.add(r);
         }
+    }
+
+    public List<rule> reorderRules(rule fr) {
+
+        List<rule> completeRules = new ArrayList<>();
+        completeRules.add(fr);
+        completeRules.addAll(rules);
+
+        for (rule r : rules) {
+            r.ruleSize = r.values.size();
+            for (rule r2 : completeRules) {
+                for (symbol s : r2.values) {
+                    if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
+                        r.useNumber++;
+                    }
+                }
+            }
+        }
+
+        // return instead of mutate etc
+
+        // can't see how to sort by size of rule as well as frequency....
+        rules = rules.stream()
+                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
+                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
+                .collect(Collectors.toList());
+
+        for (rule r : rules) {
+            int newNumber = rules.indexOf(r) + 1;
+            for (rule r2 : completeRules) {
+                for (symbol s : r2.values) {
+                    if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
+                        s.representation = String.valueOf(newNumber);
+                    }
+                }
+            }
+            r.setRuleNumber(newNumber);
+        }
+
+        return completeRules;
     }
 
 }

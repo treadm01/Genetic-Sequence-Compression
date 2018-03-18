@@ -2,6 +2,9 @@ import java.util.List;
 
 public class uncompress {
 
+    //TODO save to file and retrieve in a way that objects are known to be terminal, non terminal, rule
+    // from there can start to compare
+
     public String getOutput(rule r, List<rule> compressedRule, String soFar) {
         String uncompressed = soFar;
         for (symbol s : r.values) {

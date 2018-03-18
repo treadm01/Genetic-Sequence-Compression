@@ -1,10 +1,10 @@
 import org.junit.Test;
 
 public class compressTest {
+    compress c = new compress();
 
     @Test
     public void processInput() {
-        compress c = new compress();
         c.processInput("abcdbc");
 
         System.out.println();
@@ -86,6 +86,13 @@ public class compressTest {
 
 
         //c.processInput("Sequitur is a method for inferring compositional hierarchies from strings. It detects repetition and factors it out of the string by f"); // this is the last time# of rules match
+    }
+
+    @Test
+    public void reOrderRules() {
+        System.out.println();
+        c = new compress();
+        c.processInput("abcabdabcabd");
     }
 
     @Test

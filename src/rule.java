@@ -108,6 +108,8 @@ public class rule {
         //char c = (char) j;
         String c = i.toString();
         nonTerminal nt = new nonTerminal(c);
+        values.add(nt); // only just added this line after uncompressing from binary, check how this
+        // code has been working - probably not used, convert to string and send that??
     }
 
     //just a quick method to get the values, using for checking

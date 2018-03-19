@@ -124,7 +124,7 @@ public class compressTest {
         compress c = new compress();
     //    System.out.println(c.writeFile(c.processInput("a")));
 
-        System.out.println(c.writeFile(c.processInput("ac")));
+        System.out.println(c.writeFile(c.processInput(c.readFile())));
 
 
 

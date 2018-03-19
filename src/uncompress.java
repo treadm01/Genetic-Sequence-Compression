@@ -1,13 +1,13 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class uncompress {
+
+    public String mutatingString = "";
 
     //TODO save to file and retrieve in a way that objects are known to be terminal, non terminal, rule
     // from there can start to compare
@@ -56,4 +56,111 @@ public class uncompress {
 
         return everything;
     }
+
+    // remove every 7
+    public List<rule> processBinary(String binary) {
+
+        // first thing to do is remove wasted seventh bits
+        String removedSevens = "";
+        for (int i = 0; i < binary.length(); i++) {
+            if (i % 7 != 0) {
+                removedSevens += binary.substring(i, i+1);
+            }
+        }
+
+        List<rule> buildList = new ArrayList<>();
+        rule.ruleNumber = 0; // shouldn't have to do this
+
+        mutatingString = removedSevens;
+
+        while (mutatingString.length() != 0 && mutatingString.charAt(0) != '0') {
+            buildList.add(getRuleFromBinary(mutatingString));
+            System.out.println(mutatingString);
+        }
+//
+        for (rule r : buildList) {
+            System.out.println(r.getValues());
+        }
+
+        return buildList;
+    }
+
+    public rule getRuleFromBinary(String bnary) {
+        rule r = new rule();
+        //System.out.println(binary);
+
+        int symbolsToRead = 0;
+        while (mutatingString.charAt(symbolsToRead) != '0') {
+            symbolsToRead++;
+        }
+
+        //System.out.println(binary);
+        mutatingString = mutatingString.substring(symbolsToRead+1);
+        //System.out.println(binary);
+
+        byte numberOfSymbols = Byte.parseByte(mutatingString.substring(0, symbolsToRead), 2);
+
+        //System.out.println(numberOfSymbols);
+
+        mutatingString = mutatingString.substring(symbolsToRead);
+
+        //System.out.println(binary);
+
+        int pos = 0;
+        for (int i = 0; i < numberOfSymbols; i++) {
+            if (mutatingString.charAt(0) == '0') {
+          //      System.out.println(binary);
+                String rep = getACGT(mutatingString.substring(pos+1, pos+3));
+            //    System.out.println(rep);
+                mutatingString = mutatingString.substring(3);
+                r.addValues(rep); // for Terminal send a String, for nonTerminal send an int
+            }
+            else {
+                int repre = getNonTerminalFromBinary(mutatingString);
+                System.out.println("huh");
+                r.addValues(repre);
+                System.out.println(r.getValues());
+            }
+        }
+
+        //mutatingString = mutatingString;
+
+        return r;
+    }
+
+    public int getNonTerminalFromBinary(String bnary) {
+        int symbolsToRead = 0;
+        while (mutatingString.charAt(symbolsToRead) != '0') {
+            symbolsToRead++;
+        }
+        //System.out.println(binary);
+        mutatingString = mutatingString.substring(symbolsToRead+1);
+        //System.out.println(binary);
+        byte numberOfSymbols = Byte.parseByte(mutatingString.substring(0, symbolsToRead), 2);
+        //System.out.println(numberOfSymbols);
+        mutatingString = mutatingString.substring(symbolsToRead);
+        //mutatingString = mutatingString;
+        System.out.println(numberOfSymbols);
+        return numberOfSymbols;
+    }
+
+    public String getACGT(String binary) {
+        String ACGT = "";
+        switch (binary) {
+            case "00":
+                ACGT= "G";
+                break;
+            case "01":
+                ACGT= "C";
+                break;
+            case "10":
+                ACGT= "A";
+                break;
+            case "11":
+                ACGT= "T";
+                break;
+        }
+        return ACGT;
+    }
+
 }

@@ -67,11 +67,13 @@ public class compress {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("File Read");
         return everything;
     }
 
     public String writeFile(List<rule> finalRules) {
-
+        System.out.println("writing file");
         String fullBinary = "";
 
         int largestRuleSize = Integer.toBinaryString(finalRules.size()).length();
@@ -79,10 +81,11 @@ public class compress {
 
         for (rule r : finalRules) {
             String binaryRuleLength = "";
-            for (int i = 0; i < r.values.size(); i++) {
+            String ruleInBinary = Integer.toBinaryString(r.values.size());
+            for (int i = 0; i < ruleInBinary.length(); i++) {
                 binaryRuleLength += 1;
             }
-            binaryRuleLength += 0;
+            binaryRuleLength += 0 + ruleInBinary;
 
             fullBinary += binaryRuleLength;
 
@@ -103,16 +106,16 @@ public class compress {
                     binarySymbolRepresentation = "0";
 
                     switch (s.getRepresentation()) {
-                        case "g":
+                        case "G":
                             binarySymbolRepresentation += "00";
                             break;
-                        case "c":
+                        case "C":
                             binarySymbolRepresentation += "01";
                             break;
-                        case "a":
+                        case "A":
                             binarySymbolRepresentation += "10";
                             break;
-                        case "t":
+                        case "T":
                             binarySymbolRepresentation += "11";
                             break;
                     }
@@ -122,42 +125,45 @@ public class compress {
 
         }
 
-        String reallyFinal = "";
-        for (int i = 0; i < fullBinary.length(); i++) {
-            if (i % 7 == 0) {
-                reallyFinal += "1" + fullBinary.substring(i);
-            }
-            else {
-                reallyFinal += fullBinary.substring(i);
-            }
-        }
+        //System.out.println("last good " + fullBinary);
 
-        System.out.println("really " + reallyFinal);
-
-        while (fullBinary.length() % 7 != 0) {
+        while (fullBinary.length() % 6 != 0) {
             fullBinary += "0";
+            //System.out.println("grow" + fullBinary);
         }
+
+        String reallyFinal = "";
+        for (int i = 0; i < fullBinary.length()/6; i++) {
+            reallyFinal += "1" + fullBinary.substring(i * 6, i * 6 + 6);
+          //  System.out.println("really " + reallyFinal);
+        }
+
+
+
+//        while (fullBinary.length() % 7 != 0) {
+//            fullBinary += "0";
+//        }
 
         //System.out.println(fullBinary);
 
-        byte[] test = new byte[fullBinary.length()/7];
+        byte[] test = new byte[reallyFinal.length()/7];
 
         //dropping 0
 
-        for (int i = 0; i < fullBinary.length()/7; i++) {
-            byte value = Byte.parseByte(fullBinary.substring(i * 7, i*7 + 7), 2);
+        for (int i = 0; i < reallyFinal.length()/7; i++) {
+            byte value = Byte.parseByte(reallyFinal.substring(i * 7, i*7 + 7), 2);
             test[i] = value;
         }
         //test = fullBinary.getBytes();
 //        System.out.println(test[0]);
 
 
-        System.out.println("bytes in test : ");
-        for (Byte b : test) {
-            System.out.print(Integer.toBinaryString(b));
-        }
+//        System.out.println("bytes in test : ");
+//        for (Byte b : test) {
+//            System.out.print(Integer.toBinaryString(b));
+//        }
 
-        System.out.println("full binary : ");
+        //System.out.println("full binary : ");
 
         FileOutputStream stream = null;
         try {
@@ -177,7 +183,8 @@ public class compress {
             }
         }
 
-        return fullBinary;
+        System.out.println("Done");
+        return reallyFinal;
 
     }
 
@@ -186,6 +193,8 @@ public class compress {
         rule.ruleNumber = 0;
         rule firstRule = new rule();
         for (int i = 0; i < input.length(); i++) {
+
+            System.out.println("working through symbol " + i + " of " + input.length());
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 //

@@ -120,9 +120,34 @@ public class uncompressTest {
     public void readFile() {
         uncompress u = new uncompress();
         compress c = new compress();
-        String expected = c.writeFile(c.processInput("actcgat"));
+        String expected = c.writeFile(c.processInput("ACGACT"));
         String result = u.readFile();
 
+        System.out.println(expected);
+        System.out.println(result);
+
+        u.processBinary(result);
+
+        System.out.println(u.processInput(u.processBinary(result)));
+
         assertEquals(expected, result);
+    }
+
+
+    @Test
+    public void testCompressUncompress() {
+        uncompress u = new uncompress();
+        compress c = new compress();
+        String expected = c.readFile();
+
+        // compress file
+        c.writeFile(c.processInput(expected));
+
+        String binaryFromFile = u.readFile();
+        List<rule> processedFromBinary = u.processBinary(binaryFromFile);
+        String answer = u.processInput(processedFromBinary);
+
+        assertEquals(expected, answer);
+
     }
 }

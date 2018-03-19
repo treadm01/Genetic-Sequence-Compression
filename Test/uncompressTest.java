@@ -118,9 +118,34 @@ public class uncompressTest {
 
     @Test
     public void readFile() {
+        //TODO working for smaller groups but not larger, changed the byte parse to int... in uncompress
         uncompress u = new uncompress();
         compress c = new compress();
         String expected = c.writeFile(c.processInput("ACGACT"));
+        String result = u.readFile();
+
+        System.out.println(expected);
+        System.out.println(result);
+
+        u.processBinary(result);
+
+        System.out.println(u.processInput(u.processBinary(result)));
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void comparisonCheck() {
+        uncompress u = new uncompress();
+        compress c = new compress();
+        String expected = c.writeFile(c.processInput("ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC\n" +
+                "CATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA\n" +
+                "AGAATGGAGAGGGTATTCGTTCTTTCGTTGGCGCCTCCGAACAAACAGATGCAGAAATCA\n" +
+                "AGATTAGTGAAGCATTGGCCAAGATTGCTGAGGAACATGGCACTGAGTCTGTTACTGCTA\n" +
+                "TTGCTATTGCCTATGTTCGCTCTAAGGCGAAAAATTTTTTTCCGTCGGTTGAAGGAGGAA\n" +
+                "AAATTGAGGATCTCAAAGAGAACATTAAGGCTCTCAGTATCGATCTAACGCCAGACAATA\n" +
+                "TAAAATACTTAGAAAGTATAGTTCCTTTTGACATCGGATTTCCTAATAATTTTATCGTGT\n" +
+                "TAAATTCCTTGACTCAAAAATATGGTACGAATAATGTTTAGATAATTTTTCAGTAATCAA\n"));
         String result = u.readFile();
 
         System.out.println(expected);

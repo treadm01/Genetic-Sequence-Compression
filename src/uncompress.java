@@ -77,7 +77,7 @@ public class uncompress {
             buildList.add(getRuleFromBinary(mutatingString));
             System.out.println(mutatingString);
         }
-//
+
         for (rule r : buildList) {
             System.out.println(r.getValues());
         }

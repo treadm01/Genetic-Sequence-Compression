@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -71,6 +68,117 @@ public class compress {
             e.printStackTrace();
         }
         return everything;
+    }
+
+    public String writeFile(List<rule> finalRules) {
+
+        String fullBinary = "";
+
+        int largestRuleSize = Integer.toBinaryString(finalRules.size()).length();
+        System.out.println(largestRuleSize);
+
+        for (rule r : finalRules) {
+            String binaryRuleLength = "";
+            for (int i = 0; i < r.values.size(); i++) {
+                binaryRuleLength += 1;
+            }
+            binaryRuleLength += 0;
+
+            fullBinary += binaryRuleLength;
+
+            for (symbol s : r.values) {
+                String binarySymbolRepresentation = "";
+                String lengthOfSymbol = "";
+                if (s instanceof nonTerminal) {
+                    binarySymbolRepresentation = Integer.toBinaryString(Integer.valueOf(s.getRepresentation()));
+
+                    for (int i = 0; i < binarySymbolRepresentation.length(); i++) {
+                        lengthOfSymbol += 1;
+                    }
+                    lengthOfSymbol += 0;
+                    binarySymbolRepresentation = lengthOfSymbol + binarySymbolRepresentation;
+                }
+                else {
+                    // first 0 to show non terminal second for actg
+                    binarySymbolRepresentation = "0";
+
+                    switch (s.getRepresentation()) {
+                        case "g":
+                            binarySymbolRepresentation += "00";
+                            break;
+                        case "c":
+                            binarySymbolRepresentation += "01";
+                            break;
+                        case "a":
+                            binarySymbolRepresentation += "10";
+                            break;
+                        case "t":
+                            binarySymbolRepresentation += "11";
+                            break;
+                    }
+                }
+                fullBinary += binarySymbolRepresentation;
+            }
+
+        }
+
+        String reallyFinal = "";
+        for (int i = 0; i < fullBinary.length(); i++) {
+            if (i % 7 == 0) {
+                reallyFinal += "1" + fullBinary.substring(i);
+            }
+            else {
+                reallyFinal += fullBinary.substring(i);
+            }
+        }
+
+        System.out.println("really " + reallyFinal);
+
+        while (fullBinary.length() % 7 != 0) {
+            fullBinary += "0";
+        }
+
+        //System.out.println(fullBinary);
+
+        byte[] test = new byte[fullBinary.length()/7];
+
+        //dropping 0
+
+        for (int i = 0; i < fullBinary.length()/7; i++) {
+            byte value = Byte.parseByte(fullBinary.substring(i * 7, i*7 + 7), 2);
+            test[i] = value;
+        }
+        //test = fullBinary.getBytes();
+//        System.out.println(test[0]);
+
+
+        System.out.println("bytes in test : ");
+        for (Byte b : test) {
+            System.out.print(Integer.toBinaryString(b));
+        }
+
+        System.out.println("full binary : ");
+
+        FileOutputStream stream = null;
+        try {
+            stream = new FileOutputStream("/home/tread/IdeaProjects/GeneticCompression/textFiles/compressed.bin");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            stream.write(test);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return fullBinary;
+
     }
 
     // receives a string of whatever and works on it char by char

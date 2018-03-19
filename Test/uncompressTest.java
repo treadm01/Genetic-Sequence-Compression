@@ -115,4 +115,14 @@ public class uncompressTest {
     @Test
     public void getOutput() {
     }
+
+    @Test
+    public void readFile() {
+        uncompress u = new uncompress();
+        compress c = new compress();
+        String expected = c.writeFile(c.processInput("actcgat"));
+        String result = u.readFile();
+
+        assertEquals(expected, result);
+    }
 }

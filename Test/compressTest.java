@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.List;
+
 public class compressTest {
     compress c = new compress();
 
@@ -115,5 +117,20 @@ public class compressTest {
 
     @Test
     public void existingBigram() {
+    }
+
+    @Test
+    public void writeFile() {
+        compress c = new compress();
+    //    System.out.println(c.writeFile(c.processInput("a")));
+
+        System.out.println(c.writeFile(c.processInput("ac")));
+
+
+
+    }
+
+    @Test
+    public void reorderRules() {
     }
 }

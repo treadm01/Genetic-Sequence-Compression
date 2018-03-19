@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class uncompress {
@@ -30,5 +37,23 @@ public class uncompress {
         uncompressed += getOutput(firstRule, compressedRule, uncompressed);
 
         return uncompressed;
+    }
+
+    public String readFile() {
+        String everything = "";
+        byte[] fileContents = new byte[0];
+        Path path = Paths.get("/home/tread/IdeaProjects/GeneticCompression/textFiles/compressed.bin");
+        try {
+            fileContents = Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // use more of the byte methods!!
+        for (Byte b : fileContents) {
+            everything += Integer.toBinaryString(b);
+        }
+
+        return everything;
     }
 }

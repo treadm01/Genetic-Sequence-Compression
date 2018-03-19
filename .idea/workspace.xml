@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Test/compressTest.java" afterPath="$PROJECT_DIR$/Test/compressTest.java" />
-      <change beforePath="$PROJECT_DIR$/Test/uncompressTest.java" afterPath="$PROJECT_DIR$/Test/uncompressTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/compress.java" afterPath="$PROJECT_DIR$/src/compress.java" />
-      <change beforePath="$PROJECT_DIR$/src/rule.java" afterPath="$PROJECT_DIR$/src/rule.java" />
       <change beforePath="$PROJECT_DIR$/src/uncompress.java" afterPath="$PROJECT_DIR$/src/uncompress.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -44,8 +40,8 @@
       <file leaf-file-name="uncompress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/uncompress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="100" column="39" lean-forward="true" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+            <state relative-caret-position="363">
+              <caret line="137" column="51" lean-forward="false" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -56,8 +52,8 @@
       <file leaf-file-name="uncompressTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/uncompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+            <state relative-caret-position="266">
+              <caret line="148" column="0" lean-forward="true" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -151,9 +147,9 @@
         <option value="$PROJECT_DIR$/textFiles/test.txt" />
         <option value="$PROJECT_DIR$/Test/compressTest.java" />
         <option value="$PROJECT_DIR$/src/compress.java" />
-        <option value="$PROJECT_DIR$/src/uncompress.java" />
         <option value="$PROJECT_DIR$/src/rule.java" />
         <option value="$PROJECT_DIR$/Test/uncompressTest.java" />
+        <option value="$PROJECT_DIR$/src/uncompress.java" />
       </list>
     </option>
   </component>
@@ -489,7 +485,7 @@
       <workItem from="1521388882184" duration="6242000" />
       <workItem from="1521395412982" duration="547000" />
       <workItem from="1521396135046" duration="4476000" />
-      <workItem from="1521453193905" duration="28196000" />
+      <workItem from="1521453193905" duration="28969000" />
     </task>
     <task id="LOCAL-00001" summary="trying to split up to pairs and check for repeats">
       <created>1517774688169</created>
@@ -659,43 +655,50 @@
       <option name="project" value="LOCAL" />
       <updated>1521467409515</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="got some compression to uncompression via binary working, but issues with larger files...">
+      <created>1521484464290</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1521484464290</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 16m 41s.xml">
+    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 35m 02s.xml">
       <configuration name="uncompressTest.readFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 17m 36s.xml">
+    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 35m 10s.xml">
       <configuration name="uncompressTest.readFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 17m 52s.xml">
+    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 35m 20s.xml">
       <configuration name="uncompressTest.readFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 18m 19s.xml">
+    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 36m 22s.xml">
       <configuration name="uncompressTest.readFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 19m 23s.xml">
+    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 42m 26s.xml">
       <configuration name="uncompressTest.readFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 21m 51s.xml">
+    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 43m 23s.xml">
       <configuration name="uncompressTest.readFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 25m 12s.xml">
-      <configuration name="uncompressTest.readFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="uncompressTest_readFile - 2018.03.19 at 18h 32m 36s.xml">
-      <configuration name="uncompressTest.readFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.19 at 18h 30m 54s.xml">
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.19 at 18h 36m 38s.xml">
       <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.19 at 18h 32m 50s.xml">
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.19 at 18h 42m 32s.xml">
+      <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.19 at 18h 43m 18s.xml">
+      <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.19 at 18h 43m 28s.xml">
       <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101601000" />
+    <option name="totallyTimeSpent" value="102374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -708,7 +711,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2957958" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36036035" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -756,7 +759,8 @@
     <MESSAGE value="getting string from file" />
     <MESSAGE value="reordering the rulles for more commmon rules to be lower" />
     <MESSAGE value="added files, converting to binary, currently dropping first zeros as unnecessary, but put together are necessary" />
-    <option name="LAST_COMMIT_MESSAGE" value="added files, converting to binary, currently dropping first zeros as unnecessary, but put together are necessary" />
+    <MESSAGE value="got some compression to uncompression via binary working, but issues with larger files..." />
+    <option name="LAST_COMMIT_MESSAGE" value="got some compression to uncompression via binary working, but issues with larger files..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -872,8 +876,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/uncompress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="100" column="39" lean-forward="true" selection-start-line="100" selection-start-column="39" selection-end-line="100" selection-end-column="39" />
+        <state relative-caret-position="363">
+          <caret line="137" column="51" lean-forward="false" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -882,8 +886,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/uncompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="144" column="0" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+        <state relative-caret-position="266">
+          <caret line="148" column="0" lean-forward="true" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding />
         </state>
       </provider>

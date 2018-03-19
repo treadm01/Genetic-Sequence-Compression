@@ -98,7 +98,8 @@ public class uncompress {
         mutatingString = mutatingString.substring(symbolsToRead+1);
         //System.out.println(binary);
 
-        byte numberOfSymbols = Byte.parseByte(mutatingString.substring(0, symbolsToRead), 2);
+        // issue where the amount of symbols to read from binary is too much
+        Integer numberOfSymbols = Integer.parseInt(mutatingString.substring(0, symbolsToRead), 2);
 
         //System.out.println(numberOfSymbols);
 
@@ -117,9 +118,7 @@ public class uncompress {
             }
             else {
                 int repre = getNonTerminalFromBinary(mutatingString);
-                System.out.println("huh");
                 r.addValues(repre);
-                System.out.println(r.getValues());
             }
         }
 
@@ -136,11 +135,10 @@ public class uncompress {
         //System.out.println(binary);
         mutatingString = mutatingString.substring(symbolsToRead+1);
         //System.out.println(binary);
-        byte numberOfSymbols = Byte.parseByte(mutatingString.substring(0, symbolsToRead), 2);
+        Integer numberOfSymbols = Integer.parseInt(mutatingString.substring(0, symbolsToRead), 2);
         //System.out.println(numberOfSymbols);
         mutatingString = mutatingString.substring(symbolsToRead);
         //mutatingString = mutatingString;
-        System.out.println(numberOfSymbols);
         return numberOfSymbols;
     }
 

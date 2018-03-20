@@ -146,16 +146,33 @@ public class uncompressTest {
                 "AAATTGAGGATCTCAAAGAGAACATTAAGGCTCTCAGTATCGATCTAACGCCAGACAATA\n" +
                 "TAAAATACTTAGAAAGTATAGTTCCTTTTGACATCGGATTTCCTAATAATTTTATCGTGT\n" +
                 "TAAATTCCTTGACTCAAAAATATGGTACGAATAATGTTTAGATAATTTTTCAGTAATCAA\n"));
+
         String result = u.readFile();
 
-        System.out.println(expected);
-        System.out.println(result);
-
-        u.processBinary(result);
-
-        System.out.println(u.processInput(u.processBinary(result)));
-
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void checkLongerStrings() {
+        uncompress u = new uncompress();
+        compress c = new compress();
+
+        // "AGCTGCAGCT"
+        String originalFile = c.readFile(); // for final check the original string
+
+        List<rule> originalCompressedRules = c.processInput(originalFile);
+        String expected = c.writeFile(originalCompressedRules); // compressed
+
+        String result = u.readFile(); // receiving the compressed
+        assertEquals(expected, result); // check the same compressed stuff is received
+        List<rule> uncompressedRules = u.processBinary(result);
+
+        String uncompressedFile = u.processInput(uncompressedRules);
+
+        System.out.println("going in " + originalFile);
+        System.out.println("coming o " + uncompressedFile);
+
+        assertEquals(originalFile, uncompressedFile);
     }
 
 

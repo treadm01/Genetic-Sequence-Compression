@@ -17,7 +17,6 @@ public class compress {
         String currentValues = fr.getValues();
         while (!currentValues.equals(checkValues)) {
             currentValues = fr.getValues();
-            //System.out.println("current " + currentValues);
             checkRepeat(fr); // check for pattern in first rule
 //
 //            for (rule r : rules) {
@@ -58,7 +57,7 @@ public class compress {
 
             while (line != null) {
                 sb.append(line);
-                sb.append(System.lineSeparator());
+                //sb.append(System.lineSeparator()); //REMOVED AS NEW LINED SYMBOL ADDED WAS MESSING UP.... OK FOR THIS BUT NOT OTHERS
                 line = br.readLine();
             }
             everything = sb.toString();
@@ -194,7 +193,9 @@ public class compress {
         rule firstRule = new rule();
         for (int i = 0; i < input.length(); i++) {
 
-            System.out.println("working through symbol " + i + " of " + input.length());
+            System.out.println(firstRule.getValues());
+
+            //System.out.println("working through symbol " + i + " of " + input.length());
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 //
@@ -213,7 +214,7 @@ public class compress {
 
         }
 
-        reorderRules(firstRule);
+        //reorderRules(firstRule);
 
         // print out the final values
 
@@ -231,6 +232,7 @@ public class compress {
 
     public void checkRepeat(rule fr) {
         if (fr.checkBigram()) {
+            System.out.println("current " + fr.getValues());
             rule newRule = new rule();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
             rules.add(newRule);

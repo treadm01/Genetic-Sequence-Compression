@@ -123,10 +123,14 @@ public class compressTest {
     public void writeFile() {
         compress c = new compress();
     //    System.out.println(c.writeFile(c.processInput("a")));
+        String originalFile = c.readFile();
+        System.out.println("original " + originalFile);
 
-        System.out.println(c.writeFile(c.processInput(c.readFile())));
-
-
+        System.out.println(c.writeFile(c.processInput(originalFile)));
+//
+//        0 → 1 1 A 2 2 G 1 C G T G A
+//        1 → A G                                           AG
+//        2 → T T
 
     }
 

@@ -34,7 +34,7 @@ public class rule {
         // THIS DOES NOT GIVE BACK BIGRAMS FOR GROUPS OF THREE
         // OR EVER THE LAST BIGRAM WHICH WAS THE ORIGINAL INTENTION
         // BUT MESSES UP IF USED ELSEWHERE
-        for (int i = 0; i < values.size() - 2; i++) {
+        for (int i = 0; i < values.size() - 3; i++) { // set to 3 to stop bigrams being formed of any element of the actual final last pair..... breaks where else??
             bigram b = new bigram(values.get(i), values.get(1 + i));
             lstB.add(b);
         }
@@ -52,6 +52,7 @@ public class rule {
         }
         else {
             bigram actualB = new bigram(values.get(values.size() - 2), values.get(values.size() - 1));
+            System.out.println("THE DIRGRAM IS" + actualB.first.getRepresentation() + " " + actualB.second.getRepresentation());
             setCurrentBigram(actualB); // clean up
             // keep list of bigrams instead????
             // YOU NEED TO LOOK INTO PROPER COMPARE AND EQUALS HASHCODE ETC
@@ -65,10 +66,13 @@ public class rule {
 
         for (int i = 0; i < values.size() - 1; i++) {
                 bigram bi = new bigram(values.get(i), values.get(1 + i));
+            System.out.println("bigrams in rule are " + values.get(i).getRepresentation() + " and " + values.get(1 + i).getRepresentation());
                 lstB.add(bi);
         }
 
         bigram ruleBigram = r.currentBigram;
+
+        System.out.println("bigram you are checking is " + r.currentBigram.first.getRepresentation() + " " + r.currentBigram.second.getRepresentation());
 
         for (int i = lstB.size() -1; i > -1; i--) {
 //            System.out.println(lstB.get(i).first.getRepresentation());

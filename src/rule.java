@@ -52,7 +52,6 @@ public class rule {
         }
         else {
             bigram actualB = new bigram(values.get(values.size() - 2), values.get(values.size() - 1));
-            System.out.println("THE DIRGRAM IS" + actualB.first.getRepresentation() + " " + actualB.second.getRepresentation());
             setCurrentBigram(actualB); // clean up
             // keep list of bigrams instead????
             // YOU NEED TO LOOK INTO PROPER COMPARE AND EQUALS HASHCODE ETC
@@ -66,13 +65,12 @@ public class rule {
 
         for (int i = 0; i < values.size() - 1; i++) {
                 bigram bi = new bigram(values.get(i), values.get(1 + i));
-            System.out.println("bigrams in rule are " + values.get(i).getRepresentation() + " and " + values.get(1 + i).getRepresentation());
                 lstB.add(bi);
         }
 
         bigram ruleBigram = r.currentBigram;
 
-        System.out.println("bigram you are checking is " + r.currentBigram.first.getRepresentation() + " " + r.currentBigram.second.getRepresentation());
+        //System.out.println("bigram you are checking is " + r.currentBigram.first.getRepresentation() + " " + r.currentBigram.second.getRepresentation());
 
         for (int i = lstB.size() -1; i > -1; i--) {
 //            System.out.println(lstB.get(i).first.getRepresentation());

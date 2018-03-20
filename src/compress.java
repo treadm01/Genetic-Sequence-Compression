@@ -214,7 +214,8 @@ public class compress {
 
         }
 
-        //reorderRules(firstRule);
+        //TODO reorder rules is messing something up
+        reorderRules(firstRule);
 
         // print out the final values
 
@@ -232,7 +233,6 @@ public class compress {
 
     public void checkRepeat(rule fr) {
         if (fr.checkBigram()) {
-            System.out.println("current " + fr.getValues());
             rule newRule = new rule();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
             rules.add(newRule);
@@ -360,10 +360,10 @@ public class compress {
         // return instead of mutate etc
 
         // can't see how to sort by size of rule as well as frequency....
-        rules = rules.stream()
-                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
-                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
-                .collect(Collectors.toList());
+//        rules = rules.stream()
+//                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
+//                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
+//                .collect(Collectors.toList());
 
         for (rule r : rules) {
             int newNumber = rules.indexOf(r) + 1;

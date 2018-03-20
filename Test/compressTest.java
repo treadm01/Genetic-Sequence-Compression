@@ -127,10 +127,13 @@ public class compressTest {
         System.out.println("original " + originalFile);
 
         System.out.println(c.writeFile(c.processInput(originalFile)));
-//
-//        0 → 1 1 A 2 2 G 1 C G T G A
-//        1 → A G                                           AG
-//        2 → T T
+
+//        0 → 1 C A 2 3 4 3 2 1 5 4 T 3
+//        1 → T T C                                         TTC
+//        2 → A T                                           AT
+//        3 → 5 C                                           GGC
+//        4 → T A                                           TA
+//        5 → G G
 
     }
 

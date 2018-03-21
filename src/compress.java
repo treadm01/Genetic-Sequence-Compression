@@ -193,9 +193,9 @@ public class compress {
         rule firstRule = new rule();
         for (int i = 0; i < input.length(); i++) {
 
-            System.out.println(firstRule.getValues());
+            //System.out.println(firstRule.getValues());
 
-            //System.out.println("working through symbol " + i + " of " + input.length());
+            System.out.println("working through symbol " + i + " of " + input.length());
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 //
@@ -359,6 +359,7 @@ public class compress {
 
         // return instead of mutate etc
 
+        // causing issues somewhere with decompression
         // can't see how to sort by size of rule as well as frequency....
 //        rules = rules.stream()
 //                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))

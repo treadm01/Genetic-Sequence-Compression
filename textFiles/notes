@@ -1,0 +1,17 @@
+ProposalBirkbeck College, U. London19Evaluation of the ProjectProposal (10%15%)Awareness and understanding of related work (10%-20%)Achievement (40%-60%)Spelling, grammar, structure and coherence of the report, ability to present complex or technical material (15%-25%)Other (0%-15%) - WC 2000-3000
+
+level of detail - to computer scientists
+discussion of compression, brief discussion of dna and the relation. Why it is needed.
+possible methods why certain ones aren't chosen, 
+why chosing the chosen method
+discussion of other tools available - testing datasets etc - research etc 
+- how it will be tested, current results, speed as well as compression designated file types, but emphasis on genetic?
+objective - to implement further techniques suggested, hopefully improve, use different techniques if possible
+- check ACT masters page for description
+- what you plan to do, why certain decisions
+- prototypes, weekly plans 
+- compress multiple folder structures, access them via user interface - aim methodology one side the algorithm and benefits plus this side of it.
+... write as review of previous papers
+//- hashset hash map for storing rules, increase speed – steps to further decompress, keep generic?? … edit distance, across files? Multiple documents
+
+

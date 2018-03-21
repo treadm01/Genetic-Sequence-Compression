@@ -117,6 +117,12 @@ public class uncompressTest {
     }
 
     @Test
+    public void getBinaryFromFile() {
+        uncompress u = new uncompress();
+        System.out.println(u.readFile());
+    }
+
+    @Test
     public void readFile() {
         //TODO working for smaller groups but not larger, changed the byte parse to int... in uncompress
         uncompress u = new uncompress();

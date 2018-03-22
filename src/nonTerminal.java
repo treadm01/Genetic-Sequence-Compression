@@ -8,6 +8,7 @@ import java.util.List;
 public class nonTerminal extends symbol {
 
     static Integer ruleNumber = 0;
+    Boolean sorted = false;
     Integer number;
     Integer useNumber = 0;
     Integer ruleSize;
@@ -24,7 +25,7 @@ public class nonTerminal extends symbol {
         ruleNumber++;
     }
 
-    public nonTerminal(int i) {//String s) {
+    public nonTerminal(int i) {
         number = i;
         this.representation = number.toString();
     }
@@ -41,11 +42,21 @@ public class nonTerminal extends symbol {
 
     // adding two values from a found bigram
     public void addValues(bigram b) {
+
+        if (b.first instanceof nonTerminal) {
+            ((nonTerminal) b.first).useNumber++;
+        }
+
+        if (b.second instanceof nonTerminal) {
+            ((nonTerminal) b.second).useNumber++;
+        }
+
         values.add(b.first);
         values.add(b.second);
         setCurrentBigram(b); // set the bigram when creating a rule from one (too cheaty?)
     }
 
+    // only used by decompress??
     public void addValues(Integer i) {
         nonTerminal nt = new nonTerminal(i);
         values.add(nt); // only just added this line after uncompressing from binary, check how this
@@ -131,9 +142,18 @@ public class nonTerminal extends symbol {
                     lstB.get(i-1).second = new terminal("!");
                 }
 
+                if (values.get(i+1) instanceof nonTerminal) {
+                    ((nonTerminal) values.get(i+1)).useNumber--;
+                }
+
+                if (values.get(i) instanceof nonTerminal) {
+                    ((nonTerminal) values.get(i)).useNumber--;
+                }
+
                 values.remove(i+1);
                 values.remove(i);
                 values.add(i, r);
+                r.useNumber++;
             }
         }
     }
@@ -152,18 +172,21 @@ public class nonTerminal extends symbol {
 
     @Override
     public boolean equals(Object o) {
-        nonTerminal t = null;
-        if (!(o instanceof nonTerminal) && !(o instanceof terminal)) {
-            throw new ClassCastException("Must be nontermin. Received " + o.getClass());
-        }
-        else if (o instanceof terminal) {
-            return false;
-        }
-        else {
-            t = (nonTerminal) o;
-        }
 
-        return  (t.getRepresentation().equals(this.getRepresentation()));
+        if (o == this) {return true;}
+        else {return false;}
+//        //nonTerminal t = null;
+//        if (!(o instanceof nonTerminal) && !(o instanceof terminal)) {
+//            throw new ClassCastException("Must be nontermin. Received " + o.getClass());
+//        }
+//        else if (o instanceof terminal) {
+//            return false;
+//        }
+//        else {
+//            t = (nonTerminal) o;
+//        }
+//
+//        return  (t.getRepresentation().equals(this.getRepresentation()));
     }
 
     public bigram getCurrentBigram() {

@@ -94,7 +94,7 @@ public class compressTest {
     public void reOrderRules() {
         System.out.println();
         c = new compress();
-        c.processInput("abcabdabcabd");
+        c.processInput("abcabdabcabdabcabdabcabdabcabdabcabdabcabdabcabd");
     }
 
     @Test

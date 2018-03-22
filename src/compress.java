@@ -197,7 +197,7 @@ public class compress {
 
             //System.out.println(firstRule.getValues());
 
-            //System.out.println("working through symbol " + i + " of " + input.length());
+            System.out.println("working through symbol " + i + " of " + input.length());
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 //
@@ -214,7 +214,7 @@ public class compress {
 
             threeRule(firstNTRule);
 ////
-//            System.out.println(firstRule.getValues());
+//            System.out.println(firstNTRule.getValues());
 //            for (nonTerminal r : NTrules) {
 //                System.out.println(r.getValues());
 //                System.out.println("use number " + r.useNumber);
@@ -233,9 +233,9 @@ public class compress {
         finalRules.add(firstNTRule);
         for (nonTerminal r : NTrules) {
             finalRules.add(r);
-            System.out.println(r.getValues());
-           // System.out.println("use number " + r.useNumber);
-//            System.out.println(r.useNumber);
+            System.out.print(r.getValues());
+            System.out.print(" - use number " + r.useNumber);
+            System.out.println();
         }
 
         return finalRules;
@@ -330,7 +330,7 @@ public class compress {
             // rule with the get all bigrams method.....
             if (fr.getCurrentBigram().equals(r.getCurrentBigram()) && r.values.size() == 2) {
                 fr.updateRule(r);
-                r.useNumber++;
+                //r.useNumber++;
             }
             else if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
              //   System.out.println(fr.getCurrentBigram().first.getRepresentation());
@@ -356,17 +356,6 @@ public class compress {
         List<nonTerminal> completeRules = new ArrayList<>();
         completeRules.add(fr);
         completeRules.addAll(NTrules);
-//
-//        for (rule r : rules) {
-//            r.ruleSize = r.values.size();
-//            for (rule r2 : completeRules) {
-//                for (symbol s : r2.values) {
-//                    if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
-//                        r.useNumber++;
-//                    }
-//                }
-//            }
-//        }
 
         // return instead of mutate etc
 
@@ -374,14 +363,14 @@ public class compress {
         // can't see how to sort by size of rule as well as frequency....
 
 //        System.out.println("unsorted");
-//        for (rule r : completeRules) {
+//        for (nonTerminal r : completeRules) {
 //            System.out.println(r.getValues());
 //        }
 
-//        rules = rules.stream()
-//                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
-//                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
-//                .collect(Collectors.toList());
+        NTrules = NTrules.stream()
+                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
+                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
+                .collect(Collectors.toList());
 
 
 //        System.out.println("sorted");
@@ -394,7 +383,7 @@ public class compress {
             int newNumber = NTrules.indexOf(r) + 1;
             for (nonTerminal r2 : completeRules) {
                 for (symbol s : r2.values) {
-                    if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
+                    if (s.equals(r)) {
                         s.representation = String.valueOf(newNumber);
                     }
                 }

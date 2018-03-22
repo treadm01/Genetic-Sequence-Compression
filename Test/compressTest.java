@@ -84,10 +84,10 @@ public class compressTest {
 
         System.out.println();
         c = new compress();
-        c.processInput(c.readFile());
+       // c.processInput(c.readFile());
 
 
-        //c.processInput("Sequitur is a method for inferring compositional hierarchies from strings. It detects repetition and factors it out of the string by f"); // this is the last time# of rules match
+//        c.processInput("Sequitur is a method for inferring compositional hierarchies from strings. It detects repetition and factors it out of the string by f"); // this is the last time# of rules match
     }
 
     @Test

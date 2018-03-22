@@ -10,7 +10,7 @@ public class uncompressTest {
     public void processInput() {
         String expected = "abcdbc";
         compress c = new compress();
-        List<rule> rules = c.processInput(expected);
+        List<nonTerminal> rules = c.processInput(expected);
         uncompress u = new uncompress();
         assertEquals(expected, u.processInput(rules));
 
@@ -166,12 +166,12 @@ public class uncompressTest {
         // "AGCTGCAGCT"
         String originalFile = c.readFile(); // for final check the original string
 
-        List<rule> originalCompressedRules = c.processInput(originalFile);
+        List<nonTerminal> originalCompressedRules = c.processInput(originalFile);
         String expected = c.writeFile(originalCompressedRules); // compressed
 
         String result = u.readFile(); // receiving the compressed
         assertEquals(expected, result); // check the same compressed stuff is received
-        List<rule> uncompressedRules = u.processBinary(result);
+        List<nonTerminal> uncompressedRules = u.processBinary(result);
 
         String uncompressedFile = u.processInput(uncompressedRules);
 
@@ -192,10 +192,9 @@ public class uncompressTest {
         c.writeFile(c.processInput(expected));
 
         String binaryFromFile = u.readFile();
-        List<rule> processedFromBinary = u.processBinary(binaryFromFile);
+        List<nonTerminal> processedFromBinary = u.processBinary(binaryFromFile);
         String answer = u.processInput(processedFromBinary);
 
         assertEquals(expected, answer);
-
     }
 }

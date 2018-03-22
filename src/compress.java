@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
  * and how to access the values stored in the rules?
  */
 public class compress {
-    List<rule> rules = new ArrayList<>();
+    //List<rule> rules = new ArrayList<>();
+    List<nonTerminal> NTrules = new ArrayList<>();
 
-    public void threeRule(rule fr) {
+    public void threeRule(nonTerminal fr) {
         String checkValues = "";
         String currentValues = fr.getValues();
         while (!currentValues.equals(checkValues)) {
@@ -71,14 +72,14 @@ public class compress {
         return everything;
     }
 
-    public String writeFile(List<rule> finalRules) {
+    public String writeFile(List<nonTerminal> finalRules) {
         System.out.println("writing file");
         String fullBinary = "";
 
         int largestRuleSize = Integer.toBinaryString(finalRules.size()).length();
         System.out.println(largestRuleSize);
 
-        for (rule r : finalRules) {
+        for (nonTerminal r : finalRules) {
             String binaryRuleLength = "";
             String ruleInBinary = Integer.toBinaryString(r.values.size());
             for (int i = 0; i < ruleInBinary.length(); i++) {
@@ -188,9 +189,10 @@ public class compress {
     }
 
     // receives a string of whatever and works on it char by char
-    public List<rule> processInput(String input) {
-        rule.ruleNumber = 0;
-        rule firstRule = new rule();
+    public List<nonTerminal> processInput(String input) {
+        nonTerminal.ruleNumber = 0;
+        nonTerminal firstNTRule = new nonTerminal();
+
         for (int i = 0; i < input.length(); i++) {
 
             //System.out.println(firstRule.getValues());
@@ -203,55 +205,55 @@ public class compress {
 //                ch = "->";
 //            }
 
-            firstRule.addValues(ch);
+            firstNTRule.addValues(ch);
 
 //            if (firstRule.values.size() >=4) {
 //                bigram actualB = new bigram(firstRule.values.get(firstRule.values.size() - 2), firstRule.values.get(firstRule.values.size() - 1));
 //                firstRule.setCurrentBigram(actualB); // clean up
 //            }
 
-            threeRule(firstRule);
-
-            System.out.println(firstRule.getValues());
-            for (rule r : rules) {
-                System.out.println(r.getValues());
-                System.out.println("use number " + r.useNumber);
-//            System.out.println(r.useNumber);
-            }
+            threeRule(firstNTRule);
+////
+//            System.out.println(firstRule.getValues());
+//            for (nonTerminal r : NTrules) {
+//                System.out.println(r.getValues());
+//                System.out.println("use number " + r.useNumber);
+////            System.out.println(r.useNumber);
+//            }
 
         }
 
         //TODO reorder rules is messing something up
-        reorderRules(firstRule);
+        reorderRules(firstNTRule);
 
         // print out the final values
 
-        List<rule> finalRules = new ArrayList<>();
-        System.out.println(firstRule.getValues());
-        finalRules.add(firstRule);
-        for (rule r : rules) {
+        List<nonTerminal> finalRules = new ArrayList<>();
+        System.out.println(firstNTRule.getValues());
+        finalRules.add(firstNTRule);
+        for (nonTerminal r : NTrules) {
             finalRules.add(r);
             System.out.println(r.getValues());
-            System.out.println("use number " + r.useNumber);
+           // System.out.println("use number " + r.useNumber);
 //            System.out.println(r.useNumber);
         }
 
         return finalRules;
     }
 
-    public void checkRepeat(rule fr) {
+    public void checkRepeat(nonTerminal fr) {
         if (fr.checkBigram()) {
-            rule newRule = new rule();
+            nonTerminal newRule = new nonTerminal();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
-            rules.add(newRule);
+            NTrules.add(newRule);
             fr.updateRule(newRule);
         }
     }
 
-    public void ruleUtility(rule fr){
+    public void ruleUtility(nonTerminal fr){
         List<symbol> allSymbols = new ArrayList<>();
         allSymbols.addAll(fr.values);
-        for (rule r : rules) {
+        for (nonTerminal r : NTrules) {
             allSymbols.addAll(r.values);
         }
 
@@ -280,38 +282,38 @@ public class compress {
         // BUT SHOULD PROBABLY UPDATE RULE NUMBERS ETC AS CHANGED OCCUR
 
         // remove the single rules
-        List<rule> removalList = new ArrayList<>();
+        List<nonTerminal> removalList = new ArrayList<>();
 
         for (symbol s : once) {
-            for (rule r : rules) {
+            for (nonTerminal r : NTrules) {
 
                 if (r.values.contains(s)) {
                     int index = 0;
-                    for (rule rx : rules) {
+                    for (nonTerminal rx : NTrules) {
                         if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.getRepresentation()))) {
-                            index = rules.indexOf(rx);
+                            index = NTrules.indexOf(rx);
                         }
                     }
 
                     r.values.addAll(r.values.indexOf(s),
-                            rules.get(index).values);
+                            NTrules.get(index).values);
                     //checkRepeat(r); check for repeat in rule????
                     r.values.remove(s);
 
-                    removalList.add(rules.get(index));
+                    removalList.add(NTrules.get(index));
                 }
             }
         }
 
-        for (rule r : removalList) {
-            rules.remove(r);
+        for (nonTerminal r : removalList) {
+            NTrules.remove(r);
         }
     }
 
     // took firstrule out of rules to make this run easier but could have other issues
-    public void existingBigram(rule fr) {
-        List<rule> newRuleLst = new ArrayList<>();
-        for (rule r : rules) {
+    public void existingBigram(nonTerminal fr) {
+        List<nonTerminal> newRuleLst = new ArrayList<>();
+        for (nonTerminal r : NTrules) {
             bigram actualB = new bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
             r.setCurrentBigram(actualB); // clean up
 //            System.out.println("BREAK");
@@ -333,7 +335,7 @@ public class compress {
             else if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
              //   System.out.println(fr.getCurrentBigram().first.getRepresentation());
               //  System.out.println(fr.getCurrentBigram().second.getRepresentation());
-                rule newRule = new rule();
+                nonTerminal newRule = new nonTerminal();
                 newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
                 newRuleLst.add(newRule);
                 fr.updateRule(newRule);
@@ -344,16 +346,16 @@ public class compress {
             }
         }
 
-        for (rule r : newRuleLst) {
-            rules.add(r);
+        for (nonTerminal r : newRuleLst) {
+            NTrules.add(r);
         }
     }
 
-    public List<rule> reorderRules(rule fr) {
+    public List<nonTerminal> reorderRules(nonTerminal fr) {
 
-        List<rule> completeRules = new ArrayList<>();
+        List<nonTerminal> completeRules = new ArrayList<>();
         completeRules.add(fr);
-        completeRules.addAll(rules);
+        completeRules.addAll(NTrules);
 //
 //        for (rule r : rules) {
 //            r.ruleSize = r.values.size();
@@ -388,16 +390,16 @@ public class compress {
 //            System.out.println(r.getValues());
 //        }
 
-        for (rule r : rules) {
-            int newNumber = rules.indexOf(r) + 1;
-            for (rule r2 : completeRules) {
+        for (nonTerminal r : NTrules) {
+            int newNumber = NTrules.indexOf(r) + 1;
+            for (nonTerminal r2 : completeRules) {
                 for (symbol s : r2.values) {
                     if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
                         s.representation = String.valueOf(newNumber);
                     }
                 }
             }
-            r.setRuleNumber(rules.indexOf(r) + 1);
+            r.setRuleNumber(NTrules.indexOf(r) + 1);
         }
 
         return completeRules;

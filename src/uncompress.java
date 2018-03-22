@@ -12,14 +12,14 @@ public class uncompress {
     //TODO save to file and retrieve in a way that objects are known to be terminal, non terminal, rule
     // from there can start to compare
 
-    public String getOutput(rule r, List<rule> compressedRule, String soFar) {
+    public String getOutput(nonTerminal r, List<nonTerminal> compressedRule, String soFar) {
         String uncompressed = soFar;
         for (symbol s : r.values) {
             if (s instanceof terminal) {
                 uncompressed += s.getRepresentation();
             }
             else {
-                for (rule rx : compressedRule) {
+                for (nonTerminal rx : compressedRule) {
                     if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.getRepresentation()))) {
                         uncompressed = getOutput(rx, compressedRule, uncompressed);
                     }
@@ -29,9 +29,9 @@ public class uncompress {
         return uncompressed;
     }
 
-    public String processInput(List<rule> compressedRule) {
+    public String processInput(List<nonTerminal> compressedRule) {
 
-        rule firstRule = compressedRule.get(0);
+        nonTerminal firstRule = compressedRule.get(0);
         String uncompressed = "";
 
         uncompressed += getOutput(firstRule, compressedRule, uncompressed);
@@ -58,7 +58,7 @@ public class uncompress {
     }
 
     // remove every 7
-    public List<rule> processBinary(String binary) {
+    public List<nonTerminal> processBinary(String binary) {
 
         // first thing to do is remove wasted seventh bits
         String removedSevens = "";
@@ -68,8 +68,8 @@ public class uncompress {
             }
         }
 
-        List<rule> buildList = new ArrayList<>();
-        rule.ruleNumber = 0; // shouldn't have to do this
+        List<nonTerminal> buildList = new ArrayList<>();
+        nonTerminal.ruleNumber = 0; // shouldn't have to do this
 
         mutatingString = removedSevens;
 
@@ -78,15 +78,15 @@ public class uncompress {
             System.out.println(mutatingString);
         }
 
-        for (rule r : buildList) {
+        for (nonTerminal r : buildList) {
             System.out.println(r.getValues());
         }
 
         return buildList;
     }
 
-    public rule getRuleFromBinary(String bnary) {
-        rule r = new rule();
+    public nonTerminal getRuleFromBinary(String bnary) {
+        nonTerminal r = new nonTerminal();
         //System.out.println(binary);
 
         int symbolsToRead = 0;

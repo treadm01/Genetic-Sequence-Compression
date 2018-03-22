@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Test/uncompressTest.java" afterPath="$PROJECT_DIR$/Test/uncompressTest.java" />
       <change beforePath="$PROJECT_DIR$/src/compress.java" afterPath="$PROJECT_DIR$/src/compress.java" />
       <change beforePath="$PROJECT_DIR$/textFiles/compressed.bin" afterPath="$PROJECT_DIR$/textFiles/compressed.bin" />
     </list>
@@ -51,23 +50,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uncompressTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="uncompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/uncompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="196" column="0" lean-forward="true" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
+            <state relative-caret-position="54">
+              <caret line="170" column="29" lean-forward="false" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="compress.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="compress.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="369" column="0" lean-forward="true" selection-start-line="369" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
+            <state relative-caret-position="302">
+              <caret line="299" column="42" lean-forward="true" selection-start-line="299" selection-start-column="42" selection-end-line="299" selection-end-column="42" />
               <folding>
-                <marker date="1521745164461" expanded="true" signature="5649:6177" ph="..." />
+                <element signature="method#threeRule#0;class#compress#0" expanded="false" />
+                <element signature="method#readFile#0;class#compress#0" expanded="false" />
+                <element signature="method#writeFile#0;class#compress#0" expanded="false" />
+                <element signature="method#processInput#0;class#compress#0" expanded="false" />
+                <element signature="method#printRules#0;class#compress#0" expanded="false" />
+                <element signature="method#checkRepeat#0;class#compress#0" expanded="false" />
+                <marker date="1521749170075" expanded="true" signature="5749:6277" ph="..." />
               </folding>
             </state>
           </provider>
@@ -126,7 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ruleut</find>
       <find>getall</find>
       <find>exi</find>
       <find>process</find>
@@ -154,8 +158,9 @@
       <find>equal</find>
       <find>setrule</find>
       <find>reorder</find>
-      <find>printl</find>
       <find>reor</find>
+      <find>reo</find>
+      <find>printl</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -273,7 +278,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.uncompressTest.testCompressUncompress">
+  <component name="RunManager" selected="JUnit.uncompressTest.checkLongerStrings">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -464,8 +469,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.uncompressTest.testCompressUncompress" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.uncompressTest.checkLongerStrings" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.uncompressTest.checkLongerStrings" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.uncompressTest.testCompressUncompress" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.uncompressTest.comparisonCheck" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.compressTest.reOrderRules" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.uncompressTest.readFile" />
@@ -519,7 +524,7 @@
       <workItem from="1521453193905" duration="30870000" />
       <workItem from="1521536693351" duration="9886000" />
       <workItem from="1521566150875" duration="9651000" />
-      <workItem from="1521722970915" duration="11372000" />
+      <workItem from="1521722970915" duration="13944000" />
     </task>
     <task id="LOCAL-00001" summary="trying to split up to pairs and check for repeats">
       <created>1517774688169</created>
@@ -752,43 +757,50 @@
       <option name="project" value="LOCAL" />
       <updated>1521743962173</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="need to clean up and speed up code">
+      <created>1521745187562</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1521745187562</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 18h 43m 38s.xml">
+    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 19h 55m 45s.xml">
       <configuration name="uncompressTest.checkLongerStrings" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 18h 44m 30s.xml">
+    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 19h 56m 34s.xml">
       <configuration name="uncompressTest.checkLongerStrings" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 18h 45m 36s.xml">
+    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 19h 57m 11s.xml">
       <configuration name="uncompressTest.checkLongerStrings" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 18h 45m 50s.xml">
+    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 19h 57m 29s.xml">
       <configuration name="uncompressTest.checkLongerStrings" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_comparisonCheck - 2018.03.22 at 18h 43m 02s.xml">
-      <configuration name="uncompressTest.comparisonCheck" configurationId="JUnit" />
+    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 19h 57m 52s.xml">
+      <configuration name="uncompressTest.checkLongerStrings" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 18h 43m 29s.xml">
+    <history-entry file="uncompressTest_checkLongerStrings - 2018.03.22 at 19h 58m 51s.xml">
+      <configuration name="uncompressTest.checkLongerStrings" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 19h 25m 55s.xml">
       <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 18h 54m 17s.xml">
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 19h 31m 06s.xml">
       <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 18h 57m 53s.xml">
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 19h 44m 38s.xml">
       <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 18h 58m 31s.xml">
-      <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 18h 59m 27s.xml">
+    <history-entry file="uncompressTest_testCompressUncompress - 2018.03.22 at 19h 55m 36s.xml">
       <configuration name="uncompressTest.testCompressUncompress" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135184000" />
+    <option name="totallyTimeSpent" value="137756000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -826,7 +838,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying to implement finding matches and updating symbols" />
     <MESSAGE value="getting there, can do some of the functionality of sequitur, need to clean up code" />
     <MESSAGE value="code needs even more cleaning but utility rule seems to work in one instance" />
     <MESSAGE value="rule utility removing rules used more than once" />
@@ -851,7 +862,8 @@
     <MESSAGE value="going to try and remove rule and use terminal only" />
     <MESSAGE value="removed rules just using non-terminals. need to utilise increment decrement of rule number" />
     <MESSAGE value="sorted rules" />
-    <option name="LAST_COMMIT_MESSAGE" value="sorted rules" />
+    <MESSAGE value="need to clean up and speed up code" />
+    <option name="LAST_COMMIT_MESSAGE" value="need to clean up and speed up code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -993,21 +1005,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/compress.java">
+    <entry file="file://$PROJECT_DIR$/Test/uncompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="369" column="0" lean-forward="true" selection-start-line="369" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
-          <folding>
-            <marker date="1521745164461" expanded="true" signature="5649:6177" ph="..." />
-          </folding>
+        <state relative-caret-position="54">
+          <caret line="170" column="29" lean-forward="false" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/uncompressTest.java">
+    <entry file="file://$PROJECT_DIR$/src/compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="196" column="0" lean-forward="true" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="302">
+          <caret line="299" column="42" lean-forward="true" selection-start-line="299" selection-start-column="42" selection-end-line="299" selection-end-column="42" />
+          <folding>
+            <element signature="method#threeRule#0;class#compress#0" expanded="false" />
+            <element signature="method#readFile#0;class#compress#0" expanded="false" />
+            <element signature="method#writeFile#0;class#compress#0" expanded="false" />
+            <element signature="method#processInput#0;class#compress#0" expanded="false" />
+            <element signature="method#printRules#0;class#compress#0" expanded="false" />
+            <element signature="method#checkRepeat#0;class#compress#0" expanded="false" />
+            <marker date="1521749170075" expanded="true" signature="5749:6277" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

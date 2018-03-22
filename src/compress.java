@@ -13,44 +13,37 @@ public class compress {
     //List<rule> rules = new ArrayList<>();
     List<nonTerminal> NTrules = new ArrayList<>();
 
-    public void threeRule(nonTerminal fr) {
+
+    /**
+     * main three rules that repeatedly run over the symbol stream
+     * to find hierarchical rules
+     * @param firstRule
+     */
+    public void threeRule(nonTerminal firstRule) {
+        //TODO implement this without String
         String checkValues = "";
-        String currentValues = fr.getValues();
+        String currentValues = firstRule.getValues();
+
+        // repeat the methods until nothing changes/needs changing
         while (!currentValues.equals(checkValues)) {
-            currentValues = fr.getValues();
-            checkRepeat(fr); // check for pattern in first rule
-//
-//            for (rule r : rules) {
-//                System.out.println(r.getValues());
-//            }
+            currentValues = firstRule.getValues();
+            checkRepeat(firstRule); // check for pattern in first rule
 
+            // if bigram in another rule, update first rule again
+            existingBigram(firstRule);
 
+            ruleUtility(firstRule);// remove any rules that are only used once
 
-//            if (fr.values.size() > 4) {
-//                System.out.println(fr.getCurrentBigram().first.getRepresentation());
-//                System.out.println(fr.getCurrentBigram().second.getRepresentation());
-//            }
-            // if bigram in another rule update first rule again
-            existingBigram(fr);
-//
-//            for (rule r : rules) {
-//                System.out.println(r.getValues());
-//            }
-
-
-
-            ruleUtility(fr);
-
-            checkValues = fr.getValues();
-            //System.out.println("check " + checkValues);
+            checkValues = firstRule.getValues(); // assign new first rule to the check
         }
-
-//        for (rule r : rules) {
-//            r.setCurrentBigram(new bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1)));
-//        }
     }
 
+    /**
+     * takes file and reads it in as a String
+     * @return
+     */
     public String readFile() {
+        //TODO improve implementation
         String everything = "";
         try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/GeneticCompression/textFiles/test.txt"))) {
             StringBuilder sb = new StringBuilder();
@@ -72,7 +65,14 @@ public class compress {
         return everything;
     }
 
+    /**
+     * takes the final rule list and converts it into a binary string,
+     * which is then converted into bytes and written to bin file
+     * @param finalRules
+     * @return
+     */
     public String writeFile(List<nonTerminal> finalRules) {
+        //TODO break this up into process binary and separate write file methods
         System.out.println("writing file");
         String fullBinary = "";
 
@@ -188,59 +188,60 @@ public class compress {
 
     }
 
-    // receives a string of whatever and works on it char by char
+
+    /**
+     * Main method to take string of the input, and run through the symbol,
+     * currently holds re-order and prints out the rules at the end, returns the
+     * list too
+     * @param input
+     * @return
+     */
     public List<nonTerminal> processInput(String input) {
+        //TODO decide where reorder will go, manage where things are created
         nonTerminal.ruleNumber = 0;
         nonTerminal firstNTRule = new nonTerminal();
 
         for (int i = 0; i < input.length(); i++) {
+            //System.out.println("working through symbol " + i + " of " + input.length());
 
-            //System.out.println(firstRule.getValues());
-
-            System.out.println("working through symbol " + i + " of " + input.length());
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
-//
-//            if (ch.equals("\n")) {
-//                ch = "->";
-//            }
-
-            firstNTRule.addValues(ch);
-
-//            if (firstRule.values.size() >=4) {
-//                bigram actualB = new bigram(firstRule.values.get(firstRule.values.size() - 2), firstRule.values.get(firstRule.values.size() - 1));
-//                firstRule.setCurrentBigram(actualB); // clean up
-//            }
+            firstNTRule.addValues(ch); // created a new terminal,... shouldn't be hidden like that
 
             threeRule(firstNTRule);
-////
-//            System.out.println(firstNTRule.getValues());
-//            for (nonTerminal r : NTrules) {
-//                System.out.println(r.getValues());
-//                System.out.println("use number " + r.useNumber);
-////            System.out.println(r.useNumber);
-//            }
-
         }
 
-        //TODO reorder rules is messing something up
+        // reorder rules here after they've been formed... improves compression
         reorderRules(firstNTRule);
 
         // print out the final values
-
         List<nonTerminal> finalRules = new ArrayList<>();
-        System.out.println(firstNTRule.getValues());
         finalRules.add(firstNTRule);
         for (nonTerminal r : NTrules) {
             finalRules.add(r);
-            System.out.print(r.getValues());
-            System.out.print(" - use number " + r.useNumber);
-            System.out.println();
         }
+
+        // print out rules
+        printRules(finalRules);
 
         return finalRules;
     }
 
+    /**
+     * small method to print out rules
+     * @param r
+     */
+    public void printRules(List<nonTerminal> r) {
+        for (nonTerminal nt : r) {
+            System.out.println(nt.getValues());
+        }
+    }
+
+    /**
+     * using the most recent digram of main input, check for
+     * repeats through out the grammar
+     * @param fr
+     */
     public void checkRepeat(nonTerminal fr) {
         if (fr.checkBigram()) {
             nonTerminal newRule = new nonTerminal();
@@ -250,62 +251,42 @@ public class compress {
         }
     }
 
+    /**
+     * if a rule is only used once then remove it and... replace
+     * with what is linked to.
+     * @param fr
+     */
     public void ruleUtility(nonTerminal fr){
-        List<symbol> allSymbols = new ArrayList<>();
-        allSymbols.addAll(fr.values);
-        for (nonTerminal r : NTrules) {
-            allSymbols.addAll(r.values);
-        }
+        //TODO too many loops, needs cleaning
 
-        List<symbol> ntList = allSymbols.stream()
+        // get all symbols that are nonTerminal and are only used once
+        List<symbol> ntList = NTrules.stream()
                 .filter(x -> x instanceof nonTerminal)
+                .filter(x -> x.useNumber == 1)
                 .collect(Collectors.toList());
 
-        List<symbol> once = new ArrayList<>();
-        List<symbol> onceNoMore = new ArrayList<>();
-
-        // needs to handle never used rules not sure it does actually
-        for (symbol s : ntList) {
-            if (once.contains(s)){ // not the same objects....
-                onceNoMore.add(s);
-                once.remove(s);
-            }
-
-            if (!onceNoMore.contains(s)) {
-                once.add(s);
-            }
-        }
-
-        //NEED TO GET THE PROPER INDEX OF THE RULE, AS WHEN THEY ARE REMOVED
-        // VALUE DOESN'T CHANGE. YOU GET INDEX FROM ORIGINAL CREATION INDEX.
-        // THINK IT POSSIBLE TO HACK OUT
-        // BUT SHOULD PROBABLY UPDATE RULE NUMBERS ETC AS CHANGED OCCUR
-
-        // remove the single rules
-        List<nonTerminal> removalList = new ArrayList<>();
-
-        for (symbol s : once) {
-            for (nonTerminal r : NTrules) {
-
-                if (r.values.contains(s)) {
-                    int index = 0;
+        // TODO this is a list of rules that occur only once and you're checking everything to find them
+        // TODO you should be able ti find out where they are
+        for (symbol s : ntList) { // for every nonterminal used only once
+            //TODO this should cover the first rule, ok at the moment but... if a rule that is used only once is in the first one it will be missed
+            for (nonTerminal r : NTrules) { // for other rules check only occuring once
+                if (r.values.contains(s)) { // if the value contains the rule
+                    int index = 0; //TODO not sure how you're getting this index or why, cant use rule number?
                     for (nonTerminal rx : NTrules) {
                         if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.getRepresentation()))) {
                             index = NTrules.indexOf(rx);
                         }
                     }
-
                     r.values.addAll(r.values.indexOf(s),
                             NTrules.get(index).values);
-                    //checkRepeat(r); check for repeat in rule????
                     r.values.remove(s);
 
-                    removalList.add(NTrules.get(index));
                 }
             }
         }
 
-        for (nonTerminal r : removalList) {
+        // remove the rules that had only one instance
+        for (symbol r : ntList) {
             NTrules.remove(r);
         }
     }
@@ -367,10 +348,10 @@ public class compress {
 //            System.out.println(r.getValues());
 //        }
 
-//        NTrules = NTrules.stream()
-//                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
-//                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
-//                .collect(Collectors.toList());
+        NTrules = NTrules.stream()
+                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
+                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
+                .collect(Collectors.toList());
 
 
 //        System.out.println("sorted");

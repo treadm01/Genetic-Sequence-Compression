@@ -367,10 +367,10 @@ public class compress {
 //            System.out.println(r.getValues());
 //        }
 
-        NTrules = NTrules.stream()
-                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
-                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
-                .collect(Collectors.toList());
+//        NTrules = NTrules.stream()
+//                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
+//                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
+//                .collect(Collectors.toList());
 
 
 //        System.out.println("sorted");

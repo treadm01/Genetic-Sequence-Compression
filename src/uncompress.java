@@ -42,7 +42,7 @@ public class uncompress {
     public String readFile() {
         String everything = "";
         byte[] fileContents = new byte[0];
-        Path path = Paths.get("/home/tread/IdeaProjects/GeneticCompression/textFiles/testtext.txt");
+        Path path = Paths.get("/home/tread/IdeaProjects/GeneticCompression/textFiles/compressed.bin");
         try {
             fileContents = Files.readAllBytes(path);
         } catch (IOException e) {

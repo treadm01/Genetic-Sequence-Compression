@@ -195,7 +195,7 @@ public class compress {
 
             //System.out.println(firstRule.getValues());
 
-            System.out.println("working through symbol " + i + " of " + input.length());
+            //System.out.println("working through symbol " + i + " of " + input.length());
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 //
@@ -212,6 +212,13 @@ public class compress {
 
             threeRule(firstRule);
 
+            System.out.println(firstRule.getValues());
+            for (rule r : rules) {
+                System.out.println(r.getValues());
+                System.out.println("use number " + r.useNumber);
+//            System.out.println(r.useNumber);
+            }
+
         }
 
         //TODO reorder rules is messing something up
@@ -225,6 +232,7 @@ public class compress {
         for (rule r : rules) {
             finalRules.add(r);
             System.out.println(r.getValues());
+            System.out.println("use number " + r.useNumber);
 //            System.out.println(r.useNumber);
         }
 
@@ -320,6 +328,7 @@ public class compress {
             // rule with the get all bigrams method.....
             if (fr.getCurrentBigram().equals(r.getCurrentBigram()) && r.values.size() == 2) {
                 fr.updateRule(r);
+                r.useNumber++;
             }
             else if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
              //   System.out.println(fr.getCurrentBigram().first.getRepresentation());
@@ -345,26 +354,39 @@ public class compress {
         List<rule> completeRules = new ArrayList<>();
         completeRules.add(fr);
         completeRules.addAll(rules);
-
-        for (rule r : rules) {
-            r.ruleSize = r.values.size();
-            for (rule r2 : completeRules) {
-                for (symbol s : r2.values) {
-                    if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
-                        r.useNumber++;
-                    }
-                }
-            }
-        }
+//
+//        for (rule r : rules) {
+//            r.ruleSize = r.values.size();
+//            for (rule r2 : completeRules) {
+//                for (symbol s : r2.values) {
+//                    if (s.getRepresentation().equals(r.getRuleNumber().toString())) {
+//                        r.useNumber++;
+//                    }
+//                }
+//            }
+//        }
 
         // return instead of mutate etc
 
         // causing issues somewhere with decompression
         // can't see how to sort by size of rule as well as frequency....
+
+//        System.out.println("unsorted");
+//        for (rule r : completeRules) {
+//            System.out.println(r.getValues());
+//        }
+
 //        rules = rules.stream()
 //                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
 //                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
 //                .collect(Collectors.toList());
+
+
+//        System.out.println("sorted");
+//        System.out.println(fr.getValues());
+//        for (rule r : rules) {
+//            System.out.println(r.getValues());
+//        }
 
         for (rule r : rules) {
             int newNumber = rules.indexOf(r) + 1;
@@ -375,7 +397,7 @@ public class compress {
                     }
                 }
             }
-            r.setRuleNumber(newNumber);
+            r.setRuleNumber(rules.indexOf(r) + 1);
         }
 
         return completeRules;

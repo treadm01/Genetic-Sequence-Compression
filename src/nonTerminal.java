@@ -1,14 +1,25 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * non terminal regular symbols that don't go anywhere
  */
 
 public class nonTerminal extends symbol {
+
+    static Integer ruleNumber = 0;
+    Integer number;
+    Integer useNumber = 0;
+    Integer ruleSize;
+    public List<symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
+    bigram currentBigram;
+
     /**
      * the actual symbol
      * @param s
      */
     public nonTerminal(String s) {
-        this.representation = s;
+        this.representation = ruleNumber;
     }
 
     /**

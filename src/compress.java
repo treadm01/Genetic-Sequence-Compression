@@ -291,42 +291,37 @@ public class compress {
         }
     }
 
-    // took firstrule out of rules to make this run easier but could have other issues
+    /**
+     * check through the rules created for patterns that have already occurred.
+     * Updates those rules with new non terminals and updates the original rule
+     * from existing rules (rather than create a new one)
+     * @param fr
+     */
     public void existingBigram(nonTerminal fr) {
+        //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
         List<nonTerminal> newRuleLst = new ArrayList<>();
         for (nonTerminal r : NTrules) {
             bigram actualB = new bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
-            r.setCurrentBigram(actualB); // clean up
-//            System.out.println("BREAK");
-//            System.out.println(r.getCurrentBigram().first.getRepresentation());
-//            System.out.println(r.getCurrentBigram().second.getRepresentation());
-//            System.out.println("BREAK 2");
+            r.setCurrentBigram(actualB); // clean up - when is a good consistent way to set this?
 
             //THIS WILL UPDATE THE FIRST RULE EVEN IF THE RULE IS LARGE THAN TWO... DOESN'T MATTER RIGHT?
             // IF THEY EQUAL SHOULD UPDATE AND MAKE A NEW RULE...
-
-            // IT'S FISHY AND COULD BE AVOIDED??????
-
             // had to specify size of values to two, whole rule to work the second half, not whole
             // rule with the get all bigrams method.....
+
             if (fr.getCurrentBigram().equals(r.getCurrentBigram()) && r.values.size() == 2) {
                 fr.updateRule(r);
-                //r.useNumber++;
             }
             else if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
-             //   System.out.println(fr.getCurrentBigram().first.getRepresentation());
-              //  System.out.println(fr.getCurrentBigram().second.getRepresentation());
                 nonTerminal newRule = new nonTerminal();
                 newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
                 newRuleLst.add(newRule);
                 fr.updateRule(newRule);
                 r.updateRule(newRule);
-
-//                System.out.println(newRule.getCurrentBigram().first.getRepresentation());
-//                System.out.println(newRule.getCurrentBigram().second.getRepresentation());
             }
         }
 
+        // add the newly created rules to main list
         for (nonTerminal r : newRuleLst) {
             NTrules.add(r);
         }

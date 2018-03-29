@@ -142,10 +142,12 @@ public class nonTerminal extends symbol {
                     lstB.get(i-1).second = new terminal("!");
                 }
 
+                // decrementing the use count of nonTerminals
                 if (values.get(i+1) instanceof nonTerminal) {
                     ((nonTerminal) values.get(i+1)).useNumber--;
                 }
 
+                // decrementing the use count of nonTerminals
                 if (values.get(i) instanceof nonTerminal) {
                     ((nonTerminal) values.get(i)).useNumber--;
                 }

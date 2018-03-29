@@ -14,4 +14,7 @@ objective - to implement further techniques suggested, hopefully improve, use di
 ... write as review of previous papers
 //- hashset hash map for storing rules, increase speed – steps to further decompress, keep generic?? … edit distance, across files? Multiple documents
 
+Compress in chunks? better rate, but use collective grammar for each? would that not work out the same? Still have to go through the whole sequence. Edit distance, then rules that occur across files and those 
+specific to a file. So two or more sets of rules, one communal and those specific to one file.
 
+But yeah, would think it would be better to compare all files as one and unlikely to get boost from splitting up?? 

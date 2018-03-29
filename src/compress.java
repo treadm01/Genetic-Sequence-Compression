@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -10,9 +11,7 @@ import java.util.stream.Collectors;
  * and how to access the values stored in the rules?
  */
 public class compress {
-    //List<rule> rules = new ArrayList<>();
     List<nonTerminal> NTrules = new ArrayList<>();
-
 
     /**
      * main three rules that repeatedly run over the symbol stream
@@ -202,7 +201,7 @@ public class compress {
         nonTerminal firstNTRule = new nonTerminal();
 
         for (int i = 0; i < input.length(); i++) {
-            //System.out.println("working through symbol " + i + " of " + input.length());
+            System.out.println("working through symbol " + i + " of " + input.length());
 
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
@@ -297,6 +296,11 @@ public class compress {
      * from existing rules (rather than create a new one)
      * @param fr
      */
+
+    //TODO keep a hasset of bigrams, or map with bigram to the rule number they appear in, find the
+    //TODO hash get all the rules where they occur, but that keeps a map of bigrams and list of
+    //TODO everything... Alternative, don't store symbols individually in nonTerminal but as bigrams
+    //TODO that wouldn't be direct look up though
     public void existingBigram(nonTerminal fr) {
         //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
         List<nonTerminal> newRuleLst = new ArrayList<>();
@@ -309,15 +313,21 @@ public class compress {
             // had to specify size of values to two, whole rule to work the second half, not whole
             // rule with the get all bigrams method.....
 
-            if (fr.getCurrentBigram().equals(r.getCurrentBigram()) && r.values.size() == 2) {
-                fr.updateRule(r);
-            }
-            else if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
-                nonTerminal newRule = new nonTerminal();
-                newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
-                newRuleLst.add(newRule);
-                fr.updateRule(newRule);
-                r.updateRule(newRule);
+//            if (fr.getCurrentBigram().equals(r.getCurrentBigram()) && r.values.size() == 2) {
+//                fr.updateRule(r);
+//            }
+//            else
+            if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
+                if (r.values.size() == 2) {
+                    fr.updateRule(r);
+                }
+                else {
+                    nonTerminal newRule = new nonTerminal();
+                    newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
+                    newRuleLst.add(newRule);
+                    fr.updateRule(newRule);
+                    r.updateRule(newRule);
+                }
             }
         }
 

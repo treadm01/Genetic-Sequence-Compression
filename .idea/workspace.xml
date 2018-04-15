@@ -77,8 +77,8 @@
       <file leaf-file-name="test.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/textFiles/test.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="256" column="60" lean-forward="true" selection-start-line="256" selection-start-column="60" selection-end-line="256" selection-end-column="60" />
+            <state relative-caret-position="441">
+              <caret line="259" column="26" selection-start-line="259" selection-start-column="26" selection-end-line="259" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -204,7 +204,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -232,6 +231,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -474,7 +474,8 @@
       <workItem from="1522366602482" duration="647000" />
       <workItem from="1522614626170" duration="88000" />
       <workItem from="1523287173927" duration="2515000" />
-      <workItem from="1523730121634" duration="1935000" />
+      <workItem from="1523730121634" duration="2557000" />
+      <workItem from="1523794505499" duration="604000" />
     </task>
     <task id="LOCAL-00001" summary="trying to split up to pairs and check for repeats">
       <created>1517774688169</created>
@@ -791,7 +792,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523748570057</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="working through proposal again">
+      <created>1523754016020</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1523754016020</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -827,11 +835,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155637000" />
+    <option name="totallyTimeSpent" value="156863000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
-    <editor active="true" />
+    <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="7" />
@@ -851,10 +858,10 @@
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="2" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.32882884" />
     </layout>
@@ -1042,8 +1049,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/textFiles/test.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="256" column="60" lean-forward="true" selection-start-line="256" selection-start-column="60" selection-end-line="256" selection-end-column="60" />
+        <state relative-caret-position="441">
+          <caret line="259" column="26" selection-start-line="259" selection-start-column="26" selection-end-line="259" selection-end-column="26" />
         </state>
       </provider>
     </entry>

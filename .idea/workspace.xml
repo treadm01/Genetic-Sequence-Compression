@@ -476,21 +476,7 @@
       <workItem from="1523287173927" duration="2515000" />
       <workItem from="1523730121634" duration="2557000" />
       <workItem from="1523794505499" duration="2457000" />
-      <workItem from="1523867718458" duration="2486000" />
-    </task>
-    <task id="LOCAL-00004" summary="getting a list of repeats">
-      <created>1517776670300</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1517776670300</updated>
-    </task>
-    <task id="LOCAL-00005" summary="need to redo implementation">
-      <created>1517780048321</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1517780048321</updated>
+      <workItem from="1523867718458" duration="3705000" />
     </task>
     <task id="LOCAL-00006" summary="adding symbols one by one">
       <created>1517838917773</created>
@@ -821,7 +807,21 @@
       <option name="project" value="LOCAL" />
       <updated>1523893426804</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="working through proposal again">
+      <created>1523898497165</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1523898497165</updated>
+    </task>
+    <task id="LOCAL-00054" summary="working through proposal again">
+      <created>1523901191811</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1523901191811</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -857,7 +857,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161202000" />
+    <option name="totallyTimeSpent" value="162421000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />

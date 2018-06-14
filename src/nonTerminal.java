@@ -10,9 +10,8 @@ import java.util.Map;
 public class nonTerminal extends Symbol {
 
     static Integer ruleNumber = 0;
-    Boolean sorted = false;
-    Integer number; // what number???
-    Integer useNumber = 0;
+    Integer number; // what number??? The terminal/rule number
+    Integer useNumber = 0; // number of uses
     public List<Symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
     //Map<Integer, Symbol> values = new HashMap<>();
     bigram currentBigram;
@@ -47,10 +46,12 @@ public class nonTerminal extends Symbol {
 
         if (b.first instanceof nonTerminal) {
             ((nonTerminal) b.first).usedByList.add(this.number); // add this rules number to the terminals list to keep a record of where it is used
+            ((nonTerminal) b.first).useNumber++;
         }
 
         if (b.second instanceof nonTerminal) {
             ((nonTerminal) b.second).usedByList.add(this.number);
+            ((nonTerminal) b.second).useNumber++;
         }
 
         values.add(b.first);
@@ -102,7 +103,9 @@ public class nonTerminal extends Symbol {
         }
     }
 
+    //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH - GETBIGRAMS
     public List<bigram> getBigrams() {
+        // THIS IS PROBABLY THE PROBLEM... CREATING NEW LIST EACH TIME JUST TO SEE IF REPEATED..
         List<bigram> lstB = new ArrayList<>();
 
         // THIS DOES NOT GIVE BACK BIGRAMS FOR GROUPS OF THREE
@@ -116,7 +119,10 @@ public class nonTerminal extends Symbol {
         return lstB;
     }
 
+    //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH UPDATE RULE
     public void updateRule(nonTerminal r) {
+        // THIS ALSO A BIG PROBLEM, CREATING A LIST TO CHECK AGAINST....
+        // AND COMPUTE ON 'HEAVILY'
         List<bigram> lstB = new ArrayList<>();
 
         for (int i = 0; i < values.size() - 1; i++) {
@@ -126,13 +132,8 @@ public class nonTerminal extends Symbol {
 
         bigram ruleBigram = r.currentBigram;
 
-        //System.out.println("bigram you are checking is " + r.currentBigram.first.getRepresentation() + " " + r.currentBigram.second.getRepresentation());
-
         for (int i = lstB.size() -1; i > -1; i--) {
-//            System.out.println(lstB.get(i).first.getRepresentation());
-            //          System.out.println(lstB.get(i).second.getRepresentation());
             if (lstB.get(i).equals(ruleBigram)) {
-
 
                 // really really bad, if half of a bigram has been changed alter the one made earlier
                 // in the list by setting it's right hand to ! or whatever, also have to check that
@@ -144,22 +145,27 @@ public class nonTerminal extends Symbol {
                 // decrementing the use count of nonTerminals
                 if (values.get(i+1) instanceof nonTerminal) {
                     ((nonTerminal) values.get(i+1)).usedByList.remove(this.number);
+                    ((nonTerminal) values.get(i+1)).useNumber--;
                 }
 
                 // decrementing the use count of nonTerminals
                 if (values.get(i) instanceof nonTerminal) {
                     ((nonTerminal) values.get(i)).usedByList.remove(this.number);
+                    ((nonTerminal) values.get(i)).useNumber--;
                 }
 
                 values.remove(i+1);
                 values.remove(i);
                 values.add(i, r);
+                r.useNumber++;
                 r.usedByList.add(this.number);
             }
         }
     }
 
+    //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH - GET ALL BIGRAMS
     public List<bigram> getAllBigrams() {
+        // THIS CREATES A NEW LIST OF BIGRAMS EACH TIME! WHY??
         List<bigram> lstB = new ArrayList<>();
         for (int i = 0; i < values.size() - 1; i++) {
             bigram bi = new bigram(values.get(i), values.get(1 + i));
@@ -168,32 +174,17 @@ public class nonTerminal extends Symbol {
         return lstB;
     }
 
-
-
-
     @Override
     public boolean equals(Object o) {
-
         if (o == this) {return true;}
         else {return false;}
-//        //nonTerminal t = null;
-//        if (!(o instanceof nonTerminal) && !(o instanceof terminal)) {
-//            throw new ClassCastException("Must be nontermin. Received " + o.getClass());
-//        }
-//        else if (o instanceof terminal) {
-//            return false;
-//        }
-//        else {
-//            t = (nonTerminal) o;
-//        }
-//
-//        return  (t.getRepresentation().equals(this.getRepresentation()));
     }
 
     public bigram getCurrentBigram() {
         return currentBigram;
     }
 
+    //USE THIS!
     public void setRuleNumber(Integer rn) {
         this.number = rn;
     }

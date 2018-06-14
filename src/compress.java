@@ -7,9 +7,8 @@ import java.util.stream.Collectors;
  * and how to access the values stored in the rules?
  */
 public class compress {
-    List<nonTerminal> NTrules = new ArrayList<>();
     Map<String, Terminal> terminals = new HashMap<>();
-  //  Map<Integer, nonTerminal> nonTerminals = new HashMap<>();
+    Map<Integer, nonTerminal> nonTerminals = new HashMap<>();
     /**
      * Main method to take string of the input, and run through the symbol,
      * currently holds re-order and prints out the rules at the end, returns the
@@ -21,6 +20,7 @@ public class compress {
         //TODO decide where reorder will go, manage where things are created
         nonTerminal.ruleNumber = 0; // ehh set with a setter
         nonTerminal firstNTRule = new nonTerminal();
+        //nonTerminals.put(0, firstNTRule);
 
         for (int i = 0; i < input.length(); i++) {
             System.out.println("working through symbol " + i + " of " + input.length());
@@ -35,12 +35,12 @@ public class compress {
         }
 
         // reorder rules here after they've been formed... improves compression
-        reorderRules(firstNTRule);
+        //reorderRules(firstNTRule);
 
         // print out the final values
         List<nonTerminal> finalRules = new ArrayList<>();
         finalRules.add(firstNTRule);
-        for (nonTerminal r : NTrules) {
+        for (nonTerminal r : nonTerminals.values()) {
             finalRules.add(r);
         }
 
@@ -83,7 +83,7 @@ public class compress {
         if (fr.checkBigram()) {
             nonTerminal newRule = new nonTerminal();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
-            NTrules.add(newRule);
+            nonTerminals.put(newRule.number, newRule);
            // nonTerminals.put(nonTerminals.size() + 1, newRule);
             fr.updateRule(newRule);
         }
@@ -104,7 +104,7 @@ public class compress {
     public void existingBigram(nonTerminal fr) {
         //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
         List<nonTerminal> newRuleLst = new ArrayList<>();
-        for (nonTerminal r : NTrules) {
+        for (nonTerminal r : nonTerminals.values()) {
         //for (nonTerminal r : nonTerminals.values()) {
             bigram actualB = new bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
             r.setCurrentBigram(actualB); // clean up - when is a good consistent way to set this?
@@ -134,7 +134,7 @@ public class compress {
 
         // add the newly created rules to main list
         for (nonTerminal r : newRuleLst) {
-            NTrules.add(r);
+            nonTerminals.put(r.number, r);
         }
     }
 
@@ -145,91 +145,62 @@ public class compress {
      * @param fr
      */
     public void ruleUtility(nonTerminal fr){
-        //TODO too many loops, needs cleaning HAVE TO DO WITH HASHMAP
-
-        // get all symbols that are nonTerminal and are only used once
-        List<nonTerminal> ntList = NTrules.stream()
-                .filter(x -> x.usedByList.size() == 1)
+        List<nonTerminal> ntList = nonTerminals.values().stream()
+                .filter(x -> x.useNumber == 1)
                 .collect(Collectors.toList());
 
         for (nonTerminal s : ntList) {
-            nonTerminal hold = NTrules.get(s.usedByList.get(0)-1);
-            if (hold.values.contains(s)) {
-                hold.values.addAll(hold.values.indexOf(s), s.values);
-                hold.values.remove(s);
-            }
-        }
-//
-//        // TODO this is a list of rules that occur only once and you're checking everything to find them
-//        // TODO you should be able ti find out where they are
-//        for (Symbol s : ntList) { // for every nonterminal used only once
-//            //TODO this should cover the first rule, ok at the moment but... if a rule that is used only once is in the first one it will be missed
-//            for (nonTerminal r : NTrules) { // for other rules check only occuring once
-//                if (r.values.contains(s)) { // if the value contains the rule
-//                    int index = 0; //TODO not sure how you're getting this index or why, cant use rule number?
-//                    for (nonTerminal rx : NTrules) {
-//                        if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.toString()))) {
-//                            index = NTrules.indexOf(rx);
-//                        }
-//                    }
-//                    r.values.addAll(r.values.indexOf(s),
-//                            NTrules.get(index).values);
-//                    r.values.remove(s);
-//
-//                }
-//            }
-//        }
-
-        // remove the rules that had only one instance
-        for (Symbol r : ntList) {
-            NTrules.remove(r);
+            nonTerminal hold = nonTerminals.get(s.usedByList.get(0));
+            hold.values.addAll(hold.values.indexOf(s), s.values);
+            hold.values.remove(s);
+            nonTerminals.remove(s.number); // remove key??
         }
     }
 
 
     // WHAT DOES THIS DO TOBY?
-    public List<nonTerminal> reorderRules(nonTerminal fr) {
-
-        List<nonTerminal> completeRules = new ArrayList<>();
-        completeRules.add(fr);
-        completeRules.addAll(NTrules);
-
-        // return instead of mutate etc
-
-        // causing issues somewhere with decompression
-        // can't see how to sort by size of rule as well as frequency....
-
-//        System.out.println("unsorted");
-//        for (nonTerminal r : completeRules) {
-//            System.out.println(r.getValues());
+//    public List<nonTerminal> reorderRules(nonTerminal fr) {
+//
+//        List<nonTerminal> completeRules = new ArrayList<>();
+//        completeRules.add(fr);
+//        completeRules.addAll(NTrules);
+//
+//        // return instead of mutate etc
+//
+//        // causing issues somewhere with decompression
+//        // can't see how to sort by size of rule as well as frequency....
+//
+////        System.out.println("unsorted");
+////        for (nonTerminal r : completeRules) {
+////            System.out.println(r.getValues());
+////        }
+//
+//        NTrules = NTrules.stream()
+//                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
+//                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
+//                .collect(Collectors.toList());
+//
+//
+////        System.out.println("sorted");
+////        System.out.println(fr.getValues());
+////        for (rule r : rules) {
+////            System.out.println(r.getValues());
+////        }
+//
+//        for (nonTerminal r : NTrules) {
+//            int newNumber = NTrules.indexOf(r) + 1;
+//            for (nonTerminal r2 : completeRules) {
+//                for (Symbol s : r2.values) {
+//                    if (s.equals(r)) {
+//                        s.representation = String.valueOf(newNumber);
+//                    }
+//                }
+//            }
+//            r.setRuleNumber(NTrules.indexOf(r) + 1);
 //        }
-
-        NTrules = NTrules.stream()
-                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
-                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
-                .collect(Collectors.toList());
-
-
-//        System.out.println("sorted");
-//        System.out.println(fr.getValues());
-//        for (rule r : rules) {
-//            System.out.println(r.getValues());
-//        }
-
-        for (nonTerminal r : NTrules) {
-            int newNumber = NTrules.indexOf(r) + 1;
-            for (nonTerminal r2 : completeRules) {
-                for (Symbol s : r2.values) {
-                    if (s.equals(r)) {
-                        s.representation = String.valueOf(newNumber);
-                    }
-                }
-            }
-            r.setRuleNumber(NTrules.indexOf(r) + 1);
-        }
-
-        return completeRules;
-    }
+//
+//        return completeRules;
+//    }
 
 
     /**

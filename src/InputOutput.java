@@ -76,7 +76,7 @@ public class InputOutput {
 
             fullBinary += binaryRuleLength;
 
-            for (symbol s : r.values) {
+            for (Symbol s : r.values) {
                 String binarySymbolRepresentation = "";
                 String lengthOfSymbol = "";
                 if (s instanceof nonTerminal) {

@@ -1,9 +1,9 @@
 public class bigram implements Comparable {
 
-    symbol first;
-    symbol second;
+    Symbol first;
+    Symbol second;
 
-    public bigram(symbol f, symbol s) {
+    public bigram(Symbol f, Symbol s) {
         first = f;
         second = s;
     }

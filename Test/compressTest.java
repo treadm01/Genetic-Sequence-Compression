@@ -15,6 +15,7 @@ public class compressTest {
         c = new compress();
         c.processInput("abcdbcabcd");
 
+
         System.out.println();
         c = new compress();
         c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // this doesnt do the right number of checks
@@ -23,7 +24,7 @@ public class compressTest {
         c = new compress();
         c.processInput("abcdbcabcdabcd"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-
+//
         System.out.println();
         c = new compress();
         c.processInput("abcdbcabcdabcdbcabcd");

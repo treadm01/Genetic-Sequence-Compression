@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
  */
 public class compress {
     List<nonTerminal> NTrules = new ArrayList<>();
-    Set<nonTerminal> nonTerminalSet = new HashSet<>();
-    Set<Terminal> terminals = new HashSet<>();
+    Map<String, Terminal> terminals = new HashMap<>();
+  //  Map<Integer, nonTerminal> nonTerminals = new HashMap<>();
     /**
      * Main method to take string of the input, and run through the symbol,
      * currently holds re-order and prints out the rules at the end, returns the
@@ -27,14 +27,12 @@ public class compress {
 
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
-            terminals.add(new Terminal(ch));
+            terminals.putIfAbsent(ch, new Terminal(ch));
 
-            firstNTRule.addValues(ch); // created a new terminal,... shouldn't be hidden like that
+            firstNTRule.addValues(terminals.get(ch)); // created a new terminal,... shouldn't be hidden like that
 
             threeRule(firstNTRule);
         }
-
-        terminals.forEach(System.out::println);
 
         // reorder rules here after they've been formed... improves compression
         reorderRules(firstNTRule);
@@ -76,7 +74,6 @@ public class compress {
         }
     }
 
-
     /**
      * using the most recent digram of main input, check for
      * repeats through out the grammar
@@ -87,49 +84,11 @@ public class compress {
             nonTerminal newRule = new nonTerminal();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
             NTrules.add(newRule);
+           // nonTerminals.put(nonTerminals.size() + 1, newRule);
             fr.updateRule(newRule);
         }
     }
 
-    /**
-     * if a rule is only used once then remove it and... replace
-     * with what is linked to.
-     * @param fr
-     */
-    public void ruleUtility(nonTerminal fr){
-        //TODO too many loops, needs cleaning
-
-        // get all symbols that are nonTerminal and are only used once
-        List<symbol> ntList = NTrules.stream()
-                .filter(x -> x instanceof nonTerminal)
-                .filter(x -> x.useNumber == 1)
-                .collect(Collectors.toList());
-
-        // TODO this is a list of rules that occur only once and you're checking everything to find them
-        // TODO you should be able ti find out where they are
-        for (symbol s : ntList) { // for every nonterminal used only once
-            //TODO this should cover the first rule, ok at the moment but... if a rule that is used only once is in the first one it will be missed
-            for (nonTerminal r : NTrules) { // for other rules check only occuring once
-                if (r.values.contains(s)) { // if the value contains the rule
-                    int index = 0; //TODO not sure how you're getting this index or why, cant use rule number?
-                    for (nonTerminal rx : NTrules) {
-                        if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.toString()))) {
-                            index = NTrules.indexOf(rx);
-                        }
-                    }
-                    r.values.addAll(r.values.indexOf(s),
-                            NTrules.get(index).values);
-                    r.values.remove(s);
-
-                }
-            }
-        }
-
-        // remove the rules that had only one instance
-        for (symbol r : ntList) {
-            NTrules.remove(r);
-        }
-    }
 
     /**
      * check through the rules created for patterns that have already occurred.
@@ -146,6 +105,7 @@ public class compress {
         //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
         List<nonTerminal> newRuleLst = new ArrayList<>();
         for (nonTerminal r : NTrules) {
+        //for (nonTerminal r : nonTerminals.values()) {
             bigram actualB = new bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
             r.setCurrentBigram(actualB); // clean up - when is a good consistent way to set this?
 
@@ -177,6 +137,55 @@ public class compress {
             NTrules.add(r);
         }
     }
+
+
+    /**
+     * if a rule is only used once then remove it and... replace
+     * with what is linked to.
+     * @param fr
+     */
+    public void ruleUtility(nonTerminal fr){
+        //TODO too many loops, needs cleaning HAVE TO DO WITH HASHMAP
+
+        // get all symbols that are nonTerminal and are only used once
+        List<nonTerminal> ntList = NTrules.stream()
+                .filter(x -> x.usedByList.size() == 1)
+                .collect(Collectors.toList());
+
+        for (nonTerminal s : ntList) {
+            nonTerminal hold = NTrules.get(s.usedByList.get(0)-1);
+            if (hold.values.contains(s)) {
+                hold.values.addAll(hold.values.indexOf(s), s.values);
+                hold.values.remove(s);
+            }
+        }
+//
+//        // TODO this is a list of rules that occur only once and you're checking everything to find them
+//        // TODO you should be able ti find out where they are
+//        for (Symbol s : ntList) { // for every nonterminal used only once
+//            //TODO this should cover the first rule, ok at the moment but... if a rule that is used only once is in the first one it will be missed
+//            for (nonTerminal r : NTrules) { // for other rules check only occuring once
+//                if (r.values.contains(s)) { // if the value contains the rule
+//                    int index = 0; //TODO not sure how you're getting this index or why, cant use rule number?
+//                    for (nonTerminal rx : NTrules) {
+//                        if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.toString()))) {
+//                            index = NTrules.indexOf(rx);
+//                        }
+//                    }
+//                    r.values.addAll(r.values.indexOf(s),
+//                            NTrules.get(index).values);
+//                    r.values.remove(s);
+//
+//                }
+//            }
+//        }
+
+        // remove the rules that had only one instance
+        for (Symbol r : ntList) {
+            NTrules.remove(r);
+        }
+    }
+
 
     // WHAT DOES THIS DO TOBY?
     public List<nonTerminal> reorderRules(nonTerminal fr) {
@@ -210,7 +219,7 @@ public class compress {
         for (nonTerminal r : NTrules) {
             int newNumber = NTrules.indexOf(r) + 1;
             for (nonTerminal r2 : completeRules) {
-                for (symbol s : r2.values) {
+                for (Symbol s : r2.values) {
                     if (s.equals(r)) {
                         s.representation = String.valueOf(newNumber);
                     }

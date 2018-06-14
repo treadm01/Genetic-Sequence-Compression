@@ -1,16 +1,19 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class uncompress {
 
     public String mutatingString = "";
+    Map<String, Terminal> terminals = new HashMap<>();
 
     //TODO save to file and retrieve in a way that objects are known to be terminal, non terminal, rule
     // from there can start to compare
 
     public String getOutput(nonTerminal r, List<nonTerminal> compressedRule, String soFar) {
         String uncompressed = soFar;
-        for (symbol s : r.values) {
+        for (Symbol s : r.values) {
             if (s instanceof Terminal) {
                 uncompressed += s.toString();
             }
@@ -90,9 +93,11 @@ public class uncompress {
             if (mutatingString.charAt(0) == '0') {
           //      System.out.println(binary);
                 String rep = getACGT(mutatingString.substring(pos+1, pos+3));
+
+                terminals.putIfAbsent(rep, new Terminal(rep));// create terminals here first
             //    System.out.println(rep);
                 mutatingString = mutatingString.substring(3);
-                r.addValues(rep); // for Terminal send a String, for nonTerminal send an int
+                r.addValues(terminals.get(rep)); // for Terminal send a String, for nonTerminal send an int
             }
             else {
                 int repre = getNonTerminalFromBinary(mutatingString);

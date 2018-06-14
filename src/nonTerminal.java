@@ -1,19 +1,22 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * non terminal regular symbols that don't go anywhere
  */
 
-public class nonTerminal extends symbol {
+public class nonTerminal extends Symbol {
 
     static Integer ruleNumber = 0;
     Boolean sorted = false;
-    Integer number;
+    Integer number; // what number???
     Integer useNumber = 0;
-    Integer ruleSize;
-    public List<symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
+    public List<Symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
+    //Map<Integer, Symbol> values = new HashMap<>();
     bigram currentBigram;
+    public List<Integer> usedByList = new ArrayList<>();
 
     /**
      * the actual symbol
@@ -35,8 +38,7 @@ public class nonTerminal extends symbol {
     }
 
     // add a single non-terminal at the moment to the rule
-    public void addValues(String s) {
-        Terminal t = new Terminal(s);
+    public void addValues(Terminal t) {
         values.add(t);
     }
 
@@ -44,11 +46,11 @@ public class nonTerminal extends symbol {
     public void addValues(bigram b) {
 
         if (b.first instanceof nonTerminal) {
-            ((nonTerminal) b.first).useNumber++;
+            ((nonTerminal) b.first).usedByList.add(this.number); // add this rules number to the terminals list to keep a record of where it is used
         }
 
         if (b.second instanceof nonTerminal) {
-            ((nonTerminal) b.second).useNumber++;
+            ((nonTerminal) b.second).usedByList.add(this.number);
         }
 
         values.add(b.first);
@@ -77,7 +79,7 @@ public class nonTerminal extends symbol {
     public String getValues() {
         String valueOuput = "";
         valueOuput += this.getRuleNumber() + " -> ";
-        for (symbol i : values) {
+        for (Symbol i : values) {
             valueOuput += i.toString() + " ";
         }
         return valueOuput;
@@ -141,18 +143,18 @@ public class nonTerminal extends symbol {
 
                 // decrementing the use count of nonTerminals
                 if (values.get(i+1) instanceof nonTerminal) {
-                    ((nonTerminal) values.get(i+1)).useNumber--;
+                    ((nonTerminal) values.get(i+1)).usedByList.remove(this.number);
                 }
 
                 // decrementing the use count of nonTerminals
                 if (values.get(i) instanceof nonTerminal) {
-                    ((nonTerminal) values.get(i)).useNumber--;
+                    ((nonTerminal) values.get(i)).usedByList.remove(this.number);
                 }
 
                 values.remove(i+1);
                 values.remove(i);
                 values.add(i, r);
-                r.useNumber++;
+                r.usedByList.add(this.number);
             }
         }
     }

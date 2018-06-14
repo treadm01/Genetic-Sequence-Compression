@@ -2,7 +2,7 @@
  * terminal just a regular symbol that doesn't go anywhere
  */
 
-public class Terminal extends symbol {
+public class Terminal extends Symbol {
 
     public Terminal(String s) {
         this.representation = s;

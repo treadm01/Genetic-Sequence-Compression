@@ -12,11 +12,11 @@ public class uncompress {
         String uncompressed = soFar;
         for (symbol s : r.values) {
             if (s instanceof Terminal) {
-                uncompressed += s.getRepresentation();
+                uncompressed += s.toString();
             }
             else {
                 for (nonTerminal rx : compressedRule) {
-                    if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.getRepresentation()))) {
+                    if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.toString()))) {
                         uncompressed = getOutput(rx, compressedRule, uncompressed);
                     }
                 }

@@ -34,7 +34,7 @@ public class compress {
             threeRule(firstNTRule);
         }
 
-        terminals.forEach(x -> x.toString());
+        terminals.forEach(System.out::println);
 
         // reorder rules here after they've been formed... improves compression
         reorderRules(firstNTRule);
@@ -113,7 +113,7 @@ public class compress {
                 if (r.values.contains(s)) { // if the value contains the rule
                     int index = 0; //TODO not sure how you're getting this index or why, cant use rule number?
                     for (nonTerminal rx : NTrules) {
-                        if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.getRepresentation()))) {
+                        if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.toString()))) {
                             index = NTrules.indexOf(rx);
                         }
                     }

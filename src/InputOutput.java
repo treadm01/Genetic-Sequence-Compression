@@ -80,7 +80,7 @@ public class InputOutput {
                 String binarySymbolRepresentation = "";
                 String lengthOfSymbol = "";
                 if (s instanceof nonTerminal) {
-                    binarySymbolRepresentation = Integer.toBinaryString(Integer.valueOf(s.getRepresentation()));
+                    binarySymbolRepresentation = Integer.toBinaryString(Integer.valueOf(s.toString()));
 
                     for (int i = 0; i < binarySymbolRepresentation.length(); i++) {
                         lengthOfSymbol += 1;
@@ -92,7 +92,7 @@ public class InputOutput {
                     // first 0 to show non terminal second for actg
                     binarySymbolRepresentation = "0";
 
-                    switch (s.getRepresentation()) {
+                    switch (s.toString()) {
                         case "G":
                             binarySymbolRepresentation += "00";
                             break;

@@ -63,11 +63,8 @@ public class nonTerminal extends symbol {
         // code has been working - probably not used, convert to string and send that??
     }
 
-    /**
-     * quick way to get the symbol
-     * @return
-     */
-    public String getRepresentation() {
+    @Override
+    public String toString() {
         return this.representation;
     }
 
@@ -81,7 +78,7 @@ public class nonTerminal extends symbol {
         String valueOuput = "";
         valueOuput += this.getRuleNumber() + " -> ";
         for (symbol i : values) {
-            valueOuput += i.getRepresentation() + " ";
+            valueOuput += i.toString() + " ";
         }
         return valueOuput;
     }

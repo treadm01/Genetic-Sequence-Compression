@@ -26,6 +26,11 @@ public class Terminal extends symbol {
             t = (Terminal) o;
         }
 
-        return  (t.getRepresentation().equals(this.getRepresentation()));
+        return  (t.toString().equals(this.toString()));
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) this.toString().charAt(0);
     }
 }

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class compress {
     Map<String, Terminal> terminals = new HashMap<>();
     Map<Integer, nonTerminal> nonTerminals = new HashMap<>();
+
     /**
      * Main method to take string of the input, and run through the symbol,
      * currently holds re-order and prints out the rules at the end, returns the
@@ -20,7 +21,6 @@ public class compress {
         //TODO decide where reorder will go, manage where things are created
         nonTerminal.ruleNumber = 0; // ehh set with a setter
         nonTerminal firstNTRule = new nonTerminal();
-        //nonTerminals.put(0, firstNTRule);
 
         for (int i = 0; i < input.length(); i++) {
             System.out.println("working through symbol " + i + " of " + input.length());
@@ -37,7 +37,7 @@ public class compress {
         // reorder rules here after they've been formed... improves compression
         //reorderRules(firstNTRule);
 
-        // print out the final values
+        // print out the final values - // just for debugging
         List<nonTerminal> finalRules = new ArrayList<>();
         finalRules.add(firstNTRule);
         for (nonTerminal r : nonTerminals.values()) {
@@ -59,17 +59,13 @@ public class compress {
         //TODO implement this without String
         String checkValues = "";
         String currentValues = firstRule.getValues();
-
         // repeat the methods until nothing changes/needs changing
         while (!currentValues.equals(checkValues)) {
             currentValues = firstRule.getValues();
             checkRepeat(firstRule); // check for pattern in first rule
-
             // if bigram in another rule, update first rule again
             existingBigram(firstRule);
-
             ruleUtility(firstRule);// remove any rules that are only used once
-
             checkValues = firstRule.getValues(); // assign new first rule to the check
         }
     }
@@ -84,7 +80,6 @@ public class compress {
             nonTerminal newRule = new nonTerminal();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
             nonTerminals.put(newRule.number, newRule);
-           // nonTerminals.put(nonTerminals.size() + 1, newRule);
             fr.updateRule(newRule);
         }
     }
@@ -158,49 +153,10 @@ public class compress {
     }
 
 
-    // WHAT DOES THIS DO TOBY?
-//    public List<nonTerminal> reorderRules(nonTerminal fr) {
-//
-//        List<nonTerminal> completeRules = new ArrayList<>();
-//        completeRules.add(fr);
-//        completeRules.addAll(NTrules);
-//
-//        // return instead of mutate etc
-//
-//        // causing issues somewhere with decompression
-//        // can't see how to sort by size of rule as well as frequency....
-//
-////        System.out.println("unsorted");
-////        for (nonTerminal r : completeRules) {
-////            System.out.println(r.getValues());
-////        }
-//
-//        NTrules = NTrules.stream()
-//                .sorted((x, y) -> y.useNumber.compareTo(x.useNumber))
-//                //.sorted((x, y) -> y.ruleSize.compareTo(x.ruleSize)) // sort by size messes up
-//                .collect(Collectors.toList());
-//
-//
-////        System.out.println("sorted");
-////        System.out.println(fr.getValues());
-////        for (rule r : rules) {
-////            System.out.println(r.getValues());
-////        }
-//
-//        for (nonTerminal r : NTrules) {
-//            int newNumber = NTrules.indexOf(r) + 1;
-//            for (nonTerminal r2 : completeRules) {
-//                for (Symbol s : r2.values) {
-//                    if (s.equals(r)) {
-//                        s.representation = String.valueOf(newNumber);
-//                    }
-//                }
-//            }
-//            r.setRuleNumber(NTrules.indexOf(r) + 1);
-//        }
-//
-//        return completeRules;
-//    }
+    // returns a reordered list
+    public void reorderRules(nonTerminal fr) {
+        //TODO need to reorder rules at the end so more often used rules have lower numbers
+    }
 
 
     /**

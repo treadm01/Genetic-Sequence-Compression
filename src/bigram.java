@@ -10,7 +10,7 @@ public class bigram implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        bigram b = null;
+        bigram b;
         if (!(o instanceof bigram)) {
             throw new ClassCastException("Must be bigram. Received " + o.getClass());
         }

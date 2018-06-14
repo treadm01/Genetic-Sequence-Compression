@@ -36,7 +36,7 @@ public class nonTerminal extends symbol {
 
     // add a single non-terminal at the moment to the rule
     public void addValues(String s) {
-        terminal t = new terminal(s);
+        Terminal t = new Terminal(s);
         values.add(t);
     }
 
@@ -139,7 +139,7 @@ public class nonTerminal extends symbol {
                 // in the list by setting it's right hand to ! or whatever, also have to check that
                 // not at the bottom of the list
                 if(i-1 >= 0 ) {
-                    lstB.get(i-1).second = new terminal("!");
+                    lstB.get(i-1).second = new Terminal("!");
                 }
 
                 // decrementing the use count of nonTerminals

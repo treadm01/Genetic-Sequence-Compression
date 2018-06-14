@@ -1,7 +1,3 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +11,7 @@ public class uncompress {
     public String getOutput(nonTerminal r, List<nonTerminal> compressedRule, String soFar) {
         String uncompressed = soFar;
         for (symbol s : r.values) {
-            if (s instanceof terminal) {
+            if (s instanceof Terminal) {
                 uncompressed += s.getRepresentation();
             }
             else {
@@ -37,24 +33,6 @@ public class uncompress {
         uncompressed += getOutput(firstRule, compressedRule, uncompressed);
 
         return uncompressed;
-    }
-
-    public String readFile() {
-        String everything = "";
-        byte[] fileContents = new byte[0];
-        Path path = Paths.get("/home/tread/IdeaProjects/GeneticCompression/textFiles/compressed.bin");
-        try {
-            fileContents = Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // use more of the byte methods!!
-        for (Byte b : fileContents) {
-            everything += Integer.toBinaryString(b);
-        }
-
-        return everything;
     }
 
     // remove every 7

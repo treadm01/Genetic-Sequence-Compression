@@ -2,27 +2,28 @@
  * terminal just a regular symbol that doesn't go anywhere
  */
 
-public class terminal extends symbol {
+public class Terminal extends symbol {
 
-    public terminal(String s) {
+    public Terminal(String s) {
         this.representation = s;
     }
 
-    public String getRepresentation() {
+    @Override
+    public String toString() {
         return this.representation;
     }
 
     @Override
     public boolean equals(Object o) {
-        terminal t = null;
-        if (!(o instanceof terminal) && !(o instanceof nonTerminal)) {
+        Terminal t = null;
+        if (!(o instanceof Terminal) && !(o instanceof nonTerminal)) {
             throw new ClassCastException("Must be terminal. Received " + o.getClass());
         }
         else if (o instanceof nonTerminal) {
             return false;
         }
         else {
-            t = (terminal) o;
+            t = (Terminal) o;
         }
 
         return  (t.getRepresentation().equals(this.getRepresentation()));

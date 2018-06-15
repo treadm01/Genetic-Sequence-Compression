@@ -16,7 +16,7 @@ public class NonTerminalTest {
         nt.addValues(new Terminal("b"));
         nt.addValues(new Terminal("b"));
 
-        nt.getBigramMap();
+        //nt.getBigramMap();
     }
 
     @Test
@@ -28,7 +28,7 @@ public class NonTerminalTest {
 //        nt.addValues(5);
 //        nt.addValues(6);
 
-        nt.getBigramMap();
+        //nt.getBigramMap();
     }
 
     @Test
@@ -51,7 +51,7 @@ public class NonTerminalTest {
         System.out.println(nt.values);
         System.out.println(nt.bigramMap.size());
 
-        nt.getBigramMap();
+       // nt.getBigramMap();
 
         assertEquals(nt.values.size()-1, nt.bigramMap.size());
     }

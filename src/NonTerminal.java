@@ -8,9 +8,8 @@ import java.util.Map;
 /**
  * non terminal regular symbols that don't go anywhere
  */
-
 public class NonTerminal extends Symbol {
-
+    //TODO too much, need to split up class
     static Integer ruleNumber = 0;
     Integer number; // what number??? The terminal/rule number
     Integer useNumber = 0; // number of uses
@@ -21,7 +20,7 @@ public class NonTerminal extends Symbol {
     public List<Integer> usedByList = new ArrayList<>();
 
     /**
-     * the actual symbol
+     * constructors for terminal, if generic create new rule based on current rule amount
      * @param
      */
     public NonTerminal() {//String s) {
@@ -30,15 +29,21 @@ public class NonTerminal extends Symbol {
         ruleNumber++;
     }
 
-    public NonTerminal(int i) {
-        number = i;
+    /**
+     * create a specific nonTerminal from a number
+     * @param terminalNumber
+     */
+    public NonTerminal(int terminalNumber) {
+        number = terminalNumber;
         this.representation = number.toString();
     }
 
-    public Integer getRuleNumber() {
-        return this.number;
-    }
-
+    /**
+     * should be removed or changed to work without rebuilding the list
+     * currently rebuilds entire bigram list when the elements that this
+     * nonterminal points to are changed somewhere other than the end, eg
+     * a nonterminal is removed and replaced with two terminals etc
+     */
     //TODO should just be one method, not rebuilding list... not for looping through list
     public void rebuildBiList() {
         bigramList.clear();
@@ -48,6 +53,10 @@ public class NonTerminal extends Symbol {
         }
     }
 
+    /**
+     * updates the bigram list just at the end when a new terminal or
+     * nonterminal is added
+     */
     public void updateBiList() {
         if (values.size() > 1) {
             int left = values.size() - 2;
@@ -57,37 +66,54 @@ public class NonTerminal extends Symbol {
         }
     }
 
+    /**
+     * add terminal to the list of symbols this nonterminal points to
+     * @param terminal
+     */
     // add a single non-terminal at the moment to the rule
-    public void addValues(Terminal t) {
-        values.add(t);
+    public void addValues(Terminal terminal) {
+        values.add(terminal);
         updateBiList();
     }
 
+    /**
+     * add bigram to the list of symbols this nonterminal points to
+     * @param bigram
+     */
     // adding two values from a found bigram
-    public void addValues(Bigram b) {
-
-        if (b.first instanceof NonTerminal) {
-            ((NonTerminal) b.first).usedByList.add(this.number); // add this rules number to the terminals list to keep a record of where it is used
-            ((NonTerminal) b.first).useNumber++;
+    public void addValues(Bigram bigram) {
+        if (bigram.first instanceof NonTerminal) {
+            ((NonTerminal) bigram.first).usedByList.add(this.number); // add this rules number to the terminals list to keep a record of where it is used
+            ((NonTerminal) bigram.first).useNumber++;
         }
 
-        if (b.second instanceof NonTerminal) {
-            ((NonTerminal) b.second).usedByList.add(this.number);
-            ((NonTerminal) b.second).useNumber++;
+        if (bigram.second instanceof NonTerminal) {
+            ((NonTerminal) bigram.second).usedByList.add(this.number);
+            ((NonTerminal) bigram.second).useNumber++;
         }
 
-        values.add(b.first);
-        values.add(b.second);
-        setCurrentBigram(b); // set the bigram when creating a rule from one (too cheaty?)
+        values.add(bigram.first);
+        values.add(bigram.second);
+        setCurrentBigram(bigram); // set the bigram when creating a rule from one (too cheaty?)
         updateBiList();
     }
 
+
+    /**
+     * add nonTerminal to the list of symbols this nonTerminal points to
+     * @param nonTerminal
+     */
     // only used by decompress??
-    public void addValues(NonTerminal nt) {
-        values.add(nt);
+    public void addValues(NonTerminal nonTerminal) {
+        values.add(nonTerminal);
         updateBiList();
     }
 
+    /**
+     * takes out a nonterminal symbol from the values list for this nonterminal
+     * and replaces it with the symbols it points to
+     * @param t
+     */
     // similar to add values in that it is changing values, but replacing nonTerminal with
     // whatever it points to
     public void replaceNonTerminal(NonTerminal t) {
@@ -96,25 +122,14 @@ public class NonTerminal extends Symbol {
         rebuildBiList();
     }
 
-    @Override
-    public String toString() {
-        return this.representation;
-    }
-
+    /**
+     * sets the specific value of current bigram to the two most recent symbols added
+     * @param currentBigram
+     */
     public void setCurrentBigram(Bigram currentBigram) {
         this.currentBigram = currentBigram;
     }
 
-    //just a quick method to get the values, using for checking
-    //MAKE A TO PRINT
-    public String getValues() {
-        String valueOuput = "";
-        valueOuput += this.getRuleNumber() + " -> ";
-        for (Symbol i : values) {
-            valueOuput += i.toString() + " ";
-        }
-        return valueOuput;
-    }
 
     /**
      * check the last two values for repetition, false if nothing found
@@ -139,10 +154,15 @@ public class NonTerminal extends Symbol {
                     .filter(x -> x.equals(actualB))
                     .count();
 
-            return count > 0;//getBigrams().contains(actualB); // if bigram is repeated return true
+            return count > 0;// if the bigram is found then return true
         }
     }
 
+    /**
+     * updates the some of the values that this nonterminal points to with a nonterminal that
+     * represents those values eg 1 -> a b c , replaces with 1 -> 2 c
+     * @param r
+     */
     //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH UPDATE RULE
     public void updateRule(NonTerminal r) {
         Bigram ruleBigram = r.currentBigram;
@@ -154,10 +174,13 @@ public class NonTerminal extends Symbol {
                 // really really bad, if half of a bigram has been changed alter the one made earlier
                 // in the list by setting it's right hand to ! or whatever, also have to check that
                 // not at the bottom of the list
+
+                // THESE ALL CONDITIONAL, JUST AVOIDED IF TERMINAL
                 if(i-1 >= 0 ) {
                     bigramList.get(i-1).second = new Terminal("!");
                 }
 
+                //TODO PUT THESE TWO SAME CODE IN A METHOD
                 // decrementing the use count of nonTerminals
                 if (values.get(i+1) instanceof NonTerminal) {
                     ((NonTerminal) values.get(i+1)).usedByList.remove(this.number);
@@ -199,6 +222,30 @@ public class NonTerminal extends Symbol {
     //USE THIS!
     public void setRuleNumber(Integer rn) {
         this.number = rn;
+    }
+
+    public Integer getRuleNumber() {
+        return this.number;
+    }
+
+    @Override
+    public String toString() {
+        return this.representation;
+    }
+
+    /**
+     * kind og like toString but for the values, maybe incorporate or separate
+     * @return
+     */
+    //just a quick method to get the values, using for checking
+    //MAKE A TO PRINT
+    public String getValues() {
+        String valueOuput = "";
+        valueOuput += this.getRuleNumber() + " -> ";
+        for (Symbol i : values) {
+            valueOuput += i.toString() + " ";
+        }
+        return valueOuput;
     }
 
     public void printBigram(List<Bigram> lstB) {

@@ -19,7 +19,6 @@ public class Compress {
      */
     public List<NonTerminal> processInput(String input) {
         //TODO decide where reorder will go, manage where things are created
-        NonTerminal.ruleNumber = 0; // ehh set with a setter
         NonTerminal firstNTRule = new NonTerminal();
 
         for (int i = 0; i < input.length(); i++) {
@@ -43,8 +42,6 @@ public class Compress {
         for (NonTerminal r : nonTerminals.values()) {
             finalRules.add(r);
         }
-
-        // print out rules
         printRules(finalRules);
 
         return finalRules;
@@ -98,6 +95,7 @@ public class Compress {
     //TODO that wouldn't be direct look up though
     public void existingBigram(NonTerminal fr) {
         //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
+        //TODO remove for loops use hash
         List<NonTerminal> newRuleLst = new ArrayList<>();
         for (NonTerminal r : nonTerminals.values()) {
             Bigram actualB = new Bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));

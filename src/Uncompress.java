@@ -100,8 +100,8 @@ public class Uncompress {
                 r.addValues(terminals.get(rep)); // for Terminal send a String, for nonTerminal send an int
             }
             else {
-                int repre = getNonTerminalFromBinary(mutatingString);
-                r.addValues(repre);
+
+                r.addValues(new NonTerminal(getNonTerminalFromBinary(mutatingString)));
             }
         }
 

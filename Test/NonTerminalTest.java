@@ -21,12 +21,12 @@ public class NonTerminalTest {
 
     @Test
     public void updateBigramsBirgram() {
-        nt.addValues(1);
-        nt.addValues(2);
-        nt.addValues(3);
-        nt.addValues(4);
-        nt.addValues(5);
-        nt.addValues(6);
+//        nt.addValues(1);
+//        nt.addValues(2);
+//        nt.addValues(3);
+//        nt.addValues(4);
+//        nt.addValues(5);
+//        nt.addValues(6);
 
         nt.getBigramMap();
     }
@@ -34,12 +34,12 @@ public class NonTerminalTest {
     @Test
     public void removeBigram() {
         int indexToRemove = 3;
-        nt.addValues(1);
-        nt.addValues(2);
-        nt.addValues(3);
-        nt.addValues(4);
-        nt.addValues(5);
-        nt.addValues(6);
+//        nt.addValues(1);
+//        nt.addValues(2);
+//        nt.addValues(3);
+//        nt.addValues(4);
+//        nt.addValues(5);
+//        nt.addValues(6);
 
 
         Pair<Integer, Integer> oL = new Pair(indexToRemove-1, indexToRemove);
@@ -64,7 +64,7 @@ public class NonTerminalTest {
         nt.addValues(a);
         nt.addValues(b);
         NonTerminal ntTwo = new NonTerminal(2);
-        ntTwo.addValues(1);
+        ntTwo.addValues(nt);
 
         List<Symbol> expected = new ArrayList<>();
         expected.add(a);

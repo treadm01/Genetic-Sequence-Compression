@@ -76,8 +76,8 @@ public class NonTerminal extends Symbol {
     }
 
     // only used by decompress??
-    public void addValues(Integer i) {
-        NonTerminal nt = new NonTerminal(i);
+    public void addValues(NonTerminal nt) {
+//        NonTerminal nt = new NonTerminal(i);
         values.add(nt); // only just added this line after uncompressing from binary, check how this
         // code has been working - probably not used, convert to string and send that??
     }
@@ -85,7 +85,9 @@ public class NonTerminal extends Symbol {
     // similar to add values in that it is changing values, but replacing nonTerminal with
     // whatever it points to
     public void replaceNonTerminal(NonTerminal t) {
-
+        System.out.println(values.indexOf(t));
+        values.addAll(values.indexOf(t), t.values);
+        values.remove(t);
     }
 
     @Override

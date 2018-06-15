@@ -100,19 +100,8 @@ public class Compress {
         //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
         List<NonTerminal> newRuleLst = new ArrayList<>();
         for (NonTerminal r : nonTerminals.values()) {
-        //for (nonTerminal r : nonTerminals.values()) {
             Bigram actualB = new Bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
             r.setCurrentBigram(actualB); // clean up - when is a good consistent way to set this?
-
-            //THIS WILL UPDATE THE FIRST RULE EVEN IF THE RULE IS LARGE THAN TWO... DOESN'T MATTER RIGHT?
-            // IF THEY EQUAL SHOULD UPDATE AND MAKE A NEW RULE...
-            // had to specify size of values to two, whole rule to work the second half, not whole
-            // rule with the get all bigrams method.....
-
-//            if (fr.getCurrentBigram().equals(r.getCurrentBigram()) && r.values.size() == 2) {
-//                fr.updateRule(r);
-//            }
-//            else
             if (r.getAllBigrams(). contains(fr.getCurrentBigram())) {
                 if (r.values.size() == 2) {
                     fr.updateRule(r);
@@ -146,11 +135,7 @@ public class Compress {
 
         for (NonTerminal s : ntList) {
             NonTerminal hold = nonTerminals.get(s.usedByList.get(0));
-            System.out.println(nonTerminals);
-            int index = hold.values.indexOf(s);
-            // TODO THIS IS TOO RISKY NOT GOING THROUGH USUAL MESSY ROUTES
-            hold.values.addAll(index, s.values);
-            hold.values.remove(s);
+            hold.replaceNonTerminal(s);
             nonTerminals.remove(s.number); // remove key??
         }
     }

@@ -15,7 +15,6 @@ public class NonTerminal extends Symbol {
     Integer number; // what number??? The terminal/rule number
     Integer useNumber = 0; // number of uses
     public List<Symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
-    //Map<Integer, Symbol> values = new HashMap<>();
     Map<Pair<Integer, Integer>, Bigram> bigramMap = new HashMap<>();
     List<Bigram> bigramList = new ArrayList<>();
     Bigram currentBigram;
@@ -40,17 +39,8 @@ public class NonTerminal extends Symbol {
         return this.number;
     }
 
-//    public void updateBigrams() {
-//        if (values.size() > 1) {
-//            int left = values.size() - 2;
-//            int right = values.size() - 1;
-//            Bigram bi = new Bigram(values.get(left), values.get(right));
-//            Pair p = new Pair(left, right);
-//            bigramMap.putIfAbsent(p, bi);
-//        }
-//    }
-
-    public void updateBiList() {
+    //TODO should just be one method, not rebuilding list... not for looping through list
+    public void rebuildBiList() {
         bigramList.clear();
         for (int i = 0; i < values.size() - 1; i++) {
             Bigram bi = new Bigram(values.get(i), values.get(1 + i));
@@ -58,7 +48,14 @@ public class NonTerminal extends Symbol {
         }
     }
 
-
+    public void updateBiList() {
+        if (values.size() > 1) {
+            int left = values.size() - 2;
+            int right = values.size() - 1;
+            Bigram bi = new Bigram(values.get(left), values.get(right));
+            bigramList.add(bi);
+        }
+    }
 
     // add a single non-terminal at the moment to the rule
     public void addValues(Terminal t) {
@@ -96,7 +93,7 @@ public class NonTerminal extends Symbol {
     public void replaceNonTerminal(NonTerminal t) {
         values.addAll(values.indexOf(t), t.values);
         values.remove(t);
-        updateBiList();
+        rebuildBiList();
     }
 
     @Override
@@ -130,45 +127,27 @@ public class NonTerminal extends Symbol {
         else {
             Bigram actualB = new Bigram(values.get(values.size() - 2), values.get(values.size() - 1));
             setCurrentBigram(actualB); // clean up
-            return getBigrams().contains(actualB); // if bigram is repeated return true
+
+            //TODO need a better method than this list dupe and remove
+            List<Bigram> removedLast = new ArrayList<>(bigramList); // create a new list to check
+            // those not from the most recent bigram
+
+            removedLast.remove(removedLast.size()-1);
+            removedLast.remove(removedLast.size()-1);
+
+            long count = removedLast.stream()
+                    .filter(x -> x.equals(actualB))
+                    .count();
+
+            return count > 0;//getBigrams().contains(actualB); // if bigram is repeated return true
         }
-    }
-
-    //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH - GETBIGRAMS
-    public List<Bigram> getBigrams() {
-        // THIS IS PROBABLY THE PROBLEM... CREATING NEW LIST EACH TIME JUST TO SEE IF REPEATED..
-        List<Bigram> lstB = new ArrayList<>();
-
-        // THIS DOES NOT GIVE BACK BIGRAMS FOR GROUPS OF THREE
-        // OR EVER THE LAST BIGRAM WHICH WAS THE ORIGINAL INTENTION
-        // BUT MESSES UP IF USED ELSEWHERE
-        for (int i = 0; i < values.size() - 3; i++) { // set to 3 to stop bigrams being formed of any element of the actual final last pair..... breaks where else??
-            Bigram b = new Bigram(values.get(i), values.get(1 + i));
-            lstB.add(b);
-        }
-
-        return lstB;
     }
 
     //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH UPDATE RULE
     public void updateRule(NonTerminal r) {
-        // THIS ALSO A BIG PROBLEM, CREATING A LIST TO CHECK AGAINST....
-        // AND COMPUTE ON 'HEAVILY'
-//        List<Bigram> lstB = new ArrayList<>();
-//
-//        for (int i = 0; i < values.size() - 1; i++) {
-//            Bigram bi = new Bigram(values.get(i), values.get(1 + i));
-//            lstB.add(bi);
-//        }
-//
-//        System.out.println("FIST");
-//        getBigramMap(bigramList);
-//        System.out.println("SECOND");
-//        getBigramMap(lstB);
-
-
         Bigram ruleBigram = r.currentBigram;
 
+        // TODO yes, no loop of entire list
         for (int i = bigramList.size() -1; i > -1; i--) {
             if (bigramList.get(i).equals(ruleBigram)) {
 
@@ -194,21 +173,16 @@ public class NonTerminal extends Symbol {
                 values.remove(i+1);
                 values.remove(i);
                 values.add(i, r);
-                updateBiList();
+                //TODO shouldn't use rebuild list
+                rebuildBiList();
                 r.useNumber++;
                 r.usedByList.add(this.number);
             }
         }
     }
 
-    //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH - GET ALL BIGRAMS
+    //TODO USE HASH RATHER THAN LIST
     public List<Bigram> getAllBigrams() {
-        // THIS CREATES A NEW LIST OF BIGRAMS EACH TIME! WHY??
-//        List<Bigram> lstB = new ArrayList<>();
-//        for (int i = 0; i < values.size() - 1; i++) {
-//            Bigram bi = new Bigram(values.get(i), values.get(1 + i));
-//            lstB.add(bi);
-//        }
         return bigramList;
     }
 
@@ -227,7 +201,7 @@ public class NonTerminal extends Symbol {
         this.number = rn;
     }
 
-    public void getBigramMap(List<Bigram> lstB) {
+    public void printBigram(List<Bigram> lstB) {
         for (Bigram b : lstB) {
             System.out.println("bigram left value = " + b.first);
             System.out.println("bigram right value = " + b.second);

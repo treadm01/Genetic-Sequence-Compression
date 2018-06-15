@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class uncompress {
+public class Uncompress {
 
     public String mutatingString = "";
     Map<String, Terminal> terminals = new HashMap<>();
@@ -11,14 +11,14 @@ public class uncompress {
     //TODO save to file and retrieve in a way that objects are known to be terminal, non terminal, rule
     // from there can start to compare
 
-    public String getOutput(nonTerminal r, List<nonTerminal> compressedRule, String soFar) {
+    public String getOutput(NonTerminal r, List<NonTerminal> compressedRule, String soFar) {
         String uncompressed = soFar;
         for (Symbol s : r.values) {
             if (s instanceof Terminal) {
                 uncompressed += s.toString();
             }
             else {
-                for (nonTerminal rx : compressedRule) {
+                for (NonTerminal rx : compressedRule) {
                     if (rx.getRuleNumber() == Integer.parseInt(String.valueOf(s.toString()))) {
                         uncompressed = getOutput(rx, compressedRule, uncompressed);
                     }
@@ -28,9 +28,9 @@ public class uncompress {
         return uncompressed;
     }
 
-    public String processInput(List<nonTerminal> compressedRule) {
+    public String processInput(List<NonTerminal> compressedRule) {
 
-        nonTerminal firstRule = compressedRule.get(0);
+        NonTerminal firstRule = compressedRule.get(0);
         String uncompressed = "";
 
         uncompressed += getOutput(firstRule, compressedRule, uncompressed);
@@ -39,7 +39,7 @@ public class uncompress {
     }
 
     // remove every 7
-    public List<nonTerminal> processBinary(String binary) {
+    public List<NonTerminal> processBinary(String binary) {
 
         // first thing to do is remove wasted seventh bits
         String removedSevens = "";
@@ -49,8 +49,8 @@ public class uncompress {
             }
         }
 
-        List<nonTerminal> buildList = new ArrayList<>();
-        nonTerminal.ruleNumber = 0; // shouldn't have to do this
+        List<NonTerminal> buildList = new ArrayList<>();
+        NonTerminal.ruleNumber = 0; // shouldn't have to do this
 
         mutatingString = removedSevens;
 
@@ -59,15 +59,15 @@ public class uncompress {
             System.out.println(mutatingString);
         }
 
-        for (nonTerminal r : buildList) {
+        for (NonTerminal r : buildList) {
             System.out.println(r.getValues());
         }
 
         return buildList;
     }
 
-    public nonTerminal getRuleFromBinary(String bnary) {
-        nonTerminal r = new nonTerminal();
+    public NonTerminal getRuleFromBinary(String bnary) {
+        NonTerminal r = new NonTerminal();
         //System.out.println(binary);
 
         int symbolsToRead = 0;

@@ -1,6 +1,5 @@
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -10,43 +9,43 @@ public class uncompressTest {
     @Test
     public void processInput() {
         String expected = "abcdbc";
-        compress c = new compress();
-        List<nonTerminal> rules = c.processInput(expected);
-        uncompress u = new uncompress();
+        Compress c = new Compress();
+        List<NonTerminal> rules = c.processInput(expected);
+        Uncompress u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         rules.clear();
 
         expected = "abcdbcabc";
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         rules.clear();
 
         expected = "abcdbcabcd";
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         expected = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         expected = "abcdbcabcdabcdbcabcd";
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         expected = "abcdbcabcdabcdbcabcdabcdbcabcdabcdbcabcdabcdbcabcdabcdbcabcdabcdbcabcdabcdbcabcd";
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 //
         expected = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC" +
@@ -85,9 +84,9 @@ public class uncompressTest {
                 "AATAGGGTAGTGTTAGGGTAGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGTGTGGGTGTG" +
                 "GTGTGTGTGGGTGTGGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGGGTGTGGTGTGTGTG";
 
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         expected = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC" +
@@ -99,17 +98,17 @@ public class uncompressTest {
                 "TAAAATACTTAGAAAGTATAGTTCCTTTTGACATCGGATTTCCTAATAATTTTATCGTGT" +
                 "TAAATTCCTTGACTCAAAAATATGGTACGAATAATGTTTAGATAATTTTTCAGTAATCAA";
 
-        c = new compress();
+        c = new Compress();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
         assertEquals(expected, u.processInput(rules));
 
         rules.clear();
-        c = new compress();
+        c = new Compress();
         InputOutput io = new InputOutput();
         expected = io.readFile();
         rules = c.processInput(expected);
-        u = new uncompress();
+        u = new Uncompress();
 
         assertEquals(expected, u.processInput(rules));
     }
@@ -120,7 +119,7 @@ public class uncompressTest {
 
     @Test
     public void getBinaryFromFile() {
-        uncompress u = new uncompress();
+        Uncompress u = new Uncompress();
         InputOutput io = new InputOutput();
         System.out.println(io.readCompressedFile());
     }
@@ -128,8 +127,8 @@ public class uncompressTest {
     @Test
     public void readFile() {
         //TODO working for smaller groups but not larger, changed the byte parse to int... in uncompress
-        uncompress u = new uncompress();
-        compress c = new compress();
+        Uncompress u = new Uncompress();
+        Compress c = new Compress();
         InputOutput io = new InputOutput();
         String expected = io.writeFile(c.processInput("ACGACT"));
         String result = io.readCompressedFile();
@@ -146,8 +145,8 @@ public class uncompressTest {
 
     @Test
     public void comparisonCheck() {
-        uncompress u = new uncompress();
-        compress c = new compress();
+        Uncompress u = new Uncompress();
+        Compress c = new Compress();
         InputOutput io = new InputOutput();
         String expected = io.writeFile(c.processInput("ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC\n" +
                 "CATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA\n" +
@@ -165,19 +164,19 @@ public class uncompressTest {
 
     @Test
     public void checkLongerStrings() {
-        uncompress u = new uncompress();
-        compress c = new compress();
+        Uncompress u = new Uncompress();
+        Compress c = new Compress();
         InputOutput io = new InputOutput();
 
         // "AGCTGCAGCT"
         String originalFile = io.readFile(); // for final check the original string
 
-        List<nonTerminal> originalCompressedRules = c.processInput(originalFile);
+        List<NonTerminal> originalCompressedRules = c.processInput(originalFile);
         String expected = io.writeFile(originalCompressedRules); // compressed
 
         String result = io.readCompressedFile(); // receiving the compressed
         assertEquals(expected, result); // check the same compressed stuff is received
-        List<nonTerminal> uncompressedRules = u.processBinary(result);
+        List<NonTerminal> uncompressedRules = u.processBinary(result);
 
         String uncompressedFile = u.processInput(uncompressedRules);
 
@@ -190,8 +189,8 @@ public class uncompressTest {
 
     @Test
     public void testCompressUncompress() {
-        uncompress u = new uncompress();
-        compress c = new compress();
+        Uncompress u = new Uncompress();
+        Compress c = new Compress();
         InputOutput io = new InputOutput();
         String expected = io.readFile();
 
@@ -199,7 +198,7 @@ public class uncompressTest {
         io.writeFile(c.processInput(expected));
 
         String binaryFromFile = io.readCompressedFile();
-        List<nonTerminal> processedFromBinary = u.processBinary(binaryFromFile);
+        List<NonTerminal> processedFromBinary = u.processBinary(binaryFromFile);
         String answer = u.processInput(processedFromBinary);
 
         assertEquals(expected, answer);

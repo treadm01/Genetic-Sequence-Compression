@@ -1,21 +1,21 @@
-public class bigram implements Comparable {
+public class Bigram implements Comparable {
 
     Symbol first;
     Symbol second;
 
-    public bigram(Symbol f, Symbol s) {
+    public Bigram(Symbol f, Symbol s) {
         first = f;
         second = s;
     }
 
     @Override
     public int compareTo(Object o) {
-        bigram b;
-        if (!(o instanceof bigram)) {
+        Bigram b;
+        if (!(o instanceof Bigram)) {
             throw new ClassCastException("Must be bigram. Received " + o.getClass());
         }
         else {
-            b = (bigram) o;
+            b = (Bigram) o;
         }
 
         if (b.first.toString().equals(this.first.toString())
@@ -27,15 +27,15 @@ public class bigram implements Comparable {
 
     @Override
     public boolean equals(Object o) {
-        bigram b = null;
+        Bigram b = null;
         if (this == o) {
             return true;
         }
-        if (!(o instanceof bigram)) {
+        if (!(o instanceof Bigram)) {
             throw new ClassCastException("Must be bigram. Received " + o.getClass());
         }
         else {
-            b = (bigram) o;
+            b = (Bigram) o;
         }
 
         return  (b.first.toString().equals(this.first.toString())

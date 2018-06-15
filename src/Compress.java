@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
  * keeps a list of the rules, but then how to search that by rule number?
  * and how to access the values stored in the rules?
  */
-public class compress {
+public class Compress {
     Map<String, Terminal> terminals = new HashMap<>();
-    Map<Integer, nonTerminal> nonTerminals = new HashMap<>();
+    Map<Integer, NonTerminal> nonTerminals = new HashMap<>();
 
     /**
      * Main method to take string of the input, and run through the symbol,
@@ -17,10 +17,10 @@ public class compress {
      * @param input
      * @return
      */
-    public List<nonTerminal> processInput(String input) {
+    public List<NonTerminal> processInput(String input) {
         //TODO decide where reorder will go, manage where things are created
-        nonTerminal.ruleNumber = 0; // ehh set with a setter
-        nonTerminal firstNTRule = new nonTerminal();
+        NonTerminal.ruleNumber = 0; // ehh set with a setter
+        NonTerminal firstNTRule = new NonTerminal();
 
         for (int i = 0; i < input.length(); i++) {
             System.out.println("working through symbol " + i + " of " + input.length());
@@ -38,9 +38,9 @@ public class compress {
         //reorderRules(firstNTRule);
 
         // print out the final values - // just for debugging
-        List<nonTerminal> finalRules = new ArrayList<>();
+        List<NonTerminal> finalRules = new ArrayList<>();
         finalRules.add(firstNTRule);
-        for (nonTerminal r : nonTerminals.values()) {
+        for (NonTerminal r : nonTerminals.values()) {
             finalRules.add(r);
         }
 
@@ -55,7 +55,7 @@ public class compress {
      * to find hierarchical rules
      * @param firstRule
      */
-    public void threeRule(nonTerminal firstRule) {
+    public void threeRule(NonTerminal firstRule) {
         //TODO implement this without String
         String checkValues = "";
         String currentValues = firstRule.getValues();
@@ -75,9 +75,9 @@ public class compress {
      * repeats through out the grammar
      * @param fr
      */
-    public void checkRepeat(nonTerminal fr) {
+    public void checkRepeat(NonTerminal fr) {
         if (fr.checkBigram()) {
-            nonTerminal newRule = new nonTerminal();
+            NonTerminal newRule = new NonTerminal();
             newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
             nonTerminals.put(newRule.number, newRule);
             fr.updateRule(newRule);
@@ -96,12 +96,12 @@ public class compress {
     //TODO hash get all the rules where they occur, but that keeps a map of bigrams and list of
     //TODO everything... Alternative, don't store symbols individually in nonTerminal but as bigrams
     //TODO that wouldn't be direct look up though
-    public void existingBigram(nonTerminal fr) {
+    public void existingBigram(NonTerminal fr) {
         //TODO clean up // took firstrule out of rules to make this run easier but could have other issues
-        List<nonTerminal> newRuleLst = new ArrayList<>();
-        for (nonTerminal r : nonTerminals.values()) {
+        List<NonTerminal> newRuleLst = new ArrayList<>();
+        for (NonTerminal r : nonTerminals.values()) {
         //for (nonTerminal r : nonTerminals.values()) {
-            bigram actualB = new bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
+            Bigram actualB = new Bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
             r.setCurrentBigram(actualB); // clean up - when is a good consistent way to set this?
 
             //THIS WILL UPDATE THE FIRST RULE EVEN IF THE RULE IS LARGE THAN TWO... DOESN'T MATTER RIGHT?
@@ -113,12 +113,12 @@ public class compress {
 //                fr.updateRule(r);
 //            }
 //            else
-            if (r.getAllBigrams().contains(fr.getCurrentBigram())) {
+            if (r.getAllBigrams(). contains(fr.getCurrentBigram())) {
                 if (r.values.size() == 2) {
                     fr.updateRule(r);
                 }
                 else {
-                    nonTerminal newRule = new nonTerminal();
+                    NonTerminal newRule = new NonTerminal();
                     newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
                     newRuleLst.add(newRule);
                     fr.updateRule(newRule);
@@ -128,7 +128,7 @@ public class compress {
         }
 
         // add the newly created rules to main list
-        for (nonTerminal r : newRuleLst) {
+        for (NonTerminal r : newRuleLst) {
             nonTerminals.put(r.number, r);
         }
     }
@@ -139,13 +139,13 @@ public class compress {
      * with what is linked to.
      * @param fr
      */
-    public void ruleUtility(nonTerminal fr){
-        List<nonTerminal> ntList = nonTerminals.values().stream()
+    public void ruleUtility(NonTerminal fr){
+        List<NonTerminal> ntList = nonTerminals.values().stream()
                 .filter(x -> x.useNumber == 1)
                 .collect(Collectors.toList());
 
-        for (nonTerminal s : ntList) {
-            nonTerminal hold = nonTerminals.get(s.usedByList.get(0));
+        for (NonTerminal s : ntList) {
+            NonTerminal hold = nonTerminals.get(s.usedByList.get(0));
             hold.values.addAll(hold.values.indexOf(s), s.values);
             hold.values.remove(s);
             nonTerminals.remove(s.number); // remove key??
@@ -154,7 +154,7 @@ public class compress {
 
 
     // returns a reordered list
-    public void reorderRules(nonTerminal fr) {
+    public void reorderRules(NonTerminal fr) {
         //TODO need to reorder rules at the end so more often used rules have lower numbers
     }
 
@@ -163,8 +163,8 @@ public class compress {
      * small method to print out rules
      * @param r
      */
-    public void printRules(List<nonTerminal> r) {
-        for (nonTerminal nt : r) {
+    public void printRules(List<NonTerminal> r) {
+        for (NonTerminal nt : r) {
             System.out.println(nt.getValues());
         }
     }

@@ -58,7 +58,7 @@ public class InputOutput {
      * @param finalRules
      * @return
      */
-    public String writeFile(List<nonTerminal> finalRules) {
+    public String writeFile(List<NonTerminal> finalRules) {
         //TODO break this up into process binary and separate write file methods
         System.out.println("writing file");
         String fullBinary = "";
@@ -66,7 +66,7 @@ public class InputOutput {
         int largestRuleSize = Integer.toBinaryString(finalRules.size()).length();
         System.out.println(largestRuleSize);
 
-        for (nonTerminal r : finalRules) {
+        for (NonTerminal r : finalRules) {
             String binaryRuleLength = "";
             String ruleInBinary = Integer.toBinaryString(r.values.size());
             for (int i = 0; i < ruleInBinary.length(); i++) {
@@ -79,7 +79,7 @@ public class InputOutput {
             for (Symbol s : r.values) {
                 String binarySymbolRepresentation = "";
                 String lengthOfSymbol = "";
-                if (s instanceof nonTerminal) {
+                if (s instanceof NonTerminal) {
                     binarySymbolRepresentation = Integer.toBinaryString(Integer.valueOf(s.toString()));
 
                     for (int i = 0; i < binarySymbolRepresentation.length(); i++) {

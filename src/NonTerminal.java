@@ -17,6 +17,7 @@ public class NonTerminal extends Symbol {
     public List<Symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
     //Map<Integer, Symbol> values = new HashMap<>();
     Map<Pair<Integer, Integer>, Bigram> bigramMap = new HashMap<>();
+    //List<Bigram> bigramList = new ArrayList<>();
     Bigram currentBigram;
     public List<Integer> usedByList = new ArrayList<>();
 
@@ -39,18 +40,21 @@ public class NonTerminal extends Symbol {
         return this.number;
     }
 
-    public void updateBigrams() {
-        for (int i = 0; i < values.size() - 1; i++) {
-            Bigram bi = new Bigram(values.get(i), values.get(1 + i));
-            Pair p = new Pair(i, i+1);
-            bigramMap.putIfAbsent(p, bi);
-        }
-    }
+//    public void updateBigrams() {
+//        if (values.size() > 1) {
+//            int left = values.size() - 2;
+//            int right = values.size() - 1;
+//            Bigram bi = new Bigram(values.get(left), values.get(right));
+//            Pair p = new Pair(left, right);
+//            bigramMap.putIfAbsent(p, bi);
+//        }
+//    }
+
+
 
     // add a single non-terminal at the moment to the rule
     public void addValues(Terminal t) {
         values.add(t);
-        updateBigrams();
     }
 
     // adding two values from a found bigram
@@ -69,7 +73,6 @@ public class NonTerminal extends Symbol {
         values.add(b.first);
         values.add(b.second);
         setCurrentBigram(b); // set the bigram when creating a rule from one (too cheaty?)
-        updateBigrams();
     }
 
     // only used by decompress??
@@ -77,7 +80,12 @@ public class NonTerminal extends Symbol {
         NonTerminal nt = new NonTerminal(i);
         values.add(nt); // only just added this line after uncompressing from binary, check how this
         // code has been working - probably not used, convert to string and send that??
-        updateBigrams();
+    }
+
+    // similar to add values in that it is changing values, but replacing nonTerminal with
+    // whatever it points to
+    public void replaceNonTerminal(NonTerminal t) {
+
     }
 
     @Override
@@ -141,8 +149,6 @@ public class NonTerminal extends Symbol {
             Bigram bi = new Bigram(values.get(i), values.get(1 + i));
             lstB.add(bi);
         }
-
-        updateBigrams();
 
         Bigram ruleBigram = r.currentBigram;
 

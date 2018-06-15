@@ -146,7 +146,10 @@ public class Compress {
 
         for (NonTerminal s : ntList) {
             NonTerminal hold = nonTerminals.get(s.usedByList.get(0));
-            hold.values.addAll(hold.values.indexOf(s), s.values);
+            System.out.println(nonTerminals);
+            int index = hold.values.indexOf(s);
+            // TODO THIS IS TOO RISKY NOT GOING THROUGH USUAL MESSY ROUTES
+            hold.values.addAll(index, s.values);
             hold.values.remove(s);
             nonTerminals.remove(s.number); // remove key??
         }

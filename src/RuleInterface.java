@@ -3,10 +3,10 @@ public interface RuleInterface {
     Integer getUseAmount();
     void incrementUse();
     void decrementUse();
-    void replaceDigram();
+    void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal);
     void replaceNonTerminal();
     Boolean checkDigram();
-    void addTerminal(String terminal);
-    Symbol getSymbol(Terminal symbol);
+    void addTerminal(Terminal terminal);
+    Symbol getSymbol(Terminal symbol); //TODO for testing
     Symbol getTail();//TODO for testing
 }

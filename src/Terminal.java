@@ -24,7 +24,11 @@ public class Terminal extends Symbol {
             t = (Terminal) o;
         }
 
-        return  (t.toString().equals(this.toString()));
+        if (t.getLeftSymbol() == null || this.getLeftSymbol() == null) {
+            return false;
+        }
+
+        return  (t.toString().equals(this.toString()) && t.getLeftSymbol().toString().equals(this.getLeftSymbol().toString()));
     }
 
     @Override

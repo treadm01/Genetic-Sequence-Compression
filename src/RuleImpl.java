@@ -5,7 +5,7 @@ public class RuleImpl implements RuleInterface {
     private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
     Map<Integer, Symbol> symbolHashMap = new HashMap<>();
-    Symbol tail;
+    Symbol tail, head;
 
     @Override
     public Integer getSize() {
@@ -27,11 +27,17 @@ public class RuleImpl implements RuleInterface {
         ruleUsage--;
     }
 
+    /**
+     * take out matching digram and replace with a nonTerminal
+     */
     @Override
-    public void replaceDigram() {
+    public void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal) {
 
     }
 
+    /**
+     * take out nonTerminal symbol and replace with what it represented
+     */
     @Override
     public void replaceNonTerminal() {
 
@@ -53,18 +59,26 @@ public class RuleImpl implements RuleInterface {
      * @param terminal
      */
     @Override
-    public void addTerminal(String terminal) {
-        Terminal t = new Terminal(terminal);
+    public void addTerminal(Terminal terminal) {
         if (symbolHashMap.size() == 0) {
-            tail = t;
+            head = terminal;
+            tail = terminal;
         }
         else {
-            t.setLeftSymbol(tail);
-            tail = t;
+            terminal.setLeftSymbol(tail);
+            tail.setRightSymbol(terminal);
+            tail = terminal;
         }
-        symbolHashMap.putIfAbsent(symbolHashMap.size(), t);
+        if (!symbolHashMap.containsValue(terminal)) {
+            symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
+        }
     }
 
+    /**
+     * not sure if this will ever work was using for debugging
+     * @param symbol
+     * @return
+     */
     @Override
     public Symbol getSymbol(Terminal symbol) {
         return null;//symbolHashMap.values();
@@ -73,12 +87,20 @@ public class RuleImpl implements RuleInterface {
     @Override
     public String toString() {
         String rule = "";
-        for (Symbol s : symbolHashMap.values()) {
+        Symbol s = head;
+
+        do {
             rule += s.toString();
-        }
+            s = s.getRightSymbol();
+        } while (s != null);
+
         return rule;
     }
 
+    /**
+     * using for debugging checking digrams
+     * @return
+     */
     public Symbol getTail() {
         return tail;
     }

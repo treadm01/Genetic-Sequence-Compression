@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/RuleImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/RuleImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RuleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,8 +32,8 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="83" column="92" selection-start-line="83" selection-start-column="92" selection-end-line="83" selection-end-column="92" />
+            <state relative-caret-position="149">
+              <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -44,11 +45,7 @@
         <entry file="file://$PROJECT_DIR$/src/Terminal.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
-              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-              <folding>
-                <element signature="e#87#88#0" expanded="true" />
-                <element signature="e#114#115#0" expanded="true" />
-              </folding>
+              <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -56,7 +53,7 @@
       <file leaf-file-name="NonTerminal.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NonTerminal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
+            <state relative-caret-position="3118">
               <caret line="182" column="64" selection-start-line="182" selection-start-column="64" selection-end-line="182" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -74,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="569">
-              <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+            <state relative-caret-position="72">
+              <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#92#93#0" expanded="true" />
@@ -91,18 +88,25 @@
                 <element signature="e#427#428#0" expanded="true" />
                 <element signature="e#597#598#0" expanded="true" />
                 <element signature="e#624#625#0" expanded="true" />
-                <element signature="e#791#792#0" expanded="true" />
-                <element signature="e#819#820#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NonTerminalTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="55" column="10" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="198">
+              <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -213,16 +217,16 @@
         <option value="$PROJECT_DIR$/src/Uncompress.java" />
         <option value="$PROJECT_DIR$/Test/compressTest.java" />
         <option value="$PROJECT_DIR$/Test/uncompressTest.java" />
-        <option value="$PROJECT_DIR$/Test/NonTerminalTest.java" />
-        <option value="$PROJECT_DIR$/src/Compress.java" />
         <option value="$PROJECT_DIR$/src/RuleInter.java" />
         <option value="$PROJECT_DIR$/src/SymbolInterface.java" />
         <option value="$PROJECT_DIR$/src/Symbol.java" />
-        <option value="$PROJECT_DIR$/src/Terminal.java" />
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
-        <option value="$PROJECT_DIR$/Test/RuleImplTest.java" />
         <option value="$PROJECT_DIR$/src/RuleInterface.java" />
+        <option value="$PROJECT_DIR$/src/Compress.java" />
+        <option value="$PROJECT_DIR$/Test/NonTerminalTest.java" />
+        <option value="$PROJECT_DIR$/src/Terminal.java" />
         <option value="$PROJECT_DIR$/src/RuleImpl.java" />
+        <option value="$PROJECT_DIR$/Test/RuleImplTest.java" />
       </list>
     </option>
   </component>
@@ -519,14 +523,7 @@
       <workItem from="1529055477432" duration="24284000" />
       <workItem from="1529315636485" duration="316000" />
       <workItem from="1529316015175" duration="78000" />
-      <workItem from="1529316117349" duration="5748000" />
-    </task>
-    <task id="LOCAL-00026" summary="switched to parsing directly to int, fixed some problems, but not getting the same code back">
-      <created>1521485241087</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1521485241088</updated>
+      <workItem from="1529316117349" duration="6699000" />
     </task>
     <task id="LOCAL-00027" summary="working for smaller text not larger">
       <created>1521486506161</created>
@@ -864,19 +861,17 @@
       <option name="project" value="LOCAL" />
       <updated>1529321385989</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="can add a terminal and printout rule with one terminal">
+      <created>1529322145911</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1529322145911</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="NonTerminalTest_rebuildBiList - 2018.06.18 at 11h 09m 53s.xml">
-      <configuration name="NonTerminalTest.rebuildBiList" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="NonTerminalTest_rebuildBiList - 2018.06.18 at 11h 10m 19s.xml">
-      <configuration name="NonTerminalTest.rebuildBiList" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="NonTerminalTest_rebuildBiList - 2018.06.18 at 11h 10m 50s.xml">
-      <configuration name="NonTerminalTest.rebuildBiList" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="NonTerminalTest_rebuildBiList - 2018.06.18 at 11h 12m 24s.xml">
       <configuration name="NonTerminalTest.rebuildBiList" configurationId="JUnit" />
     </history-entry>
@@ -898,9 +893,18 @@
     <history-entry file="compressTest_simpleInputTest - 2018.06.18 at 11h 38m 03s.xml">
       <configuration name="compressTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.18 at 12h 42m 00s.xml">
+      <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.18 at 12h 42m 38s.xml">
+      <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.18 at 12h 43m 10s.xml">
+      <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="221952000" />
+    <option name="totallyTimeSpent" value="222903000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -913,7 +917,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.43373495" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.43373495" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32882884" />
       <window_info id="Designer" order="2" />
@@ -939,7 +943,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added text files" />
     <MESSAGE value="going to try and remove rule and use terminal only" />
     <MESSAGE value="removed rules just using non-terminals. need to utilise increment decrement of rule number" />
     <MESSAGE value="sorted rules" />
@@ -964,7 +967,8 @@
     <MESSAGE value="overhaul, breaking up classes, using interfaces, trying to store symbols next to each other within the objects" />
     <MESSAGE value="same for symbol... with terminal and nonterminal next" />
     <MESSAGE value="adding terminal to rule, not sure about the symbol interface with terminal extending" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding terminal to rule, not sure about the symbol interface with terminal extending" />
+    <MESSAGE value="can add a terminal and printout rule with one terminal" />
+    <option name="LAST_COMMIT_MESSAGE" value="can add a terminal and printout rule with one terminal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1062,13 +1066,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="93" column="33" selection-start-line="93" selection-start-column="33" selection-end-line="93" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Digram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -1082,16 +1079,6 @@
           <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
           <folding>
             <marker date="1529078786202" expanded="true" signature="525:757" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="83" column="92" selection-start-line="83" selection-start-column="92" selection-end-line="83" selection-end-column="92" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1126,38 +1113,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Terminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-          <folding>
-            <element signature="e#87#88#0" expanded="true" />
-            <element signature="e#114#115#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SymbolInterface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" column="32" lean-forward="true" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NonTerminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="182" column="64" selection-start-line="182" selection-start-column="64" selection-end-line="182" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
@@ -1168,10 +1127,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NonTerminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3118">
+          <caret line="182" column="64" selection-start-line="182" selection-start-column="64" selection-end-line="182" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Terminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="55" column="10" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        <state relative-caret-position="72">
+          <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#92#93#0" expanded="true" />
@@ -1184,9 +1177,14 @@
             <element signature="e#427#428#0" expanded="true" />
             <element signature="e#597#598#0" expanded="true" />
             <element signature="e#624#625#0" expanded="true" />
-            <element signature="e#791#792#0" expanded="true" />
-            <element signature="e#819#820#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
         </state>
       </provider>
     </entry>

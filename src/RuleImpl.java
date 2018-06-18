@@ -5,6 +5,7 @@ public class RuleImpl implements RuleInterface {
     private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
     Map<Integer, Symbol> symbolHashMap = new HashMap<>();
+    Symbol tail;
 
     @Override
     public Integer getSize() {
@@ -43,6 +44,13 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public void addTerminal(Terminal terminal) {
+        if (symbolHashMap.size() == 0) {
+            tail = terminal;
+        }
+        else {
+            terminal.setLeftSymbol(tail);
+            tail = terminal;
+        }
         symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
     }
 

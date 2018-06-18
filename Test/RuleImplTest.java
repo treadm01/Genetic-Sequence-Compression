@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 
 public class RuleImplTest {
     public RuleInterface ruleInterface;
-    public Terminal terminal;
+    public Terminal terminal, terminalTwo;
 
     @Before
     public void initFields() {
         ruleInterface = new RuleImpl();
         terminal = new Terminal("a");
+        terminalTwo = new Terminal("b");
     }
 
     @Test
@@ -28,6 +29,9 @@ public class RuleImplTest {
     @Test
     public void addTerminal() {
         ruleInterface.addTerminal(terminal);
+        assertEquals("a", ruleInterface.toString());
+
+        ruleInterface.addTerminal(terminalTwo);
         System.out.println(ruleInterface);
     }
 }

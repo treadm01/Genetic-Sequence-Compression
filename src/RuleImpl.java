@@ -4,7 +4,7 @@ import java.util.Map;
 public class RuleImpl implements RuleInterface {
     private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
-    Map<Integer, Symbol> symbolHashMap = new HashMap<>();
+    Map<Symbol, Integer> symbolHashMap = new HashMap<>();
     Symbol tail, head;
 
     @Override
@@ -45,11 +45,7 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public Boolean checkDigram() {
-        Long count = symbolHashMap.values()
-                .stream()
-                .filter(x -> x.digramEquals(tail))
-                .count();
-        return count > 1;
+       return symbolHashMap.get(tail) > 1;
     }
 
     /**
@@ -69,8 +65,11 @@ public class RuleImpl implements RuleInterface {
             tail.setRightSymbol(terminal);
             tail = terminal;
         }
-        if (!symbolHashMap.containsValue(terminal)) {
-            symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
+        if (!symbolHashMap.containsKey(terminal)) {
+            symbolHashMap.putIfAbsent(terminal, 1);
+        }
+        else {
+            symbolHashMap.put(terminal, symbolHashMap.get(terminal) + 1);
         }
     }
 
@@ -84,6 +83,11 @@ public class RuleImpl implements RuleInterface {
         return null;//symbolHashMap.values();
     }
 
+    /**
+     * starts from head and cycles through symbols until it is null,
+     * the end of rule
+     * @return
+     */
     @Override
     public String toString() {
         String rule = "";
@@ -103,5 +107,9 @@ public class RuleImpl implements RuleInterface {
      */
     public Symbol getTail() {
         return tail;
+    }
+
+    public Map<Symbol, Integer> getSymbolHashMap() {
+        return symbolHashMap;
     }
 }

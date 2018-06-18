@@ -69,5 +69,6 @@ public class RuleImplTest {
         ruleInterface.addTerminal(new Terminal("b"));
 
         assertEquals("abab", ruleInterface.toString());
+        assertEquals(3, ruleInterface.getSymbolHashMap().size());
     }
 }

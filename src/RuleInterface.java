@@ -11,5 +11,5 @@ public interface RuleInterface {
     void addTerminal(Terminal terminal);
     Symbol getSymbol(Terminal symbol); //TODO for testing
     Symbol getTail();//TODO for testing
-    Map<Symbol, Integer> getSymbolHashMap(); // TODO for testing
+    Map<Digram, Integer> getSymbolHashMap(); // TODO for testing
 }

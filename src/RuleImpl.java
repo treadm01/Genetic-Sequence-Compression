@@ -1,10 +1,12 @@
+import javafx.util.Pair;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class RuleImpl implements RuleInterface {
     private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
-    Map<Symbol, Integer> symbolHashMap = new HashMap<>();
+    Map<Digram, Integer> symbolHashMap = new HashMap<>();
     Symbol tail, head;
 
     @Override
@@ -33,6 +35,7 @@ public class RuleImpl implements RuleInterface {
     @Override
     public void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal) {
 
+        System.out.println(symbol.getLeftSymbol().getLeftSymbol());
     }
 
     /**
@@ -45,7 +48,8 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public Boolean checkDigram() {
-       return symbolHashMap.get(tail) > 1;
+        Digram p = new Digram(tail.getLeftSymbol(), tail);
+        return symbolHashMap.get(p) > 1;
     }
 
     /**
@@ -56,20 +60,23 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void addTerminal(Terminal terminal) {
+        Digram digram;
         if (symbolHashMap.size() == 0) {
             head = terminal;
             tail = terminal;
+            digram = new Digram(null, terminal); // TODO don't do this
         }
         else {
             terminal.setLeftSymbol(tail);
             tail.setRightSymbol(terminal);
+            digram = new Digram(tail, terminal);
             tail = terminal;
         }
-        if (!symbolHashMap.containsKey(terminal)) {
-            symbolHashMap.putIfAbsent(terminal, 1);
+        if (!symbolHashMap.containsKey(digram)) {
+            symbolHashMap.putIfAbsent(digram, 1);
         }
         else {
-            symbolHashMap.put(terminal, symbolHashMap.get(terminal) + 1);
+            symbolHashMap.put(digram, symbolHashMap.get(digram) + 1);
         }
     }
 
@@ -109,7 +116,7 @@ public class RuleImpl implements RuleInterface {
         return tail;
     }
 
-    public Map<Symbol, Integer> getSymbolHashMap() {
+    public Map<Digram, Integer> getSymbolHashMap() {
         return symbolHashMap;
     }
 }

@@ -179,7 +179,7 @@ public class NonTerminal extends Symbol {
                 // not at the bottom of the list
 
                 // THESE ALL CONDITIONAL, JUST AVOIDED IF TERMINAL
-                if(i-1 >= 0 ) {
+                if(i-1 >= 0) {
                     digramList.get(i-1).second = new Terminal("!");
                 }
 

@@ -1,11 +1,11 @@
 /**
- * terminal just a regular symbol that doesn't go anywhere
+ * terminal
  */
 
 public class Terminal extends Symbol {
 
-    public Terminal(String s) {
-        this.representation = s;
+    public Terminal(String representation) {
+        setSymbol(representation);
     }
 
     @Override
@@ -32,9 +32,5 @@ public class Terminal extends Symbol {
     @Override
     public int hashCode() {
         return (int) this.toString().charAt(0);
-    }
-
-    public void setLeft(Symbol symbol) {
-        this.left = symbol;
     }
 }

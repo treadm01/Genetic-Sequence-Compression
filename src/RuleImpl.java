@@ -42,7 +42,7 @@ public class RuleImpl implements RuleInterface {
     }
 
     @Override
-    public void addTerminal() {
+    public void addTerminal(Terminal terminal) {
 
     }
 }

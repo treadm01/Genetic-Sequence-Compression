@@ -6,5 +6,5 @@ public interface RuleInterface {
     void replaceDigram();
     void replaceNonTerminal();
     Boolean checkDigram();
-    void addTerminal();
+    void addTerminal(Terminal terminal);
 }

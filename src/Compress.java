@@ -27,14 +27,9 @@ public class Compress {
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
 
-            Terminal currentTerminal = new Terminal(ch);
-            if (firstNTRule.values.size() != 0) {
-                currentTerminal.setLeft(firstNTRule.values.get(firstNTRule.values.size()-1));
-            }
-
             terminals.putIfAbsent(ch, new Terminal(ch)); // how to do???
 
-            firstNTRule.addValues(currentTerminal); // created a new terminal,... shouldn't be hidden like that
+            firstNTRule.addValues(terminals.get(ch)); // created a new terminal,... shouldn't be hidden like that
 
             threeRule(firstNTRule);
         }

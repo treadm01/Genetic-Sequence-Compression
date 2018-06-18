@@ -40,20 +40,20 @@ public class NonTerminalTest {
 //        nt.addValues(4);
 //        nt.addValues(5);
 //        nt.addValues(6);
+//
+//
+//        Pair<Integer, Integer> oL = new Pair(indexToRemove-1, indexToRemove);
+//        Pair<Integer, Integer> oR = new Pair(indexToRemove, indexToRemove + 1);
+//        nt.bigramMap.remove(oR);
+//        Digram b = new Digram(nt.values.get(indexToRemove-1), nt.values.get(indexToRemove + 1));
+//        nt.bigramMap.replace(oL, b);
+//        nt.values.remove(indexToRemove);
+//        System.out.println(nt.values);
+//        System.out.println(nt.bigramMap.size());
+//
+//       // nt.getBigramMap();
 
-
-        Pair<Integer, Integer> oL = new Pair(indexToRemove-1, indexToRemove);
-        Pair<Integer, Integer> oR = new Pair(indexToRemove, indexToRemove + 1);
-        nt.bigramMap.remove(oR);
-        Digram b = new Digram(nt.values.get(indexToRemove-1), nt.values.get(indexToRemove + 1));
-        nt.bigramMap.replace(oL, b);
-        nt.values.remove(indexToRemove);
-        System.out.println(nt.values);
-        System.out.println(nt.bigramMap.size());
-
-       // nt.getBigramMap();
-
-        assertEquals(nt.values.size()-1, nt.bigramMap.size());
+        //assertEquals(nt.values//.size()-1, nt.bigramMap.size());
     }
 
     @Test

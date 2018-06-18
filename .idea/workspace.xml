@@ -4,11 +4,7 @@
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/RuleImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/RuleImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NonTerminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rule.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RuleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RuleInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/src/RuleInterface.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="144">
-              <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+              <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -81,8 +77,8 @@
       <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+            <state relative-caret-position="569">
+              <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#92#93#0" expanded="true" />
@@ -95,6 +91,8 @@
                 <element signature="e#427#428#0" expanded="true" />
                 <element signature="e#597#598#0" expanded="true" />
                 <element signature="e#624#625#0" expanded="true" />
+                <element signature="e#791#792#0" expanded="true" />
+                <element signature="e#819#820#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +101,8 @@
       <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+            <state relative-caret-position="486">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
         </entry>
@@ -314,7 +312,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.compressTest.simpleInputTest">
+  <component name="RunManager" selected="JUnit.RuleImplTest.addTerminal">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -328,6 +326,23 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="NonTerminalTest" />
       <option name="METHOD_NAME" value="rebuildBiList" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="RuleImplTest.addTerminal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="RuleImplTest" />
+      <option name="METHOD_NAME" value="addTerminal" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -388,23 +403,6 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="uncompressTest.comparisonCheck" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="uncompressTest" />
-      <option name="METHOD_NAME" value="comparisonCheck" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
     <configuration name="uncompressTest.processInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -445,19 +443,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.uncompressTest.comparisonCheck" />
       <item itemvalue="JUnit.uncompressTest.processInput" />
       <item itemvalue="JUnit.compressTest.processInput" />
       <item itemvalue="JUnit.NonTerminalTest.rebuildBiList" />
       <item itemvalue="JUnit.compressTest.simpleInputTest" />
+      <item itemvalue="JUnit.RuleImplTest.addTerminal" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RuleImplTest.addTerminal" />
         <item itemvalue="JUnit.compressTest.simpleInputTest" />
         <item itemvalue="JUnit.NonTerminalTest.rebuildBiList" />
         <item itemvalue="JUnit.compressTest.processInput" />
         <item itemvalue="JUnit.uncompressTest.processInput" />
-        <item itemvalue="JUnit.uncompressTest.comparisonCheck" />
       </list>
     </recent_temporary>
   </component>
@@ -521,14 +519,7 @@
       <workItem from="1529055477432" duration="24284000" />
       <workItem from="1529315636485" duration="316000" />
       <workItem from="1529316015175" duration="78000" />
-      <workItem from="1529316117349" duration="5201000" />
-    </task>
-    <task id="LOCAL-00025" summary="got some compression to uncompression via binary working, but issues with larger files...">
-      <created>1521484464290</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1521484464290</updated>
+      <workItem from="1529316117349" duration="5748000" />
     </task>
     <task id="LOCAL-00026" summary="switched to parsing directly to int, fixed some problems, but not getting the same code back">
       <created>1521485241087</created>
@@ -866,7 +857,14 @@
       <option name="project" value="LOCAL" />
       <updated>1529320708049</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="adding terminal to rule, not sure about the symbol interface with terminal extending">
+      <created>1529321385989</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1529321385989</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -902,7 +900,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="221405000" />
+    <option name="totallyTimeSpent" value="221952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -941,7 +939,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="as rules are unpacked and given a number in the order they're received have set reorder to simply set the rule number in the order they are currently in, have to make sure reorder sorts them, then reassigns them again" />
     <MESSAGE value="added text files" />
     <MESSAGE value="going to try and remove rule and use terminal only" />
     <MESSAGE value="removed rules just using non-terminals. need to utilise increment decrement of rule number" />
@@ -966,7 +963,8 @@
     <MESSAGE value="added some documentation" />
     <MESSAGE value="overhaul, breaking up classes, using interfaces, trying to store symbols next to each other within the objects" />
     <MESSAGE value="same for symbol... with terminal and nonterminal next" />
-    <option name="LAST_COMMIT_MESSAGE" value="same for symbol... with terminal and nonterminal next" />
+    <MESSAGE value="adding terminal to rule, not sure about the symbol interface with terminal extending" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding terminal to rule, not sure about the symbol interface with terminal extending" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1158,22 +1156,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+        <state relative-caret-position="486">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RuleInterface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
-          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+        <state relative-caret-position="569">
+          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#92#93#0" expanded="true" />
@@ -1186,6 +1184,8 @@
             <element signature="e#427#428#0" expanded="true" />
             <element signature="e#597#598#0" expanded="true" />
             <element signature="e#624#625#0" expanded="true" />
+            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#819#820#0" expanded="true" />
           </folding>
         </state>
       </provider>

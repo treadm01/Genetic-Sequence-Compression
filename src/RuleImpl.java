@@ -43,6 +43,15 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public void addTerminal(Terminal terminal) {
+        symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
+    }
 
+    @Override
+    public String toString() {
+        String rule = "";
+        for (Symbol s : symbolHashMap.values()) {
+            rule += s.toString();
+        }
+        return rule;
     }
 }

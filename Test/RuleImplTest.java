@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class RuleImplTest {
     public RuleInterface ruleInterface;
-    public SymbolInterface terminal;
+    public Terminal terminal;
 
     @Before
     public void initFields() {
@@ -27,7 +27,7 @@ public class RuleImplTest {
 
     @Test
     public void addTerminal() {
-        ruleInterface.addTerminal();
-
+        ruleInterface.addTerminal(terminal);
+        System.out.println(ruleInterface);
     }
 }

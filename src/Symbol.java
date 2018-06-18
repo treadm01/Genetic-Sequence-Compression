@@ -36,4 +36,18 @@ public class Symbol implements SymbolInterface {
     public Symbol getRightSymbol() {
         return this.right;
     }
+
+
+    public boolean digramEquals(Symbol o) {
+        Symbol t = null;
+        if (!(o instanceof Terminal) && !(o instanceof NonTerminal)) {
+            throw new ClassCastException("Must be terminal or nonterminal. Received " + o.getClass());
+        }
+
+        if (o.getLeftSymbol() == null || this.getLeftSymbol() == null) {
+            return false;
+        }
+
+        return  (o.toString().equals(this.toString()) && o.getLeftSymbol().equals(this.getLeftSymbol()));
+    }
 }

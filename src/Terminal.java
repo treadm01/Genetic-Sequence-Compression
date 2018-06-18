@@ -1,7 +1,6 @@
 /**
  * terminal
  */
-
 public class Terminal extends Symbol {
     public Terminal(String representation) {
         setSymbol(representation); //TODO not sure about this, rather that using own methods

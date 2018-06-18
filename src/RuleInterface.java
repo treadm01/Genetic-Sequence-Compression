@@ -6,5 +6,7 @@ public interface RuleInterface {
     void replaceDigram();
     void replaceNonTerminal();
     Boolean checkDigram();
-    void addTerminal(Terminal terminal);
+    void addTerminal(String terminal);
+    Symbol getSymbol(Terminal symbol);
+    Symbol getTail();//TODO for testing
 }

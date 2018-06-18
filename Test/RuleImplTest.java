@@ -24,14 +24,32 @@ public class RuleImplTest {
 
     @Test
     public void checkDigram() {
+        // add repeating a b a b - so should match a bigram
+        ruleInterface.addTerminal("a");
+        ruleInterface.addTerminal("b");
+        ruleInterface.addTerminal("a");
+
+        assertEquals(false, ruleInterface.checkDigram());
+
+        ruleInterface.addTerminal("b");
+        assertEquals(true, ruleInterface.checkDigram());
+
+        ruleInterface.addTerminal("b");
+        assertEquals(false, ruleInterface.checkDigram());
+
+        ruleInterface.addTerminal("b");
+        ruleInterface.addTerminal("b");
+        assertEquals(true, ruleInterface.checkDigram());
     }
 
     @Test
     public void addTerminal() {
-        ruleInterface.addTerminal(terminal);
+        // add terminal
+        ruleInterface.addTerminal("a");
         assertEquals("a", ruleInterface.toString());
 
-        ruleInterface.addTerminal(terminalTwo);
-        System.out.println(ruleInterface);
+        // check second terminal has link to first
+        ruleInterface.addTerminal("b");
+        assertEquals(ruleInterface.getTail().getLeftSymbol().toString(), "a");
     }
 }

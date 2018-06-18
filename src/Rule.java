@@ -46,7 +46,7 @@
 //     * check the last two values for repetition, false if nothing found
 //     * @return
 //     */
-//    public boolean checkBigram() {
+//    public boolean checkDigram() {
 //        if (values.size() <= 3) {
 //            return false;
 //        }

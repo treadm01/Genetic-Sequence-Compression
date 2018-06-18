@@ -15,42 +15,42 @@
 //    }
 //
 //    @Test
-//    public void checkBigram() {
+//    public void checkDigram() {
 //        testRule.addValues("a");
-//        assertEquals(false, testRule.checkBigram());
+//        assertEquals(false, testRule.checkDigram());
 //        testRule.addValues("b");
-//        assertEquals(false, testRule.checkBigram());
+//        assertEquals(false, testRule.checkDigram());
 //        testRule.addValues("a");
-//        assertEquals(false, testRule.checkBigram());
+//        assertEquals(false, testRule.checkDigram());
 //        testRule.addValues("b");
-//        assertEquals(true, testRule.checkBigram());
+//        assertEquals(true, testRule.checkDigram());
 //
 //        testRule.values.clear();
 //
 //        testRule.addValues("a");
-//        assertEquals(false, testRule.checkBigram());
+//        assertEquals(false, testRule.checkDigram());
 //        testRule.addValues("a");
-//        assertEquals(false, testRule.checkBigram());
+//        assertEquals(false, testRule.checkDigram());
 //        testRule.addValues("a");
-//        assertEquals(false, testRule.checkBigram());
+//        assertEquals(false, testRule.checkDigram());
 //        testRule.addValues("a");
-//        assertEquals(true, testRule.checkBigram());
+//        assertEquals(true, testRule.checkDigram());
 //
 //        testRule.values.clear();
 //
 //        // check with first string
 //        testRule.addValues("a");
-//        assertEquals(false, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(false, testRule.checkDigram()); // not actually creating or connected to
 //        testRule.addValues("b");
-//        assertEquals(false, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(false, testRule.checkDigram()); // not actually creating or connected to
 //        testRule.addValues("c");
-//        assertEquals(false, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(false, testRule.checkDigram()); // not actually creating or connected to
 //        testRule.addValues("d");
-//        assertEquals(false, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(false, testRule.checkDigram()); // not actually creating or connected to
 //        testRule.addValues("b");
-//        assertEquals(false, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(false, testRule.checkDigram()); // not actually creating or connected to
 //        testRule.addValues("c");
-//        assertEquals(true, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(true, testRule.checkDigram()); // not actually creating or connected to
 //
 //        testRule.values.clear();
 //        String input = "abcdbc";
@@ -58,7 +58,7 @@
 //        for (int i = 0; i < input.length(); i++) {
 //            testRule.addValues(input.substring(i, i+1));
 //        }
-//        assertEquals(true, testRule.checkBigram()); // not actually creating or connected to
+//        assertEquals(true, testRule.checkDigram()); // not actually creating or connected to
 //
 //    }
 //

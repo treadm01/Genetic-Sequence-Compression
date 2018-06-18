@@ -45,7 +45,7 @@ public class NonTerminalTest {
         Pair<Integer, Integer> oL = new Pair(indexToRemove-1, indexToRemove);
         Pair<Integer, Integer> oR = new Pair(indexToRemove, indexToRemove + 1);
         nt.bigramMap.remove(oR);
-        Bigram b = new Bigram(nt.values.get(indexToRemove-1), nt.values.get(indexToRemove + 1));
+        Digram b = new Digram(nt.values.get(indexToRemove-1), nt.values.get(indexToRemove + 1));
         nt.bigramMap.replace(oL, b);
         nt.values.remove(indexToRemove);
         System.out.println(nt.values);
@@ -73,5 +73,37 @@ public class NonTerminalTest {
         ntTwo.replaceNonTerminal(nt);
 
         assertEquals(expected.toString(), ntTwo.values.toString());
+    }
+
+    @Test
+    public void rebuildBiList() {
+        Terminal a = new Terminal("a");
+        Terminal b = new Terminal("b");
+        NonTerminal ntOne = new NonTerminal(1);
+        ntOne.addValues(a);
+        ntOne.addValues(b);
+
+        Terminal c = new Terminal("c");
+        NonTerminal ntTwo = new NonTerminal(2);
+        ntTwo.addValues(c);
+        ntTwo.addValues(b);
+
+        NonTerminal ntThree = new NonTerminal(3);
+        ntThree.addValues(ntOne); // a nonterminal with a nonterminal pointing to ab
+        ntThree.addValues(ntTwo);
+        ntThree.addValues(ntOne);
+
+        // ntThree is a nonterminal 3 -> 1 2 1
+        // with bigrams 1 2 and 2 1
+        // want to replace 2 with cb, so 3 -> 1 c b 1
+
+        ntThree.printBigram(ntThree.digramList);
+
+        ntThree.replaceNonTerminal(ntTwo);
+        System.out.println("BREAK");
+
+        ntThree.printBigram(ntThree.digramList);
+
+
     }
 }

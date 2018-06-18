@@ -4,4 +4,6 @@
  */
 public class Symbol {
     String representation;
+    Symbol left;
+    Symbol right;
 }

@@ -14,9 +14,9 @@ public class NonTerminal extends Symbol {
     Integer number; // what number??? The terminal/rule number
     Integer useNumber = 0; // number of uses
     public List<Symbol> values = new ArrayList<>(); // the terminals and nonterminals in the rule
-    Map<Pair<Integer, Integer>, Bigram> bigramMap = new HashMap<>();
-    List<Bigram> bigramList = new ArrayList<>();
-    Bigram currentBigram;
+    Map<Integer, Symbol> symbolMap = new HashMap<>();
+    List<Digram> digramList = new ArrayList<>();
+    Digram currentDigram;
     public List<Integer> usedByList = new ArrayList<>();
 
     /**
@@ -46,10 +46,10 @@ public class NonTerminal extends Symbol {
      */
     //TODO should just be one method, not rebuilding list... not for looping through list
     public void rebuildBiList() {
-        bigramList.clear();
+        digramList.clear();
         for (int i = 0; i < values.size() - 1; i++) {
-            Bigram bi = new Bigram(values.get(i), values.get(1 + i));
-            bigramList.add(bi);
+            Digram bi = new Digram(values.get(i), values.get(1 + i));
+            digramList.add(bi);
         }
     }
 
@@ -61,8 +61,8 @@ public class NonTerminal extends Symbol {
         if (values.size() > 1) {
             int left = values.size() - 2;
             int right = values.size() - 1;
-            Bigram bi = new Bigram(values.get(left), values.get(right));
-            bigramList.add(bi);
+            Digram bi = new Digram(values.get(left), values.get(right));
+            digramList.add(bi);
         }
     }
 
@@ -73,28 +73,29 @@ public class NonTerminal extends Symbol {
     // add a single non-terminal at the moment to the rule
     public void addValues(Terminal terminal) {
         values.add(terminal);
+        symbolMap.putIfAbsent(symbolMap.size(), terminal);
         updateBiList();
     }
 
     /**
      * add bigram to the list of symbols this nonterminal points to
-     * @param bigram
+     * @param digram
      */
     // adding two values from a found bigram
-    public void addValues(Bigram bigram) {
-        if (bigram.first instanceof NonTerminal) {
-            ((NonTerminal) bigram.first).usedByList.add(this.number); // add this rules number to the terminals list to keep a record of where it is used
-            ((NonTerminal) bigram.first).useNumber++;
+    public void addValues(Digram digram) {
+        if (digram.first instanceof NonTerminal) {
+            ((NonTerminal) digram.first).usedByList.add(this.number); // add this rules number to the terminals list to keep a record of where it is used
+            ((NonTerminal) digram.first).useNumber++;
         }
 
-        if (bigram.second instanceof NonTerminal) {
-            ((NonTerminal) bigram.second).usedByList.add(this.number);
-            ((NonTerminal) bigram.second).useNumber++;
+        if (digram.second instanceof NonTerminal) {
+            ((NonTerminal) digram.second).usedByList.add(this.number);
+            ((NonTerminal) digram.second).useNumber++;
         }
 
-        values.add(bigram.first);
-        values.add(bigram.second);
-        setCurrentBigram(bigram); // set the bigram when creating a rule from one (too cheaty?)
+        values.add(digram.first);
+        values.add(digram.second);
+        setCurrentDigram(digram); // set the bigram when creating a rule from one (too cheaty?)
         updateBiList();
     }
 
@@ -106,6 +107,7 @@ public class NonTerminal extends Symbol {
     // only used by decompress??
     public void addValues(NonTerminal nonTerminal) {
         values.add(nonTerminal);
+        symbolMap.putIfAbsent(symbolMap.size(), nonTerminal);
         updateBiList();
     }
 
@@ -124,31 +126,32 @@ public class NonTerminal extends Symbol {
 
     /**
      * sets the specific value of current bigram to the two most recent symbols added
-     * @param currentBigram
+     * @param currentDigram
      */
-    public void setCurrentBigram(Bigram currentBigram) {
-        this.currentBigram = currentBigram;
+    public void setCurrentDigram(Digram currentDigram) {
+        this.currentDigram = currentDigram;
     }
 
 
     /**
-     * check the last two values for repetition, false if nothing found
+     * check the last two values for repetition, just within this
+     * nonTerminal, false if nothing found
      * @return
      */
-    public boolean checkBigram() {
+    public boolean checkDigram() {
         if (values.size() <= 3) {
             return false;
         }
         else {
-            Bigram actualB = new Bigram(values.get(values.size() - 2), values.get(values.size() - 1));
-            setCurrentBigram(actualB); // clean up
+            Digram actualB = new Digram(values.get(values.size() - 2), values.get(values.size() - 1));
+            setCurrentDigram(actualB); // clean up
 
             //TODO need a better method than this list dupe and remove
-            List<Bigram> removedLast = new ArrayList<>(bigramList); // create a new list to check
+            List<Digram> removedLast = new ArrayList<>(digramList); // create a new list to check
             // those not from the most recent bigram
 
-            removedLast.remove(removedLast.size()-1);
-            removedLast.remove(removedLast.size()-1);
+            removedLast.remove(removedLast.size() - 1);
+            removedLast.remove(removedLast.size() - 1);
 
             long count = removedLast.stream()
                     .filter(x -> x.equals(actualB))
@@ -165,11 +168,11 @@ public class NonTerminal extends Symbol {
      */
     //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH UPDATE RULE
     public void updateRule(NonTerminal r) {
-        Bigram ruleBigram = r.currentBigram;
+        Digram ruleDigram = r.currentDigram;
 
         // TODO yes, no loop of entire list
-        for (int i = bigramList.size() -1; i > -1; i--) {
-            if (bigramList.get(i).equals(ruleBigram)) {
+        for (int i = digramList.size() -1; i > -1; i--) {
+            if (digramList.get(i).equals(ruleDigram)) {
 
                 // really really bad, if half of a bigram has been changed alter the one made earlier
                 // in the list by setting it's right hand to ! or whatever, also have to check that
@@ -177,7 +180,7 @@ public class NonTerminal extends Symbol {
 
                 // THESE ALL CONDITIONAL, JUST AVOIDED IF TERMINAL
                 if(i-1 >= 0 ) {
-                    bigramList.get(i-1).second = new Terminal("!");
+                    digramList.get(i-1).second = new Terminal("!");
                 }
 
                 //TODO PUT THESE TWO SAME CODE IN A METHOD
@@ -205,8 +208,8 @@ public class NonTerminal extends Symbol {
     }
 
     //TODO USE HASH RATHER THAN LIST
-    public List<Bigram> getAllBigrams() {
-        return bigramList;
+    public List<Digram> getAllBigrams() {
+        return digramList;
     }
 
     @Override
@@ -215,8 +218,8 @@ public class NonTerminal extends Symbol {
         else {return false;}
     }
 
-    public Bigram getCurrentBigram() {
-        return currentBigram;
+    public Digram getCurrentDigram() {
+        return currentDigram;
     }
 
     //USE THIS!
@@ -248,8 +251,8 @@ public class NonTerminal extends Symbol {
         return valueOuput;
     }
 
-    public void printBigram(List<Bigram> lstB) {
-        for (Bigram b : lstB) {
+    public void printBigram(List<Digram> lstB) {
+        for (Digram b : lstB) {
             System.out.println("bigram left value = " + b.first);
             System.out.println("bigram right value = " + b.second);
         }

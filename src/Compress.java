@@ -19,16 +19,22 @@ public class Compress {
      */
     public List<NonTerminal> processInput(String input) {
         //TODO decide where reorder will go, manage where things are created
-        NonTerminal firstNTRule = new NonTerminal();
+        NonTerminal firstNTRule = new NonTerminal(); // the 0 rule initial rule
 
         for (int i = 0; i < input.length(); i++) {
             System.out.println("working through symbol " + i + " of " + input.length());
 
             // add the element to string to first rule
             String ch = input.substring(i, i+1);
-            terminals.putIfAbsent(ch, new Terminal(ch));
 
-            firstNTRule.addValues(terminals.get(ch)); // created a new terminal,... shouldn't be hidden like that
+            Terminal currentTerminal = new Terminal(ch);
+            if (firstNTRule.values.size() != 0) {
+                currentTerminal.setLeft(firstNTRule.values.get(firstNTRule.values.size()-1));
+            }
+
+            terminals.putIfAbsent(ch, new Terminal(ch)); // how to do???
+
+            firstNTRule.addValues(currentTerminal); // created a new terminal,... shouldn't be hidden like that
 
             threeRule(firstNTRule);
         }
@@ -73,11 +79,11 @@ public class Compress {
      * @param fr
      */
     public void checkRepeat(NonTerminal fr) {
-        if (fr.checkBigram()) {
+        if (fr.checkDigram()) {
             NonTerminal newRule = new NonTerminal();
-            newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
+            newRule.addValues(fr.getCurrentDigram()); //TODO would want to update this after
             nonTerminals.put(newRule.number, newRule);
-            fr.updateRule(newRule);
+            fr.updateRule(newRule); //TODO update the left and right of elements here
         }
     }
 
@@ -98,15 +104,15 @@ public class Compress {
         //TODO remove for loops use hash
         List<NonTerminal> newRuleLst = new ArrayList<>();
         for (NonTerminal r : nonTerminals.values()) {
-            Bigram actualB = new Bigram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
-            r.setCurrentBigram(actualB); // clean up - when is a good consistent way to set this?
-            if (r.getAllBigrams(). contains(fr.getCurrentBigram())) {
+            Digram actualB = new Digram(r.values.get(r.values.size() - 2), r.values.get(r.values.size() - 1));
+            r.setCurrentDigram(actualB); // clean up - when is a good consistent way to set this?
+            if (r.getAllBigrams(). contains(fr.getCurrentDigram())) {
                 if (r.values.size() == 2) {
                     fr.updateRule(r);
                 }
                 else {
                     NonTerminal newRule = new NonTerminal();
-                    newRule.addValues(fr.getCurrentBigram()); // how to get bigram from first rule??
+                    newRule.addValues(fr.getCurrentDigram()); // how to get bigram from first rule??
                     newRuleLst.add(newRule);
                     fr.updateRule(newRule);
                     r.updateRule(newRule);

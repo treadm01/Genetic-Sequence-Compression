@@ -33,4 +33,8 @@ public class Terminal extends Symbol {
     public int hashCode() {
         return (int) this.toString().charAt(0);
     }
+
+    public void setLeft(Symbol symbol) {
+        this.left = symbol;
+    }
 }

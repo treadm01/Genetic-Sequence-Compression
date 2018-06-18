@@ -1,6 +1,6 @@
 public interface SymbolInterface {
     void setSymbol(String representation);
-    Symbol getSymbol();
+    String getSymbol();
     void setLeftSymbol(Symbol leftSymbol);
     void setRightSymbol(Symbol rightSymbol);
     Symbol getLeftSymbol();

@@ -1,12 +1,12 @@
-import javafx.util.Pair;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RuleImpl implements RuleInterface {
     private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
-    Map<Digram, Integer> symbolHashMap = new HashMap<>();
+    Map<Integer, Symbol> symbolHashMap = new HashMap<>();
     Symbol tail, head;
 
     @Override
@@ -34,8 +34,39 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal) {
+        //nonterminal left set as first.leftsymbol of digram,
+        // nonterminal  right set as second.rightsymbol of digram
 
-        System.out.println(symbol.getLeftSymbol().getLeftSymbol());
+        //TODO same problem, have to be able to change the values, how to store them???
+
+        List<Symbol> symbolList = symbolHashMap.values()
+                .stream()
+                .filter(x -> x.equals(symbol))
+                .collect(Collectors.toList());
+
+        for (Symbol s : symbolList) {
+            s.setLeftSymbol(s.getLeftSymbol().getLeftSymbol()); // if head??
+            s = nonTerminal;
+        }
+
+        // need to add and remove digrams and nonTerminals from map
+
+
+        /**
+         * as it is, keeps a list of digrams that occurs and their frequencies
+         * problems arise when you want to replace a digram with something else
+         * there's a link between each individual symbol, and there's the generic
+         * digrams, replacing digrams can't be done like this
+         *
+         * when replacing a digram you have the digram itself the last two symbols
+         * or tail of current rule
+         *
+         * have to replace every instance of that with the nonTerminal
+         *
+         * keep a separate hashmap for altering??
+         *
+         * switch it to have a digram for each instance, have to recheck way of counting digrams
+         */
     }
 
     /**
@@ -48,8 +79,13 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public Boolean checkDigram() {
-        Digram p = new Digram(tail.getLeftSymbol(), tail);
-        return symbolHashMap.get(p) > 1;
+//        Digram p = new Digram(tail.getLeftSymbol(), tail);
+//        return symbolHashMap.get(p) > 1;
+        Long count = symbolHashMap.values()
+                .stream()
+                .filter(x -> x.equals(tail))
+                .count();
+        return count > 1;
     }
 
     /**
@@ -60,23 +96,20 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void addTerminal(Terminal terminal) {
-        Digram digram;
         if (symbolHashMap.size() == 0) {
             head = terminal;
             tail = terminal;
-            digram = new Digram(null, terminal); // TODO don't do this
         }
         else {
             terminal.setLeftSymbol(tail);
             tail.setRightSymbol(terminal);
-            digram = new Digram(tail, terminal);
             tail = terminal;
         }
-        if (!symbolHashMap.containsKey(digram)) {
-            symbolHashMap.putIfAbsent(digram, 1);
+        if (!symbolHashMap.containsKey(terminal)) {
+            symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
         }
         else {
-            symbolHashMap.put(digram, symbolHashMap.get(digram) + 1);
+            symbolHashMap.put(symbolHashMap.size(), terminal);
         }
     }
 
@@ -116,7 +149,7 @@ public class RuleImpl implements RuleInterface {
         return tail;
     }
 
-    public Map<Digram, Integer> getSymbolHashMap() {
+    public Map<Integer, Symbol> getSymbolHashMap() {
         return symbolHashMap;
     }
 }

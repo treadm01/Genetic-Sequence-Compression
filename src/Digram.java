@@ -52,8 +52,11 @@ public class Digram {
         return (first + " " + second);
     }
 
-    @Override
-    public int hashCode() {
-        return 0;//(int) ((int) this.first.toString().charAt(0) + (int) this.second.toString().charAt(0));
-    }
+    /**
+     * hashcode uncomment to equal digrams with the same symbols
+     */
+//    @Override
+//    public int hashCode() {
+//        return 0;//(int) ((int) this.first.toString().charAt(0) + (int) this.second.toString().charAt(0));
+//    }
 }

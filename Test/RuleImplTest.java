@@ -22,8 +22,12 @@ public class RuleImplTest {
         ruleInterface.addTerminal(terminalTwo);
         ruleInterface.addTerminal(new Terminal("a"));
         ruleInterface.addTerminal(new Terminal("b"));
+        System.out.println(ruleInterface.getSymbolHashMap());
 
         ruleInterface.replaceDigram(ruleInterface.getTail(), nonTerminal);
+        System.out.println(ruleInterface.getSymbolHashMap());
+
+        System.out.println(ruleInterface);
         //assertEquals("11", ruleInterface.toString());
     }
 
@@ -71,7 +75,6 @@ public class RuleImplTest {
         ruleInterface.addTerminal(new Terminal("b"));
 
         assertEquals("abab", ruleInterface.toString());
-        assertEquals(3, ruleInterface.getSymbolHashMap().size());
 
         System.out.println(ruleInterface.getSymbolHashMap());
     }

@@ -13,8 +13,8 @@ public class Symbol implements SymbolInterface {
     }
 
     @Override
-    public Symbol getSymbol() {
-        return this; //TODO HMMMMMMMMM
+    public String getSymbol() {
+        return this.representation; //TODO HMMMMMMMMM
     }
 
     @Override

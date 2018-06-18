@@ -20,4 +20,9 @@ public class NonTerminalTwo extends Symbol implements NonTerminalInterface {
         if (o == this) {return true;}
         else {return false;}
     }
+
+    @Override
+    public String toString() {
+        return this.getSymbol();
+    }
 }

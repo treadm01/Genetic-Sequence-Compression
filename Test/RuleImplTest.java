@@ -65,7 +65,6 @@ public class RuleImplTest {
         // add terminal
         ruleInterface.addTerminal(terminal);
         assertEquals("a", ruleInterface.toString());
-        Terminal z = new Terminal("b");
 
         // check second terminal has link to first
         ruleInterface.addTerminal(terminalTwo);

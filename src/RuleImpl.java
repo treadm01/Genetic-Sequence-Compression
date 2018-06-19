@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,8 @@ public class RuleImpl implements RuleInterface {
     private Integer ruleUsage = 0;
     Map<Integer, Symbol> symbolHashMap = new HashMap<>();
     Symbol tail, head;
+
+    Map<Pair<Symbol, Symbol>, Symbol> ts = new HashMap<>();
 
     @Override
     public Integer getSize() {
@@ -37,17 +41,33 @@ public class RuleImpl implements RuleInterface {
         //nonterminal left set as first.leftsymbol of digram,
         // nonterminal  right set as second.rightsymbol of digram
 
+        // don't need to send symbol if always the last digram
+
         //TODO same problem, have to be able to change the values, how to store them???
 
         List<Symbol> symbolList = symbolHashMap.values()
                 .stream()
-                .filter(x -> x.equals(symbol))
+                .filter(x -> x.equals(getTail()))
                 .collect(Collectors.toList());
 
         for (Symbol s : symbolList) {
-            s.setLeftSymbol(s.getLeftSymbol().getLeftSymbol()); // if head??
-            s = nonTerminal;
+            NonTerminalTwo nt = nonTerminal; // need to create, clone???
+            nt.setLeftSymbol(s.getLeftSymbol().getLeftSymbol());
+            nt.setRightSymbol(s.getRightSymbol());
+            symbolHashMap.putIfAbsent(symbolHashMap.size(), nt);
+            if (nt.getLeftSymbol() == null) {
+                head = nt;
+            }
         }
+
+        System.out.println(symbolHashMap.get(4).getLeftSymbol());
+        System.out.println(symbolHashMap.get(4).getRightSymbol());
+
+
+        System.out.println(symbolHashMap.get(5).getLeftSymbol());
+        System.out.println(symbolHashMap.get(5).getRightSymbol());
+
+
 
         // need to add and remove digrams and nonTerminals from map
 
@@ -85,6 +105,7 @@ public class RuleImpl implements RuleInterface {
                 .stream()
                 .filter(x -> x.equals(tail))
                 .count();
+        System.out.println(count);
         return count > 1;
     }
 
@@ -105,6 +126,11 @@ public class RuleImpl implements RuleInterface {
             tail.setRightSymbol(terminal);
             tail = terminal;
         }
+
+        Pair<Symbol, Symbol> p = new Pair(terminal.getLeftSymbol(), terminal.getRightSymbol());
+        ts.putIfAbsent(p, terminal);
+        System.out.println(ts);
+
         if (!symbolHashMap.containsKey(terminal)) {
             symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
         }

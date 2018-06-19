@@ -11,7 +11,7 @@ public class RuleImpl implements RuleInterface {
     Map<Integer, Symbol> symbolHashMap = new HashMap<>();
     Symbol tail, head;
 
-    Map<Pair<Symbol, Symbol>, Symbol> ts = new HashMap<>();
+    Map<Symbol, Digram> ts = new HashMap<>();
 
     @Override
     public Integer getSize() {
@@ -45,29 +45,39 @@ public class RuleImpl implements RuleInterface {
 
         //TODO same problem, have to be able to change the values, how to store them???
 
-        List<Symbol> symbolList = symbolHashMap.values()
+        List<Symbol> symbolList = ts.keySet()
                 .stream()
                 .filter(x -> x.equals(getTail()))
                 .collect(Collectors.toList());
 
         for (Symbol s : symbolList) {
-            NonTerminalTwo nt = nonTerminal; // need to create, clone???
-            nt.setLeftSymbol(s.getLeftSymbol().getLeftSymbol());
-            nt.setRightSymbol(s.getRightSymbol());
-            symbolHashMap.putIfAbsent(symbolHashMap.size(), nt);
-            if (nt.getLeftSymbol() == null) {
-                head = nt;
+
+            // create new entry for nonterminal, from hashmap get corresponding values
+            // think you're going to have same problem as creating a new digram,
+            // order wont be right.... could assign to different objects
+            Symbol left = ts.get(ts.get(s).first).first;
+            Symbol right = ts.get(s).second;
+            Digram d = new Digram(left, right);
+            ts.putIfAbsent(nonTerminal, d);
+
+            // need to update the new left and right symbols to point to the new nonterminal one
+            if (left != null && right != null) {
+                d = new Digram(ts.get(left).first, nonTerminal);
+                ts.put(left, d);
+
+                d = new Digram(nonTerminal, ts.get(right).second);
+                ts.put(right, d);
             }
+
+//            NonTerminalTwo nt = nonTerminal; // need to create, clone???
+//            nt.setLeftSymbol(s.getLeftSymbol().getLeftSymbol());
+//            nt.setRightSymbol(s.getRightSymbol());
+//            symbolHashMap.putIfAbsent(symbolHashMap.size(), nt);
+//            if (nt.getLeftSymbol() == null) {
+//                head = nt;
+//            }
         }
-
-        System.out.println(symbolHashMap.get(4).getLeftSymbol());
-        System.out.println(symbolHashMap.get(4).getRightSymbol());
-
-
-        System.out.println(symbolHashMap.get(5).getLeftSymbol());
-        System.out.println(symbolHashMap.get(5).getRightSymbol());
-
-
+        System.out.println(ts);
 
         // need to add and remove digrams and nonTerminals from map
 
@@ -101,7 +111,7 @@ public class RuleImpl implements RuleInterface {
     public Boolean checkDigram() {
 //        Digram p = new Digram(tail.getLeftSymbol(), tail);
 //        return symbolHashMap.get(p) > 1;
-        Long count = symbolHashMap.values()
+        Long count = ts.keySet()
                 .stream()
                 .filter(x -> x.equals(tail))
                 .count();
@@ -117,7 +127,8 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void addTerminal(Terminal terminal) {
-        if (symbolHashMap.size() == 0) {
+        Digram p;
+        if (ts.size() == 0) {
             head = terminal;
             tail = terminal;
         }
@@ -125,18 +136,21 @@ public class RuleImpl implements RuleInterface {
             terminal.setLeftSymbol(tail);
             tail.setRightSymbol(terminal);
             tail = terminal;
+            // assign pair values for new terminal
+            // but also update last one
+            ts.get(terminal.getLeftSymbol()).second = terminal;
         }
 
-        Pair<Symbol, Symbol> p = new Pair(terminal.getLeftSymbol(), terminal.getRightSymbol());
-        ts.putIfAbsent(p, terminal);
+        p = new Digram(terminal.getLeftSymbol(), terminal.getRightSymbol());
+        ts.putIfAbsent(terminal, p);
         System.out.println(ts);
 
-        if (!symbolHashMap.containsKey(terminal)) {
-            symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
-        }
-        else {
-            symbolHashMap.put(symbolHashMap.size(), terminal);
-        }
+//        if (!symbolHashMap.containsKey(terminal)) {
+//            symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
+//        }
+//        else {
+//            symbolHashMap.put(symbolHashMap.size(), terminal);
+//        }
     }
 
     /**

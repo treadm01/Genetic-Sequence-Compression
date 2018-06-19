@@ -30,9 +30,9 @@ public class Terminal extends Symbol {
 
         return  (t.toString().equals(this.toString()) && t.getLeftSymbol().toString().equals(this.getLeftSymbol().toString()));
     }
-
-    @Override
-    public int hashCode() {
-        return (int) this.toString().charAt(0);
-    }
+//
+//    @Override
+//    public int hashCode() {
+//        return (int) this.toString().charAt(0);
+//    }
 }

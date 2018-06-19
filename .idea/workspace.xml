@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/RuleImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/RuleImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RuleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,6 +16,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Terminal.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Terminal.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-start-column="2" selection-end-line="36" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="NonTerminalTwo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NonTerminalTwo.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -37,16 +46,16 @@
       <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="130" column="36" selection-start-line="130" selection-start-column="36" selection-end-line="130" selection-end-column="36" />
+            <state relative-caret-position="144">
+              <caret line="63" column="45" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4312#4313#0" expanded="true" />
-                <element signature="e#4364#4365#0" expanded="true" />
-                <element signature="e#4831#4832#0" expanded="true" />
-                <element signature="e#4858#4859#0" expanded="true" />
-                <element signature="e#4912#4913#0" expanded="true" />
-                <element signature="e#4948#4949#0" expanded="true" />
+                <element signature="e#5083#5084#0" expanded="true" />
+                <element signature="e#5135#5136#0" expanded="true" />
+                <element signature="e#5602#5603#0" expanded="true" />
+                <element signature="e#5629#5630#0" expanded="true" />
+                <element signature="e#5683#5684#0" expanded="true" />
+                <element signature="e#5719#5720#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -88,8 +97,8 @@
       <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="65" column="28" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
+            <state relative-caret-position="216">
+              <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -188,14 +197,14 @@
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
         <option value="$PROJECT_DIR$/src/NonTerminalInterface.java" />
         <option value="$PROJECT_DIR$/Test/NonTerminalTwoTest.java" />
-        <option value="$PROJECT_DIR$/src/Terminal.java" />
         <option value="$PROJECT_DIR$/src/Digram.java" />
         <option value="$PROJECT_DIR$/src/Symbol.java" />
         <option value="$PROJECT_DIR$/src/NonTerminalTwo.java" />
         <option value="$PROJECT_DIR$/src/RuleInterface.java" />
-        <option value="$PROJECT_DIR$/Test/RuleImplTest.java" />
         <option value="$PROJECT_DIR$/Test/TestStructureTest.java" />
         <option value="$PROJECT_DIR$/src/TestStructure.java" />
+        <option value="$PROJECT_DIR$/src/Terminal.java" />
+        <option value="$PROJECT_DIR$/Test/RuleImplTest.java" />
         <option value="$PROJECT_DIR$/src/RuleImpl.java" />
       </list>
     </option>
@@ -286,7 +295,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.RuleImplTest.addTerminal">
+  <component name="RunManager" selected="JUnit.RuleImplTest.replaceDigram">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -425,9 +434,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.RuleImplTest.addTerminal" />
         <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
         <item itemvalue="JUnit.RuleImplTest.checkDigram" />
+        <item itemvalue="JUnit.RuleImplTest.addTerminal" />
         <item itemvalue="JUnit.compressTest.simpleInputTest" />
         <item itemvalue="JUnit.NonTerminalTest.rebuildBiList" />
       </list>
@@ -489,14 +498,7 @@
       <workItem from="1529315636485" duration="316000" />
       <workItem from="1529316015175" duration="78000" />
       <workItem from="1529316117349" duration="31060000" />
-      <workItem from="1529409235245" duration="4747000" />
-    </task>
-    <task id="LOCAL-00033" summary="sorted rules">
-      <created>1521743962173</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1521743962173</updated>
+      <workItem from="1529409235245" duration="9079000" />
     </task>
     <task id="LOCAL-00034" summary="need to clean up and speed up code">
       <created>1521745187562</created>
@@ -834,43 +836,50 @@
       <option name="project" value="LOCAL" />
       <updated>1529349705601</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="going to try another storing reference to left and right symols as a key...">
+      <created>1529416034575</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1529416034580</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="RuleImplTest_addTerminal - 2018.06.19 at 13h 13m 39s.xml">
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.19 at 15h 06m 30s.xml">
       <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_checkDigram - 2018.06.19 at 13h 23m 53s.xml">
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.19 at 15h 10m 53s.xml">
+      <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.19 at 15h 17m 04s.xml">
+      <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RuleImplTest_addTerminal - 2018.06.19 at 15h 18m 21s.xml">
+      <configuration name="RuleImplTest.addTerminal" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="RuleImplTest_checkDigram - 2018.06.19 at 15h 20m 42s.xml">
       <configuration name="RuleImplTest.checkDigram" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_checkDigram - 2018.06.19 at 13h 24m 33s.xml">
+    <history-entry file="RuleImplTest_checkDigram - 2018.06.19 at 15h 28m 38s.xml">
       <configuration name="RuleImplTest.checkDigram" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_checkDigram - 2018.06.19 at 13h 27m 02s.xml">
+    <history-entry file="RuleImplTest_checkDigram - 2018.06.19 at 15h 30m 00s.xml">
       <configuration name="RuleImplTest.checkDigram" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 13h 30m 09s.xml">
+    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 16h 01m 14s.xml">
       <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 13h 36m 04s.xml">
+    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 16h 03m 56s.xml">
       <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 13h 38m 56s.xml">
-      <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 13h 53m 21s.xml">
-      <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 13h 53m 43s.xml">
-      <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 13h 54m 49s.xml">
+    <history-entry file="RuleImplTest_replaceDigram - 2018.06.19 at 16h 04m 37s.xml">
       <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252011000" />
+    <option name="totallyTimeSpent" value="256343000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -884,10 +893,10 @@
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.43373495" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.43373495" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32882884" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24963397" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -909,7 +918,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="working through proposal" />
     <MESSAGE value="working through proposal again" />
     <MESSAGE value="focCW" />
     <MESSAGE value="trying to speed up, improve data structures" />
@@ -934,7 +942,8 @@
     <MESSAGE value="can just check the amount of times symbol with matching previous symbol has been added... will it work for nonTerminal" />
     <MESSAGE value="going back to including digrams, hopefully will be able to change elements more easily" />
     <MESSAGE value="still trying to get a good underlying structure.." />
-    <option name="LAST_COMMIT_MESSAGE" value="still trying to get a good underlying structure.." />
+    <MESSAGE value="going to try another storing reference to left and right symols as a key..." />
+    <option name="LAST_COMMIT_MESSAGE" value="going to try another storing reference to left and right symols as a key..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1069,13 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Terminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="36" column="5" selection-start-line="33" selection-start-column="4" selection-end-line="36" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Digram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="954">
@@ -1141,26 +1143,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Terminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-start-column="2" selection-end-line="36" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="130" column="36" selection-start-line="130" selection-start-column="36" selection-end-line="130" selection-end-column="36" />
+        <state relative-caret-position="144">
+          <caret line="63" column="45" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4312#4313#0" expanded="true" />
-            <element signature="e#4364#4365#0" expanded="true" />
-            <element signature="e#4831#4832#0" expanded="true" />
-            <element signature="e#4858#4859#0" expanded="true" />
-            <element signature="e#4912#4913#0" expanded="true" />
-            <element signature="e#4948#4949#0" expanded="true" />
+            <element signature="e#5083#5084#0" expanded="true" />
+            <element signature="e#5135#5136#0" expanded="true" />
+            <element signature="e#5602#5603#0" expanded="true" />
+            <element signature="e#5629#5630#0" expanded="true" />
+            <element signature="e#5683#5684#0" expanded="true" />
+            <element signature="e#5719#5720#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="65" column="28" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
+        <state relative-caret-position="216">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
         </state>
       </provider>
     </entry>

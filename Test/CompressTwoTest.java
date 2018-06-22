@@ -12,6 +12,8 @@ public class CompressTwoTest {
         //0 -> a 1 d 1
         //1 -> b c
 
+        //TODO once a digram has been replaced it is not being recognised as repeat
+        //TODO keep all history of digrams? don't remove old ones? - How to update nonTerminal rules
         System.out.println();
         c = new CompressTwo();
         c.processInput("abcdbcabc");

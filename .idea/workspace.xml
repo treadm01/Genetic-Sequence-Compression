@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Test/CompressTwoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CompressTwo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/RuleImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/RuleImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/CompressTwoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTwoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CompressTwo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CompressTwo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RuleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RuleInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleInterface.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,10 +38,12 @@
       <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="55" column="20" lean-forward="true" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
+            <state relative-caret-position="36">
+              <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="62" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#8438#8439#0" expanded="true" />
+                <element signature="e#8500#8501#0" expanded="true" />
                 <element signature="e#7276#7277#0" expanded="true" />
                 <element signature="e#7328#7329#0" expanded="true" />
                 <element signature="e#7740#7741#0" expanded="true" />
@@ -72,8 +72,8 @@
       <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1314">
-              <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
+            <state relative-caret-position="26">
+              <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -93,8 +93,8 @@
       <file leaf-file-name="CompressTwo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CompressTwo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="16" column="96" selection-start-line="16" selection-start-column="96" selection-end-line="16" selection-end-column="96" />
+            <state relative-caret-position="18">
+              <caret line="4" column="53" lean-forward="true" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,8 +105,8 @@
       <file leaf-file-name="CompressTwoTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/CompressTwoTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+            <state relative-caret-position="162">
+              <caret line="15" column="100" selection-start-line="15" selection-start-column="100" selection-end-line="15" selection-end-column="100" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,8 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getva</find>
-      <find>equal</find>
       <find>setrule</find>
       <find>reor</find>
       <find>printl</find>
@@ -178,6 +176,8 @@
       <find>values</find>
       <find>rebui</find>
       <find>digraml</find>
+      <find>checkD</find>
+      <find>addnon</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -223,10 +223,10 @@
         <option value="$PROJECT_DIR$/src/Terminal.java" />
         <option value="$PROJECT_DIR$/Test/RuleImplTest.java" />
         <option value="$PROJECT_DIR$/src/Compress.java" />
-        <option value="$PROJECT_DIR$/src/RuleImpl.java" />
         <option value="$PROJECT_DIR$/src/RuleInterface.java" />
-        <option value="$PROJECT_DIR$/Test/CompressTwoTest.java" />
         <option value="$PROJECT_DIR$/src/CompressTwo.java" />
+        <option value="$PROJECT_DIR$/src/RuleImpl.java" />
+        <option value="$PROJECT_DIR$/Test/CompressTwoTest.java" />
       </list>
     </option>
   </component>
@@ -340,14 +340,14 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="RuleImplTest.replaceDigram" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RuleImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="RuleImplTest" />
-      <option name="METHOD_NAME" value="replaceDigram" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -357,13 +357,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RuleImplTest.replaceDigram" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="RuleImplTest" />
-      <option name="METHOD_NAME" value="replaceMoreComplexDigramHashMap" />
+      <option name="METHOD_NAME" value="replaceDigram" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -447,19 +447,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
-      <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigramHashMap" />
       <item itemvalue="JUnit.RuleImplTest.replaceNonTerminal" />
       <item itemvalue="JUnit.compressTest.simpleInputTest" />
       <item itemvalue="JUnit.CompressTwoTest.simpleInputTest" />
+      <item itemvalue="JUnit.RuleImplTest" />
+      <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CompressTwoTest.simpleInputTest" />
+        <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
+        <item itemvalue="JUnit.RuleImplTest" />
         <item itemvalue="JUnit.compressTest.simpleInputTest" />
         <item itemvalue="JUnit.RuleImplTest.replaceNonTerminal" />
-        <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigramHashMap" />
-        <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
       </list>
     </recent_temporary>
   </component>
@@ -519,14 +519,7 @@
       <workItem from="1529315636485" duration="316000" />
       <workItem from="1529316015175" duration="78000" />
       <workItem from="1529316117349" duration="31060000" />
-      <workItem from="1529409235245" duration="37286000" />
-    </task>
-    <task id="LOCAL-00038" summary="working through proposal">
-      <created>1522366514495</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1522366514495</updated>
+      <workItem from="1529409235245" duration="41681000" />
     </task>
     <task id="LOCAL-00039" summary="working through proposal">
       <created>1522366608827</created>
@@ -864,43 +857,50 @@
       <option name="project" value="LOCAL" />
       <updated>1529675040131</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="kind of working, very messy">
+      <created>1529689066945</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1529689066945</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 25m 23s.xml">
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 47m 31s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 26m 57s.xml">
+    <history-entry file="RuleImplTest - 2018.06.22 at 19h 05m 19s.xml">
+      <configuration name="RuleImplTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 05m 30s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 32m 53s.xml">
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 06m 44s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 33m 13s.xml">
+    <history-entry file="RuleImplTest_replaceDigram - 2018.06.22 at 19h 07m 06s.xml">
+      <configuration name="RuleImplTest.replaceDigram" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 07m 38s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 33m 26s.xml">
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 08m 00s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 33m 54s.xml">
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 22m 37s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 34m 17s.xml">
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 28m 44s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 34m 26s.xml">
-      <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="compressTest_simpleInputTest - 2018.06.22 at 18h 34m 38s.xml">
-      <configuration name="compressTest.simpleInputTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 18h 35m 02s.xml">
+    <history-entry file="CompressTwoTest_simpleInputTest - 2018.06.22 at 19h 48m 28s.xml">
       <configuration name="CompressTwoTest.simpleInputTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="284550000" />
+    <option name="totallyTimeSpent" value="288945000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -939,7 +939,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="using index of rule being used to remove single use rules and update" />
     <MESSAGE value="noting some things to fix with speed hopefully, some decompression tests now failing with update to ruleutility" />
     <MESSAGE value="cleaning up slightly" />
     <MESSAGE value="adding some tests to keep map of bigrams" />
@@ -964,7 +963,8 @@
     <MESSAGE value="trying a method using digram map with indexes" />
     <MESSAGE value="removing indexes of old terminals next to new nonterminal" />
     <MESSAGE value="have to reshuffle indexes for everything after removing terminals etc, they could be anywhere and have to check all, so wont be efficient..." />
-    <option name="LAST_COMMIT_MESSAGE" value="have to reshuffle indexes for everything after removing terminals etc, they could be anywhere and have to check all, so wont be efficient..." />
+    <MESSAGE value="kind of working, very messy" />
+    <option name="LAST_COMMIT_MESSAGE" value="kind of working, very messy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1132,13 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1314">
-          <caret line="76" column="53" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1173,12 +1166,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
+    <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="55" column="20" lean-forward="true" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
+        <state relative-caret-position="26">
+          <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CompressTwo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="4" column="53" lean-forward="true" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="62" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8438#8439#0" expanded="true" />
+            <element signature="e#8500#8501#0" expanded="true" />
             <element signature="e#7276#7277#0" expanded="true" />
             <element signature="e#7328#7329#0" expanded="true" />
             <element signature="e#7740#7741#0" expanded="true" />
@@ -1191,20 +1203,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CompressTwo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="16" column="96" selection-start-line="16" selection-start-column="96" selection-end-line="16" selection-end-column="96" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTwoTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="16" column="36" lean-forward="true" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
+        <state relative-caret-position="162">
+          <caret line="15" column="100" selection-start-line="15" selection-start-column="100" selection-end-line="15" selection-end-column="100" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

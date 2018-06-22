@@ -4,14 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 public class RuleImpl implements RuleInterface {
-    private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
     Map<Digram, List<Integer>> symbolHashMap = new HashMap<>();
     Map<NonTerminalTwo, List<Integer>> nonTerminalHashMap = new HashMap<>();
     Digram tail, head;
     List<Symbol> values = new ArrayList<>(); // might be able to eventually remove and just use indexes
-
-    Map<Digram, List<Integer>> ts = new HashMap<>();
 
     @Override
     public Integer getSize() {
@@ -38,7 +35,7 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void replaceDigram(NonTerminalTwo nonTerminal) {
-        Digram d = new Digram(values.get(values.size()-2), values.get(values.size()-1)); // current digram
+        Digram d = getTail();//new Digram(values.get(values.size()-2), values.get(values.size()-1)); // current digram
 
         // remove all unused digrams
         for (Integer index : symbolHashMap.get(d)) {
@@ -221,8 +218,7 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public Boolean checkDigram() {
-        Digram d = new Digram(values.get(values.size()-2), values.get(values.size()-1));
-        return symbolHashMap.get(d).size() > 1;
+        return symbolHashMap.get(getTail()).size() > 1;
     }
 
     /**

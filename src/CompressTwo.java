@@ -20,6 +20,8 @@ public class CompressTwo {
                 ruleMap.put(ruleMap.size(), ri);
             }
         }
+        System.out.println(mainRule.getSymbolHashMap());
+        System.out.println(mainRule.getNonTerminalHashMap());
         System.out.println(ruleMap);
     }
 

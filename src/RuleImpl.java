@@ -66,7 +66,7 @@ public class RuleImpl implements RuleInterface {
         int offset = 0; // have to use an offset when removing from list....
         for (Integer index : symbolHashMap.get(d)) {
             // add values/remove values from value list
-            values.remove(values.get(index - offset));
+            values.remove(index - offset);
             values.add(index - offset, nonTerminal);
             values.remove((index-1) - offset);
 
@@ -100,6 +100,7 @@ public class RuleImpl implements RuleInterface {
             }
         }
         symbolHashMap.remove(d);
+        setTail();
     }
 
     public void addDigram(Digram digram, Integer index) {
@@ -267,6 +268,10 @@ public class RuleImpl implements RuleInterface {
      */
     public Digram getTail() {
         return tail;
+    }
+
+    public void setTail() {
+        tail = new Digram(values.get(values.size() - 2), values.get(values.size() - 1));
     }
 
     public Map<Digram, List<Integer>> getSymbolHashMap() {

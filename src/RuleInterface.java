@@ -6,7 +6,7 @@ public interface RuleInterface {
     Integer getUseAmount();
     void incrementUse();
     void decrementUse();
-    void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal);
+    void replaceDigram(NonTerminalTwo nonTerminal);
     void replaceNonTerminal();
     Boolean checkDigram();
     void addTerminal(Terminal terminal);

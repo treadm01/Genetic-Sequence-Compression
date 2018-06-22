@@ -24,11 +24,34 @@ public class RuleImplTest {
         ruleInterface.addTerminal(new Terminal("b"));
         System.out.println(ruleInterface.getSymbolHashMap());
 
-        ruleInterface.replaceDigram(ruleInterface.getTail(), nonTerminal);
-        System.out.println(ruleInterface.getSymbolHashMap());
+        System.out.println(ruleInterface);
+
+        ruleInterface.replaceDigram(nonTerminal);
 
         System.out.println(ruleInterface);
-        //assertEquals("11", ruleInterface.toString());
+        assertEquals("11", ruleInterface.toString());
+    }
+
+    @Test
+    public void replaceMoreComplexDigramHashMap() {
+        ruleInterface.addTerminal(new Terminal("e"));
+        ruleInterface.addTerminal(new Terminal("z"));
+
+        ruleInterface.addTerminal(new Terminal("a"));
+        ruleInterface.addTerminal(new Terminal("b"));
+
+        ruleInterface.addTerminal(new Terminal("q"));
+        ruleInterface.addTerminal(new Terminal("r"));
+
+        ruleInterface.addTerminal(new Terminal("a"));
+        ruleInterface.addTerminal(new Terminal("b"));
+
+        ruleInterface.replaceDigram(nonTerminal);
+
+        assertEquals("ez1qr1", ruleInterface.toString());
+
+        System.out.println(ruleInterface.getSymbolHashMap());
+        System.out.println(ruleInterface);
     }
 
     @Test

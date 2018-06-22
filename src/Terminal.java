@@ -14,10 +14,10 @@ public class Terminal extends Symbol {
     @Override
     public boolean equals(Object o) {
         Terminal t = null;
-        if (!(o instanceof Terminal) && !(o instanceof NonTerminal)) {
+        if (!(o instanceof Terminal) && !(o instanceof NonTerminalTwo)) {
             throw new ClassCastException("Must be terminal. Received " + o.getClass());
         }
-        else if (o instanceof NonTerminal) {
+        else if (o instanceof NonTerminalTwo) {
             return false;
         }
         else {

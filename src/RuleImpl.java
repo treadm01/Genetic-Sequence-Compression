@@ -36,9 +36,50 @@ public class RuleImpl implements RuleInterface {
      * take out matching digram and replace with a nonTerminal
      */
     @Override
-    public void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal) {
+    public void replaceDigram(NonTerminalTwo nonTerminal) {
+        // get list of indexes of the digram from map
+        // replace all instances in values with terminal
+
+
+
+        // how to update digram map
+        // can remove those updated easily (i hope)
+
+        // but same problem of how to update other digrams
+        Digram d = new Digram(values.get(values.size()-2), values.get(values.size()-1));
+
+
+        for (Integer index : symbolHashMap.get(d)) {
+            // digrams to remove
+            // left
+            if ((index - 2) >= 0) {
+                Digram digramLeft = new Digram(values.get(index - 2), values.get(index - 1));
+                symbolHashMap.get(digramLeft).remove(Integer.valueOf(index - 1));
+            }
+            // right
+            if ((index + 1) <= values.size() - 1) {
+                Digram digramRight = new Digram(values.get(index), values.get(index + 1));
+                symbolHashMap.get(digramRight).remove(Integer.valueOf(index + 1));
+            }
+
+
+        }
+
+
+
+        int offset = 0; // have to use an offset when removing from list....
+        for (Integer index : symbolHashMap.get(d)) {
+            values.remove(values.get(index - offset));
+            values.add(index - offset, nonTerminal);
+            values.remove((index-1) - offset);
+            offset += 1;
+        }
 
     }
+
+//    public void updateDigramMap() {
+//
+//    }
 
     /**
      * take out nonTerminal symbol and replace with what it represented

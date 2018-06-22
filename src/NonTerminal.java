@@ -119,6 +119,8 @@ public class NonTerminal extends Symbol {
     public void replaceNonTerminal(NonTerminal t) {
         values.addAll(values.indexOf(t), t.values);
         values.remove(t);
+        //create digram here and add to list/set, remove old digrams -
+        // list of digrams used linearly at the moment though i think
         rebuildBiList();
     }
 
@@ -166,6 +168,9 @@ public class NonTerminal extends Symbol {
      */
     //TODO - REMOVE USE LIST OF BIGRAMS, USE HASH UPDATE RULE
     public void updateRule(NonTerminal r) {
+        // digram map, where left and right links are not symbols but digrams
+        // create new digrams and add them
+        // remove the old ones
         Digram ruleDigram = r.currentDigram;
 
         // TODO yes, no loop of entire list

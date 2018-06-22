@@ -1,17 +1,16 @@
-import javafx.util.Pair;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RuleImpl implements RuleInterface {
     private Integer ruleSize = 0;
     private Integer ruleUsage = 0;
-    Map<Integer, Symbol> symbolHashMap = new HashMap<>();
+    Map<Digram, List<Integer>> symbolHashMap = new HashMap<>();
     Symbol tail, head;
+    List<Symbol> values = new ArrayList<>(); // might be able to eventually remove and just use indexes
 
-    Map<Symbol, Digram> ts = new HashMap<>();
+    Map<Digram, List<Integer>> ts = new HashMap<>();
 
     @Override
     public Integer getSize() {
@@ -38,65 +37,7 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void replaceDigram(Symbol symbol, NonTerminalTwo nonTerminal) {
-        //nonterminal left set as first.leftsymbol of digram,
-        // nonterminal  right set as second.rightsymbol of digram
 
-        // don't need to send symbol if always the last digram
-
-        //TODO same problem, have to be able to change the values, how to store them???
-
-        List<Symbol> symbolList = ts.keySet()
-                .stream()
-                .filter(x -> x.equals(getTail()))
-                .collect(Collectors.toList());
-
-        for (Symbol s : symbolList) {
-
-            // create new entry for nonterminal, from hashmap get corresponding values
-            // think you're going to have same problem as creating a new digram,
-            // order wont be right.... could assign to different objects
-            Symbol left = ts.get(ts.get(s).first).first;
-            Symbol right = ts.get(s).second;
-            Digram d = new Digram(left, right);
-            ts.putIfAbsent(nonTerminal, d);
-
-            // need to update the new left and right symbols to point to the new nonterminal one
-            if (left != null && right != null) {
-                d = new Digram(ts.get(left).first, nonTerminal);
-                ts.put(left, d);
-
-                d = new Digram(nonTerminal, ts.get(right).second);
-                ts.put(right, d);
-            }
-
-//            NonTerminalTwo nt = nonTerminal; // need to create, clone???
-//            nt.setLeftSymbol(s.getLeftSymbol().getLeftSymbol());
-//            nt.setRightSymbol(s.getRightSymbol());
-//            symbolHashMap.putIfAbsent(symbolHashMap.size(), nt);
-//            if (nt.getLeftSymbol() == null) {
-//                head = nt;
-//            }
-        }
-        System.out.println(ts);
-
-        // need to add and remove digrams and nonTerminals from map
-
-
-        /**
-         * as it is, keeps a list of digrams that occurs and their frequencies
-         * problems arise when you want to replace a digram with something else
-         * there's a link between each individual symbol, and there's the generic
-         * digrams, replacing digrams can't be done like this
-         *
-         * when replacing a digram you have the digram itself the last two symbols
-         * or tail of current rule
-         *
-         * have to replace every instance of that with the nonTerminal
-         *
-         * keep a separate hashmap for altering??
-         *
-         * switch it to have a digram for each instance, have to recheck way of counting digrams
-         */
     }
 
     /**
@@ -109,14 +50,8 @@ public class RuleImpl implements RuleInterface {
 
     @Override
     public Boolean checkDigram() {
-//        Digram p = new Digram(tail.getLeftSymbol(), tail);
-//        return symbolHashMap.get(p) > 1;
-        Long count = ts.keySet()
-                .stream()
-                .filter(x -> x.equals(tail))
-                .count();
-        System.out.println(count);
-        return count > 1;
+        Digram d = new Digram(values.get(values.size()-2), values.get(values.size()-1));
+        return symbolHashMap.get(d).size() > 1;
     }
 
     /**
@@ -127,30 +62,17 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void addTerminal(Terminal terminal) {
-        Digram p;
-        if (ts.size() == 0) {
-            head = terminal;
-            tail = terminal;
+        if (values.size() > 0) {
+            Digram digram = new Digram(values.get(values.size()-1), terminal);
+            if (!symbolHashMap.containsKey(digram)) {
+                List<Integer> index = new ArrayList<>();
+                index.add(values.size());
+                symbolHashMap.putIfAbsent(digram, index);
+            } else {
+                symbolHashMap.get(digram).add(values.size()); // add new index to list of terminal...
+            }
         }
-        else {
-            terminal.setLeftSymbol(tail);
-            tail.setRightSymbol(terminal);
-            tail = terminal;
-            // assign pair values for new terminal
-            // but also update last one
-            ts.get(terminal.getLeftSymbol()).second = terminal;
-        }
-
-        p = new Digram(terminal.getLeftSymbol(), terminal.getRightSymbol());
-        ts.putIfAbsent(terminal, p);
-        System.out.println(ts);
-
-//        if (!symbolHashMap.containsKey(terminal)) {
-//            symbolHashMap.putIfAbsent(symbolHashMap.size(), terminal);
-//        }
-//        else {
-//            symbolHashMap.put(symbolHashMap.size(), terminal);
-//        }
+        values.add(terminal);
     }
 
     /**
@@ -170,15 +92,11 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public String toString() {
-        String rule = "";
-        Symbol s = head;
-
-        do {
-            rule += s.toString();
-            s = s.getRightSymbol();
-        } while (s != null);
-
-        return rule;
+        String result = "";
+        for (Symbol s : values) {
+            result += s.toString();
+        }
+        return result;
     }
 
     /**
@@ -189,7 +107,7 @@ public class RuleImpl implements RuleInterface {
         return tail;
     }
 
-    public Map<Integer, Symbol> getSymbolHashMap() {
+    public Map<Digram, List<Integer>> getSymbolHashMap() {
         return symbolHashMap;
     }
 }

@@ -68,12 +68,13 @@ public class RuleImplTest {
 
         // check second terminal has link to first
         ruleInterface.addTerminal(terminalTwo);
-        assertEquals(ruleInterface.getTail().getLeftSymbol().toString(), "a");
 
         ruleInterface.addTerminal(new Terminal("a"));
         ruleInterface.addTerminal(new Terminal("b"));
 
         assertEquals("abab", ruleInterface.toString());
+
+        System.out.println(ruleInterface);
 
         System.out.println(ruleInterface.getSymbolHashMap());
     }

@@ -24,13 +24,9 @@ public class Terminal extends Symbol {
             t = (Terminal) o;
         }
 
-        if (t.getLeftSymbol() == null || this.getLeftSymbol() == null) {
-            return false;
-        }
-
-        return  (t.toString().equals(this.toString()) && t.getLeftSymbol().toString().equals(this.getLeftSymbol().toString()));
+        return  (t.toString().equals(this.toString()));
     }
-//
+
 //    @Override
 //    public int hashCode() {
 //        return (int) this.toString().charAt(0);

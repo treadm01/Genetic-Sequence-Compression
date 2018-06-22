@@ -7,10 +7,11 @@ public interface RuleInterface {
     void incrementUse();
     void decrementUse();
     void replaceDigram(NonTerminalTwo nonTerminal);
-    void replaceNonTerminal();
+    void replaceNonTerminal(NonTerminalTwo nonTerminal);
     Boolean checkDigram();
-    void addTerminal(Terminal terminal);
+    void addTerminal(Symbol terminal);
     Symbol getSymbol(Terminal symbol); //TODO for testing
-    Symbol getTail();//TODO for testing
+    Digram getTail();//TODO for testing
     Map<Digram, List<Integer>> getSymbolHashMap(); // TODO for testing
+    Map<NonTerminalTwo, List<Integer>> getNonTerminalHashMap(); // TODO for testing
 }

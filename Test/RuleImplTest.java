@@ -29,6 +29,7 @@ public class RuleImplTest {
         ruleInterface.replaceDigram(nonTerminal);
 
         System.out.println(ruleInterface);
+        System.out.println(ruleInterface.getSymbolHashMap());
         assertEquals("11", ruleInterface.toString());
     }
 
@@ -45,6 +46,9 @@ public class RuleImplTest {
 
         ruleInterface.addTerminal(new Terminal("a"));
         ruleInterface.addTerminal(new Terminal("b"));
+
+        System.out.println(ruleInterface.getSymbolHashMap());
+        System.out.println(ruleInterface);
 
         ruleInterface.replaceDigram(nonTerminal);
 

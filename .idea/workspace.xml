@@ -5,8 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/RuleImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/RuleImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RuleImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RuleInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RuleInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,19 +43,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RuleImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="57" column="48" selection-start-line="57" selection-start-column="48" selection-end-line="57" selection-end-column="48" />
+            <state relative-caret-position="252">
+              <caret line="81" column="55" selection-start-line="81" selection-start-column="55" selection-end-line="81" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3547#3548#0" expanded="true" />
-                <element signature="e#3599#3600#0" expanded="true" />
-                <element signature="e#4011#4012#0" expanded="true" />
-                <element signature="e#4038#4039#0" expanded="true" />
-                <element signature="e#4098#4099#0" expanded="true" />
-                <element signature="e#4134#4135#0" expanded="true" />
+                <element signature="e#4169#4170#0" expanded="true" />
+                <element signature="e#4221#4222#0" expanded="true" />
+                <element signature="e#4633#4634#0" expanded="true" />
+                <element signature="e#4660#4661#0" expanded="true" />
+                <element signature="e#4720#4721#0" expanded="true" />
+                <element signature="e#4756#4757#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RuleImplTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="52" column="59" lean-forward="true" selection-start-line="52" selection-start-column="59" selection-end-line="52" selection-end-column="59" />
+            <state relative-caret-position="252">
+              <caret line="40" column="47" lean-forward="true" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -301,14 +299,14 @@
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="RuleImplTest.addTerminal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RuleImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="RuleImplTest" />
-      <option name="METHOD_NAME" value="addTerminal" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -425,19 +423,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.RuleImplTest.addTerminal" />
       <item itemvalue="JUnit.RuleImplTest.checkDigram" />
       <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
       <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigram" />
       <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigramHashMap" />
+      <item itemvalue="JUnit.RuleImplTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigramHashMap" />
-        <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigram" />
         <item itemvalue="JUnit.RuleImplTest.replaceDigram" />
+        <item itemvalue="JUnit.RuleImplTest" />
+        <item itemvalue="JUnit.RuleImplTest.replaceMoreComplexDigram" />
         <item itemvalue="JUnit.RuleImplTest.checkDigram" />
-        <item itemvalue="JUnit.RuleImplTest.addTerminal" />
       </list>
     </recent_temporary>
   </component>
@@ -497,14 +495,7 @@
       <workItem from="1529315636485" duration="316000" />
       <workItem from="1529316015175" duration="78000" />
       <workItem from="1529316117349" duration="31060000" />
-      <workItem from="1529409235245" duration="19159000" />
-    </task>
-    <task id="LOCAL-00036" summary="cleaning up code adding comment">
-      <created>1521754084159</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1521754084159</updated>
+      <workItem from="1529409235245" duration="23030000" />
     </task>
     <task id="LOCAL-00037" summary="updating propasal">
       <created>1522233452067</created>
@@ -842,43 +833,50 @@
       <option name="project" value="LOCAL" />
       <updated>1529666188995</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="removing indexes of old terminals next to new nonterminal">
+      <created>1529671072033</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1529671072034</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 28m 29s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 35m 03s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 29m 23s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 35m 36s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 29m 45s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 36m 08s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 30m 32s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 36m 38s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 30m 49s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 37m 03s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 30m 56s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 37m 31s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 31m 22s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 37m 57s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 32m 16s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 38m 09s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 33m 30s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 38m 42s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 13h 33m 55s.xml">
+    <history-entry file="RuleImplTest_replaceMoreComplexDigramHashMap - 2018.06.22 at 14h 38m 48s.xml">
       <configuration name="RuleImplTest.replaceMoreComplexDigramHashMap" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="266423000" />
+    <option name="totallyTimeSpent" value="270294000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -917,7 +915,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying to speed up, improve data structures" />
     <MESSAGE value="unique terminal objects in hashset" />
     <MESSAGE value="using index of rule being used to remove single use rules and update" />
     <MESSAGE value="noting some things to fix with speed hopefully, some decompression tests now failing with update to ruleutility" />
@@ -942,7 +939,8 @@
     <MESSAGE value="going to try another storing reference to left and right symols as a key..." />
     <MESSAGE value="not really much closer, and more convoluted" />
     <MESSAGE value="trying a method using digram map with indexes" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying a method using digram map with indexes" />
+    <MESSAGE value="removing indexes of old terminals next to new nonterminal" />
+    <option name="LAST_COMMIT_MESSAGE" value="removing indexes of old terminals next to new nonterminal" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1146,26 +1144,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
+    <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="52" column="59" lean-forward="true" selection-start-line="52" selection-start-column="59" selection-end-line="52" selection-end-column="59" />
+        <state relative-caret-position="252">
+          <caret line="81" column="55" selection-start-line="81" selection-start-column="55" selection-end-line="81" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4169#4170#0" expanded="true" />
+            <element signature="e#4221#4222#0" expanded="true" />
+            <element signature="e#4633#4634#0" expanded="true" />
+            <element signature="e#4660#4661#0" expanded="true" />
+            <element signature="e#4720#4721#0" expanded="true" />
+            <element signature="e#4756#4757#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RuleImpl.java">
+    <entry file="file://$PROJECT_DIR$/Test/RuleImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="57" column="48" selection-start-line="57" selection-start-column="48" selection-end-line="57" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3547#3548#0" expanded="true" />
-            <element signature="e#3599#3600#0" expanded="true" />
-            <element signature="e#4011#4012#0" expanded="true" />
-            <element signature="e#4038#4039#0" expanded="true" />
-            <element signature="e#4098#4099#0" expanded="true" />
-            <element signature="e#4134#4135#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="252">
+          <caret line="40" column="47" lean-forward="true" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
         </state>
       </provider>
     </entry>

@@ -37,44 +37,79 @@ public class RuleImpl implements RuleInterface {
      */
     @Override
     public void replaceDigram(NonTerminalTwo nonTerminal) {
-        // get list of indexes of the digram from map
-        // replace all instances in values with terminal
+        Digram d = new Digram(values.get(values.size()-2), values.get(values.size()-1)); // current digram
 
-
-
-        // how to update digram map
-        // can remove those updated easily (i hope)
-
-        // but same problem of how to update other digrams
-        Digram d = new Digram(values.get(values.size()-2), values.get(values.size()-1));
-
-
+        // remove all unused digrams
         for (Integer index : symbolHashMap.get(d)) {
             // digrams to remove
             // left
             if ((index - 2) >= 0) {
                 Digram digramLeft = new Digram(values.get(index - 2), values.get(index - 1));
-                symbolHashMap.get(digramLeft).remove(Integer.valueOf(index - 1));
+                if (symbolHashMap.containsKey(digramLeft)) {
+                    symbolHashMap.get(digramLeft).remove(Integer.valueOf(index - 1));
+                    if (symbolHashMap.get(digramLeft).size() == 0) {
+                        symbolHashMap.remove(digramLeft);
+                    }
+                }
             }
             // right
             if ((index + 1) <= values.size() - 1) {
                 Digram digramRight = new Digram(values.get(index), values.get(index + 1));
-                symbolHashMap.get(digramRight).remove(Integer.valueOf(index + 1));
+                if (symbolHashMap.containsKey(digramRight)) {
+                    symbolHashMap.get(digramRight).remove(Integer.valueOf(index + 1));
+                    if (symbolHashMap.get(digramRight).size() == 0) {
+                        symbolHashMap.remove(digramRight);
+                    }
+                }
             }
-
-
         }
 
-
-
+        // add new values to rule
         int offset = 0; // have to use an offset when removing from list....
         for (Integer index : symbolHashMap.get(d)) {
             values.remove(values.get(index - offset));
             values.add(index - offset, nonTerminal);
             values.remove((index-1) - offset);
+
+            for (List<Integer> in : symbolHashMap.values()) {
+                if (! in.equals(symbolHashMap.get(d))) {
+                    for (Integer num : in) {
+                        if (num > index) {
+                            int copy = num;
+                            copy--;
+                            in.set(in.indexOf(num), copy);
+                        }
+                    }
+                }
+            }
+
             offset += 1;
+
+            if (((index-1) - offset) >= 0) {
+                Digram q = new Digram(values.get((index - 1) - offset), nonTerminal);
+                addDigram(q, (index) - offset);
+            }
+
+            if ((index + 1) - offset <= values.size() - 1) {
+                Digram q = new Digram(nonTerminal, values.get((index + 1) - offset));
+                addDigram(q, ((index) - offset) + 1);
+            }
+
         }
 
+        symbolHashMap.remove(d);
+
+    }
+
+    public void addDigram(Digram digram, Integer index) {
+        if (!symbolHashMap.containsKey(digram)) {
+            List<Integer> i = new ArrayList<>();
+            i.add(index);
+            symbolHashMap.putIfAbsent(digram, i);
+        }
+        else {
+            symbolHashMap.get(digram).add(index); // add new index to list of terminal...
+        }
     }
 
 //    public void updateDigramMap() {
@@ -105,13 +140,7 @@ public class RuleImpl implements RuleInterface {
     public void addTerminal(Terminal terminal) {
         if (values.size() > 0) {
             Digram digram = new Digram(values.get(values.size()-1), terminal);
-            if (!symbolHashMap.containsKey(digram)) {
-                List<Integer> index = new ArrayList<>();
-                index.add(values.size());
-                symbolHashMap.putIfAbsent(digram, index);
-            } else {
-                symbolHashMap.get(digram).add(values.size()); // add new index to list of terminal...
-            }
+            addDigram(digram, values.size());
         }
         values.add(terminal);
     }

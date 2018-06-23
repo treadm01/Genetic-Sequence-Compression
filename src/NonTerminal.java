@@ -72,6 +72,7 @@ public class NonTerminal extends Symbol {
     public void addValues(Terminal terminal) {
         values.add(terminal);
         symbolMap.putIfAbsent(symbolMap.size(), terminal);
+        setCurrentDigram(new Digram(values.get(values.size() - 1), terminal));
         updateBiList();
     }
 
@@ -106,6 +107,7 @@ public class NonTerminal extends Symbol {
     public void addValues(NonTerminal nonTerminal) {
         values.add(nonTerminal);
         symbolMap.putIfAbsent(symbolMap.size(), nonTerminal);
+        setCurrentDigram(new Digram(values.get(values.size() - 1), nonTerminal));
         updateBiList();
     }
 
@@ -121,6 +123,7 @@ public class NonTerminal extends Symbol {
         values.remove(t);
         //create digram here and add to list/set, remove old digrams -
         // list of digrams used linearly at the moment though i think
+        setCurrentDigram(new Digram(values.get(values.size() - 2), values.get(values.size() - 1)));
         rebuildBiList();
     }
 
@@ -204,6 +207,7 @@ public class NonTerminal extends Symbol {
                 values.add(i, r);
                 //TODO shouldn't use rebuild list
                 rebuildBiList();
+                setCurrentDigram(new Digram(values.get(values.size() - 2), values.get(values.size() - 1)));
                 r.useNumber++;
                 r.usedByList.add(this.number);
             }

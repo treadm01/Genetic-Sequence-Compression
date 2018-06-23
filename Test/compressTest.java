@@ -22,7 +22,7 @@ public class compressTest {
 
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabcd"); // 4d is 3 so that should be found and updated, then, as
+        c.processInput("abcdbcabcdabc"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
 
         System.out.println();
@@ -149,8 +149,9 @@ public class compressTest {
     //    System.out.println(c.writeFile(c.processInput("a")));
         String originalFile = io.readFile();
         System.out.println("original " + originalFile);
+        c.processInput(originalFile);
 
-        System.out.println(io.writeFile(c.processInput(originalFile)));
+        //System.out.println(io.writeFile(c.processInput(originalFile)));
 
 //        0 → 1 C A 2 3 4 3 2 1 5 4 T 3
 //        1 → T T C                                         TTC

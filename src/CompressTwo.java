@@ -11,7 +11,6 @@ public class CompressTwo {
         for (int i = 0; i < input.length(); i++) {
             String ch = input.substring(i, i+1);
             mainRule.addTerminal(new Terminal(ch));
-
             if (mainRule.getSize() > 1) {
                 if (mainRule.checkDigram()){
                     RuleImpl ri = new RuleImpl();
@@ -26,8 +25,6 @@ public class CompressTwo {
                 else if (digramMap.containsKey(mainRule.getTail())) {
                     mainRule.replaceDigram(digramMap.get(mainRule.getTail()));
                     if (mainRule.checkDigram()){
-                        System.out.println(mainRule.getTail().first);
-                        System.out.println(mainRule.getTail().second);
                         RuleImpl ri = new RuleImpl();
                         ri.addTerminal(mainRule.getTail().first);
                         ri.addTerminal(mainRule.getTail().second);

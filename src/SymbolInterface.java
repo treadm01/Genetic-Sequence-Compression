@@ -5,4 +5,5 @@ public interface SymbolInterface {
     void setRightSymbol(Symbol rightSymbol);
     Symbol getLeftSymbol();
     Symbol getRightSymbol();
+    void join(Symbol nextSymbol);
 }

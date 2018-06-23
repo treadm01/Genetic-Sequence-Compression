@@ -4,8 +4,7 @@
  */
 public class Symbol implements SymbolInterface {
     String representation;
-    Symbol left;
-    Symbol right;
+    Symbol left, right;
 
     @Override
     public void setSymbol(String representation) {
@@ -37,17 +36,10 @@ public class Symbol implements SymbolInterface {
         return this.right;
     }
 
+    @Override
+    public void join(Symbol nextSymbol) {
 
-    public boolean digramEquals(Symbol o) {
-        Symbol t = null;
-        if (!(o instanceof Terminal) && !(o instanceof NonTerminal)) {
-            throw new ClassCastException("Must be terminal or nonterminal. Received " + o.getClass());
-        }
-
-        if (o.getLeftSymbol() == null || this.getLeftSymbol() == null) {
-            return false;
-        }
-
-        return  (o.toString().equals(this.toString()) && o.getLeftSymbol().equals(this.getLeftSymbol()));
     }
+
+
 }

@@ -79,7 +79,7 @@ public class Compress {
             NonTerminal newRule = new NonTerminal();
             newRule.addValues(fr.getCurrentDigram()); //TODO would want to update this after
             nonTerminals.put(newRule.number, newRule);
-            System.out.println("RULES HERE " + nonTerminals);
+           // System.out.println("RULES HERE " + nonTerminals);
             if (!digramIndex.containsKey(fr.currentDigram)) {
                 List<Integer> index = new ArrayList<>();
                 index.add(newRule.number);
@@ -103,22 +103,25 @@ public class Compress {
     public void existingBigram(NonTerminal fr) {
         //TODO need to get hashset index for this
         List<NonTerminal> newRuleLst = new ArrayList<>();
-        System.out.println("current bigram " + fr.getCurrentDigram());
-        System.out.println("digram index " + digramIndex);
-        System.out.println("NON TERMINALS " + nonTerminals);
+//        System.out.println("current bigram " + fr.getCurrentDigram());
+//        System.out.println("digram index " + digramIndex);
+//        System.out.println("NON TERMINALS " + nonTerminals);
 
-        List<NonTerminal> finalRules = new ArrayList<>();
-        for (NonTerminal r : nonTerminals.values()) {
-            finalRules.add(r);
-        }
-        printRules(finalRules);
+        //printout
+//        List<NonTerminal> finalRules = new ArrayList<>();
+//        for (NonTerminal r : nonTerminals.values()) {
+//            finalRules.add(r);
+//        }
+//        printRules(finalRules);
 
         // TODO not doing enough loops.... there's an a 15 that should be found as repeat in
         // TODO 17, create a new rule and update
         if (digramIndex.containsKey(fr.getCurrentDigram())) {
+            //System.out.println("current bigram " + fr.getCurrentDigram());
+            //System.out.println("CONTAINED IN DIGRAMAP " + digramIndex);
             for (Integer i : digramIndex.get(fr.getCurrentDigram())) {
                 if (nonTerminals.get(i) != null) {
-                    System.out.println("GO TO BED " + nonTerminals.get(i).values);
+          //          System.out.println("GO TO BED " + nonTerminals.get(i).values);
                     if (nonTerminals.get(i).values.size() == 2) { // what is this 2??
                         fr.updateRule(nonTerminals.get(i));
                     }
@@ -133,7 +136,7 @@ public class Compress {
             }
         }
 
-        System.out.println("DONE A LOOP");
+        //System.out.println("DONE A LOOP");
 //
 //        for (NonTerminal r : nonTerminals.values()) {
 ////            System.out.println("R " + r);
@@ -157,7 +160,7 @@ public class Compress {
         // add the newly created rules to main list
         for (NonTerminal r : newRuleLst) {
             nonTerminals.put(r.number, r);
-            System.out.println("r numbers " + r.number);
+            //System.out.println("r numbers " + r.number);
 //            if (!digramIndex.containsKey(fr.currentDigram.second)) {
 //                List<Integer> index = new ArrayList<>();
 //                index.add(r.number);
@@ -186,6 +189,19 @@ public class Compress {
 
         for (NonTerminal s : ntList) {
             NonTerminal hold = nonTerminals.get(s.usedByList.get(0));
+            // when a rule is replaced with digram try to add that to the new rule in digram map
+            // gonna have to remove too
+            for (Digram d : s.getAllBigrams()) {
+                if (!digramIndex.containsKey(d)) {
+                    List<Integer> index = new ArrayList<>();
+                    index.add(hold.number);
+                    digramIndex.put(d, index);
+                }
+                else {
+                    digramIndex.get(d).add(digramIndex.get(d).size(),
+                            hold.number);
+                }
+            }
             hold.replaceNonTerminal(s);
             nonTerminals.remove(s.number); // remove key??
         }

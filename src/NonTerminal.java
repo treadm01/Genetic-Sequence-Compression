@@ -5,7 +5,10 @@ public class NonTerminal extends Symbol {
     List<Symbol> values = new ArrayList<>();
     Symbol guard;
 
-    public NonTerminal() {
+    public NonTerminal(String representation) {
+        this.representation = representation;
+        left = new Terminal("?");
+        right = new Terminal("?");
         //TODO set number for rule
         guard = new Terminal("!");
         guard.left = guard;
@@ -29,6 +32,11 @@ public class NonTerminal extends Symbol {
         symbol.left = values.get(values.size() - 2);
         values.get(values.size() - 2).right = symbol;
         values.get(values.size() - 1).left = symbol;
+    }
+
+    public void addSymbols(Symbol symbol) {
+        this.addNextSymbol(symbol);
+        this.addNextSymbol(symbol.right);
     }
 
     public Symbol getLast() {

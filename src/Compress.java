@@ -8,8 +8,11 @@ public class Compress {
         NonTerminal firstRule = new NonTerminal();
         for (int i = 0; i < input.length(); i++) {
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
+
+            //digramMap.putIfAbsent()
         }
 
         System.out.println(firstRule.values);
+
     }
 }

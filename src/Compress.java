@@ -9,5 +9,7 @@ public class Compress {
         for (int i = 0; i < input.length(); i++) {
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
         }
+
+        System.out.println(firstRule.values);
     }
 }

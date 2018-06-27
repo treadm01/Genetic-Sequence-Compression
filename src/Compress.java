@@ -15,6 +15,14 @@ public class Compress {
 
             // check whether the last(and one before if through left) has already been seen
             if (digramMap.containsKey(firstRule.getLast())) {
+
+                Symbol first = digramMap.get(firstRule.getLast());
+                Symbol second = firstRule.getLast();
+
+//                firstRule.values.remove(first);
+//                firstRule.values.remove(second);
+
+
                 System.out.println(firstRule.getLast().left + " " + firstRule.getLast());
                 // create new rule for found digram
                 NonTerminal newRule = new NonTerminal(String.valueOf(nonTerminalMap.size()));
@@ -23,7 +31,9 @@ public class Compress {
                 // TODO remove old digrams??
                 // TODO update rule with new nonTerminal -
                 // WHICH IS? reorder left and right of the ones found
-                firstRule.updateNonTerminal(newRule);
+
+                firstRule.updateNonTerminal(newRule, first);
+                firstRule.updateNonTerminal(newRule, second);
             }
             else
                 {

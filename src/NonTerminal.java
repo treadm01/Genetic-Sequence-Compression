@@ -41,10 +41,20 @@ public class NonTerminal extends Symbol {
         this.addNextSymbol(symbol.right);
     }
 
-    public void updateNonTerminal(NonTerminal nonTerminal) {
-        values.remove(values.size() - 2);
-        values.remove(values.size() - 2);
-        addNextSymbol(nonTerminal);
+    public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+        int index = values.indexOf(symbol);
+        nonTerminal.right = values.get(index).right;
+        values.get(index).right.left = nonTerminal;
+        values.remove(index);
+
+        values.add(index, nonTerminal);
+
+        nonTerminal.left = values.get(index - 1).left;
+        values.get(index - 1).left.right = nonTerminal;
+        values.remove(index - 1);
+
+        //nonTerminal.right =
+        //addNextSymbol(nonTerminal);
     }
 
     public Symbol getLast() {

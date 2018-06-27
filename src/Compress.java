@@ -9,9 +9,10 @@ public class Compress {
         for (int i = 0; i < input.length(); i++) {
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
 
-            //digramMap.putIfAbsent()
+            digramMap.putIfAbsent(firstRule.getLast(), firstRule.getLast());
         }
 
+        System.out.println(digramMap);
         System.out.println(firstRule.values);
 
     }

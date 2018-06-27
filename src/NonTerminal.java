@@ -32,6 +32,6 @@ public class NonTerminal extends Symbol {
     }
 
     public Symbol getLast() {
-        return values.get(values.size() - 1);
+        return values.get(values.size() - 2);
     }
 }

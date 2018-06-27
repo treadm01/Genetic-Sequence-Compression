@@ -5,6 +5,7 @@ public class Compress {
     Map<Symbol, Symbol> digramMap = new HashMap<>();
 
     public void processInput(String input) {
+        NonTerminal firstRule = new NonTerminal();
         for (int i = 0; i < input.length(); i++) {
 
         }

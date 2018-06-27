@@ -27,16 +27,24 @@ public class NonTerminal extends Symbol {
         // new symbol right should be guard
         // guard right then new symbol
         // guard left never used?*/
-        values.add(values.size() - 1, symbol);
+
         symbol.right = values.get(values.size() - 1);
         symbol.left = values.get(values.size() - 2);
         values.get(values.size() - 2).right = symbol;
         values.get(values.size() - 1).left = symbol;
+
+        values.add(values.size() - 1, symbol);
     }
 
     public void addSymbols(Symbol symbol) {
         this.addNextSymbol(symbol);
         this.addNextSymbol(symbol.right);
+    }
+
+    public void updateNonTerminal(NonTerminal nonTerminal) {
+        values.remove(values.size() - 2);
+        values.remove(values.size() - 2);
+        addNextSymbol(nonTerminal);
     }
 
     public Symbol getLast() {

@@ -15,7 +15,7 @@ public class CompressTest {
     public void processInput() {
         c.processInput("abcdbc");
 
-        //0 -> a 1 d  1
+        //0 -> a 1 d 1
         //1 -> b c
     }
 

@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class NonTerminal extends Symbol {
+public class NonTerminal extends Symbol implements Cloneable {
     List<Symbol> values = new ArrayList<>();
     Symbol guard;
-    static int ruleNumber = 0;
 
-    public NonTerminal() {
+    public NonTerminal(int ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
-        ruleNumber++;
+
         left = new Terminal("?");
         right = new Terminal("?");
         //TODO set number for rule
@@ -47,17 +46,21 @@ public class NonTerminal extends Symbol {
      * update this nonTerminal/rules digram with a nonTerminal
      * @param symbol
      */
-    public void updateNonTerminal(Symbol symbol) {
+    public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
         //TODO clean up. use values or nodes, use a generic addSymbol with index.
         int index = values.indexOf(symbol);
-        NonTerminal nonTerminal = new NonTerminal(); // create the nonTerminal here as it needs to be a different object
-        nonTerminal.addSymbols(symbol, symbol.right); // though should be matching symbols, TODO figure out rule numbers
+
+        System.out.println("THING IS " + values.get(index));
+        System.out.println("THING IS " + values.get(index + 1));
+        System.out.println("THING IS " + values.get(index).right);
 
         nonTerminal.right = values.get(index).right; // update node nonTerminal right
         values.get(index).right.left = nonTerminal; // update values for corresponding thing
         values.remove(index);
 
         values.add(index, nonTerminal); // add the nonTerminal to the list....
+
+        //System.out.println("OTHER THING IS " + values.get(index - 1).left);
 
         nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
         values.get(index - 1).left.right = nonTerminal;

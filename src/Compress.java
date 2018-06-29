@@ -10,12 +10,14 @@ public class Compress {
     // TODO recursively check new digram from where nonTerminals are added...
     // TODO rule numbers accurate
 
+    // keep list of nonterminals to their first symbol check that way for repeats
+
     /**
      * main method, doing too much, need to break up
      * @param input
      */
     public void processInput(String input) {
-        NonTerminal firstRule = new NonTerminal(); // create first rule
+        NonTerminal firstRule = new NonTerminal(0); // create first rule
         nonTerminalMap.put(firstRule, firstRule); // put in map
         for (int i = 0; i < input.length(); i++) {
             // add next symbol from input to the first rule
@@ -29,8 +31,19 @@ public class Compress {
                 // print out current digram being checked
                 System.out.println("DIGRAM = " + firstRule.getLast().left + " " + firstRule.getLast());
 
-                firstRule.updateNonTerminal(first); // update rule for first digram
-                firstRule.updateNonTerminal(second); // update for second
+                int ruleNumber = nonTerminalMap.size();
+
+                NonTerminal newRule = new NonTerminal(ruleNumber);
+                newRule.addSymbols(first.left, first);
+                firstRule.updateNonTerminal(newRule, first); // update rule for first digram
+
+                System.out.println("HERE" + firstRule.values);
+
+                newRule = new NonTerminal(ruleNumber);
+                newRule.addSymbols(second.left, second);
+                firstRule.updateNonTerminal(newRule, second); // update for second
+
+                nonTerminalMap.putIfAbsent(newRule, newRule);
             }
             else {
                 // add digram of last added symbols
@@ -43,10 +56,15 @@ public class Compress {
         System.out.println(firstRule.values);
 
         // print out from nodes for debugging
-        Symbol s = firstRule.values.get(1);
-        do {
-            System.out.println(s);
-            s = s.right;
-        } while (!s.representation.equals("!"));
+
+        printRules();
+    }
+
+    public void printRules() {
+        for (NonTerminal nt : nonTerminalMap.values()) {
+            System.out.print("RULE " + nt + " ");
+            System.out.print(nt.values);
+            System.out.println();
+        }
     }
 }

@@ -50,22 +50,18 @@ public class NonTerminal extends Symbol implements Cloneable {
         //TODO clean up. use values or nodes, use a generic addSymbol with index.
         int index = values.indexOf(symbol);
 
-        System.out.println("THING IS " + values.get(index));
-        System.out.println("THING IS " + values.get(index + 1));
-        System.out.println("THING IS " + values.get(index).right);
+        nonTerminal.right = values.get(index + 1); // update node nonTerminal right
+        nonTerminal.left = values.get(index - 2);
 
-        nonTerminal.right = values.get(index).right; // update node nonTerminal right
-        values.get(index).right.left = nonTerminal; // update values for corresponding thing
+
+        values.get(index + 1).left = nonTerminal; // update values for corresponding thing
         values.remove(index);
 
         values.add(index, nonTerminal); // add the nonTerminal to the list....
 
-        //System.out.println("OTHER THING IS " + values.get(index - 1).left);
-
-        nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
-        values.get(index - 1).left.right = nonTerminal;
+        //nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
+        values.get(index - 2).right = nonTerminal;
         values.remove(index - 1);
-
         //addNextSymbol(nonTerminal);
     }
 

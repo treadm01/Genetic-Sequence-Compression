@@ -9,8 +9,12 @@ public class Rule extends Symbol {
     }
 
     public void removeRule() {
-        left.right = nonTerminal.guard.left.right;
-        nonTerminal.last.right = right;
+        //TODO figure out how to access rule to be removed and replace with the rule it points to
+
+//        left.right = nonTerminal.guard.left.right;
+//        nonTerminal.last.right = right;
+
+
         //right.left = nonTerminal.last;
 //        left.right = nonTerminal.guard.left.right;
 //        nonTerminal.last.right = right;

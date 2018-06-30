@@ -7,11 +7,8 @@ public class Compress {
     NonTerminal firstRule = new NonTerminal(0); // create first rule;
 
     // TODO remove old digrams after adding nonTerminal
-    // TODO make a shell rule that keeps count of usage, holds a nonterminal, remove when reaches 1
-    // TODO use either left right or the list in nonTerminals
-
+    // TODO make sure the way symbols are created and stored isn't going to cause issues later on
     // keep list of nonterminals to their first symbol check that way for repeats
-    // keep a shell to instantiate for nonTerminals then send same instance of a rule to it
 
     /**
      * main method, doing too much, need to break up
@@ -40,7 +37,6 @@ public class Compress {
 
             System.out.print("RULE " + nt + " ");
             System.out.print(output + " ");
-            //System.out.print(nt.values + " ");
             System.out.print(nt.count);
             System.out.println();
         }
@@ -54,31 +50,31 @@ public class Compress {
 
     //TODO have method for boolean check of digram
     //TODO have method for updating firstRule
+    //TODO CLEAN AND BREAK UP WITH METHOD
     public void checkDigram() {
-        // TODO update new digrams where nonTerminal was added
-        // TODO recursively check new digram from where nonTerminals are added...
         // check whether new digram has already been seen
-
         if (digramMap.containsKey(firstRule.getLast())) {
             // if digram seen and rule already exists, get rule and update first rule with it
             if (nonTerminalMap.containsKey(firstRule.getLast())) {
-                Rule rule = new Rule(nonTerminalMap.get(firstRule.getLast()));
+                //THREE??
                 Symbol second = firstRule.getLast(); // new digram from last added terminal
+                Rule rule = new Rule(nonTerminalMap.get(firstRule.getLast())); // create new rule and send through nonTerminal
                 firstRule.updateNonTerminal(rule, second); // update rule for first digram
 
                 checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
-                digramMap.putIfAbsent(rule, rule);
+
+                // TODO possible to put this before recurisve checkDigram? would then match same process further down
+                digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
             }
             else { // create new rule for digram and update rule with them in all instances
                 Symbol first = digramMap.get(firstRule.getLast()); // the matching digram added earlier
                 Symbol second = firstRule.getLast(); // new digram from last added terminal
 
-                int ruleNumber = nonTerminalMap.size();
-
-                NonTerminal newRule = new NonTerminal(ruleNumber);
-//                newRule.addSymbols(first.left, first);
+                int ruleNumber = nonTerminalMap.size(); // TODO get in a better way
+                NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
                 // reduce rule count if being replaced.... if either of digram a nonterminal then rmeove
+                //TODO clean up, make separate method
                 if (first.left instanceof Rule) {
                     ((Rule) first.left).nonTerminal.count--;
                     if (((Rule) first.left).nonTerminal.count == 1) {
@@ -92,21 +88,24 @@ public class Compress {
                     }
                 }
 
-                Rule rule = new Rule(newRule);
+                // ONE
+                Rule rule = new Rule(newRule); // create a new rule but with the same nonTerminal
                 firstRule.updateNonTerminal(rule, first); // update rule for first digram
-
+                // add new digrams from the use of Nonterminal
                 digramMap.putIfAbsent(rule, rule);
                 digramMap.putIfAbsent(rule.right, rule.right);
 
+                // TWO
+                // create new rule for second instance with the same nonterminal
                 rule = new Rule(newRule);
                 firstRule.updateNonTerminal(rule, second); // update for second
-                // right right right?
-                newRule.addSymbols(first.left, first);
-                nonTerminalMap.putIfAbsent(rule.nonTerminal.guard.left.right.right, rule.nonTerminal);
-
+                // add potential digram of adding new nonterminal to end of rule
                 digramMap.putIfAbsent(rule, rule);
 
-                // add rulees no nonterminal after all done...
+                // TODO this below can't be done before the digrams are dealt with in a rule, as it wipes out the references of left and right. check if ok
+                newRule.addSymbols(first.left, first); // add symbols to the new rule/terminal
+                // put the new rule/nonTerminal into the map
+                nonTerminalMap.putIfAbsent(rule.nonTerminal.guard.left.right.right, rule.nonTerminal);
             }
             //checkDigram();
         }

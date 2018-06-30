@@ -54,12 +54,14 @@ public class NonTerminal extends Symbol implements Cloneable {
         rule.left = values.get(index - 2);
 
         values.get(index + 1).left = rule; // update values for corresponding thing
+
         values.remove(index);
 
         values.add(index, rule); // add the nonTerminal to the list....
 
         //nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
         values.get(index - 2).right = rule;
+
         values.remove(index - 1);
         //addNextSymbol(nonTerminal);
     }

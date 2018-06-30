@@ -22,7 +22,11 @@ public class Compress {
         for (int i = 0; i < input.length(); i++) {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
+            printRules();
+            System.out.println();
             checkDigram();
+            printRules();
+            System.out.println();
         }
 
 
@@ -59,9 +63,8 @@ public class Compress {
             if (nonTerminalMap.containsKey(firstRule.getLast())) {
                 Rule rule = new Rule(nonTerminalMap.get(firstRule.getLast()));
                 Symbol second = firstRule.getLast(); // new digram from last added terminal
-                //NonTerminal newRule = new NonTerminal(Integer.valueOf(nonTerminalMap.get(firstRule.getLast()).representation));
-                //newRule.addSymbols(second.left, second);
                 firstRule.updateNonTerminal(rule, second); // update rule for first digram
+
                 checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
                 digramMap.putIfAbsent(rule, rule);
             }
@@ -73,6 +76,15 @@ public class Compress {
 
                 NonTerminal newRule = new NonTerminal(ruleNumber);
                 newRule.addSymbols(first.left, first);
+
+                // reduce rule count if being replaced.... if either of digram a nonterminal then rmeove
+                if (first.left instanceof Rule) {
+                    ((Rule) first.left).nonTerminal.count--;
+                }
+                if (first instanceof Rule) {
+                    ((Rule) first).nonTerminal.count--;
+                }
+
                 Rule rule = new Rule(newRule);
                 firstRule.updateNonTerminal(rule, first); // update rule for first digram
 

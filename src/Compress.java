@@ -35,7 +35,8 @@ public class Compress {
     public void printRules() {
         for (NonTerminal nt : nonTerminalMap.values()) {
             System.out.print("RULE " + nt + " ");
-            System.out.print(nt.values);
+            System.out.print(nt.values + " ");
+            System.out.print(nt.count);
             System.out.println();
         }
     }
@@ -56,12 +57,13 @@ public class Compress {
         if (digramMap.containsKey(firstRule.getLast())) {
             // if digram seen and rule already exists, get rule and update first rule with it
             if (nonTerminalMap.containsKey(firstRule.getLast())) {
+                Rule rule = new Rule(nonTerminalMap.get(firstRule.getLast()));
                 Symbol second = firstRule.getLast(); // new digram from last added terminal
-                NonTerminal newRule = new NonTerminal(Integer.valueOf(nonTerminalMap.get(firstRule.getLast()).representation));
-                newRule.addSymbols(second.left, second);
-                firstRule.updateNonTerminal(newRule, second); // update rule for first digram
+                //NonTerminal newRule = new NonTerminal(Integer.valueOf(nonTerminalMap.get(firstRule.getLast()).representation));
+                //newRule.addSymbols(second.left, second);
+                firstRule.updateNonTerminal(rule, second); // update rule for first digram
                 checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
-                digramMap.putIfAbsent(newRule, newRule);
+                digramMap.putIfAbsent(rule, rule);
             }
             else { // create new rule for digram and update rule with them in all instances
                 Symbol first = digramMap.get(firstRule.getLast()); // the matching digram added earlier
@@ -71,17 +73,17 @@ public class Compress {
 
                 NonTerminal newRule = new NonTerminal(ruleNumber);
                 newRule.addSymbols(first.left, first);
-                firstRule.updateNonTerminal(newRule, first); // update rule for first digram
+                Rule rule = new Rule(newRule);
+                firstRule.updateNonTerminal(rule, first); // update rule for first digram
 
-                digramMap.putIfAbsent(newRule, newRule);
-                digramMap.putIfAbsent(newRule.right, newRule.right);
+                digramMap.putIfAbsent(rule, rule);
+                digramMap.putIfAbsent(rule.right, rule.right);
 
-                newRule = new NonTerminal(ruleNumber);
-                newRule.addSymbols(second.left, second);
-                firstRule.updateNonTerminal(newRule, second); // update for second
-                nonTerminalMap.putIfAbsent(newRule.values.get(2), newRule);
+                rule = new Rule(newRule);
+                firstRule.updateNonTerminal(rule, second); // update for second
+                nonTerminalMap.putIfAbsent(rule.nonTerminal.values.get(2), rule.nonTerminal);
 
-                digramMap.putIfAbsent(newRule, newRule);
+                digramMap.putIfAbsent(rule, rule);
             }
             //checkDigram();
         }

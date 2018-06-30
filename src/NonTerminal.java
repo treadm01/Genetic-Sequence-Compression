@@ -4,10 +4,10 @@ import java.util.List;
 public class NonTerminal extends Symbol implements Cloneable {
     List<Symbol> values = new ArrayList<>();
     Symbol guard;
+    int count;
 
     public NonTerminal(int ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
-
         left = new Terminal("?");
         right = new Terminal("?");
         //TODO set number for rule
@@ -46,21 +46,20 @@ public class NonTerminal extends Symbol implements Cloneable {
      * update this nonTerminal/rules digram with a nonTerminal
      * @param symbol
      */
-    public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+    public void updateNonTerminal(Rule rule, Symbol symbol) {
         //TODO clean up. use values or nodes, use a generic addSymbol with index.
         int index = values.indexOf(symbol);
 
-        nonTerminal.right = values.get(index + 1); // update node nonTerminal right
-        nonTerminal.left = values.get(index - 2);
+        rule.right = values.get(index + 1); // update node nonTerminal right
+        rule.left = values.get(index - 2);
 
-
-        values.get(index + 1).left = nonTerminal; // update values for corresponding thing
+        values.get(index + 1).left = rule; // update values for corresponding thing
         values.remove(index);
 
-        values.add(index, nonTerminal); // add the nonTerminal to the list....
+        values.add(index, rule); // add the nonTerminal to the list....
 
         //nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
-        values.get(index - 2).right = nonTerminal;
+        values.get(index - 2).right = rule;
         values.remove(index - 1);
         //addNextSymbol(nonTerminal);
     }

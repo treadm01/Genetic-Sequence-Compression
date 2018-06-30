@@ -3,7 +3,7 @@ import java.util.List;
 
 public class NonTerminal extends Symbol implements Cloneable {
     List<Symbol> values = new ArrayList<>();
-    Symbol guard;
+    Symbol guard, last;
     int count;
 
     public NonTerminal(int ruleNumber) {
@@ -12,8 +12,9 @@ public class NonTerminal extends Symbol implements Cloneable {
         right = new Terminal("?");
         //TODO set number for rule
         guard = new Terminal("!");
-        guard.left = guard;
-        guard.right = guard;
+        guard.left = left;
+        guard.right = right;
+        last = guard.left;
         values.add(new Terminal("!"));
         values.add(new Terminal("!"));
     }
@@ -28,6 +29,19 @@ public class NonTerminal extends Symbol implements Cloneable {
         symbol.left = values.get(values.size() - 2);
         values.get(values.size() - 2).right = symbol;
         values.get(values.size() - 1).left = symbol;
+        symbol.left = last;
+        symbol.right = guard.right;
+        last.right = symbol;
+        last = symbol;
+
+
+        //guard.right = symbol;
+//        System.out.println("GUARD" + guard + " guard riught " + guard.right );
+//        System.out.println("RIGHT LEFT " + guard.right.left);
+//        System.out.println("RIGHT LEFT right " + guard.right.left.right);
+//        System.out.println("RIGHT right " + guard.right.right);
+//
+//        System.out.println("LEFT " + guard.left.right);
 
         values.add(values.size() - 1, symbol);
     }

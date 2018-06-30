@@ -22,11 +22,7 @@ public class Compress {
         for (int i = 0; i < input.length(); i++) {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
-            printRules();
-            System.out.println();
             checkDigram();
-            printRules();
-            System.out.println();
         }
 
 
@@ -80,9 +76,15 @@ public class Compress {
                 // reduce rule count if being replaced.... if either of digram a nonterminal then rmeove
                 if (first.left instanceof Rule) {
                     ((Rule) first.left).nonTerminal.count--;
+                    if (((Rule) first.left).nonTerminal.count == 1) {
+                        ((Rule) first.left).removeRule();
+                    }
                 }
                 if (first instanceof Rule) {
                     ((Rule) first).nonTerminal.count--;
+                    if (((Rule) first).nonTerminal.count == 1) {
+                        ((Rule) first).removeRule();
+                    }
                 }
 
                 Rule rule = new Rule(newRule);

@@ -71,6 +71,10 @@ public class NonTerminal extends Symbol implements Cloneable {
 
         //System.out.println("val " + values.get(index - 2));
 
+        if (symbol == last) {
+            last = rule;
+        }
+
         rule.right = symbol.right;
         rule.left = symbol.left.left;
 

@@ -22,7 +22,6 @@ public class Compress {
         for (int i = 0; i < input.length(); i++) {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
-            printRules();
             checkDigram();
         }
 

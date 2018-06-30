@@ -20,15 +20,11 @@ public class Compress {
     public void processInput(String input) {
         nonTerminalMap.put(firstRule, firstRule); // put in map
         for (int i = 0; i < input.length(); i++) {
+            System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
         }
-
-
-
-        // print out for debugging
-        // printDigrams();
         printRules();
     }
 

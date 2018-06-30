@@ -9,15 +9,26 @@ public class Rule extends Symbol {
     }
 
     public void removeRule() {
-//        System.out.println(nonTerminal.values);
-//        System.out.println(right.left);
-//
-//        nonTerminal.values.get(1).left = left;
-//        nonTerminal.values.get(nonTerminal.values.size() - 2).right = right;
-//
-//        right.left = nonTerminal.values.get(nonTerminal.values.size() - 2);
-//
-//        System.out.println(right.left);
+        left.right = nonTerminal.guard.left.right;
+        nonTerminal.last.right = right;
+        //right.left = nonTerminal.last;
+//        left.right = nonTerminal.guard.left.right;
+//        nonTerminal.last.right = right;
+//        nonTerminal.guard.left.right.left = left;
+//        right.left = nonTerminal.last;
+//        //nonTerminal.last.right = right;
+        //nonTerminal.guard.left.right.left = left;
 
+        //right.left = nonTerminal.last;
+        //left.right = nonTerminal.guard.left.right;
+        System.out.println(right.left);
+        System.out.println("right of this rule is " + right.left);
+        System.out.println("left of this rule is " + left + left.right + left.right.right);
+        System.out.println("last symbol the rule points to " + nonTerminal.last.right);
+        System.out.println("first symbol the rule points to " + nonTerminal.guard.left.right);
+        //System.out.println(right.left);
+        //right.left = nonTerminal.last;
+//        nonTerminal.last.right = right;
+//        nonTerminal.guard.left.right.left = left;
     }
 }

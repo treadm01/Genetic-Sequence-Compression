@@ -106,4 +106,13 @@ public class CompressTest {
                 "GTGTGTGTGGGTGTGGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGGGTGTGGTGTGTGTG");
     }
 
+
+    @Test
+    public void writeFile() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile();
+        c.processInput(originalFile);
+    }
+
 }

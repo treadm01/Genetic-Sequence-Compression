@@ -9,15 +9,15 @@ public class Rule extends Symbol {
     }
 
     public void removeRule() {
-        System.out.println(nonTerminal.values);
-        System.out.println(right.left);
-
-        nonTerminal.values.get(1).left = left;
-        nonTerminal.values.get(nonTerminal.values.size() - 2).right = right;
-
-        right.left = nonTerminal.values.get(nonTerminal.values.size() - 2);
-
-        System.out.println(right.left);
+//        System.out.println(nonTerminal.values);
+//        System.out.println(right.left);
+//
+//        nonTerminal.values.get(1).left = left;
+//        nonTerminal.values.get(nonTerminal.values.size() - 2).right = right;
+//
+//        right.left = nonTerminal.values.get(nonTerminal.values.size() - 2);
+//
+//        System.out.println(right.left);
 
     }
 }

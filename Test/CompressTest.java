@@ -18,24 +18,24 @@ public class CompressTest {
         //0 -> a 1 d 1
         //1 -> b c
 
-        System.out.println();
-        c = new Compress();
-        c.processInput("abcdbcabc");
-
-////////        2 -> 4 d 3 4
-////////        3 -> b c
-////////        4 -> a 3
-////
-        System.out.println();
-        c = new Compress();
-        c.processInput("abcdbcabcd");
-
-////////        5 -> 8 6 8
-////////        6 -> b c
-////////        8 -> a 6 d
+//        System.out.println();
+//        c = new Compress();
+//        c.processInput("abcdbcabc");
+//
+//////////        2 -> 4 d 3 4
+//////////        3 -> b c
+//////////        4 -> a 3
 //////
 //        System.out.println();
-//        c = new CompressNew();
+//        c = new Compress();
+//        c.processInput("abcdbcabcd");
+//
+//////////        5 -> 8 6 8
+//////////        6 -> b c
+//////////        8 -> a 6 d
+////////
+////        System.out.println();
+////        c = new CompressNew();
 //        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // this doesnt do the right number of checks
 //
 //////        9 -> 13 13

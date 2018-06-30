@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NonTerminal extends Symbol implements Cloneable {
-    List<Symbol> values = new ArrayList<>();
+    //List<Symbol> values = new ArrayList<>();
     Symbol guard, last;
     int count;
 
@@ -15,8 +15,8 @@ public class NonTerminal extends Symbol implements Cloneable {
         guard.left = left;
         guard.right = right;
         last = guard.left;
-        values.add(new Terminal("!"));
-        values.add(new Terminal("!"));
+      //  values.add(new Terminal("!"));
+      //  values.add(new Terminal("!"));
     }
 
     /**
@@ -25,14 +25,19 @@ public class NonTerminal extends Symbol implements Cloneable {
      */
     public void addNextSymbol(Symbol symbol) {
         //TODO add nodes to each other without using a list
-        symbol.right = values.get(values.size() - 1);
-        symbol.left = values.get(values.size() - 2);
-        values.get(values.size() - 2).right = symbol;
-        values.get(values.size() - 1).left = symbol;
+//        symbol.right = values.get(values.size() - 1);
+//        symbol.left = values.get(values.size() - 2);
+//        values.get(values.size() - 2).right = symbol;
+//        values.get(values.size() - 1).left = symbol;
         symbol.left = last;
         symbol.right = guard.right;
+
+  //      System.out.println("SYMBOL " + symbol.left + symbol + symbol.right);
         last.right = symbol;
+
         last = symbol;
+
+//        System.out.println("last " + last.left + last + last.right);
 
 
         //guard.right = symbol;
@@ -43,7 +48,7 @@ public class NonTerminal extends Symbol implements Cloneable {
 //
 //        System.out.println("LEFT " + guard.left.right);
 
-        values.add(values.size() - 1, symbol);
+        //values.add(values.size() - 1, symbol);
     }
 
     /**
@@ -62,22 +67,29 @@ public class NonTerminal extends Symbol implements Cloneable {
      */
     public void updateNonTerminal(Rule rule, Symbol symbol) {
         //TODO clean up. use values or nodes, use a generic addSymbol with index.
-        int index = values.indexOf(symbol);
+        //int index = values.indexOf(symbol);
 
-        rule.right = values.get(index + 1); // update node nonTerminal right
-        rule.left = values.get(index - 2);
+        //System.out.println("val " + values.get(index - 2));
 
-        values.get(index + 1).left = rule; // update values for corresponding thing
+        rule.right = symbol.right;
+        rule.left = symbol.left.left;
 
-        values.remove(index);
-
-        values.add(index, rule); // add the nonTerminal to the list....
-
-        //nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
-        values.get(index - 2).right = rule;
-
-        values.remove(index - 1);
-        //addNextSymbol(nonTerminal);
+        symbol.right.left = rule;
+        symbol.left.left.right = rule;
+        //rule.right = values.get(index + 1); // update node nonTerminal right
+//        rule.left = values.get(index - 2);
+//
+//        values.get(index + 1).left = rule; // update values for corresponding thing
+//
+//        values.remove(index);
+//
+//        values.add(index, rule); // add the nonTerminal to the list....
+//
+//        //nonTerminal.left = values.get(index - 1).left; // do the same as above but for other side
+//        values.get(index - 2).right = rule;
+//
+//        values.remove(index - 1);
+//        //addNextSymbol(nonTerminal);
     }
 
     /**
@@ -85,6 +97,6 @@ public class NonTerminal extends Symbol implements Cloneable {
      * @return
      */
     public Symbol getLast() {
-        return values.get(values.size() - 2);
+        return last;
     }
 }

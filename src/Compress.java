@@ -22,6 +22,7 @@ public class Compress {
         for (int i = 0; i < input.length(); i++) {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
+            printRules();
             checkDigram();
         }
 
@@ -34,8 +35,17 @@ public class Compress {
 
     public void printRules() {
         for (NonTerminal nt : nonTerminalMap.values()) {
+
+            Symbol s = nt.guard.left.right;
+            String output = "";
+            do {
+                output += s.toString();
+                s = s.right;
+            } while (!s.representation.equals("?"));
+
             System.out.print("RULE " + nt + " ");
-            System.out.print(nt.values + " ");
+            System.out.print(output + " ");
+            //System.out.print(nt.values + " ");
             System.out.print(nt.count);
             System.out.println();
         }
@@ -71,7 +81,7 @@ public class Compress {
                 int ruleNumber = nonTerminalMap.size();
 
                 NonTerminal newRule = new NonTerminal(ruleNumber);
-                newRule.addSymbols(first.left, first);
+//                newRule.addSymbols(first.left, first);
 
                 // reduce rule count if being replaced.... if either of digram a nonterminal then rmeove
                 if (first.left instanceof Rule) {
@@ -95,9 +105,13 @@ public class Compress {
 
                 rule = new Rule(newRule);
                 firstRule.updateNonTerminal(rule, second); // update for second
-                nonTerminalMap.putIfAbsent(rule.nonTerminal.values.get(2), rule.nonTerminal);
+                // right right right?
+                newRule.addSymbols(first.left, first);
+                nonTerminalMap.putIfAbsent(rule.nonTerminal.guard.left.right.right, rule.nonTerminal);
 
                 digramMap.putIfAbsent(rule, rule);
+
+                // add rulees no nonterminal after all done...
             }
             //checkDigram();
         }

@@ -23,8 +23,8 @@ public class Compress {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
-//            printRules();
-//            printDigrams();
+            printRules();
+            printDigrams();
         }
         generateRules(firstRule.guard.left.right);
         System.out.println(rules);
@@ -85,6 +85,13 @@ public class Compress {
                 Rule rule = new Rule(nonTerminalMap.get(firstRule.getLast())); // create new rule and send through nonTerminal
                 firstRule.updateNonTerminal(rule, first); // update rule for first digram
                 digramMap.remove(first.left);
+
+                // getting the thing it occurs in but not updating the digram, just taking
+                //TODO needs to update the rule.nonTerminal with matching digram
+                // TODO need to check whether the digram in rule is entire rule or not
+                //TODO won't work if digram occurs somewhere in the middle of a rule
+
+                //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUS?T FIRST
 
                 checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
 

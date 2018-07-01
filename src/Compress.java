@@ -77,13 +77,14 @@ public class Compress {
     public void checkDigram() {
         // check whether new digram has already been seen
         Symbol first;
-        if (digramMap.containsKey(firstRule.getLast())) {
+        if (digramMap.containsKey(firstRule.getLast()) || nonTerminalMap.containsKey(firstRule.getLast())) {
             // if digram seen and rule already exists, get rule and update first rule with it
             if (nonTerminalMap.containsKey(firstRule.getLast())) {
                 //THREE??
                 first = firstRule.getLast(); // new digram from last added terminal
                 Rule rule = new Rule(nonTerminalMap.get(firstRule.getLast())); // create new rule and send through nonTerminal
                 firstRule.updateNonTerminal(rule, first); // update rule for first digram
+                digramMap.remove(first.left);
 
                 checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
 
@@ -95,7 +96,6 @@ public class Compress {
                 Symbol second = firstRule.getLast(); // new digram from last added terminal
                 int ruleNumber = nonTerminalMap.size(); // TODO get in a better way
                 NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
-
 
                 // ONE
                 Rule rule = new Rule(newRule); // create a new rule but with the same nonTerminal
@@ -118,6 +118,7 @@ public class Compress {
                 newRule.addSymbols(first.left, first); // add symbols to the new rule/terminal
                 // put the new rule/nonTerminal into the map
                 nonTerminalMap.putIfAbsent(rule.nonTerminal.guard.left.right.right, rule.nonTerminal);
+                digramMap.remove(second);
             }
 
             // reduce rule count if being replaced.... if either of digram a nonterminal then rmeove

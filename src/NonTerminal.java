@@ -2,7 +2,7 @@ public class NonTerminal extends Symbol implements Cloneable {
     Symbol guard, last;
     int count;
 
-    public NonTerminal(int ruleNumber) {
+    public NonTerminal(Integer ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
         left = new Terminal("?");
         right = new Terminal("?");

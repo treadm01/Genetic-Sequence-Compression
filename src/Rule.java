@@ -12,45 +12,10 @@ public class Rule extends Symbol {
     public void removeRule() {
         //TODO figure out how to access rule to be removed and replace with the rule it points to
         //TODO how to work for longer symbols??
-
-        // set the nonterminal start and end to those left and right of the rule
-
-        // set the left.right of rule to start of nonterminal
-
-        // set right.left of rule to last of nonterminal
+        nonTerminal.last.right = right;
+        nonTerminal.guard.left.right.left = left;
 
         right.left = nonTerminal.last;
         left.right = nonTerminal.guard.left.right;
-
-
-
-        //System.out.println(locationTerminal.representation);
-        //System.out.println(locationTerminal.guard.left.right.right);
-        //nonTerminal.last.right = locationTerminal.guard.left.right;
-        //locationTerminal.guard.left.right = nonTerminal.guard.left.right;
-
-//        left.right = nonTerminal.guard.left.right;
-//        nonTerminal.last.right = right;
-
-
-        //right.left = nonTerminal.last;
-//        left.right = nonTerminal.guard.left.right;
-//        nonTerminal.last.right = right;
-//        nonTerminal.guard.left.right.left = left;
-//        right.left = nonTerminal.last;
-//        //nonTerminal.last.right = right;
-        //nonTerminal.guard.left.right.left = left;
-
-        //right.left = nonTerminal.last;
-        //left.right = nonTerminal.guard.left.right;
-//        System.out.println(right.left);
-//        System.out.println("right of this rule is " + right.left);
-//        System.out.println("left of this rule is " + left + left.right + left.right.right);
-//        System.out.println("last symbol the rule points to " + nonTerminal.last.right);
-        //System.out.println("first symbol the rule points to " + nonTerminal.guard.left.right);
-//        //System.out.println(right.left);
-        //right.left = nonTerminal.last;
-//        nonTerminal.last.right = right;
-//        nonTerminal.guard.left.right.left = left;
     }
 }

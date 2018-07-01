@@ -108,6 +108,9 @@ public class Compress {
                 firstRule.updateNonTerminal(ruleTwo, second); // update for second
                 // add potential digram of adding new nonterminal to end of rule
                 digramMap.putIfAbsent(ruleTwo, ruleTwo);
+
+                //ADDED TWO SEPARATE RULES CREATED THEN ADDED FIRST RULE TO DIGRAM MAP AFTER EDITING MAIN
+                // RULE TO ENSURE THEY ARE RELEVANT
                 digramMap.putIfAbsent(rule, rule);
                 digramMap.putIfAbsent(rule.right, rule.right);
 

@@ -54,6 +54,15 @@ public class CompressTest {
         c.processInput("aaaaa");
         assertEquals("[aa, 11a]", c.getRules());
 
+        System.out.println();
+        c = new Compress();
+        c.processInput("aaaaaa");
+        assertEquals("[aa, 111]", c.getRules());
+
+        System.out.println();
+        c = new Compress();
+        c.processInput("aaaaaaa");
+        assertEquals("[aa, 111a]", c.getRules());
 //
 //        System.out.println();
 //        c = new Compress();

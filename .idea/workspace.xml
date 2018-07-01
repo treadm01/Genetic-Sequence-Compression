@@ -15,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Compress.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="111" column="62" selection-start-line="111" selection-start-column="62" selection-end-line="111" selection-end-column="62" />
+            <state relative-caret-position="270">
+              <caret line="112" column="51" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1276#1277#0" expanded="true" />
@@ -50,7 +50,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="162">
@@ -546,14 +546,7 @@
       <workItem from="1530355369208" duration="4726000" />
       <workItem from="1530360201971" duration="186000" />
       <workItem from="1530360492221" duration="14780000" />
-      <workItem from="1530441435178" duration="15183000" />
-    </task>
-    <task id="LOCAL-00068" summary="moved replacing non terminals with their right hand side to nonterminal class">
-      <created>1529072700510</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1529072700510</updated>
+      <workItem from="1530441435178" duration="15262000" />
     </task>
     <task id="LOCAL-00069" summary="using a standardised list with updates all over the place, should be able to clean from there..">
       <created>1529074746098</created>
@@ -891,13 +884,17 @@
       <option name="project" value="LOCAL" />
       <updated>1530455697677</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="problem with adding digrams to map which were subsequently overwritten.. need to clean up the method">
+      <created>1530456968660</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1530456968660</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest_processInput - 2018.07.01 at 15h 34m 15s.xml">
-      <configuration name="CompressTest.processInput" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CompressTest_processInput - 2018.07.01 at 15h 34m 34s.xml">
       <configuration name="CompressTest.processInput" configurationId="JUnit" />
     </history-entry>
@@ -925,9 +922,12 @@
     <history-entry file="CompressTest_processInput - 2018.07.01 at 15h 43m 41s.xml">
       <configuration name="CompressTest.processInput" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CompressTest_processInput - 2018.07.01 at 15h 55m 28s.xml">
+      <configuration name="CompressTest.processInput" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="417631000" />
+    <option name="totallyTimeSpent" value="417710000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -966,7 +966,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="gone through a few attempts, starting again..." />
     <MESSAGE value="something like this" />
     <MESSAGE value="will try keeping a list as well as joining symbols" />
     <MESSAGE value="works the same, probably have to add a buffer for first in list, might be able to not have a last, just check list.last..." />
@@ -991,7 +990,8 @@
     <MESSAGE value="needed to reposition rule removal, probably issues, needs cleaning" />
     <MESSAGE value="added a check to compare not just a digram overalpping in symbols equal" />
     <MESSAGE value="added proper test checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="added proper test checks" />
+    <MESSAGE value="problem with adding digrams to map which were subsequently overwritten.. need to clean up the method" />
+    <option name="LAST_COMMIT_MESSAGE" value="problem with adding digrams to map which were subsequently overwritten.. need to clean up the method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1117,24 +1117,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="111" column="62" selection-start-line="111" selection-start-column="62" selection-end-line="111" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1276#1277#0" expanded="true" />
-            <element signature="e#1303#1304#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="112" column="51" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1276#1277#0" expanded="true" />
+            <element signature="e#1303#1304#0" expanded="true" />
           </folding>
         </state>
       </provider>

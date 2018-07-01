@@ -34,9 +34,13 @@ public class CompressTest {
 //////////        6 -> b c
 //////////        8 -> a 6 d
 ////////
-////        System.out.println();
-////        c = new CompressNew();
-//        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // this doesnt do the right number of checks
+        System.out.println();
+        c = new Compress();
+        c.processInput("aaa");
+
+        System.out.println();
+        c = new Compress();
+        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 //
 //////        9 -> 13 13
 //////        10 -> a a

@@ -23,7 +23,10 @@ public class Symbol {
     @Override
     public boolean equals(Object obj) {
         //TODO add all checks
-        return ((representation.equals((obj).toString())) &&
-                (left.representation.equals(((Symbol)obj).left.representation))); // switched check to look at left symbol rather than right
+        if (this == ((Symbol) obj).right) { return false; }
+        return ((representation.equals((obj).toString()))
+                && (left.representation.equals(((Symbol)obj).left.representation))
+        //&& (right.representation.equals(((Symbol)obj).right.representation))
+        ); // switched check to look at left symbol rather than right
     }
 }

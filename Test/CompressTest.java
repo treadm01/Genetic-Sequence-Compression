@@ -83,11 +83,14 @@ public class CompressTest {
         c.processInput("aaaaaaa");
         assertEquals("[aa, 111a]", c.getRules());
     }
-//
-//        System.out.println();
-//        c = new Compress();
-//        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-//
+
+    @Test
+    public void longAA() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        assertEquals("[aa, 11, 22, 33, 44]", c.getRules());
+    }
 //////        9 -> 13 13
 //////        10 -> a a
 //////        11 -> 10 10

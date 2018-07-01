@@ -1,10 +1,12 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Compress {
     Map<Symbol, Symbol> digramMap = new HashMap<>();
     Map<Symbol, NonTerminal> nonTerminalMap = new HashMap<>(); // map for all nonterminals not sure if needed
     NonTerminal firstRule = new NonTerminal(0); // create first rule;
+    HashSet<String> rules = new HashSet<>();
 
     // TODO remove old digrams after adding nonTerminal
     // TODO make sure the way symbols are created and stored isn't going to cause issues later on
@@ -22,7 +24,22 @@ public class Compress {
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
         }
+        generateRules(firstRule.guard.left.right);
+        System.out.println(rules);
         printRules();
+    }
+
+    public void generateRules(Symbol current) {
+        String output = "";
+        while (!current.representation.equals("?")) {
+            output += current;
+            if (current instanceof Rule) {
+                generateRules(((Rule) current).nonTerminal.guard.left.right);
+
+            }
+            current = current.right;
+        }
+        rules.add(output);
     }
 
     public void printRules() {
@@ -35,9 +52,9 @@ public class Compress {
                 s = s.right;
             } while (!s.representation.equals("?"));
 
-            System.out.print("RULE " + nt + " ");
-            System.out.print(output + " ");
-            System.out.print(nt.count);
+            System.out.print("#" + nt + " > ");
+            System.out.print(output);
+            //System.out.print(" use number " + nt.count);
             System.out.println();
         }
     }

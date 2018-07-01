@@ -23,8 +23,8 @@ public class Compress {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
-            printRules();
-            printDigrams();
+//            printRules();
+//            printDigrams();
         }
         generateRules(firstRule.guard.left.right);
         System.out.println(rules);

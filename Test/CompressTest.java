@@ -97,11 +97,14 @@ public class CompressTest {
 //////        12 -> 11 11
 //////        13 -> 12 12
 ////
-//        System.out.println();
-//        c = new CompressNew();
-//        c.processInput("abcdbcabcdabcd"); // 4d is 3 so that should be found and updated, then, as
-//        // 4 will only be in 3 it should be replaced with a1 and 4 removed
-////
+    @Test
+    public void processInput10() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("abcdbcabcdabcd"); // 4d is 3 so that should be found and updated, then, as
+        // 4 will only be in 3 it should be replaced with a1 and 4 removed
+        assertEquals("[bc, 3133, a1d]", c.getRules());
+    }
 //////        14 -> 17 15 17 17
 //////        17 -> a 15 d
 //////        15 -> b c

@@ -23,8 +23,8 @@ public class Compress {
             // add next symbol from input to the first rule
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
-            printRules();
-            printDigrams();
+            //printRules();
+            //printDigrams();
         }
         generateRules(firstRule.guard.left.right);
         System.out.println(rules);
@@ -91,7 +91,8 @@ public class Compress {
                 // TODO need to check whether the digram in rule is entire rule or not
                 //TODO won't work if digram occurs somewhere in the middle of a rule
 
-                //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUS?T FIRST
+                //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
+                //TODO would it work with keeping the original digrams for location?
 
                 checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
 

@@ -1,7 +1,6 @@
 public class Rule extends Symbol {
     // keep reference to nonTerminal this occurs in??
     NonTerminal nonTerminal; // the nonTerminal the rule points to
-    NonTerminal locationTerminal;
 
     public Rule(NonTerminal nonTerminal) {
         this.nonTerminal = nonTerminal;

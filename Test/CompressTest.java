@@ -15,12 +15,16 @@ public class CompressTest {
     public void processInput() {
         c.processInput("abcdbc");
 
+        assertEquals("[bc, a1d1]", c.getRules());
+
         //0 -> a 1 d 1
         //1 -> b c
 
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabc");
+
+        assertEquals("[a1, bc, 2d12]", c.getRules());
 
 //////////        2 -> 4 d 3 4
 //////////        3 -> b c
@@ -29,6 +33,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcd");
+        assertEquals("[bc, a1d, 313]", c.getRules());
 
 //////////        5 -> 8 6 8
 //////////        6 -> b c
@@ -37,10 +42,22 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaa");
+        assertEquals("[aaa]", c.getRules());
 
         System.out.println();
         c = new Compress();
-        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        c.processInput("aaaa");
+        assertEquals("[aa, 11]", c.getRules());
+
+        System.out.println();
+        c = new Compress();
+        c.processInput("aaaaa");
+        assertEquals("[aa, 11a]", c.getRules());
+
+//
+//        System.out.println();
+//        c = new Compress();
+//        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 //
 //////        9 -> 13 13
 //////        10 -> a a

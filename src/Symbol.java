@@ -23,7 +23,12 @@ public class Symbol {
     @Override
     public boolean equals(Object obj) {
         //TODO add all checks
+
+        // if this symbol is also the right hand side of a digram, then they are not equal
+        // as they're dependent on each other
         if (this == ((Symbol) obj).right) { return false; }
+
+
         return ((representation.equals((obj).toString()))
                 && (left.representation.equals(((Symbol)obj).left.representation))
         //&& (right.representation.equals(((Symbol)obj).right.representation))

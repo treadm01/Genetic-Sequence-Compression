@@ -12,6 +12,18 @@ public class Rule extends Symbol {
     public void removeRule() {
         //TODO figure out how to access rule to be removed and replace with the rule it points to
         //TODO how to work for longer symbols??
+
+        // set the nonterminal start and end to those left and right of the rule
+
+        // set the left.right of rule to start of nonterminal
+
+        // set right.left of rule to last of nonterminal
+
+        right.left = nonTerminal.last;
+        left.right = nonTerminal.guard.left.right;
+
+
+
         //System.out.println(locationTerminal.representation);
         //System.out.println(locationTerminal.guard.left.right.right);
         //nonTerminal.last.right = locationTerminal.guard.left.right;

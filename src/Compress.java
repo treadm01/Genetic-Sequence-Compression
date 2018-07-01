@@ -24,6 +24,7 @@ public class Compress {
             firstRule.addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
             printRules();
+            printDigrams();
         }
         generateRules(firstRule.guard.left.right);
         System.out.println(rules);
@@ -92,7 +93,6 @@ public class Compress {
             else { // create new rule for digram and update rule with them in all instances
                 first = digramMap.get(firstRule.getLast()); // the matching digram added earlier
                 Symbol second = firstRule.getLast(); // new digram from last added terminal
-
                 int ruleNumber = nonTerminalMap.size(); // TODO get in a better way
                 NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
@@ -101,15 +101,15 @@ public class Compress {
                 Rule rule = new Rule(newRule); // create a new rule but with the same nonTerminal
                 firstRule.updateNonTerminal(rule, first); // update rule for first digram
                 // add new digrams from the use of Nonterminal
-                digramMap.putIfAbsent(rule, rule);
-                digramMap.putIfAbsent(rule.right, rule.right);
 
                 // TWO
                 // create new rule for second instance with the same nonterminal
-                rule = new Rule(newRule);
-                firstRule.updateNonTerminal(rule, second); // update for second
+                Rule ruleTwo = new Rule(newRule);
+                firstRule.updateNonTerminal(ruleTwo, second); // update for second
                 // add potential digram of adding new nonterminal to end of rule
+                digramMap.putIfAbsent(ruleTwo, ruleTwo);
                 digramMap.putIfAbsent(rule, rule);
+                digramMap.putIfAbsent(rule.right, rule.right);
 
                 // TODO this below can't be done before the digrams are dealt with in a rule, as it wipes out the references of left and right. check if ok
                 newRule.addSymbols(first.left, first); // add symbols to the new rule/terminal

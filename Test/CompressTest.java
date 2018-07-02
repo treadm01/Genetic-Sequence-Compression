@@ -99,7 +99,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdabc"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("[bc, 3134, 4d, a1]", c.getRules());
+        assertEquals("[a1, 4d, bc, 3134]", c.getRules());
     }
 
     @Test

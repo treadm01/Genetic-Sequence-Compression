@@ -15,15 +15,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Compress.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="122" column="68" selection-start-line="122" selection-start-column="68" selection-end-line="122" selection-end-column="68" />
+            <state relative-caret-position="144">
+              <caret line="144" column="51" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6865#6866#0" expanded="true" />
-                <element signature="e#6902#6903#0" expanded="true" />
+                <element signature="e#7581#7582#0" expanded="true" />
+                <element signature="e#7618#7619#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -50,7 +50,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
@@ -280,7 +280,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CompressTest.processInput11">
+  <component name="RunManager" selected="JUnit.CompressTest">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -419,8 +419,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CompressTest.processInput11" />
         <item itemvalue="JUnit.CompressTest" />
+        <item itemvalue="JUnit.CompressTest.processInput11" />
         <item itemvalue="JUnit.CompressTest.longAA" />
         <item itemvalue="JUnit.CompressTest.writeFile" />
         <item itemvalue="JUnit.CompressTest.processInput2" />
@@ -547,14 +547,7 @@
       <workItem from="1530360201971" duration="186000" />
       <workItem from="1530360492221" duration="14780000" />
       <workItem from="1530441435178" duration="21257000" />
-      <workItem from="1530532262569" duration="11462000" />
-    </task>
-    <task id="LOCAL-00077" summary="using a method to check digrams, trying to make terminals/digrams unique within map, could be hard to access">
-      <created>1529327429577</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1529327429577</updated>
+      <workItem from="1530532262569" duration="12496000" />
     </task>
     <task id="LOCAL-00078" summary="now storing terminal digrams as unique members of hashmap..">
       <created>1529335816047</created>
@@ -892,16 +885,17 @@
       <option name="project" value="LOCAL" />
       <updated>1530535310545</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="broke up check digram method">
+      <created>1530544559963</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1530544559963</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest_longAA - 2018.07.02 at 15h 42m 59s.xml">
-      <configuration name="CompressTest.longAA" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_longAA - 2018.07.02 at 15h 45m 02s.xml">
-      <configuration name="CompressTest.longAA" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CompressTest - 2018.07.02 at 15h 45m 09s.xml">
       <configuration name="CompressTest" configurationId="JUnit" />
     </history-entry>
@@ -926,9 +920,15 @@
     <history-entry file="CompressTest_processInput11 - 2018.07.02 at 16h 04m 31s.xml">
       <configuration name="CompressTest.processInput11" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CompressTest_processInput11 - 2018.07.02 at 16h 24m 38s.xml">
+      <configuration name="CompressTest.processInput11" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_processInput11 - 2018.07.02 at 16h 28m 37s.xml">
+      <configuration name="CompressTest.processInput11" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="435167000" />
+    <option name="totallyTimeSpent" value="436201000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -967,7 +967,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed list and left right of symbols in an awkward way, need to check for new digrams with, add new digram" />
     <MESSAGE value="added some comments" />
     <MESSAGE value="still need to implement linking between objects properly, using list for ease" />
     <MESSAGE value="need to clean up, implement rule utlity and do todos" />
@@ -992,7 +991,8 @@
     <MESSAGE value="added some code, need to clean then try to fix" />
     <MESSAGE value="removing rule extra method" />
     <MESSAGE value="put updating rule into another method" />
-    <option name="LAST_COMMIT_MESSAGE" value="put updating rule into another method" />
+    <MESSAGE value="broke up check digram method" />
+    <option name="LAST_COMMIT_MESSAGE" value="broke up check digram method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1118,24 +1118,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="144" column="51" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7581#7582#0" expanded="true" />
+            <element signature="e#7618#7619#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="98" column="26" selection-start-line="98" selection-start-column="26" selection-end-line="98" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="122" column="68" selection-start-line="122" selection-start-column="68" selection-end-line="122" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6865#6866#0" expanded="true" />
-            <element signature="e#6902#6903#0" expanded="true" />
           </folding>
         </state>
       </provider>

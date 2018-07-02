@@ -70,7 +70,7 @@ public class Compress {
 
     public void printDigrams() {
         for (Symbol s : digramMap.values()) {
-            System.out.println(s.left + " " + s);
+            System.out.println(s.left + " " + s + s.right);
         }
     }
 
@@ -87,8 +87,20 @@ public class Compress {
         // check existing digrams for last digram, update them with new rule
         if (digramMap.containsKey(lastDigram)) {
             //TODO need to check if already a rule, if there is one then use that
-            // TODO else need to create a new rule and update the digram
-            createRule(lastDigram);
+            // TODO else need to create a new rule and update the digram WHEREVER IT IS
+
+            // if contains digram
+            // check if its already a rule, if so use that
+            // else create new rule and update
+            if (digramMap.get(lastDigram).left.left.representation.equals("?")
+                    && digramMap.get(lastDigram).right.representation.equals("?")) {
+                System.out.println("HEllo");
+                System.out.println(digramMap.get(lastDigram));
+                existingRule(lastDigram);
+            }
+            else {
+                createRule(lastDigram);
+            }
         }
         // check if last digram is already a rule... will be used differently
         else if (nonTerminalMap.containsKey(lastDigram)) {
@@ -130,7 +142,7 @@ public class Compress {
         // TODO this doesn't really check that a new exact rule has been seen, length of rule must be two
         Rule rule = new Rule(nonTerminalMap.get(symbol)); // create new rule and send through nonTerminal
         firstRule.updateNonTerminal(rule, symbol); // update rule for first digram
-        digramMap.remove(symbol.left);
+        digramMap.remove(symbol.left); // TODO hmmm
         checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
         digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
 

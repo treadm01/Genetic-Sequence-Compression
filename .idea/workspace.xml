@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,10 +18,14 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="18">
+              <caret line="168" column="51" lean-forward="true" selection-start-line="168" selection-start-column="51" selection-end-line="168" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#8521#8522#0" expanded="true" />
+                <element signature="e#8558#8559#0" expanded="true" />
+                <element signature="e#8591#8592#0" expanded="true" />
+                <element signature="e#8630#8631#0" expanded="true" />
                 <element signature="method#generateRules#0;class#Compress#0" />
                 <element signature="method#printRules#0;class#Compress#0" />
                 <element signature="method#printDigrams#0;class#Compress#0" />
@@ -55,7 +58,7 @@
       <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
+            <state relative-caret-position="-1603">
               <caret line="8" column="11" lean-forward="true" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -554,14 +557,7 @@
       <workItem from="1530360201971" duration="186000" />
       <workItem from="1530360492221" duration="14780000" />
       <workItem from="1530441435178" duration="21257000" />
-      <workItem from="1530532262569" duration="18967000" />
-    </task>
-    <task id="LOCAL-00079" summary="can just check the amount of times symbol with matching previous symbol has been added... will it work for nonTerminal">
-      <created>1529336682771</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1529336682771</updated>
+      <workItem from="1530532262569" duration="19946000" />
     </task>
     <task id="LOCAL-00080" summary="going back to including digrams, hopefully will be able to change elements more easily">
       <created>1529342840030</created>
@@ -899,13 +895,17 @@
       <option name="project" value="LOCAL" />
       <updated>1530545604742</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="not updating with a certain rule, rule number now kept as an integer rather than the size of the map, usused nonterminals removed from map">
+      <created>1530552190479</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1530552190480</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest - 2018.07.02 at 18h 11m 12s.xml">
-      <configuration name="CompressTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CompressTest - 2018.07.02 at 18h 11m 21s.xml">
       <configuration name="CompressTest" configurationId="JUnit" />
     </history-entry>
@@ -933,9 +933,12 @@
     <history-entry file="CompressTest - 2018.07.02 at 18h 19m 20s.xml">
       <configuration name="CompressTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CompressTest - 2018.07.02 at 18h 20m 47s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="442672000" />
+    <option name="totallyTimeSpent" value="443651000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -974,7 +977,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="still need to implement linking between objects properly, using list for ease" />
     <MESSAGE value="need to clean up, implement rule utlity and do todos" />
     <MESSAGE value="put in a rule class, which is just a container for nonterminals... nonterminals can then be kept once and count updated accordingly. Have to decrement count too" />
     <MESSAGE value="keeping count of rule use, needs cleaning up" />
@@ -999,7 +1001,8 @@
     <MESSAGE value="put updating rule into another method" />
     <MESSAGE value="broke up check digram method" />
     <MESSAGE value="adding a check to use already exisiting rules, also seems to update digrams in subrules" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding a check to use already exisiting rules, also seems to update digrams in subrules" />
+    <MESSAGE value="not updating with a certain rule, rule number now kept as an integer rather than the size of the map, usused nonterminals removed from map" />
+    <option name="LAST_COMMIT_MESSAGE" value="not updating with a certain rule, rule number now kept as an integer rather than the size of the map, usused nonterminals removed from map" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1123,7 +1126,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
+        <state relative-caret-position="-1603">
           <caret line="8" column="11" lean-forward="true" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1133,10 +1136,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="18">
+          <caret line="168" column="51" lean-forward="true" selection-start-line="168" selection-start-column="51" selection-end-line="168" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#8521#8522#0" expanded="true" />
+            <element signature="e#8558#8559#0" expanded="true" />
+            <element signature="e#8591#8592#0" expanded="true" />
+            <element signature="e#8630#8631#0" expanded="true" />
             <element signature="method#generateRules#0;class#Compress#0" />
             <element signature="method#printRules#0;class#Compress#0" />
             <element signature="method#printDigrams#0;class#Compress#0" />

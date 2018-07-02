@@ -18,7 +18,9 @@ public class Compress {
     // TODO these rule manipulations set as methods in the classes themselves?
 
     /**
-     * main method, doing too much, need to break up
+     * main method loops through the input and adds the latest symbol to the main rule
+     * calls check digram on for last two symbols
+     * some output calls
      * @param input
      */
     public void processInput(String input) {
@@ -45,6 +47,13 @@ public class Compress {
     //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
     //TODO would it work with keeping the original digrams for location?
 
+    /**
+     * metod that checks through the main options of latest two symbols
+     * if new digram not seen beofre, add to map
+     * if seen beofre and already a rule, use that rule instead
+     * if seen and not a rule, make a new rule
+     * each new digram with the use of a rule must be checked also
+     */
     public void checkDigram() {
         Symbol lastDigram = firstRule.getLast();
         // check existing digrams for last digram, update them with new rule
@@ -88,6 +97,13 @@ public class Compress {
         }
     }
 
+    /**
+     * if a digram is being replaced with a new nonterminal and either symbols of that
+     * digram are a rule, their count/usage must be reduced
+     * if the count has reached one, then the rule is removed and it's occurence replaced with
+     * the symbols it stood for
+     * @param symbol
+     */
     public void replaceRule(Symbol symbol) {
         if (symbol instanceof Rule) {
             Rule rule = (Rule) symbol;
@@ -99,10 +115,17 @@ public class Compress {
         }
     }
 
-    public void updateRule(Rule oldRule, NonTerminal nonTerminal, Symbol symbol) {
+    /**
+     * might not be needed you know... just work the links of the symbols??
+     * replace an instance of a digram with a nonterminal
+     * @param ruleWithDigram
+     * @param nonTerminal
+     * @param symbol - the position of the digram to be replaced
+     */
+    public void replaceDigram(Rule ruleWithDigram, NonTerminal nonTerminal, Symbol symbol) {
         Rule rule = new Rule(nonTerminal);
         //TODO how to access nonterminal? put method in rule or shift around?
-        oldRule.nonTerminal.updateNonTerminal(rule, symbol); // update for second
+        ruleWithDigram.nonTerminal.updateNonTerminal(rule, symbol); // update for second
         // add potential digram of adding new nonterminal to end of rule
 
         //TODO - are new digrams created when adding to sub rules???
@@ -112,19 +135,31 @@ public class Compress {
         digramMap.putIfAbsent(rule.right, rule.right); // not really necessary if last symbol in rule
     }
 
+
+    /**
+     * already a rule for the digram found, replace it with that rule
+     * this needs looking into - TODO recursive here? consolidate with other method?
+     * @param symbol
+     */
     public void existingRule(Symbol symbol) {
         // TODO this doesn't really check that a new exact rule has been seen, length of rule must be two
         Rule rule = new Rule(nonTerminalMap.get(symbol)); // create new rule and send through nonTerminal
         firstRule.updateNonTerminal(rule, symbol); // update rule for first digram
         digramMap.remove(symbol.left); // TODO hmmm what's this doing and is it bad?
+
+        //TODO why only recurse from here? consolidate methods
         checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
         digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
-
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
         replaceRule(symbol.left);
         replaceRule(symbol);
     }
 
+    /**
+     * create the rule for a repeated digram, requires being done twice for both instances
+     * of the digram, rule has two instances, the nonterminal it represents only one
+     * @param symbol
+     */
     public void createRule(Symbol symbol) {
         Symbol secondDigram = symbol; // get new digram from last symbol added
         Symbol firstDigram = digramMap.get(secondDigram); // matching digram in the rule
@@ -132,9 +167,9 @@ public class Compress {
         NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
         // update rule for first instance of digram
-        updateRule(mainRule, newRule, firstDigram);
+        replaceDigram(mainRule, newRule, firstDigram);
         // update rule for last instance of digram
-        updateRule(mainRule, newRule, secondDigram);
+        replaceDigram(mainRule, newRule, secondDigram);
 
         // TODO this below can't be done before the digrams are dealt with in a rule, as it wipes out the references of left and right. check if ok
         newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
@@ -156,6 +191,10 @@ public class Compress {
         return rules.toString();
     }
 
+    /**
+     * creates strings of the symbols for each nonterminal
+     * @param current
+     */
     public void generateRules(Symbol current) {
         String output = "";
         while (!current.representation.equals("?")) {

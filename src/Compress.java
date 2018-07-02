@@ -5,10 +5,12 @@ import java.util.Map;
 public class Compress {
     Map<Symbol, Symbol> digramMap = new HashMap<>();
     Map<Symbol, NonTerminal> nonTerminalMap = new HashMap<>(); // map for all nonterminals not sure if needed
-    NonTerminal firstRule = new NonTerminal(0); // create first rule;
+    Integer ruleNumber = 0;
+    NonTerminal firstRule = new NonTerminal(ruleNumber); // create first rule;
     HashSet<String> rules = new HashSet<>();
     final static int USED_ONCE = 1;
     Rule mainRule;
+
 
     // TODO remove old digrams after adding nonTerminal
     // TODO make sure the way symbols are created and stored isn't going to cause issues later on
@@ -35,45 +37,6 @@ public class Compress {
         printRules();
     }
 
-    public String getRules() {
-        return rules.toString();
-    }
-
-    public void generateRules(Symbol current) {
-        String output = "";
-        while (!current.representation.equals("?")) {
-            output += current;
-            if (current instanceof Rule) {
-                generateRules(((Rule) current).nonTerminal.guard.left.right);
-            }
-            current = current.right;
-        }
-        rules.add(output);
-    }
-
-    public void printRules() {
-        for (NonTerminal nt : nonTerminalMap.values()) {
-
-            Symbol s = nt.guard.left.right;
-            String output = "";
-            do {
-                output += s.toString();
-                s = s.right;
-            } while (!s.representation.equals("?"));
-
-            System.out.print("#" + nt + " > ");
-            System.out.print(output);
-            //System.out.print(" use number " + nt.count);
-            System.out.println();
-        }
-    }
-
-    public void printDigrams() {
-        for (Symbol s : digramMap.values()) {
-            System.out.println(s.left + " " + s + s.right);
-        }
-    }
-
     //TODO have method for boolean check of digram
     // getting the thing it occurs in but not updating the digram, just taking
     //TODO needs to update the rule.nonTerminal with matching digram
@@ -89,25 +52,35 @@ public class Compress {
             //TODO need to check if already a rule, if there is one then use that
             // TODO else need to create a new rule and update the digram WHEREVER IT IS
 
+            /**
+             * a digram that is already a rule is not being registered as so, not sure why
+             * new separation of methods allows for rethinking and change flow of execution
+             */
+
             // if contains digram
             // check if its already a rule, if so use that
             // else create new rule and update
+            // TODO create a proper check for if a digram matches an existing rule
+            System.out.println("BEFORE " + lastDigram.left + " " + lastDigram);
+            System.out.println("left of rule " + digramMap.get(lastDigram).left.representation);
+            System.out.println("RIGHT " + digramMap.get(lastDigram).representation);
+            System.out.println("IS IT IN HERE? " + nonTerminalMap.containsKey(lastDigram));
+            System.out.println("BRACE");
+            printRules();
+            System.out.println(nonTerminalMap.keySet());
+            System.out.println(nonTerminalMap.values());
+            System.out.println("BRACE");
+
             if (digramMap.get(lastDigram).left.left.representation.equals("?")
-                    && digramMap.get(lastDigram).right.representation.equals("?")) {
-                System.out.println("HEllo");
-                System.out.println(digramMap.get(lastDigram));
+                    && digramMap.get(lastDigram).right.representation.equals("?")
+                    && nonTerminalMap.containsKey(lastDigram)) {
+                System.out.println("HERE " + lastDigram.left + " " + lastDigram);
                 existingRule(lastDigram);
             }
             else {
+                System.out.println("OR HERE " + lastDigram.left + " " + lastDigram);
                 createRule(lastDigram);
             }
-        }
-        // check if last digram is already a rule... will be used differently
-        else if (nonTerminalMap.containsKey(lastDigram)) {
-            //TODO - not a separate check from digram
-            //tODO need to check for rules that encapsulate an entire digram and nothing more
-            // TODO - if such a rule exists use that
-            existingRule(lastDigram);
         }
         // digram not been seen before, add to digram map
         else {
@@ -120,6 +93,7 @@ public class Compress {
             Rule rule = (Rule) symbol;
             rule.nonTerminal.count--;
             if (rule.nonTerminal.count == USED_ONCE) {
+                nonTerminalMap.remove(rule.nonTerminal.guard.left.right.right);
                 rule.removeRule();
             }
         }
@@ -142,7 +116,7 @@ public class Compress {
         // TODO this doesn't really check that a new exact rule has been seen, length of rule must be two
         Rule rule = new Rule(nonTerminalMap.get(symbol)); // create new rule and send through nonTerminal
         firstRule.updateNonTerminal(rule, symbol); // update rule for first digram
-        digramMap.remove(symbol.left); // TODO hmmm
+        digramMap.remove(symbol.left); // TODO hmmm what's this doing and is it bad?
         checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
         digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
 
@@ -152,9 +126,9 @@ public class Compress {
     }
 
     public void createRule(Symbol symbol) {
-        int ruleNumber = nonTerminalMap.size(); // TODO get in a better way
         Symbol secondDigram = symbol; // get new digram from last symbol added
         Symbol firstDigram = digramMap.get(secondDigram); // matching digram in the rule
+        ruleNumber++;
         NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
         // update rule for first instance of digram
@@ -173,8 +147,47 @@ public class Compress {
         replaceRule(firstDigram);
     }
 
-    //GETTER FOR FIRST RULE
     public NonTerminal getFirstRule() {
         return this.firstRule;
+    }
+
+
+    public String getRules() {
+        return rules.toString();
+    }
+
+    public void generateRules(Symbol current) {
+        String output = "";
+        while (!current.representation.equals("?")) {
+            output += current;
+            if (current instanceof Rule) {
+                generateRules(((Rule) current).nonTerminal.guard.left.right);
+            }
+            current = current.right;
+        }
+        System.out.println(output);
+        rules.add(output);
+    }
+
+    public void printRules() {
+        for (NonTerminal nt : nonTerminalMap.values()) {
+            Symbol s = nt.guard.left.right;
+            String output = "";
+            do {
+                output += s.toString();
+                s = s.right;
+            } while (!s.representation.equals("?"));
+
+            System.out.print("#" + nt + " > ");
+            System.out.print(output);
+            //System.out.print(" use number " + nt.count);
+            System.out.println();
+        }
+    }
+
+    public void printDigrams() {
+        for (Symbol s : digramMap.values()) {
+            System.out.println(s.left + " " + s + s.right);
+        }
     }
 }

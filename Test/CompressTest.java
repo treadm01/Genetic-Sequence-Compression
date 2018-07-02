@@ -111,11 +111,13 @@ public class CompressTest {
         assertEquals("[bc, 3133, a1d]", c.getRules());
     }
 
+    @Test
+    public void processInput13() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("abcdbcabcdabcdbcabcd");
 
-//        System.out.println();
-//        c = new CompressNew();
-//        c.processInput("abcdbcabcdabcdbcabcd");
-//
+    }
 ////        19 -> 26 26
 ////        20 -> b c
 ////        22 -> a 20 d

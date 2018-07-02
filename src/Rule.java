@@ -4,13 +4,15 @@ public class Rule extends Symbol {
 
     public Rule(NonTerminal nonTerminal) {
         this.nonTerminal = nonTerminal;
-        this.nonTerminal.count++;
-        representation = nonTerminal.representation;
+        this.nonTerminal.count++; // increase use count
+        representation = nonTerminal.representation; // rule has the same symbol rep as it's nonterminal...
     }
 
+    /**
+     * assign the links of those elements this rule points to to the
+     * elements either side of this rule
+     */
     public void removeRule() {
-        //TODO figure out how to access rule to be removed and replace with the rule it points to
-        //TODO how to work for longer symbols??
         nonTerminal.last.right = right;
         nonTerminal.guard.left.right.left = left;
 

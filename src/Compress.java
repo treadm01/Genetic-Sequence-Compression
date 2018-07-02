@@ -80,13 +80,14 @@ public class Compress {
             System.out.println(nonTerminalMap.values());
             System.out.println("BRACE");
 
+            // if there's a rule already, use that
             if (digramMap.get(lastDigram).left.left.representation.equals("?")
                     && digramMap.get(lastDigram).right.representation.equals("?")
                     && nonTerminalMap.containsKey(lastDigram)) {
                 System.out.println("HERE " + lastDigram.left + " " + lastDigram);
-                existingRule(lastDigram);
+                existingRule(lastDigram); //TODO does this work for the check??
             }
-            else {
+            else { // if digram has been seen but only once, no rule, then create new rule
                 System.out.println("OR HERE " + lastDigram.left + " " + lastDigram);
                 createRule(lastDigram);
             }
@@ -105,10 +106,10 @@ public class Compress {
      * @param symbol
      */
     public void replaceRule(Symbol symbol) {
-        if (symbol instanceof Rule) {
+        if (symbol instanceof Rule) { // if the symbol is a rule reduce usage
             Rule rule = (Rule) symbol;
             rule.nonTerminal.count--;
-            if (rule.nonTerminal.count == USED_ONCE) {
+            if (rule.nonTerminal.count == USED_ONCE) { // if rule is down to one, remove completely
                 nonTerminalMap.remove(rule.nonTerminal.guard.left.right.right);
                 rule.removeRule();
             }
@@ -150,6 +151,7 @@ public class Compress {
         //TODO why only recurse from here? consolidate methods
         checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
         digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
+
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
         replaceRule(symbol.left);
         replaceRule(symbol);

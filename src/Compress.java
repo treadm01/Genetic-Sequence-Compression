@@ -7,6 +7,7 @@ public class Compress {
     Map<Symbol, NonTerminal> nonTerminalMap = new HashMap<>(); // map for all nonterminals not sure if needed
     NonTerminal firstRule = new NonTerminal(0); // create first rule;
     HashSet<String> rules = new HashSet<>();
+    final static int USED_ONCE = 1;
 
     // TODO remove old digrams after adding nonTerminal
     // TODO make sure the way symbols are created and stored isn't going to cause issues later on
@@ -129,22 +130,9 @@ public class Compress {
                 digramMap.remove(second);
             }
 
-            // reduce rule count if being replaced.... if either of digram a nonterminal then rmeove
-            //TODO clean up, make separate method
-            if (first.left instanceof Rule) {
-                ((Rule) first.left).nonTerminal.count--;
-                if (((Rule) first.left).nonTerminal.count == 1) {
-                    ((Rule) first.left).removeRule();
-                }
-            }
-            if (first instanceof Rule) {
-                ((Rule) first).nonTerminal.count--;
-                if (((Rule) first).nonTerminal.count == 1) {
-                    ((Rule) first).removeRule();
-                }
-            }
-
-            //checkDigram();
+            // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
+            replaceRule(first.left);
+            replaceRule(first);
         }
         else { // digram not been seen before, add to digram map
             digramMap.putIfAbsent(firstRule.getLast(), firstRule.getLast());
@@ -152,4 +140,17 @@ public class Compress {
     }
 
     //GETTER FOR FIRST RULE
+    public NonTerminal getFirstRule() {
+        return this.firstRule;
+    }
+
+    public void replaceRule(Symbol symbol) {
+        if (symbol instanceof Rule) {
+            Rule rule = (Rule) symbol;
+            rule.nonTerminal.count--;
+            if (rule.nonTerminal.count == USED_ONCE) {
+                rule.removeRule();
+            }
+        }
+    }
 }

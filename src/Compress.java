@@ -3,23 +3,33 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class Compress {
-    Map<Symbol, Symbol> digramMap = new HashMap<>();
-    Map<Integer, NonTerminal> nonTerminalMap = new HashMap<>(); // map for all nonterminals not sure if needed
-    Integer ruleNumber = 0;
-    NonTerminal firstRule = new NonTerminal(ruleNumber); // create first rule;
-    HashSet<String> rules = new HashSet<>();
-    final static int USED_ONCE = 1;
-    Rule mainRule;
+    private final static int USED_ONCE = 1; // rule used once
+    private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
+    private Map<Integer, NonTerminal> nonTerminalMap; // nonterminal map created, key being the rule number.
+    private Integer ruleNumber; // count for created rules
+    private NonTerminal firstRule; // main base 'nonterminal'
+    private Rule mainRule; // rule for holding base nonterminal
+    private HashSet<String> rules; // used for debugging, printing out rules
 
-    //TODO reordering of rule numbers, most frequently used are lower
-    // TODO use string or int consistently for representation
+    /**
+     * main constructor for compress, just initialises, maps and first rules etc
+     */
+    public Compress() {
+        digramMap = new HashMap<>();
+        nonTerminalMap = new HashMap<>();
+        rules = new HashSet<>();
+        ruleNumber = 0;
+        firstRule = new NonTerminal(ruleNumber); // create first rule;
+    }
 
-
+    //TODO reordering of rule numbers, most frequently used are lower? read
+    // TODO use string or int consistently for representation of nonterminals etc
     // TODO remove old digrams after adding nonTerminal
     // TODO make sure the way symbols are created and stored isn't going to cause issues later on
-    // keep list of nonterminals to their first symbol check that way for repeats
     // TODO these rule manipulations set as methods in the classes themselves?
-
+    // TODO can the nonterminal map be removed completely?
+    // TODO implementation of containingRule indicator needs checking
+    // tODO containing rules are not maintained for most symbols, only used via heads and tails of rules... remove if possible
     /**
      * main method loops through the input and adds the latest symbol to the main rule
      * calls check digram on for last two symbols
@@ -58,15 +68,22 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram() {
+        //TODO can probably clean up use of digrams here
         Symbol lastDigram = firstRule.getLast();
         // check existing digrams for last digram, update them with new rule
         if (digramMap.containsKey(lastDigram)) {
             //TODO a better way to check for existing rule
-            if (digramMap.get(lastDigram).left.left.representation.equals("?")
-                    && digramMap.get(lastDigram).right.representation.equals("?")
-                    && nonTerminalMap.containsKey(digramMap.get(lastDigram).left.left.containingRule)
+            // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
+            Symbol existingDigram = digramMap.get(lastDigram); // existing digram
+            //TODO maintain a length of nonterminal? then just check if it is 2??
+            if (existingDigram.left.left.representation.equals("?")
+                    && existingDigram.right.representation.equals("?")
+                    //TODO create a method to check the containing rule...
+                    //TODO below is superfluous check i think, if the digram exists,
+                    // TODO is two then it should be in the map anyway...
+                    //&& nonTerminalMap.containsKey(existingDigram.left.left.containingRule)
                     ) {
-                existingRule(lastDigram);
+                existingRule(lastDigram, nonTerminalMap.get(existingDigram.left.left.containingRule));
             }
             else { // if digram has been seen but only once, no rule, then create new rule
                 createRule(lastDigram);
@@ -121,22 +138,28 @@ public class Compress {
     /**
      * already a rule for the digram found, replace it with that rule
      * this needs looking into - TODO recursive here? consolidate with other method?
+     * takes the symbol being the latest digram of the main rule and
+     * the already exsiting rule/nonterminal for that digram
      * @param symbol
      */
-    public void existingRule(Symbol symbol) {
+    public void existingRule(Symbol symbol, NonTerminal nonTerminal) {
         // getting last and last.left should be ok as exisitng rule should be matching a digram
-        NonTerminal nonTerminal = nonTerminalMap.get(digramMap.get(symbol).left.left.containingRule);
-        Symbol first = nonTerminal.last.left;
-        Symbol second = nonTerminal.last;
+        // get the existing rule from the nonterminal map, by checking the digram and where that digram
+        // currently resides, using the containing rule of the left hand head/buffer
+        Symbol first = nonTerminal.last.left; // first symbol of digram
+        Symbol second = nonTerminal.last; // second symbol
 
-        Rule rule = new Rule(nonTerminal,
-                symbol.containingRule); // create new rule and send through nonTerminal
+        // create new rule and send through nonTerminal and containing rule of where it will be PROBABLY ALWAYS 0 HERE AS LASTDIGRAM
+        Rule rule = new Rule(nonTerminal, symbol.containingRule);
+
         firstRule.updateNonTerminal(rule, symbol); // update rule for first digram
-        digramMap.remove(symbol.left); // TODO hmmm what's this doing and is it bad?
+        digramMap.remove(symbol.left); // removing digram of previous two symbols as should no longer occur
 
         //TODO why only recurse from here? consolidate methods
         checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
-        digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
+
+        //TODO below does not seem to be necessary
+        //digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal after recursion
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
         // references retrieved earlier as updating first rule can lose the second
@@ -175,11 +198,11 @@ public class Compress {
         replaceRule(firstDigram);
     }
 
-    public NonTerminal getFirstRule() {
-        return this.firstRule;
-    }
-
-
+    /**
+     * just returns a list of the rules generated in generate rules
+     * used for debugging at the moment
+     * @return
+     */
     public String getRules() {
         return rules.toString();
     }
@@ -200,6 +223,9 @@ public class Compress {
         rules.add(output);
     }
 
+    /**
+     * prints rules by looping through all the nonterminals generated
+     */
     public void printRules() {
         System.out.println();
         for (NonTerminal nt : nonTerminalMap.values()) {
@@ -218,12 +244,21 @@ public class Compress {
         System.out.println();
     }
 
+    /**
+     * prints out all the digrams added to the digram map
+     * //TODO check which digrams are kept or can be removed, clean up digram map
+     */
     public void printDigrams() {
         for (Symbol s : digramMap.values()) {
             System.out.println(s.left + " " + s);
         }
     }
 
+    /**
+     * for debugging, creates the string back from the cfg generated
+     * @param rule
+     * @return
+     */
     public String decompress(Rule rule) {
         Symbol s = rule.nonTerminal.guard.left.right;
         String output = "";
@@ -240,7 +275,22 @@ public class Compress {
         return output;
     }
 
+    /**
+     * returns the encapsulating rule of the base rule
+     * for use with decompress test, could probably use nonterminal
+     * //TODO decide whether nonterminal or rule will be the standard acess
+     * @return
+     */
     public Rule getActualFirstRule() {
         return this.mainRule;
+    }
+
+
+    /**
+     * getter for the main rule nonterminal
+     * @return
+     */
+    public NonTerminal getFirstRule() {
+        return this.firstRule;
     }
 }

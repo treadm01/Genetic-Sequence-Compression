@@ -26,7 +26,7 @@ public class InputOutput {
     public String readFile() {
         //TODO improve implementation
         String everything = "";
-        try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/GeneticCompression/textFiles/test.txt"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/GeneticCompression/textFiles/testbig.txt"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 

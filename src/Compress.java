@@ -12,7 +12,7 @@ public class Compress {
     Rule mainRule;
 
     //TODO reordering of rule numbers, most frequently used are lower
-    // TODO nonterminals are not being removed
+    // TODO use string or int consistently for representation
 
 
     // TODO remove old digrams after adding nonTerminal
@@ -201,6 +201,7 @@ public class Compress {
     }
 
     public void printRules() {
+        System.out.println();
         for (NonTerminal nt : nonTerminalMap.values()) {
             Symbol s = nt.guard.left.right;
             String output = "";
@@ -214,11 +215,32 @@ public class Compress {
             //System.out.print(" use number " + nt.count);
             System.out.println();
         }
+        System.out.println();
     }
 
     public void printDigrams() {
         for (Symbol s : digramMap.values()) {
-            System.out.println(s.left + " " + s + s.right);
+            System.out.println(s.left + " " + s);
         }
+    }
+
+    public String decompress(Rule rule) {
+        Symbol s = rule.nonTerminal.guard.left.right;
+        String output = "";
+        do {
+            if (s instanceof Terminal) {
+                output += s.toString();
+                s = s.right;
+            }
+            else {
+                output += decompress((Rule) s);
+                s = s.right;
+            }
+        } while (!s.representation.equals("?"));
+        return output;
+    }
+
+    public Rule getActualFirstRule() {
+        return this.mainRule;
     }
 }

@@ -11,6 +11,9 @@ public class Compress {
     final static int USED_ONCE = 1;
     Rule mainRule;
 
+    //TODO reordering of rule numbers, most frequently used are lower
+    // TODO nonterminals are not being removed
+
 
     // TODO remove old digrams after adding nonTerminal
     // TODO make sure the way symbols are created and stored isn't going to cause issues later on
@@ -27,7 +30,7 @@ public class Compress {
         mainRule = new Rule(getFirstRule(), 0); //TODO 0 or -1 not contained by any rule
         nonTerminalMap.put(0, getFirstRule()); // put in map
         for (int i = 0; i < input.length(); i++) {
-            System.out.println(i + " of " + input.length());
+            //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
             checkDigram();
@@ -40,13 +43,13 @@ public class Compress {
     }
 
     //TODO have method for boolean check of digram
-    // getting the thing it occurs in but not updating the digram, just taking
     //TODO needs to update the rule.nonTerminal with matching digram
     // TODO need to check whether the digram in rule is entire rule or not
     //TODO won't work if digram occurs somewhere in the middle of a rule
-    //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
-    //TODO would it work with keeping the original digrams for location?
 
+    //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
+
+    //TODO would it work with keeping the original digrams for location?
     /**
      * metod that checks through the main options of latest two symbols
      * if new digram not seen beofre, add to map
@@ -58,53 +61,14 @@ public class Compress {
         Symbol lastDigram = firstRule.getLast();
         // check existing digrams for last digram, update them with new rule
         if (digramMap.containsKey(lastDigram)) {
-            //TODO need to check if already a rule, if there is one then use that
-            // TODO else need to create a new rule and update the digram WHEREVER IT IS
-
-
-            /**
-             * a digram that is already a rule is not being registered as so, not sure why
-             * new separation of methods allows for rethinking and change flow of execution
-             */
-
-            // if contains digram
-            // check if its already a rule, if so use that
-            // else create new rule and update
-            // TODO create a proper check for if a digram matches an existing rule
-            //TODO how to check if something in nonterminal map?? only used twice and never hits
-            // if there's a rule already, use that
-//
-//            System.out.println();
-//            printRules();
-//            System.out.println();
-
-            // TODO map keys need to be immutable,
-            // TODO manage insertion and deletion of nonterminals as they are changed?
-            // TODO or use nonTerminla for key, maybe rule but would create multiple...
-            // TODO nonterminal would still be mutable - no i don't think so... as number stays the same and so would left
-            // TODO also digram map how safe is that?
-
-            //TODO THINK IT MAKES SENSE TO UPDATE THE MAP AS NECESSARY
-            // TODO implement proper rule updating, sub rules etc
-
-            //TODO CREATE A MOCK RULE WITH DIGRAM, CHECK TO THAT? MAYBE? NOT THE CURRENT PROBLEM AS HAVE TO NOT LOSE THE BUCKET LOCATION
-
-            //TODO need to update map properly, mutating keys can't be managed
-
-//            System.out.println(digramMap.get(lastDigram).left.left.containingRule);
-//            System.out.println(nonTerminalMap.containsKey(digramMap.get(lastDigram).left.left.containingRule));
-//            System.out.println(digramMap.get(lastDigram).left.left.representation.equals("?"));
-//            System.out.println(digramMap.get(lastDigram).left.representation + " " + digramMap.get(lastDigram).representation + " " + digramMap.get(lastDigram).right.representation + " ");
-            // think you would still need the check as this must be true for all ?? nah not if getting last digram
+            //TODO a better way to check for existing rule
             if (digramMap.get(lastDigram).left.left.representation.equals("?")
                     && digramMap.get(lastDigram).right.representation.equals("?")
                     && nonTerminalMap.containsKey(digramMap.get(lastDigram).left.left.containingRule)
                     ) {
-//                System.out.println("HERE " + lastDigram.left + " " + lastDigram);
-                existingRule(lastDigram); //TODO does this work for the check??
+                existingRule(lastDigram);
             }
             else { // if digram has been seen but only once, no rule, then create new rule
-                //System.out.println("OR HERE " + lastDigram.left + " " + lastDigram);
                 createRule(lastDigram);
             }
         }
@@ -126,9 +90,8 @@ public class Compress {
             Rule rule = (Rule) symbol;
             rule.nonTerminal.count--;
             if (rule.nonTerminal.count == USED_ONCE) { // if rule is down to one, remove completely
-               // nonTerminalMap.remove(rule.nonTerminal.guard.left.right.right);
-                //System.out.println("RULE REMOVING " + rule.left.containingRule);
                 rule.removeRule();
+                nonTerminalMap.remove(Integer.valueOf(rule.representation));
             }
         }
     }
@@ -152,7 +115,6 @@ public class Compress {
         //digramMap.remove(symbol); //TODO removed to keep digrams that are placed in a new rule
         digramMap.putIfAbsent(rule, rule);
         digramMap.putIfAbsent(rule.right, rule.right); // not really necessary if last symbol in rule
-
     }
 
 
@@ -162,10 +124,12 @@ public class Compress {
      * @param symbol
      */
     public void existingRule(Symbol symbol) {
-        //TODO get a reference to the two symbols to be checked if rules to be removed up front
+        // getting last and last.left should be ok as exisitng rule should be matching a digram
+        NonTerminal nonTerminal = nonTerminalMap.get(digramMap.get(symbol).left.left.containingRule);
+        Symbol first = nonTerminal.last.left;
+        Symbol second = nonTerminal.last;
 
-        // TODO this doesn't really check that a new exact rule has been seen, length of rule must be two
-        Rule rule = new Rule(nonTerminalMap.get(digramMap.get(symbol).left.left.containingRule),
+        Rule rule = new Rule(nonTerminal,
                 symbol.containingRule); // create new rule and send through nonTerminal
         firstRule.updateNonTerminal(rule, symbol); // update rule for first digram
         digramMap.remove(symbol.left); // TODO hmmm what's this doing and is it bad?
@@ -175,10 +139,9 @@ public class Compress {
         digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
-
-        replaceRule(nonTerminalMap.get(digramMap.get(symbol).left.left.containingRule).last.left);
-        //replaceRule(nonTerminalMap.get(digramMap.get(symbol).left.left.containingRule).last);
-
+        // references retrieved earlier as updating first rule can lose the second
+        replaceRule(first);
+        replaceRule(second);
     }
 
     /**

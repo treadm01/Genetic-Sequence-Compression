@@ -15,7 +15,7 @@ public class CompressTest {
     public void processInput() {
         c.processInput("abcdbc");
 
-        assertEquals("[bc, a1d1]", c.getRules());
+        assertEquals("[b c , a 1 d 1 ]", c.getRules());
     }
 
         @Test
@@ -24,7 +24,7 @@ public class CompressTest {
             c = new Compress();
             c.processInput("abcdbcabc");
 
-            assertEquals("[a1, bc, 2d12]", c.getRules());
+            assertEquals("[a 1 , b c , 2 d 1 2 ]", c.getRules());
         }
 
         @Test
@@ -32,7 +32,7 @@ public class CompressTest {
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabcd");
-            assertEquals("[bc, a1d, 313]", c.getRules());
+            assertEquals("[a 1 d , b c , 3 1 3 ]", c.getRules());
         }
 
     @Test
@@ -40,7 +40,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaa");
-        assertEquals("[aaa]", c.getRules());
+        assertEquals("[a a a ]", c.getRules());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaa");
-        assertEquals("[aa, 11]", c.getRules());
+        assertEquals("[a a , 1 1 ]", c.getRules());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaa");
-        assertEquals("[aa, 11a]", c.getRules());
+        assertEquals("[a a , 1 1 a ]", c.getRules());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaa");
-        assertEquals("[aa, 111]", c.getRules());
+        assertEquals("[a a , 1 1 1 ]", c.getRules());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaa");
-        assertEquals("[aa, 111a]", c.getRules());
+        assertEquals("[a a , 1 1 1 a ]", c.getRules());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        assertEquals("[aa, 11, 22, 33, 44]", c.getRules());
+        assertEquals("[4 4 , a a , 1 1 , 2 2 , 3 3 ]", c.getRules());
     }
 
 
@@ -90,7 +90,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdab"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("[bc, 313ab, a1d]", c.getRules());
+        assertEquals("[3 1 3 a b , a 1 d , b c ]", c.getRules());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdabc"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("[a1, 4d, bc, 3134]", c.getRules());
+        assertEquals("[4 d , a 1 , b c , 3 1 3 4 ]", c.getRules());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdabcd"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("[bc, a1d, 3133]", c.getRules());
+        assertEquals("[a 1 d , b c , 3 1 3 3 ]", c.getRules());
     }
 
     @Test

@@ -11,6 +11,18 @@ public class Compress {
     private Rule mainRule; // rule for holding base nonterminal
     private HashSet<String> rules; // used for debugging, printing out rules
 
+    //TODO reordering of rule numbers, most frequently used are lower? read
+    //TODO can createRule/existingRule methods be comined more - process improved
+    // TODO can methods be put in their respective classes
+    // TODO use string or int consistently for representation of nonterminals etc
+    // TODO remove old digrams after adding nonTerminal
+    // TODO make sure the way symbols are created and stored isn't going to cause issues later on
+    // TODO these rule manipulations set as methods in the classes themselves?
+    // TODO can the nonterminal map be removed completely?
+    // TODO implementation of containingRule indicator needs checking - use head and tail to get direct access?
+    // TODO same for checking if digram is a length two nonterminal?
+    // tODO containing rules are not maintained for most symbols, only used via heads and tails of rules... remove if possible
+
     /**
      * main constructor for compress, just initialises, maps and first rules etc
      */
@@ -22,14 +34,6 @@ public class Compress {
         firstRule = new NonTerminal(ruleNumber); // create first rule;
     }
 
-    //TODO reordering of rule numbers, most frequently used are lower? read
-    // TODO use string or int consistently for representation of nonterminals etc
-    // TODO remove old digrams after adding nonTerminal
-    // TODO make sure the way symbols are created and stored isn't going to cause issues later on
-    // TODO these rule manipulations set as methods in the classes themselves?
-    // TODO can the nonterminal map be removed completely?
-    // TODO implementation of containingRule indicator needs checking
-    // tODO containing rules are not maintained for most symbols, only used via heads and tails of rules... remove if possible
     /**
      * main method loops through the input and adds the latest symbol to the main rule
      * calls check digram on for last two symbols
@@ -83,10 +87,11 @@ public class Compress {
                     // TODO is two then it should be in the map anyway...
                     //&& nonTerminalMap.containsKey(existingDigram.left.left.containingRule)
                     ) {
-                existingRule(lastDigram, nonTerminalMap.get(existingDigram.left.left.containingRule));
+
+                existingRule(lastDigram, nonTerminalMap.get(existingDigram.right.containingRule));
             }
             else { // if digram has been seen but only once, no rule, then create new rule
-                createRule(lastDigram);
+                createRule(lastDigram, existingDigram);
             }
         }
         // digram not been seen before, add to digram map
@@ -105,10 +110,11 @@ public class Compress {
     public void replaceRule(Symbol symbol) {
         if (symbol instanceof Rule) { // if the symbol is a rule reduce usage
             Rule rule = (Rule) symbol;
-            rule.nonTerminal.count--;
+            rule.nonTerminal.count--; // TODO getter setter
             if (rule.nonTerminal.count == USED_ONCE) { // if rule is down to one, remove completely
-                rule.removeRule();
-                nonTerminalMap.remove(Integer.valueOf(rule.representation));
+                rule.removeRule(); // uses the rule method to reassign elements of rule
+                //TODO check out remove rule, decide on representation use
+                nonTerminalMap.remove(Integer.valueOf(rule.representation)); // remove that rule from the map
             }
         }
     }
@@ -170,14 +176,16 @@ public class Compress {
     /**
      * create the rule for a repeated digram, requires being done twice for both instances
      * of the digram, rule has two instances, the nonterminal it represents only one
+     * takes the latest digram and the digram that occured earlier from the digram map
      * @param symbol
      */
-    public void createRule(Symbol symbol) {
+    //TODO make generic for rule being updated?? not first rule
+    public void createRule(Symbol symbol, Symbol oldSymbol) {
         //TODO update specific rule by getting containing rule - don't add containing for every terminal or rule
         //TODO just access last? you might not know where last is
         Symbol secondDigram = symbol; // get new digram from last symbol added
-        Symbol firstDigram = digramMap.get(secondDigram); // matching digram in the rule
-        ruleNumber++;
+        Symbol firstDigram = oldSymbol; // matching digram in the rule
+        ruleNumber++; // increase rule number
         NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
         //TODO what is this doing if the rule isn't the mainrule????
@@ -194,6 +202,7 @@ public class Compress {
         nonTerminalMap.putIfAbsent(ruleNumber, newRule);
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
+
         replaceRule(firstDigram.left);
         replaceRule(firstDigram);
     }

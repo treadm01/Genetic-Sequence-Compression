@@ -17,6 +17,7 @@ public class NonTerminal extends Symbol implements Cloneable {
      * @param symbol
      */
     public void addNextSymbol(Symbol symbol) {
+        //TODO write out in english what is going on here again
         symbol.left = last;
         symbol.right = guard.right;
         last.right = symbol;
@@ -43,6 +44,7 @@ public class NonTerminal extends Symbol implements Cloneable {
             last = rule;
         }
 
+        //TODO write out in english what is going on here again
         rule.right = symbol.right;
         rule.left = symbol.left.left;
 

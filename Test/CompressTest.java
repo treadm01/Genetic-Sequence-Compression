@@ -108,7 +108,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdabcd"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("[bc, 3133, a1d]", c.getRules());
+        assertEquals("[bc, a1d, 3133]", c.getRules());
     }
 
     @Test
@@ -168,12 +168,12 @@ public class CompressTest {
 //    }
 
 //
-//    @Test
-//    public void writeFile() {
-//        Compress c = new Compress();
-//        InputOutput io = new InputOutput();
-//        String originalFile = io.readFile();
-//        c.processInput(originalFile);
-//    }
+    @Test
+    public void writeFile() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile();
+        c.processInput(originalFile);
+    }
 
 }

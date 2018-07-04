@@ -2,6 +2,7 @@ public class Symbol {
     Symbol left, right;
     String representation;
     static final int prime = 2265539; // from sequitur
+    int containingRule;
 
     @Override
     public String toString() {

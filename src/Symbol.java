@@ -28,7 +28,6 @@ public class Symbol {
         // as they're dependent on each other
         if (this == ((Symbol) obj).right) { return false; }
 
-
         return ((representation.equals((obj).toString()))
                 && (left.representation.equals(((Symbol)obj).left.representation))
         //&& (right.representation.equals(((Symbol)obj).right.representation))

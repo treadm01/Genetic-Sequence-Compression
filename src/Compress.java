@@ -31,8 +31,8 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram();
-            printRules();
-            printDigrams();
+            //printRules();
+            //printDigrams();
         }
         generateRules(getFirstRule().guard.left.right);
         System.out.println(rules);
@@ -70,25 +70,34 @@ public class Compress {
             // check if its already a rule, if so use that
             // else create new rule and update
             // TODO create a proper check for if a digram matches an existing rule
-            System.out.println("BEFORE " + lastDigram.left + " " + lastDigram);
-            System.out.println("left of rule " + digramMap.get(lastDigram).left.representation);
-            System.out.println("RIGHT " + digramMap.get(lastDigram).representation);
-            System.out.println("IS IT IN HERE? " + nonTerminalMap.containsKey(lastDigram));
-            System.out.println("BRACE");
-            printRules();
-            System.out.println(nonTerminalMap.keySet());
-            System.out.println(nonTerminalMap.values());
-            System.out.println("BRACE");
-
+            //TODO how to check if something in nonterminal map?? only used twice and never hits
             // if there's a rule already, use that
+
+            System.out.println();
+            printRules();
+            System.out.println();
+
+            // TODO map keys need to be immutable,
+            // TODO manage insertion and deletion of nonterminals as they are changed?
+            // TODO or use nonTerminla for key, maybe rule but would create multiple...
+            // TODO nonterminal would still be mutable - no i don't think so... as number stays the same and so would left
+            // TODO also digram map how safe is that?
+
+            //TODO THINK IT MAKES SENSE TO UPDATE THE MAP AS NECESSARY
+            // TODO implement proper rule updating, sub rules etc
+
+            //TODO CREATE A MOCK RULE WITH DIGRAM, CHECK TO THAT? MAYBE? NOT THE CURRENT PROBLEM AS HAVE TO NOT LOSE THE BUCKET LOCATION
+
+            //TODO need to update map properly, mutating keys can't be managed
             if (digramMap.get(lastDigram).left.left.representation.equals("?")
                     && digramMap.get(lastDigram).right.representation.equals("?")
-                    && nonTerminalMap.containsKey(lastDigram)) {
-                System.out.println("HERE " + lastDigram.left + " " + lastDigram);
+                    //&& nonTerminalMap.containsKey(lastDigram)
+                    ) {
+              //  System.out.println("HERE " + lastDigram.left + " " + lastDigram);
                 existingRule(lastDigram); //TODO does this work for the check??
             }
             else { // if digram has been seen but only once, no rule, then create new rule
-                System.out.println("OR HERE " + lastDigram.left + " " + lastDigram);
+                //System.out.println("OR HERE " + lastDigram.left + " " + lastDigram);
                 createRule(lastDigram);
             }
         }
@@ -110,7 +119,7 @@ public class Compress {
             Rule rule = (Rule) symbol;
             rule.nonTerminal.count--;
             if (rule.nonTerminal.count == USED_ONCE) { // if rule is down to one, remove completely
-                nonTerminalMap.remove(rule.nonTerminal.guard.left.right.right);
+               // nonTerminalMap.remove(rule.nonTerminal.guard.left.right.right);
                 rule.removeRule();
             }
         }
@@ -125,6 +134,7 @@ public class Compress {
      */
     public void replaceDigram(Rule ruleWithDigram, NonTerminal nonTerminal, Symbol symbol) {
         Rule rule = new Rule(nonTerminal);
+
         //TODO how to access nonterminal? put method in rule or shift around?
         ruleWithDigram.nonTerminal.updateNonTerminal(rule, symbol); // update for second
         // add potential digram of adding new nonterminal to end of rule
@@ -134,6 +144,7 @@ public class Compress {
         //digramMap.remove(symbol); //TODO removed to keep digrams that are placed in a new rule
         digramMap.putIfAbsent(rule, rule);
         digramMap.putIfAbsent(rule.right, rule.right); // not really necessary if last symbol in rule
+
     }
 
 
@@ -168,6 +179,7 @@ public class Compress {
         ruleNumber++;
         NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
+        //TODO what is this doing if the rule isn't the mainrule????
         // update rule for first instance of digram
         replaceDigram(mainRule, newRule, firstDigram);
         // update rule for last instance of digram
@@ -206,7 +218,6 @@ public class Compress {
             }
             current = current.right;
         }
-        System.out.println(output);
         rules.add(output);
     }
 

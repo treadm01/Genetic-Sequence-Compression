@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,8 +19,8 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="92" column="67" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
+            <state relative-caret-position="234">
+              <caret line="95" column="46" selection-start-line="95" selection-start-column="46" selection-end-line="95" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#12461#12462#0" expanded="true" />
@@ -76,11 +77,11 @@
       <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="90">
+              <caret line="177" column="28" lean-forward="true" selection-start-line="177" selection-start-column="28" selection-end-line="177" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1530889986503" expanded="true" signature="6725:6952" ph="..." />
+                <marker date="1530890150353" expanded="true" signature="6591:6806" ph="..." />
               </folding>
             </state>
           </provider>
@@ -223,8 +224,8 @@
         <option value="$PROJECT_DIR$/src/Rule.java" />
         <option value="$PROJECT_DIR$/src/Symbol.java" />
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
-        <option value="$PROJECT_DIR$/src/Compress.java" />
         <option value="$PROJECT_DIR$/Test/CompressTest.java" />
+        <option value="$PROJECT_DIR$/src/Compress.java" />
       </list>
     </option>
   </component>
@@ -314,7 +315,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CompressTest">
+  <component name="RunManager" selected="JUnit.CompressTest.writeFile">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -453,9 +454,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CompressTest.writeFile" />
         <item itemvalue="JUnit.CompressTest" />
         <item itemvalue="JUnit.CompressTest.processInput12" />
-        <item itemvalue="JUnit.CompressTest.writeFile" />
         <item itemvalue="JUnit.CompressTest.processInput11" />
         <item itemvalue="JUnit.CompressTest.processInput10" />
       </list>
@@ -588,14 +589,7 @@
       <workItem from="1530710090669" duration="17000" />
       <workItem from="1530710169400" duration="7184000" />
       <workItem from="1530801235660" duration="5024000" />
-      <workItem from="1530874167848" duration="14956000" />
-    </task>
-    <task id="LOCAL-00093" summary="something like this">
-      <created>1530122000660</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1530122000660</updated>
+      <workItem from="1530874167848" duration="15251000" />
     </task>
     <task id="LOCAL-00094" summary="will try keeping a list as well as joining symbols">
       <created>1530123453888</created>
@@ -933,25 +927,17 @@
       <option name="project" value="LOCAL" />
       <updated>1530889899411</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="passing most old tests">
+      <created>1530890137064</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1530890137064</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 03m 47s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 04m 05s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 04m 26s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 04m 39s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 04m 48s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 04m 58s.xml">
       <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
@@ -967,9 +953,24 @@
     <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 12m 11s.xml">
       <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CompressTest - 2018.07.06 at 16h 13m 44s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_processInput12 - 2018.07.06 at 16h 13m 53s.xml">
+      <configuration name="CompressTest.processInput12" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_processInput12 - 2018.07.06 at 16h 15m 15s.xml">
+      <configuration name="CompressTest.processInput12" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest - 2018.07.06 at 16h 15m 20s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.06 at 16h 15m 52s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="498809000" />
+    <option name="totallyTimeSpent" value="499104000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1008,7 +1009,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="problem with adding digrams to map which were subsequently overwritten.. need to clean up the method" />
     <MESSAGE value="now reached the digram removal bug" />
     <MESSAGE value="removing the digram of symbol before last when replacing the second part of an old digram..." />
     <MESSAGE value="seems to have sold the long as, but needs lots of cleaning" />
@@ -1033,7 +1033,8 @@
     <MESSAGE value="checking existing rules and adding links" />
     <MESSAGE value="getting closer" />
     <MESSAGE value="had to reassign first of rule" />
-    <option name="LAST_COMMIT_MESSAGE" value="had to reassign first of rule" />
+    <MESSAGE value="passing most old tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="passing most old tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1165,8 +1166,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="92" column="67" selection-start-line="92" selection-start-column="67" selection-end-line="92" selection-end-column="67" />
+        <state relative-caret-position="234">
+          <caret line="95" column="46" selection-start-line="95" selection-start-column="46" selection-end-line="95" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#12461#12462#0" expanded="true" />
@@ -1182,11 +1183,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="90">
+          <caret line="177" column="28" lean-forward="true" selection-start-line="177" selection-start-column="28" selection-end-line="177" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1530889986503" expanded="true" signature="6725:6952" ph="..." />
+            <marker date="1530890150353" expanded="true" signature="6591:6806" ph="..." />
           </folding>
         </state>
       </provider>

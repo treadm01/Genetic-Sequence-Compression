@@ -48,7 +48,7 @@ public class Compress {
         // starting from 1 to avoid digram of guard
         getActualFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
         for (int i = 1; i < input.length(); i++) {
-            //System.out.println(i + " of " + input.length());
+            System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             //System.out.println(getActualFirstRule().left);
             getActualFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
@@ -93,8 +93,8 @@ public class Compress {
                 // TODO think digrams aren't being removed properly
                 NonTerminal nonTerminal = new NonTerminal((Rule) existingDigram.left.left);
                 mainRule.updateNonTerminal(nonTerminal, lastDigram);
+                digramMap.remove(symbol.left);
                 checkDigram(nonTerminal.left);
-                //existingRule();
                 replaceRule(existingDigram);
                 replaceRule(existingDigram.right);
             }

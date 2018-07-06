@@ -90,13 +90,13 @@ public class Compress {
             if (existingDigram.left.representation.equals("?")
                     && existingDigram.right.right.representation.equals("?")) {
 
-                // TODO wont work if digram
+                // TODO think digrams aren't being removed properly
                 NonTerminal nonTerminal = new NonTerminal((Rule) existingDigram.left.left);
                 mainRule.updateNonTerminal(nonTerminal, lastDigram);
                 checkDigram(nonTerminal.left);
                 //existingRule();
-//                replaceRule(existingDigram);
-//                replaceRule(existingDigram.right);
+                replaceRule(existingDigram);
+                replaceRule(existingDigram.right);
             }
             else {
                 createRule(lastDigram, existingDigram);

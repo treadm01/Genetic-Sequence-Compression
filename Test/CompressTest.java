@@ -179,12 +179,12 @@ public class CompressTest {
         c.processInput(originalFile);
     }
 
-//    @Test
-//    public void decompressTest() {
-//        InputOutput io = new InputOutput();
-//        String input = io.readFile("test");
-//        c.processInput(input);
-//        assertEquals(input, c.decompress(c.getActualFirstRule()));
-//    }
+    @Test
+    public void decompressTest() {
+        InputOutput io = new InputOutput();
+        String input = io.readFile("test");
+        c.processInput(input);
+        assertEquals(input, c.decompress(c.getActualFirstRule()));
+    }
 
 }

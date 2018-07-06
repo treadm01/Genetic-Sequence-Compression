@@ -1,22 +1,62 @@
 public class NonTerminal extends Symbol implements Cloneable {
-    Rule rule;
+    Symbol guard, last;
+    int count;
 
-    public NonTerminal(Rule rule) {
-        this.rule = rule;
-        this.rule.count++;
-        this.representation = String.valueOf(this.rule.ruleNumber);
+    public NonTerminal(Integer ruleNumber) {
+        this.representation = String.valueOf(ruleNumber);
+        left = new Terminal("?", ruleNumber);
+        right = new Terminal("?", ruleNumber);
+        guard = new Terminal("!", ruleNumber);
+        guard.left = left;
+        guard.right = right;
+        last = guard.left;
     }
 
     /**
-     * assign the links of those elements this rule points to to the
-     * elements either side of this rule
+     * adds a symbol to the last symbol
+     * @param symbol
      */
-    public void removeRule() {
-        //TODO not sure this is setting ALL of the links
-        right.left = rule.left; // symbol currently right of nonterminals left, set to the last element of rule
-        left.right = rule.guard.right; // right of left set to first of rule
-        rule.left.right = right; // last of rules right assigned to this places right
-        rule.guard.right.left = left;
-        //TODO relink the first elements of rule left???
+    public void addNextSymbol(Symbol symbol) {
+        //TODO write out in english what is going on here again
+        symbol.left = last;
+        symbol.right = guard.right;
+        last.right = symbol;
+
+        last = symbol;
+    }
+
+    /**
+     * add the two symbols from a digram to a nonTerminal
+     * @param left
+     * @param right
+     */
+    public void addSymbols(Symbol left, Symbol right) {
+        this.addNextSymbol(left);
+        this.addNextSymbol(right);
+    }
+
+    /**
+     * update this nonTerminal/rules digram with a nonTerminal
+     * @param symbol
+     */
+    public void updateNonTerminal(Rule rule, Symbol symbol) {
+        if (symbol == last) {
+            last = rule;
+        }
+
+        //TODO write out in english what is going on here again
+        rule.right = symbol.right;
+        rule.left = symbol.left.left;
+
+        symbol.right.left = rule;
+        symbol.left.left.right = rule;
+    }
+
+    /**
+     * return the last element of the list, not the buffer
+     * @return
+     */
+    public Symbol getLast() {
+        return last;
     }
 }

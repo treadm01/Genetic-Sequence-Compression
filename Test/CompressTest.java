@@ -86,7 +86,7 @@ public class CompressTest {
 //    @Test
 //    public void processInputAgain() {
 //        c = new Compress();
-//        c.processInput("ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA");
+//        //c.processInput("ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA");
 //    }
 
 
@@ -174,18 +174,18 @@ public class CompressTest {
 //    }
 
 //
-    @Test
-    public void writeFile() {
-        Compress c = new Compress();
-        InputOutput io = new InputOutput();
-        String originalFile = io.readFile();
-        c.processInput(originalFile);
-    }
+//    @Test
+//    public void writeFile() {
+//        Compress c = new Compress();
+//        InputOutput io = new InputOutput();
+//        String originalFile = io.readFile("testbig");
+//        c.processInput(originalFile);
+//    }
 
     @Test
     public void decompressTest() {
         InputOutput io = new InputOutput();
-        String input = io.readFile();
+        String input = io.readFile("test");
         c.processInput(input);
         assertEquals(input, c.decompress(c.getActualFirstRule()));
     }

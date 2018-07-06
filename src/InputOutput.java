@@ -23,10 +23,10 @@ public class InputOutput {
         return everything;
     }
 
-    public String readFile() {
+    public String readFile(String fileName) {
         //TODO improve implementation
         String everything = "";
-        try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/GeneticCompression/textFiles/test.txt"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/GeneticCompression/textFiles/" + fileName + ".txt"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 

@@ -11,6 +11,9 @@ public class Compress {
     private Rule mainRule; // rule for holding base nonterminal
     private HashSet<String> rules; // used for debugging, printing out rules
 
+    // nonterminal points to head/guard of rule, that points to first, last points back to head
+    // any nonterminals point to rule
+    //TODO read paper, implement better, (getting duplicate digrams, unused digrams) sort out ordering of rules.
     //TODO reordering of rule numbers, most frequently used are lower? read
     //TODO can createRule/existingRule methods be comined more - process improved
     // TODO can methods be put in their respective classes
@@ -48,8 +51,8 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
             checkDigram();
+           // printDigrams();
             //printRules();
-            //printDigrams();
         }
         generateRules(getFirstRule().guard.left.right);
         System.out.println(rules);
@@ -135,7 +138,7 @@ public class Compress {
 
         //TODO - are new digrams created when adding to sub rules???
         digramMap.remove(symbol.left);
-        //digramMap.remove(symbol); //TODO removed to keep digrams that are placed in a new rule
+        //digramMap.remove(symbol); //TODO commented out to keep digrams that are placed in a new rule
         digramMap.putIfAbsent(rule, rule);
         digramMap.putIfAbsent(rule.right, rule.right); // not really necessary if last symbol in rule
     }
@@ -259,7 +262,7 @@ public class Compress {
      */
     public void printDigrams() {
         for (Symbol s : digramMap.values()) {
-            System.out.println(s.left + " " + s);
+            System.out.print(s.left + " " + s + ", ");
         }
     }
 

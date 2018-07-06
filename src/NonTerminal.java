@@ -4,9 +4,9 @@ public class NonTerminal extends Symbol implements Cloneable {
 
     public NonTerminal(Integer ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
-        left = new Terminal("?", ruleNumber);
-        right = new Terminal("?", ruleNumber);
-        guard = new Terminal("!", ruleNumber);
+        left = new Terminal("?");
+        right = new Terminal("?");
+        guard = new Terminal("!");
         guard.left = left;
         guard.right = right;
         last = guard.left;

@@ -14,7 +14,7 @@ public class Symbol {
         long code;
         //from sequitur
         int a = Integer.valueOf(this.toString().charAt(0));
-        int b = Integer.valueOf(left.toString().charAt(0)); // switched check to look at left symbol rather than right
+        int b = Integer.valueOf(right.toString().charAt(0)); // switched check to look at left symbol rather than right
         code = ((21599 * (long)a) + (20507 * (long)b));
         code = code % (long)prime;
         return (int)code;
@@ -30,7 +30,7 @@ public class Symbol {
         if (this == ((Symbol) obj).right) { return false; }
 
         return ((representation.equals((obj).toString()))
-                && (left.representation.equals(((Symbol)obj).left.representation))
+                && (right.representation.equals(((Symbol)obj).right.representation))
         //&& (right.representation.equals(((Symbol)obj).right.representation))
         ); // switched check to look at left symbol rather than right
     }

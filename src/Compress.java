@@ -44,17 +44,19 @@ public class Compress {
      * @param input
      */
     public void processInput(String input) {
-        mainRule = new Rule(getFirstRule(), 0); //TODO 0 or -1 not contained by any rule
+        mainRule = new Rule(); //TODO 0 or -1 not contained by any rule
         nonTerminalMap.put(0, getFirstRule()); // put in map
-        for (int i = 0; i < input.length(); i++) {
+        getActualFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
+        for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
-            getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
-            checkDigram();
+            getActualFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
+            //getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
+            checkDigram(getActualFirstRule().getLast().left);
            // printDigrams();
             //printRules();
         }
-        generateRules(getFirstRule().guard.left.right);
+        generateRules(getActualFirstRule().guard);
         System.out.println(rules);
         printRules();
     }
@@ -74,33 +76,41 @@ public class Compress {
      * if seen and not a rule, make a new rule
      * each new digram with the use of a rule must be checked also
      */
-    public void checkDigram() {
-        //TODO can probably clean up use of digrams here
-        Symbol lastDigram = firstRule.getLast();
-        // check existing digrams for last digram, update them with new rule
-        if (digramMap.containsKey(lastDigram)) {
-            //TODO a better way to check for existing rule
-            // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
-            Symbol existingDigram = digramMap.get(lastDigram); // existing digram
-            //TODO maintain a length of nonterminal? then just check if it is 2??
-            if (existingDigram.left.left.representation.equals("?")
-                    && existingDigram.right.representation.equals("?")
-                    //TODO create a method to check the containing rule...
-                    //TODO below is superfluous check i think, if the digram exists,
-                    // TODO is two then it should be in the map anyway...
-                    //&& nonTerminalMap.containsKey(existingDigram.left.left.containingRule)
-                    ) {
-
-                existingRule(lastDigram, nonTerminalMap.get(existingDigram.right.containingRule));
-            }
-            else { // if digram has been seen but only once, no rule, then create new rule
-                createRule(lastDigram, existingDigram);
-            }
+    public void checkDigram(Symbol symbol) {
+        if (digramMap.containsKey(symbol)) {
+            System.out.println("digram here");
         }
-        // digram not been seen before, add to digram map
         else {
-            digramMap.putIfAbsent(lastDigram, lastDigram);
+            System.out.println(symbol + " " + symbol.right);
+            digramMap.putIfAbsent(symbol, symbol);
         }
+
+        //TODO can probably clean up use of digrams here
+//        Symbol lastDigram = firstRule.getLast();
+//        // check existing digrams for last digram, update them with new rule
+//        if (digramMap.containsKey(lastDigram)) {
+//            //TODO a better way to check for existing rule
+//            // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
+//            Symbol existingDigram = digramMap.get(lastDigram); // existing digram
+//            //TODO maintain a length of nonterminal? then just check if it is 2??
+//            if (existingDigram.left.left.representation.equals("?")
+//                    && existingDigram.right.representation.equals("?")
+//                    //TODO create a method to check the containing rule...
+//                    //TODO below is superfluous check i think, if the digram exists,
+//                    // TODO is two then it should be in the map anyway...
+//                    //&& nonTerminalMap.containsKey(existingDigram.left.left.containingRule)
+//                    ) {
+//
+//                existingRule(lastDigram, nonTerminalMap.get(existingDigram.right.containingRule));
+//            }
+//            else { // if digram has been seen but only once, no rule, then create new rule
+//                createRule(lastDigram, existingDigram);
+//            }
+//        }
+//        // digram not been seen before, add to digram map
+//        else {
+//            digramMap.putIfAbsent(lastDigram, lastDigram);
+//        }
     }
 
     /**
@@ -130,7 +140,7 @@ public class Compress {
      * @param symbol - the position of the digram to be replaced
      */
     public void replaceDigram(Rule ruleWithDigram, NonTerminal nonTerminal, Symbol symbol) {
-        Rule rule = new Rule(nonTerminal, Integer.valueOf(ruleWithDigram.representation));
+        Rule rule = new Rule();
 
         //TODO how to access nonterminal? put method in rule or shift around?
         ruleWithDigram.nonTerminal.updateNonTerminal(rule, symbol); // update for second
@@ -159,13 +169,13 @@ public class Compress {
         Symbol second = nonTerminal.last; // second symbol
 
         // create new rule and send through nonTerminal and containing rule of where it will be PROBABLY ALWAYS 0 HERE AS LASTDIGRAM
-        Rule rule = new Rule(nonTerminal, symbol.containingRule);
+        Rule rule = new Rule();
 
         firstRule.updateNonTerminal(rule, symbol); // update rule for first digram
         digramMap.remove(symbol.left); // removing digram of previous two symbols as should no longer occur
 
         //TODO why only recurse from here? consolidate methods
-        checkDigram(); // adding a re check here for new terminal added, should probably be somewhere else as well
+        checkDigram(symbol); // adding a re check here for new terminal added, should probably be somewhere else as well
 
         //TODO below does not seem to be necessary
         //digramMap.putIfAbsent(rule, rule); // add potential new digram with added nonTerminal after recursion

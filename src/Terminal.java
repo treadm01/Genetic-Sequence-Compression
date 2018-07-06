@@ -1,7 +1,7 @@
 public class Terminal extends Symbol {
 
-    public Terminal(String representation, int containingRule) {
+    public Terminal(String representation) {
         this.representation = representation;
-        this.containingRule = containingRule;
+        //this.containingRule = containingRule;
     }
 }

@@ -1,6 +1,4 @@
 public class Rule extends Symbol {
-    // keep reference to nonTerminal this occurs in??
-    //NonTerminal nonTerminal; // the nonTerminal the rule points to
     Symbol guard;
     Integer ruleNumber;
     int count;
@@ -15,10 +13,6 @@ public class Rule extends Symbol {
         guard.left = this; // keep a reference to get to this rule....
         right = guard; // always points to guard
         left = guard; // end pointer that shifts
-//        this.containingRule = containingRule;
-//        this.nonTerminal = nonTerminal;
-//        this.nonTerminal.count++; // increase use count
-//        representation = nonTerminal.representation; // rule has the same symbol rep as it's nonterminal...
     }
 
     /**
@@ -27,12 +21,10 @@ public class Rule extends Symbol {
      */
     public void addNextSymbol(Symbol symbol) {
         //TODO write out in english what is going on here again
-
         symbol.right = guard; // set new symbols right back to guard
         symbol.left = left;
         left.right = symbol; // set current ends right to new symbol
         left = symbol; // set left of guard, or end to new symbol
-
     }
 
     /**

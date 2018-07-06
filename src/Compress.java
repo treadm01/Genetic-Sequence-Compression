@@ -36,7 +36,7 @@ public class Compress {
         // starting from 1 to avoid digram of guard
         getActualFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
         for (int i = 1; i < input.length(); i++) {
-            System.out.println(i + " of " + input.length());
+           // System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getActualFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getActualFirstRule().getLast().left); //TODO have to send link of left...
@@ -51,7 +51,6 @@ public class Compress {
         }
         generateRules(getActualFirstRule().guard.right);
         System.out.println(rules);
-        printRules();
     }
 
     //TODO have method for boolean check of digram
@@ -72,7 +71,6 @@ public class Compress {
     public void checkDigram(Symbol newDigram) {
         if (digramMap.containsKey(newDigram)) {
             Symbol existingDigram = digramMap.get(newDigram); // existing digram
-
             if (existingDigram.left.representation.equals("?")
                     && existingDigram.right.right.representation.equals("?")) {
                 existingRule(newDigram, existingDigram);
@@ -82,7 +80,7 @@ public class Compress {
             }
         }
         else {
-            digramMap.putIfAbsent(newDigram, newDigram);
+            digramMap.put(newDigram, newDigram);
         }
     }
 
@@ -98,10 +96,19 @@ public class Compress {
         //TODO just access last? you might not know where last is
         ruleNumber++; // increase rule number
         Rule newRule = new Rule(ruleNumber);
-        replaceDigram(mainRule, newRule, existingDigram);
-        replaceDigram(mainRule, newRule, lastDigram);
 
-        newRule.addSymbols(existingDigram, existingDigram.right);
+        digramMap.remove(existingDigram.right);
+        digramMap.remove(existingDigram.left);
+
+        NonTerminal nonTerminal = new NonTerminal(newRule);
+
+        getActualFirstRule().updateNonTerminal(nonTerminal, existingDigram);
+        digramMap.put(nonTerminal.left, nonTerminal.left);
+        digramMap.put(nonTerminal, nonTerminal); // not really necessary if last symbol in rule
+
+        nonTerminal = new NonTerminal(newRule);
+        getActualFirstRule().updateNonTerminal(nonTerminal, lastDigram);
+        digramMap.put(nonTerminal.left, nonTerminal.left);
 
         replaceRule(existingDigram);
         replaceRule(existingDigram.right);
@@ -117,19 +124,15 @@ public class Compress {
      */
     public void replaceDigram(Rule ruleWithDigram, Rule newRule, Symbol symbol) {
         //TODO how to access nonterminal? put method in rule or shift around?
-        digramMap.remove(symbol.right);
-        digramMap.remove(symbol.left);
-
         NonTerminal nonTerminal = new NonTerminal(newRule);
 
         ruleWithDigram.updateNonTerminal(nonTerminal, symbol);
 
-
-        digramMap.putIfAbsent(nonTerminal.left, nonTerminal.left);
+        digramMap.put(nonTerminal.left, nonTerminal.left);
 //        //TODO only add right if inbetween two symbols ie not the end
 //
         if (!nonTerminal.right.representation.equals("?")) {
-            digramMap.putIfAbsent(nonTerminal, nonTerminal); // not really necessary if last symbol in rule
+        digramMap.put(nonTerminal, nonTerminal); // not really necessary if last symbol in rule
         }
 //        System.out.println("here");
 //        printDigrams();
@@ -169,6 +172,8 @@ public class Compress {
 //        System.out.println("exisitng : " + existingDigram);
 //        System.out.println("should be a rule " + existingDigram.left.left);
         NonTerminal nonTerminal = new NonTerminal((Rule) existingDigram.left.left);
+
+        //TODO do any digrams need to be removed when using an existing rule??
         //replaceDigram(mainRule, (Rule) existingDigram.left.left, newDigram);
         mainRule.updateNonTerminal(nonTerminal, newDigram);
         checkDigram(nonTerminal.left);
@@ -200,27 +205,6 @@ public class Compress {
             current = current.right;
         }
         rules.add(output);
-    }
-
-    /**
-     * prints rules by looping through all the nonterminals generated
-     */
-    public void printRules() {
-        System.out.println();
-        for (NonTerminal nt : nonTerminalMap.values()) {
-            Symbol s = nt.guard.left.right;
-            String output = "";
-            do {
-                output += s.toString() + " ";
-                s = s.right;
-            } while (!s.representation.equals("?"));
-
-            System.out.print("#" + nt + " > ");
-            System.out.print(output);
-            //System.out.print(" use number " + nt.count);
-            System.out.println();
-        }
-        System.out.println();
     }
 
     /**

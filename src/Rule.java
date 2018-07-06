@@ -1,12 +1,17 @@
 public class Rule extends Symbol {
     // keep reference to nonTerminal this occurs in??
-    NonTerminal nonTerminal; // the nonTerminal the rule points to
+    //NonTerminal nonTerminal; // the nonTerminal the rule points to
     Symbol guard;
+    Integer ruleNumber;
+    int count;
 
 
-    public Rule() {
+    public Rule(Integer ruleNumber) {
+        this.ruleNumber = ruleNumber;
         guard = new Symbol();
+        guard.representation = "?";
         guard.right = guard;
+        guard.left = this; // keep a reference to get to this rule....
         right = guard; // always points to guard
         left = guard; // end pointer that shifts
 //        this.containingRule = containingRule;
@@ -21,10 +26,12 @@ public class Rule extends Symbol {
      */
     public void addNextSymbol(Symbol symbol) {
         //TODO write out in english what is going on here again
-        symbol.right = guard.right; // set new symbols right back to guard
+
+        symbol.right = guard; // set new symbols right back to guard
         symbol.left = left;
         left.right = symbol; // set current ends right to new symbol
         left = symbol; // set left of guard, or end to new symbol
+
     }
 
     /**
@@ -38,15 +45,32 @@ public class Rule extends Symbol {
     }
 
     /**
+     * update this nonTerminal/rules digram with a nonTerminal
+     * @param symbol
+     */
+    public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+        if (symbol.right == left) { // if symbol is last update last to the new nonterminal
+            left = nonTerminal;
+        }
+
+        //TODO write out in english what is going on here again
+        nonTerminal.right = symbol.right.right;
+        nonTerminal.left = symbol.left;
+
+        symbol.right.right.left = nonTerminal;
+        symbol.left.right = nonTerminal;
+    }
+
+    /**
      * assign the links of those elements this rule points to to the
      * elements either side of this rule
      */
     public void removeRule() {
-        nonTerminal.last.right = right;
-        nonTerminal.guard.left.right.left = left;
-
-        right.left = nonTerminal.last;
-        left.right = nonTerminal.guard.left.right;
+//        nonTerminal.last.right = right;
+//        nonTerminal.guard.left.right.left = left;
+//
+//        right.left = nonTerminal.last;
+//        left.right = nonTerminal.guard.left.right;
     }
 
     /**

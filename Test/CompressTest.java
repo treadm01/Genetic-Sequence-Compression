@@ -12,14 +12,14 @@ public class CompressTest {
     }
 
     @Test
-    public void processInput() {
+    public void processInput() { // create rules from digrams
         c.processInput("abcdbc");
 
         assertEquals("[b c , a 1 d 1 ]", c.getRules());
     }
 
         @Test
-        public void processInput2() {
+        public void processInput2() { // check for and use existing rules
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabc");
@@ -28,7 +28,7 @@ public class CompressTest {
         }
 
         @Test
-        public void processInput3() {
+        public void processInput3() { // rule utility
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabcd");
@@ -36,7 +36,7 @@ public class CompressTest {
         }
 
     @Test
-    public void processInput4() {
+    public void processInput4() { // no overlap of digrams
         System.out.println();
         c = new Compress();
         c.processInput("aaa");
@@ -122,7 +122,6 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabcdbcabcd");
-
     }
 ////        19 -> 26 26
 ////        20 -> b c
@@ -182,12 +181,12 @@ public class CompressTest {
 //        c.processInput(originalFile);
 //    }
 
-    @Test
-    public void decompressTest() {
-        InputOutput io = new InputOutput();
-        String input = io.readFile("test");
-        c.processInput(input);
-        assertEquals(input, c.decompress(c.getActualFirstRule()));
-    }
+//    @Test
+//    public void decompressTest() {
+//        InputOutput io = new InputOutput();
+//        String input = io.readFile("test");
+//        c.processInput(input);
+//        assertEquals(input, c.decompress(c.getActualFirstRule()));
+//    }
 
 }

@@ -8,6 +8,7 @@ public class Rule extends Symbol {
 
     public Rule(Integer ruleNumber) {
         this.ruleNumber = ruleNumber;
+        this.representation = String.valueOf(this.ruleNumber); //TODO doing too often....
         guard = new Symbol();
         guard.representation = "?";
         guard.right = guard;
@@ -59,18 +60,6 @@ public class Rule extends Symbol {
 
         symbol.right.right.left = nonTerminal;
         symbol.left.right = nonTerminal;
-    }
-
-    /**
-     * assign the links of those elements this rule points to to the
-     * elements either side of this rule
-     */
-    public void removeRule() {
-//        nonTerminal.last.right = right;
-//        nonTerminal.guard.left.right.left = left;
-//
-//        right.left = nonTerminal.last;
-//        left.right = nonTerminal.guard.left.right;
     }
 
     /**

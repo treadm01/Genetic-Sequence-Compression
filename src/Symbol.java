@@ -26,7 +26,7 @@ public class Symbol {
 
         // if this symbol is also the right hand side of a digram, then they are not equal
         // as they're dependent on each other
-        //if (this == ((Symbol) obj).right) { return false; }
+        if (this == ((Symbol) obj).right) { return false; }
 
         return ((representation.equals((obj).toString()))
                 && (right.representation.equals(((Symbol)obj).right.representation))

@@ -149,6 +149,10 @@ public class Compress {
         replaceDigram(mainRule, newRule, lastDigram);
         replaceDigram(mainRule, newRule, existingDigram);
         newRule.addSymbols(existingDigram, existingDigram.right);
+
+        replaceRule(existingDigram);
+        replaceRule(existingDigram.right);
+
 //        ruleNumber++; // increase rule number
 //        NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 //
@@ -208,13 +212,18 @@ public class Compress {
      * @param symbol
      */
     public void replaceRule(Symbol symbol) {
-        if (symbol instanceof Rule) { // if the symbol is a rule reduce usage
-            Rule rule = (Rule) symbol;
-            rule.count--; // TODO getter setter
-            if (rule.count == USED_ONCE) { // if rule is down to one, remove completely
-                rule.removeRule(); // uses the rule method to reassign elements of rule
+        // need to reduce the count of the rule the nonterminal refers to
+        // and replace the nonterminal in the rule it occurs in with its contents
+        if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
+            System.out.println("its a non terminal " + symbol);
+            NonTerminal nonTerminal = ((NonTerminal) symbol);
+            System.out.println(nonTerminal.rule);
+            nonTerminal.rule.count--; // TODO getter setter
+            if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
+                System.out.println("ONLY USED ONCE " + nonTerminal.rule);
+                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
+
                 //TODO check out remove rule, decide on representation use
-                nonTerminalMap.remove(Integer.valueOf(rule.representation)); // remove that rule from the map
             }
         }
     }

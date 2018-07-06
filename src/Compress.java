@@ -13,6 +13,12 @@ public class Compress {
 
     // nonterminal points to head/guard of rule, that points to first, last points back to head
     // any nonterminals point to rule
+    // TODO remove and sort digrams
+    // TODO swap rule for nonterminal vice versa
+    //TODO keep digrams from left to right
+    // TODO reorder rules to rule usage
+    // TODO access guard positions better,
+
     //TODO read paper, implement better, (getting duplicate digrams, unused digrams) sort out ordering of rules.
     //TODO reordering of rule numbers, most frequently used are lower? read
     //TODO can createRule/existingRule methods be comined more - process improved
@@ -46,12 +52,13 @@ public class Compress {
     public void processInput(String input) {
         mainRule = new Rule(getFirstRule(), 0); //TODO 0 or -1 not contained by any rule
         nonTerminalMap.put(0, getFirstRule()); // put in map
-        for (int i = 0; i < input.length(); i++) {
+        getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1), 0));
+        for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
             checkDigram();
-            // printDigrams();
+            //printDigrams();
             //printRules();
         }
         generateRules(getFirstRule().guard.left.right);
@@ -191,6 +198,10 @@ public class Compress {
         ruleNumber++; // increase rule number
         NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
 
+        //System.out.println("right " + firstDigram.right);
+        //System.out.println("left " + firstDigram.left);
+//        digramMap.remove(firstDigram.right);
+//        digramMap.remove(firstDigram.left.left);
         //TODO what is this doing if the rule isn't the mainrule????
         // update rule for first instance of digram
         replaceDigram(mainRule, newRule, firstDigram);
@@ -264,6 +275,7 @@ public class Compress {
         for (Symbol s : digramMap.values()) {
             System.out.print(s.left + " " + s + ", ");
         }
+        System.out.println();
     }
 
     /**

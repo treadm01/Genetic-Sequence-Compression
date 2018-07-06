@@ -100,11 +100,10 @@ public class CompressTest {
     }
 
     @Test
-    public void processInput11() {
+    public void processInput11() { // matching digram in existing rule, create new rule
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabc"); // 4d is 3 so that should be found and updated, then, as
-        // 4 will only be in 3 it should be replaced with a1 and 4 removed
+        c.processInput("abcdbcabcdabc");
         assertEquals("[4 d , a 1 , b c , 3 1 3 4 ]", c.getRules());
     }
 
@@ -177,7 +176,7 @@ public class CompressTest {
 //    public void writeFile() {
 //        Compress c = new Compress();
 //        InputOutput io = new InputOutput();
-//        String originalFile = io.readFile("testbig");
+//        String originalFile = io.readFile("test");
 //        c.processInput(originalFile);
 //    }
 

@@ -50,14 +50,14 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
-            System.out.println(getActualFirstRule().left);
+            //System.out.println(getActualFirstRule().left);
             getActualFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getActualFirstRule().getLast().left); //TODO have to send link of left...
 
             // debugging
-            rules.clear();
-            generateRules(getActualFirstRule().guard.right);
-            System.out.println(rules);
+//            rules.clear();
+//            generateRules(getActualFirstRule().guard.right);
+//            System.out.println(rules);
 
             //printDigrams();
             //printRules();
@@ -84,19 +84,21 @@ public class Compress {
      */
     public void checkDigram(Symbol symbol) {
         Symbol lastDigram = symbol;
-        System.out.println("CHECKING " + symbol + " " + symbol.right);
+
         if (digramMap.containsKey(symbol)) {
             Symbol existingDigram = digramMap.get(symbol); // existing digram
             if (existingDigram.left.representation.equals("?")
                     && existingDigram.right.right.representation.equals("?")) {
-                System.out.println("CHECKING EXISTING " + symbol + " " + symbol.right);
+
+                // TODO wont work if digram
                 NonTerminal nonTerminal = new NonTerminal((Rule) existingDigram.left.left);
                 mainRule.updateNonTerminal(nonTerminal, lastDigram);
                 checkDigram(nonTerminal.left);
                 //existingRule();
+//                replaceRule(existingDigram);
+//                replaceRule(existingDigram.right);
             }
             else {
-                System.out.println("FOUND NEW " + symbol + " " + symbol.right);
                 createRule(lastDigram, existingDigram);
             }
         }
@@ -215,12 +217,9 @@ public class Compress {
         // need to reduce the count of the rule the nonterminal refers to
         // and replace the nonterminal in the rule it occurs in with its contents
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
-            System.out.println("its a non terminal " + symbol);
             NonTerminal nonTerminal = ((NonTerminal) symbol);
-            System.out.println(nonTerminal.rule);
             nonTerminal.rule.count--; // TODO getter setter
             if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
-                System.out.println("ONLY USED ONCE " + nonTerminal.rule);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
 
                 //TODO check out remove rule, decide on representation use

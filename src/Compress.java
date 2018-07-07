@@ -13,7 +13,6 @@ public class Compress {
 
     // nonterminal points to head/guard of rule, that points to first, last points back to head
     // any nonterminals point to rule
-    // use int rather than converting to string etc
     // TODO try again to remove nonterminal map
     // TODO reorder rules to rule usage
     // TODO access guard positions better, containing rule etc, use numbers rather than strings
@@ -42,6 +41,7 @@ public class Compress {
     public void processInput(String input) {
         getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1), 0));
         for (int i = 1; i < input.length(); i++) {
+            System.out.println(i);
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
@@ -70,6 +70,8 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram(Symbol symbol) {
+        // as checkDigram is called recursively when digrams change,
+        // this first check is to ensure that the digram is not at the edge TODO better way to do this
         if (!symbol.representation.equals("?")
                 && !symbol.left.representation.equals("?")) {
             // check existing digrams for last digram, update them with new rule

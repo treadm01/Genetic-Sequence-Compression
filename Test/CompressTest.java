@@ -178,7 +178,7 @@ public class CompressTest {
         // exisiting rule crash, nonterminal map = null on 90000
         // did run on testLong in 21 s which is 316000
         // on double testLong took 1m 31
-        String originalFile = io.readFile("15000");
+        String originalFile = io.readFile("testLong");
         c.processInput(originalFile);
     }
 

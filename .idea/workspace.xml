@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/textFiles/45000.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/textFiles/90000.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/textFiles/testLong.txt" beforeDir="false" afterPath="$PROJECT_DIR$/textFiles/testLong.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,16 +22,16 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="182" column="20" selection-start-line="182" selection-start-column="10" selection-end-line="182" selection-end-column="20" />
+            <state relative-caret-position="78">
+              <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#12586#12587#0" expanded="true" />
-                <element signature="e#12625#12626#0" expanded="true" />
-                <element signature="e#14973#14974#0" expanded="true" />
-                <element signature="e#15009#15010#0" expanded="true" />
-                <element signature="e#15126#15127#0" expanded="true" />
-                <element signature="e#15163#15164#0" expanded="true" />
+                <element signature="e#8855#8856#0" expanded="true" />
+                <element signature="e#8894#8895#0" expanded="true" />
+                <element signature="e#11202#11203#0" expanded="true" />
+                <element signature="e#11238#11239#0" expanded="true" />
+                <element signature="e#11355#11356#0" expanded="true" />
+                <element signature="e#11392#11393#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,7 +58,7 @@
       <file leaf-file-name="InputOutput.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/InputOutput.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
+            <state relative-caret-position="288">
               <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -64,42 +67,42 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testbig.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/textFiles/testbig.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4122">
-              <caret column="229354" selection-start-column="229354" selection-end-column="229354" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
+            <state relative-caret-position="157">
+              <caret line="179" column="40" selection-start-line="179" selection-start-column="40" selection-end-line="179" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1530956266463" expanded="true" signature="6576:6791" ph="..." />
+                <marker date="1530959981045" expanded="true" signature="6576:7004" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NonTerminalTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
+      <file leaf-file-name="testLong.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/textFiles/testLong.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
+            <state relative-caret-position="241">
+              <caret line="5276" column="60" selection-start-line="5276" selection-start-column="60" selection-end-line="5276" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/textFiles/test.txt">
+      <file leaf-file-name="45000.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/textFiles/45000.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4752">
-              <caret line="264" column="60" selection-start-line="114" selection-end-line="264" selection-end-column="60" />
+            <state relative-caret-position="241">
+              <caret line="749" column="60" lean-forward="true" selection-end-line="749" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="90000.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/textFiles/90000.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="313">
+              <caret line="1499" column="60" selection-start-line="1499" selection-start-column="60" selection-end-line="1499" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -135,10 +138,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>replacedigr</find>
-      <find>generateru</find>
-      <find>digram here</find>
-      <find>system.out.pr</find>
       <find>generateRule</find>
       <find>count++</find>
       <find>count</find>
@@ -164,7 +163,11 @@
       <find>23 10</find>
       <find>system</find>
       <find>digrammap.re</find>
+      <find>putif</find>
+      <find>replaceru</find>
+      <find>nonterminalmap.re</find>
       <find>system.out</find>
+      <find>containing R</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -215,16 +218,19 @@
         <option value="$PROJECT_DIR$/src/NonTerminalNew.java" />
         <option value="$PROJECT_DIR$/src/CompressNew.java" />
         <option value="$PROJECT_DIR$/Test/SymbolTest.java" />
-        <option value="$PROJECT_DIR$/textFiles/test.txt" />
         <option value="$PROJECT_DIR$/Test/NonTerminalTest.java" />
-        <option value="$PROJECT_DIR$/textFiles/testbig.txt" />
         <option value="$PROJECT_DIR$/src/InputOutput.java" />
         <option value="$PROJECT_DIR$/src/Rule.java" />
         <option value="$PROJECT_DIR$/src/Terminal.java" />
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
         <option value="$PROJECT_DIR$/src/Symbol.java" />
-        <option value="$PROJECT_DIR$/Test/CompressTest.java" />
+        <option value="$PROJECT_DIR$/textFiles/test.txt" />
+        <option value="$PROJECT_DIR$/textFiles/testbig.txt" />
+        <option value="$PROJECT_DIR$/textFiles/45000.txt" />
+        <option value="$PROJECT_DIR$/textFiles/90000.txt" />
         <option value="$PROJECT_DIR$/src/Compress.java" />
+        <option value="$PROJECT_DIR$/Test/CompressTest.java" />
+        <option value="$PROJECT_DIR$/textFiles/testLong.txt" />
       </list>
     </option>
   </component>
@@ -314,7 +320,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CompressTest.processInputAgain">
+  <component name="RunManager" selected="JUnit.CompressTest.writeFile">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -338,13 +344,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="CompressTest.decompressTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CompressTest.processInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="CompressTest" />
-      <option name="METHOD_NAME" value="decompressTest" />
+      <option name="METHOD_NAME" value="processInput" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -355,13 +361,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="CompressTest.processInput2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CompressTest.processInput8" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="CompressTest" />
-      <option name="METHOD_NAME" value="processInput2" />
+      <option name="METHOD_NAME" value="processInput8" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -447,17 +453,17 @@
     <list>
       <item itemvalue="JUnit.CompressTest.processInputAgain" />
       <item itemvalue="JUnit.CompressTest.writeFile" />
+      <item itemvalue="JUnit.CompressTest.processInput" />
+      <item itemvalue="JUnit.CompressTest.processInput8" />
       <item itemvalue="JUnit.CompressTest" />
-      <item itemvalue="JUnit.CompressTest.processInput2" />
-      <item itemvalue="JUnit.CompressTest.decompressTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CompressTest.processInputAgain" />
         <item itemvalue="JUnit.CompressTest.writeFile" />
-        <item itemvalue="JUnit.CompressTest.decompressTest" />
         <item itemvalue="JUnit.CompressTest" />
-        <item itemvalue="JUnit.CompressTest.processInput2" />
+        <item itemvalue="JUnit.CompressTest.processInputAgain" />
+        <item itemvalue="JUnit.CompressTest.processInput" />
+        <item itemvalue="JUnit.CompressTest.processInput8" />
       </list>
     </recent_temporary>
   </component>
@@ -589,14 +595,7 @@
       <workItem from="1530710169400" duration="7184000" />
       <workItem from="1530801235660" duration="5024000" />
       <workItem from="1530874167848" duration="27168000" />
-      <workItem from="1530946521652" duration="9786000" />
-    </task>
-    <task id="LOCAL-00099" summary="had to add an extra terminal for hashcode check...">
-      <created>1530127847816</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1530127847816</updated>
+      <workItem from="1530946521652" duration="13449000" />
     </task>
     <task id="LOCAL-00100" summary="something like this.. need to update digram throughout rule">
       <created>1530130152518</created>
@@ -934,43 +933,50 @@
       <option name="project" value="LOCAL" />
       <updated>1530902163741</updated>
     </task>
-    <option name="localTasksCounter" value="148" />
+    <task id="LOCAL-00148" summary="working probably more consistently although more messy with a lot of additional conditional checks. needs cleaning">
+      <created>1530956466586</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1530956466589</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest_processInput - 2018.07.07 at 10h 34m 39s.xml">
-      <configuration name="CompressTest.processInput" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 31m 18s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest - 2018.07.07 at 10h 34m 45s.xml">
-      <configuration name="CompressTest" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 31m 24s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInput2 - 2018.07.07 at 10h 34m 53s.xml">
-      <configuration name="CompressTest.processInput2" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 31m 46s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInput2 - 2018.07.07 at 10h 35m 13s.xml">
-      <configuration name="CompressTest.processInput2" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 32m 25s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInput2 - 2018.07.07 at 10h 35m 40s.xml">
-      <configuration name="CompressTest.processInput2" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 33m 09s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInput2 - 2018.07.07 at 10h 36m 26s.xml">
-      <configuration name="CompressTest.processInput2" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 33m 49s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInput2 - 2018.07.07 at 10h 37m 15s.xml">
-      <configuration name="CompressTest.processInput2" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 34m 33s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest - 2018.07.07 at 10h 37m 29s.xml">
-      <configuration name="CompressTest" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 35m 26s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInputAgain - 2018.07.07 at 10h 37m 35s.xml">
-      <configuration name="CompressTest.processInputAgain" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 37m 24s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest_processInputAgain - 2018.07.07 at 10h 37m 49s.xml">
-      <configuration name="CompressTest.processInputAgain" configurationId="JUnit" />
+    <history-entry file="CompressTest_writeFile - 2018.07.07 at 11h 39m 04s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="520807000" />
+    <option name="totallyTimeSpent" value="524470000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -1009,7 +1015,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added some code, need to clean then try to fix" />
     <MESSAGE value="removing rule extra method" />
     <MESSAGE value="put updating rule into another method" />
     <MESSAGE value="broke up check digram method" />
@@ -1034,7 +1039,8 @@
     <MESSAGE value="still quite slow for larger files" />
     <MESSAGE value="reverted back to earlier as faster, should be able to add some of the better methods from the other attemps" />
     <MESSAGE value="need to remove digrams properly" />
-    <option name="LAST_COMMIT_MESSAGE" value="need to remove digrams properly" />
+    <MESSAGE value="working probably more consistently although more messy with a lot of additional conditional checks. needs cleaning" />
+    <option name="LAST_COMMIT_MESSAGE" value="working probably more consistently although more messy with a lot of additional conditional checks. needs cleaning" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1042,8 +1048,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/FindPattern.java" />
     <entry file="file://$PROJECT_DIR$/src/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/NonTerminal.java" />
     <entry file="file://$PROJECT_DIR$/Test/FindPatternTest.java" />
@@ -1098,44 +1102,6 @@
     <entry file="file://$PROJECT_DIR$/textFiles/test2.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/textFiles/testLong.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/textFiles/test.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4752">
-          <caret line="264" column="60" selection-start-line="114" selection-end-line="264" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/textFiles/testbig.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4122">
-          <caret column="229354" selection-start-column="229354" selection-end-column="229354" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/InputOutput.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Terminal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -1157,6 +1123,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/textFiles/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="243" column="60" lean-forward="true" selection-start-line="243" selection-start-column="60" selection-end-line="243" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/textFiles/15000.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="249" column="60" selection-end-line="250" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InputOutput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/textFiles/45000.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="749" column="60" lean-forward="true" selection-end-line="749" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Symbol.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -1164,30 +1168,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/textFiles/90000.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="1499" column="60" selection-start-line="1499" selection-start-column="60" selection-end-line="1499" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="182" column="20" selection-start-line="182" selection-start-column="10" selection-end-line="182" selection-end-column="20" />
+        <state relative-caret-position="78">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12586#12587#0" expanded="true" />
-            <element signature="e#12625#12626#0" expanded="true" />
-            <element signature="e#14973#14974#0" expanded="true" />
-            <element signature="e#15009#15010#0" expanded="true" />
-            <element signature="e#15126#15127#0" expanded="true" />
-            <element signature="e#15163#15164#0" expanded="true" />
+            <element signature="e#8855#8856#0" expanded="true" />
+            <element signature="e#8894#8895#0" expanded="true" />
+            <element signature="e#11202#11203#0" expanded="true" />
+            <element signature="e#11238#11239#0" expanded="true" />
+            <element signature="e#11355#11356#0" expanded="true" />
+            <element signature="e#11392#11393#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
+        <state relative-caret-position="157">
+          <caret line="179" column="40" selection-start-line="179" selection-start-column="40" selection-end-line="179" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1530956266463" expanded="true" signature="6576:6791" ph="..." />
+            <marker date="1530959981045" expanded="true" signature="6576:7004" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/textFiles/testLong.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="5276" column="60" selection-start-line="5276" selection-start-column="60" selection-end-line="5276" selection-end-column="60" />
         </state>
       </provider>
     </entry>

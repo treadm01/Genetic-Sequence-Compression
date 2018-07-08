@@ -10,12 +10,16 @@ public class Compress {
     private NonTerminal mainRule; // rule for holding base nonterminal
     private HashSet<String> rules; // used for debugging, printing out rules
 
-    // nonterminal points to head/guard of rule, that points to first, last points back to head
-    // any nonterminals point to rule
     // TODO is it better without nonterminal map?? how to print rules properly?
     // TODO reorder rules to rule usage
-    // TODO access guard positions better, containing rule etc, use numbers rather than strings
-    //TODO keep digrams from left to right
+    // TODO access guard positions better, containing rule etc, use numbers rather than strings (didn't seem better and cause conflicts)
+    // TODO keep digrams from left to right
+
+    // TODO put methods in classes?
+
+    // TODO need to check whether the digram in rule is entire rule or not
+    //TODO won't work if digram occurs somewhere in the middle of a rule ... double check
+    //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -42,19 +46,10 @@ public class Compress {
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
             //printDigrams();
-            //printRules();
         }
         generateRules(getFirstRule().guard.left.right);
         System.out.println(rules);
-        printRules();
     }
-
-    //TODO have method for boolean check of digram
-    //TODO needs to update the rule.nonTerminal with matching digram
-    // TODO need to check whether the digram in rule is entire rule or not
-    //TODO won't work if digram occurs somewhere in the middle of a rule
-    //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
-    //TODO would it work with keeping the original digrams for location?
 
     /**
      * metod that checks through the main options of latest two symbols
@@ -65,28 +60,24 @@ public class Compress {
      */
     public void checkDigram(Symbol symbol) {
         // as checkDigram is called recursively when digrams change,
-        // this first check is to ensure that the digram is not at the edge TODO better way to do this
-        if (!symbol.isGuard()
-                && !symbol.left.isGuard()) {
+        // this first check is to ensure that the digram is not at the edge
+        // TODO better way to do this
+        if (!(symbol.isGuard() || symbol.left.isGuard())) {
             // check existing digrams for last digram, update them with new rule
             if (digramMap.containsKey(symbol)) {
-                //TODO a better way to check for existing rule
                 // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
                 Symbol existingDigram = digramMap.get(symbol); // existing digram
+                //TODO a better way to check for existing rule
                 //TODO maintain a length of nonterminal? then just check if it is 2??
-                if (existingDigram.left.left.isGuard()
-                        && existingDigram.right.isGuard()) {
-                    //TODO just need a get rule from nonterminal, from symbol, rather than containing rule
-                    //TODO the actual rule, then send rule as reference for new terminal...
-                    //TODO the rule needs to be an object you can link to
-                    //System.out.println("RULE " + existingDigram.right.right);
-                    existingRule(symbol, existingDigram);//ruleMap.get(existingDigram.right.containingRule));
-                } else { // if digram has been seen but only once, no rule, then create new rule
+                if (existingDigram.left.left.isGuard() && existingDigram.right.isGuard()) {
+                    existingRule(symbol, existingDigram);
+                }
+                else { // if digram has been seen but only once, no rule, then create new rule
                     createRule(symbol, existingDigram);
                 }
             }
-            // digram not been seen before, add to digram map
             else {
+                // digram not been seen before, add to digram map
                 digramMap.putIfAbsent(symbol, symbol);
             }
         }
@@ -113,7 +104,6 @@ public class Compress {
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkDigram(nonTerminal.right);
                 checkDigram(nonTerminal.left.right);
-        //        ruleMap.remove(Integer.valueOf(nonTerminal.representation)); // remove that rule from the map
             }
         }
     }
@@ -126,7 +116,9 @@ public class Compress {
      * @param symbol - the position of the digram to be replaced
      */
     public void replaceDigram(NonTerminal ruleWithDigram, Rule rule, Symbol symbol) {
-        digramMap.remove(symbol.left);
+        if (!symbol.left.isGuard()) {
+            digramMap.remove(symbol.left);
+        }
         if (!symbol.right.isGuard()) {
             digramMap.remove(symbol.right);
         }
@@ -211,26 +203,6 @@ public class Compress {
         rules.add(output);
     }
 
-    /**
-     * prints rules by looping through all the nonterminals generated
-     */
-    public void printRules() {
-//        System.out.println();
-//        for (Rule rule : ruleMap.values()) {
-//            Symbol s = rule.guard.left.right;
-//            String output = "";
-//            do {
-//                output += s.toString() + " ";
-//                s = s.right;
-//            } while (!s.representation.equals("?"));
-//
-//            System.out.print("#" + rule + " > ");
-//            System.out.print(output);
-//            //System.out.print(" use number " + nt.count);
-//            System.out.println();
-//        }
-//        System.out.println();
-    }
 
     /**
      * prints out all the digrams added to the digram map

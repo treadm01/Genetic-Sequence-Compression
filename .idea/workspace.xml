@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Guard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rule.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +19,8 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
-              <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+            <state relative-caret-position="144">
+              <caret line="120" column="9" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#9256#9257#0" expanded="true" />
@@ -81,10 +79,9 @@
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret lean-forward="true" />
+              <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="24" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <marker date="1531058707453" expanded="true" signature="6576:7000" ph="..." />
+                <marker date="1531059247862" expanded="true" signature="6576:7000" ph="..." />
               </folding>
             </state>
           </provider>
@@ -608,14 +605,7 @@
       <workItem from="1530946521652" duration="13723000" />
       <workItem from="1530960906202" duration="100000" />
       <workItem from="1530961147648" duration="272000" />
-      <workItem from="1531041449029" duration="15012000" />
-    </task>
-    <task id="LOCAL-00104" summary="need to clean up, implement rule utlity and do todos">
-      <created>1530286634662</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1530286634662</updated>
+      <workItem from="1531041449029" duration="15627000" />
     </task>
     <task id="LOCAL-00105" summary="put in a rule class, which is just a container for nonterminals... nonterminals can then be kept once and count updated accordingly. Have to decrement count too">
       <created>1530358011368</created>
@@ -953,31 +943,17 @@
       <option name="project" value="LOCAL" />
       <updated>1531056595824</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="replaced checking representation with guard objects that can be checked for a boolean">
+      <created>1531058984163</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1531058984163</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest - 2018.07.08 at 14h 55m 43s.xml">
-      <configuration name="CompressTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.08 at 14h 59m 31s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 00m 09s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 00m 41s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processInput - 2018.07.08 at 15h 03m 08s.xml">
-      <configuration name="CompressTest.processInput" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 03m 21s.xml">
-      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest - 2018.07.08 at 15h 03m 26s.xml">
-      <configuration name="CompressTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 04m 01s.xml">
       <configuration name="CompressTest.writeFile" configurationId="JUnit" />
     </history-entry>
@@ -987,9 +963,30 @@
     <history-entry file="CompressTest - 2018.07.08 at 15h 07m 28s.xml">
       <configuration name="CompressTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="CompressTest - 2018.07.08 at 15h 08m 00s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 08m 44s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 09m 12s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 14m 10s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 14m 21s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 14m 37s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.08 at 15h 18m 07s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="540128000" />
+    <option name="totallyTimeSpent" value="540743000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1028,7 +1025,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="not updating with a certain rule, rule number now kept as an integer rather than the size of the map, usused nonterminals removed from map" />
     <MESSAGE value="added some documentation" />
     <MESSAGE value="bit more documentation" />
     <MESSAGE value="checking for nonterminal in map makes no difference" />
@@ -1053,7 +1049,8 @@
     <MESSAGE value="need to go through again and add documentation for current implementation" />
     <MESSAGE value="reshuffled rules and nonterminals" />
     <MESSAGE value="removed nonterminal map, slighlty slower.." />
-    <option name="LAST_COMMIT_MESSAGE" value="removed nonterminal map, slighlty slower.." />
+    <MESSAGE value="replaced checking representation with guard objects that can be checked for a boolean" />
+    <option name="LAST_COMMIT_MESSAGE" value="replaced checking representation with guard objects that can be checked for a boolean" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1217,8 +1214,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+        <state relative-caret-position="144">
+          <caret line="120" column="9" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#9256#9257#0" expanded="true" />
@@ -1234,10 +1231,9 @@
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret lean-forward="true" />
+          <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1531058707453" expanded="true" signature="6576:7000" ph="..." />
+            <marker date="1531059247862" expanded="true" signature="6576:7000" ph="..." />
           </folding>
         </state>
       </provider>

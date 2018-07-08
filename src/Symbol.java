@@ -1,7 +1,7 @@
 public class Symbol {
     Symbol left, right;
     String representation;
-    static final int prime = 2265539; // from sequitur
+    private static final int PRIME = 2265539; // from sequitur
     //int containingRule;
 
     public Boolean isGuard() {
@@ -17,10 +17,10 @@ public class Symbol {
     public int hashCode() {
         long code;
         //from sequitur
-        int a = Integer.valueOf(this.toString().charAt(0));
-        int b = Integer.valueOf(left.toString().charAt(0)); // switched check to look at left symbol rather than right
+        int a = (int) this.toString().charAt(0);
+        int b = (int) left.toString().charAt(0); // switched check to look at left symbol rather than right
         code = ((21599 * (long)a) + (20507 * (long)b));
-        code = code % (long)prime;
+        code = code % (long)PRIME;
         return (int)code;
     }
 

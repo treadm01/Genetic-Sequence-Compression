@@ -174,7 +174,7 @@ public class CompressTest {
     public void writeFile() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("test");
+        String originalFile = io.readFile("360000");
         c.processInput(originalFile);
     }
 

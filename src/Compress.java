@@ -8,7 +8,7 @@ public class Compress {
     private Integer ruleNumber; // count for created rules
     private Rule firstRule; // main base 'nonterminal'
     private NonTerminal mainRule; // rule for holding base nonterminal
-    private HashSet<String> rules; // used for debugging, printing out rules
+    private HashSet<String> rules; // used for debugging, printing out rules //TODO make of actual rules
 
     // TODO is it better without nonterminal map?? how to print rules properly?
     // TODO reorder rules to rule usage

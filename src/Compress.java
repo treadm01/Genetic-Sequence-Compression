@@ -5,10 +5,10 @@ import java.util.Map;
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
-    private Map<Integer, NonTerminal> nonTerminalMap; // nonterminal map created, key being the rule number.
+    private Map<Integer, Rule> ruleMap; // nonterminal map created, key being the rule number.
     private Integer ruleNumber; // count for created rules
-    private NonTerminal firstRule; // main base 'nonterminal'
-    private Rule mainRule; // rule for holding base nonterminal
+    private Rule firstRule; // main base 'nonterminal'
+    private NonTerminal mainRule; // rule for holding base nonterminal
     private HashSet<String> rules; // used for debugging, printing out rules
 
     // nonterminal points to head/guard of rule, that points to first, last points back to head
@@ -16,7 +16,6 @@ public class Compress {
     // TODO try again to remove nonterminal map
     // TODO reorder rules to rule usage
     // TODO access guard positions better, containing rule etc, use numbers rather than strings
-    // TODO swap rule for nonterminal vice versa
     //TODO keep digrams from left to right
 
     /**
@@ -24,12 +23,12 @@ public class Compress {
      */
     public Compress() {
         digramMap = new HashMap<>();
-        nonTerminalMap = new HashMap<>();
+        ruleMap = new HashMap<>();
         rules = new HashSet<>();
         ruleNumber = 0;
-        firstRule = new NonTerminal(ruleNumber); // create first rule;
-        mainRule = new Rule(getFirstRule(), 0); //TODO 0 or -1 not contained by any rule
-        nonTerminalMap.put(0, getFirstRule()); // put in map
+        firstRule = new Rule(ruleNumber); // create first rule;
+        mainRule = new NonTerminal(getFirstRule(), 0); //TODO 0 or -1 not contained by any rule
+        ruleMap.put(0, getFirstRule()); // put in map
     }
 
     /**
@@ -41,7 +40,7 @@ public class Compress {
     public void processInput(String input) {
         getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1), 0));
         for (int i = 1; i < input.length(); i++) {
-            System.out.println(i);
+          //  System.out.println(i);
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1), 0));
@@ -82,7 +81,7 @@ public class Compress {
                 //TODO maintain a length of nonterminal? then just check if it is 2??
                 if (existingDigram.left.left.representation.equals("?")
                         && existingDigram.right.representation.equals("?")) {
-                    existingRule(symbol, nonTerminalMap.get(existingDigram.right.containingRule));
+                    existingRule(symbol, ruleMap.get(existingDigram.right.containingRule));
                 } else { // if digram has been seen but only once, no rule, then create new rule
                     createRule(symbol, existingDigram);
                 }
@@ -102,20 +101,20 @@ public class Compress {
      * @param symbol
      */
     public void replaceRule(Symbol symbol) {
-        if (symbol instanceof Rule) { // if the symbol is a rule reduce usage
-            Rule rule = (Rule) symbol;
-            rule.nonTerminal.count--; // TODO getter setter
-            if (rule.nonTerminal.count == USED_ONCE) { // if rule is down to one, remove completely
+        if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
+            NonTerminal nonTerminal = (NonTerminal) symbol;
+            nonTerminal.rule.count--; // TODO getter setter
+            if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
                 if (!symbol.left.representation.equals("?")) {
                     digramMap.remove(symbol.left);
                 }
                 if (!symbol.right.representation.equals("?")) {
                     digramMap.remove(symbol.right);
                 }
-                rule.removeRule(); // uses the rule method to reassign elements of rule
-                checkDigram(rule.right);
-                checkDigram(rule.left.right);
-                nonTerminalMap.remove(Integer.valueOf(rule.representation)); // remove that rule from the map
+                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
+                checkDigram(nonTerminal.right);
+                checkDigram(nonTerminal.left.right);
+                ruleMap.remove(Integer.valueOf(nonTerminal.representation)); // remove that rule from the map
             }
         }
     }
@@ -127,13 +126,13 @@ public class Compress {
      * @param nonTerminal
      * @param symbol - the position of the digram to be replaced
      */
-    public void replaceDigram(Rule ruleWithDigram, NonTerminal nonTerminal, Symbol symbol) {
+    public void replaceDigram(NonTerminal ruleWithDigram, Rule nonTerminal, Symbol symbol) {
         digramMap.remove(symbol.left);
         if (!symbol.right.representation.equals("?")) {
             digramMap.remove(symbol.right);
         }
-        Rule rule = new Rule(nonTerminal, symbol.containingRule);
-        ruleWithDigram.nonTerminal.updateNonTerminal(rule, symbol); // update for second
+        NonTerminal rule = new NonTerminal(nonTerminal, symbol.containingRule);
+        ruleWithDigram.rule.updateNonTerminal(rule, symbol); // update for second
         checkDigram(rule);
         checkDigram(rule.right);
     }
@@ -146,7 +145,7 @@ public class Compress {
      * the already exsiting rule/nonterminal for that digram
      * @param symbol
      */
-    public void existingRule(Symbol symbol, NonTerminal nonTerminal) {
+    public void existingRule(Symbol symbol, Rule nonTerminal) {
 //        System.out.println("SYMBOL " + symbol.left + " " + symbol);
 //        System.out.println(nonTerminal);
         Symbol first = nonTerminal.last.left; // first symbol of digram
@@ -169,7 +168,7 @@ public class Compress {
         Symbol secondDigram = symbol; // get new digram from last symbol added
         Symbol firstDigram = oldSymbol; // matching digram in the rule
         ruleNumber++; // increase rule number
-        NonTerminal newRule = new NonTerminal(ruleNumber); // create new rule to hold new Nonterminal
+        Rule newRule = new Rule(ruleNumber); // create new rule to hold new Nonterminal
 
         //TODO what is this doing if the rule isn't the mainrule????
         replaceDigram(mainRule, newRule, firstDigram); // update rule for first instance of digram
@@ -180,7 +179,7 @@ public class Compress {
         newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
 
         // put the new rule/nonTerminal into the map
-        nonTerminalMap.putIfAbsent(ruleNumber, newRule);
+        ruleMap.putIfAbsent(ruleNumber, newRule);
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
         replaceRule(firstDigram.left);
@@ -204,8 +203,8 @@ public class Compress {
         String output = "";
         while (!current.representation.equals("?")) {
             output += current + " ";
-            if (current instanceof Rule) {
-                generateRules(((Rule) current).nonTerminal.guard.left.right);
+            if (current instanceof NonTerminal) {
+                generateRules(((NonTerminal) current).rule.guard.left.right);
             }
             current = current.right;
         }
@@ -217,15 +216,15 @@ public class Compress {
      */
     public void printRules() {
         System.out.println();
-        for (NonTerminal nt : nonTerminalMap.values()) {
-            Symbol s = nt.guard.left.right;
+        for (Rule rule : ruleMap.values()) {
+            Symbol s = rule.guard.left.right;
             String output = "";
             do {
                 output += s.toString() + " ";
                 s = s.right;
             } while (!s.representation.equals("?"));
 
-            System.out.print("#" + nt + " > ");
+            System.out.print("#" + rule + " > ");
             System.out.print(output);
             //System.out.print(" use number " + nt.count);
             System.out.println();
@@ -249,8 +248,8 @@ public class Compress {
      * @param rule
      * @return
      */
-    public String decompress(Rule rule) {
-        Symbol s = rule.nonTerminal.guard.left.right;
+    public String decompress(NonTerminal rule) {
+        Symbol s = rule.rule.guard.left.right;
         String output = "";
         do {
             if (s instanceof Terminal) {
@@ -258,7 +257,7 @@ public class Compress {
                 s = s.right;
             }
             else {
-                output += decompress((Rule) s);
+                output += decompress((NonTerminal) s);
                 s = s.right;
             }
         } while (!s.representation.equals("?"));
@@ -271,7 +270,7 @@ public class Compress {
      * //TODO decide whether nonterminal or rule will be the standard acess
      * @return
      */
-    public Rule getActualFirstRule() {
+    public NonTerminal getActualFirstRule() {
         return this.mainRule;
     }
 
@@ -280,7 +279,7 @@ public class Compress {
      * getter for the main rule nonterminal
      * @return
      */
-    public NonTerminal getFirstRule() {
+    public Rule getFirstRule() {
         return this.firstRule;
     }
 }

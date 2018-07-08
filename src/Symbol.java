@@ -25,12 +25,13 @@ public class Symbol {
     public boolean equals(Object obj) {
         //TODO add all checks
 
+        Symbol symbol = (Symbol) obj;
         // if this symbol is also the right hand side of a digram, then they are not equal
         // as they're dependent on each other
-        if (this == ((Symbol) obj).right) { return false; }
+        if (this == symbol.right) { return false; }
 
-        return ((representation.equals((obj).toString()))
-                && (left.representation.equals(((Symbol)obj).left.representation))
+        return ((representation.equals(symbol.toString()))
+                && (left.representation.equals(symbol.left.toString()))
         //&& (right.representation.equals(((Symbol)obj).right.representation))
         ); // switched check to look at left symbol rather than right
     }

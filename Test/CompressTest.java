@@ -174,11 +174,7 @@ public class CompressTest {
     public void writeFile() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        // generate rules causes crash on 45000
-        // exisiting rule crash, nonterminal map = null on 90000
-        // did run on testLong in 21 s which is 316000
-        // on double testLong took 1m 31
-        String originalFile = io.readFile("45000");
+        String originalFile = io.readFile("test");
         c.processInput(originalFile);
     }
 

@@ -15,11 +15,15 @@ public class Compress {
     // TODO access guard positions better, containing rule etc, use numbers rather than strings (didn't seem better and cause conflicts)
     // TODO keep digrams from left to right
 
+    //TODO need a better way to check if the end of rule, guard etc
+
     // TODO put methods in classes?
 
     // TODO need to check whether the digram in rule is entire rule or not
     //TODO won't work if digram occurs somewhere in the middle of a rule ... double check
     //TODO NEED TO CLEAN UP SO CAN BE APPLICABLE TO ANY RULE NOT JUST FIRST - do i? or possible to update via rule some how, like remove rule
+
+    // TODO remove repetition from code
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -39,13 +43,11 @@ public class Compress {
      * @param input
      */
     public void processInput(String input) {
-        getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
-        for (int i = 1; i < input.length(); i++) {
+        for (int i = 0; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
-            //printDigrams();
         }
         generateRules(getFirstRule().guard.left.right);
         System.out.println(rules);
@@ -95,12 +97,7 @@ public class Compress {
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.rule.count--; // TODO getter setter
             if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
-                if (!symbol.left.isGuard()) {
-                    digramMap.remove(symbol.left);
-                }
-                if (!symbol.right.isGuard()) {
-                    digramMap.remove(symbol.right);
-                }
+                removeDigramsFromMap(symbol);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkDigram(nonTerminal.right);
                 checkDigram(nonTerminal.left.right);
@@ -116,16 +113,20 @@ public class Compress {
      * @param symbol - the position of the digram to be replaced
      */
     public void replaceDigram(NonTerminal ruleWithDigram, Rule rule, Symbol symbol) {
+        removeDigramsFromMap(symbol);
+        NonTerminal nonTerminal = new NonTerminal(rule);
+        ruleWithDigram.rule.updateNonTerminal(nonTerminal, symbol); // update for second
+        checkDigram(nonTerminal);
+        checkDigram(nonTerminal.right);
+    }
+
+    public void removeDigramsFromMap(Symbol symbol) {
         if (!symbol.left.isGuard()) {
             digramMap.remove(symbol.left);
         }
         if (!symbol.right.isGuard()) {
             digramMap.remove(symbol.right);
         }
-        NonTerminal nonTerminal = new NonTerminal(rule);
-        ruleWithDigram.rule.updateNonTerminal(nonTerminal, symbol); // update for second
-        checkDigram(nonTerminal);
-        checkDigram(nonTerminal.right);
     }
 
 
@@ -137,9 +138,7 @@ public class Compress {
      * @param symbol
      */
     public void existingRule(Symbol symbol, Symbol oldSymbol) {
-//        System.out.println("SYMBOL " + symbol.left + " " + symbol);
-//        System.out.println(nonTerminal);
-        Rule rule =  (Rule) oldSymbol.right.right;
+        Rule rule = (Rule) oldSymbol.right.right; // get rule using pointer to it in the guard// right.right will be guard
         Symbol first = rule.last.left; // first symbol of digram
         Symbol second = rule.last; // second symbol
         replaceDigram(mainRule, rule, symbol);
@@ -153,10 +152,7 @@ public class Compress {
      * takes the latest digram and the digram that occured earlier from the digram map
      * @param symbol
      */
-    //TODO make generic for rule being updated?? not first rule
     public void createRule(Symbol symbol, Symbol oldSymbol) {
-        //TODO update specific rule by getting containing rule - don't add containing for every terminal or rule
-        //TODO just access last? you might not know where last is
         Symbol secondDigram = symbol; // get new digram from last symbol added
         Symbol firstDigram = oldSymbol; // matching digram in the rule
         ruleNumber++; // increase rule number
@@ -169,9 +165,6 @@ public class Compress {
         // TODO this below can't be done before the digrams are dealt with in a rule, as it wipes out the references of left and right. check if ok
         // update containing rule here... TODO or not for now, just use head and tail
         newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
-
-        // put the new rule/nonTerminal into the map
-        //ruleMap.putIfAbsent(ruleNumber, newRule);
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
         replaceRule(firstDigram.left);
@@ -206,7 +199,6 @@ public class Compress {
 
     /**
      * prints out all the digrams added to the digram map
-     * //TODO check which digrams are kept or can be removed, clean up digram map
      */
     public void printDigrams() {
         for (Symbol s : digramMap.values()) {

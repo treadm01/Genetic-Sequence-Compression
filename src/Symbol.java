@@ -2,7 +2,11 @@ public class Symbol {
     Symbol left, right;
     String representation;
     static final int prime = 2265539; // from sequitur
-    int containingRule;
+    //int containingRule;
+
+    public Boolean isGuard() {
+        return false;
+    }
 
     @Override
     public String toString() {

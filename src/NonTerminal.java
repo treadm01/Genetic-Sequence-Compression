@@ -2,8 +2,7 @@ public class NonTerminal extends Symbol {
     // keep reference to nonTerminal this occurs in??
     Rule rule; // the nonTerminal the rule points to
 
-    public NonTerminal(Rule rule, int containingRule) {
-        this.containingRule = containingRule;
+    public NonTerminal(Rule rule) {
         this.rule = rule;
         this.rule.count++; // increase use count
         representation = rule.representation; // rule has the same symbol rep as it's nonterminal...

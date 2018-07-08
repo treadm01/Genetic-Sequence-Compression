@@ -4,11 +4,12 @@ public class Rule extends Symbol {
 
     public Rule(Integer ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
-        left = new Terminal("?", ruleNumber);
-        right = new Terminal("?", ruleNumber);
-        guard = new Terminal("!", ruleNumber);
+        left = new Terminal("?");
+        right = new Terminal("?");
+        guard = this;//new Terminal("!", ruleNumber); // assigned to get a reference to the rule from a symbol..
         guard.left = left;
         guard.right = right;
+        guard.right.right = guard;
         last = guard.left;
     }
 
@@ -23,6 +24,7 @@ public class Rule extends Symbol {
         last.right = symbol;
 
         last = symbol;
+        //System.out.println(guard.right.right);
     }
 
     /**

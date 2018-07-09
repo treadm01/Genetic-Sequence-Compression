@@ -2,7 +2,6 @@ public class Symbol {
     Symbol left, right;
     String representation;
     private static final int PRIME = 2265539; // from sequitur
-    //int containingRule;
 
     public Boolean isGuard() {
         return false;
@@ -38,5 +37,13 @@ public class Symbol {
                 && (left.representation.equals(symbol.left.toString()))
         //&& (right.representation.equals(((Symbol)obj).right.representation))
         ); // switched check to look at left symbol rather than right
+    }
+
+    public void assignLeft(Symbol left) {
+        this.left = left;
+    }
+
+    public void assignRight(Symbol right) {
+        this.right = right;
     }
 }

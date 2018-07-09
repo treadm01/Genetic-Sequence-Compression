@@ -14,7 +14,7 @@ public class CompressTest {
     @Test
     public void processInput() { // create rules from digrams
         c.processInput("abcdbc");
-        assertEquals("[b c , a 1 d 1 ]", c.getRules());
+        assertEquals("1 > b c | 0 > a 1 d 1 | ", c.printRules());
     }
 
         @Test
@@ -23,7 +23,7 @@ public class CompressTest {
             c = new Compress();
             c.processInput("abcdbcabc");
 
-            assertEquals("[a 1 , b c , 2 d 1 2 ]", c.getRules());
+            assertEquals("1 > b c | 2 > a 1 | 0 > 2 d 1 2 | ", c.printRules());
         }
 
         @Test
@@ -31,7 +31,7 @@ public class CompressTest {
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabcd");
-            assertEquals("[a 1 d , b c , 3 1 3 ]", c.getRules());
+            assertEquals("1 > b c | 0 > 3 1 3 | 3 > a 1 d | ", c.printRules());
         }
 
     @Test
@@ -39,7 +39,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaa");
-        assertEquals("[a a a ]", c.getRules());
+        assertEquals("0 > a a a | ", c.printRules());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaa");
-        assertEquals("[a a , 1 1 ]", c.getRules());
+        assertEquals("1 > a a | 0 > 1 1 | ", c.printRules());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaa");
-        assertEquals("[a a , 1 1 a ]", c.getRules());
+        assertEquals("1 > a a | 0 > 1 1 a | ", c.printRules());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaa");
-        assertEquals("[a a , 1 1 1 ]", c.getRules());
+        assertEquals("1 > a a | 0 > 1 1 1 | ", c.printRules());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaa");
-        assertEquals("[a a , 1 1 1 a ]", c.getRules());
+        assertEquals("1 > a a | 0 > 1 1 1 a | ", c.printRules());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        assertEquals("[4 4 , a a , 1 1 , 2 2 , 3 3 ]", c.getRules());
+        assertEquals("1 > a a | 2 > 1 1 | 0 > 4 4 | 4 > 3 3 | 3 > 2 2 | ", c.printRules());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdab"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("[3 1 3 a b , a 1 d , b c ]", c.getRules());
+        assertEquals("1 > b c | 0 > 3 1 3 a b | 3 > a 1 d | ", c.printRules());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabc");
-        assertEquals("[4 d , a 1 , b c , 3 1 3 4 ]", c.getRules());
+        assertEquals("1 > b c | 0 > 3 1 3 4 | 4 > a 1 | 3 > 4 d | ", c.printRules());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabcd");
-        assertEquals("[a 1 d , b c , 3 1 3 3 ]", c.getRules());
+        assertEquals("1 > b c | 0 > 3 1 3 3 | 3 > a 1 d | ", c.printRules());
     }
 
     @Test
@@ -120,13 +120,6 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdabcdbcabcd");
     }
-////        19 -> 26 26
-////        20 -> b c
-////        22 -> a 20 d
-////        26 -> 22 20 22
-
-
-
 
 //    @Test
 //    public void testLongerInput() {
@@ -168,8 +161,9 @@ public class CompressTest {
 //                "AATAGGGTAGTGTTAGGGTAGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGTGTGGGTGTG\n" +
 //                "GTGTGTGTGGGTGTGGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGGGTGTGGTGTGTGTG");
 //    }
-
 //
+
+// sometimes get infinite recursion rule from generate rules/ the grammar built
     @Test
     public void writeFile() {
         Compress c = new Compress();
@@ -179,11 +173,200 @@ public class CompressTest {
     }
 
     @Test
+    public void chmpxx() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chmpxx");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void chntxx() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chntxx");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void hehcmv() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("hehcmv");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void humdyst() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humdyst");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void humghcs() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humghcs");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void humhbb() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhbb");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void vaccg() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("vaccg");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void mtpacga() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mtpacga");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void mpomtcg() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mpomtcg");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void humprtb() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humprtb");
+        c.processInput(originalFile);
+    }
+
+    @Test
+    public void humhdab() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhdab");
+        c.processInput(originalFile);
+    }
+
+
+    @Test
     public void decompressTest() {
         InputOutput io = new InputOutput();
-        String input = io.readFile("test");
+        String input = io.readFile("15000");
         c.processInput(input);
-        assertEquals(input, c.decompress(c.getActualFirstRule()));
+        assertEquals(input, c.decompress(c.getFirstRule()));
+    }
+
+
+    @Test
+    public void chmpxxDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chmpxx");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void chntxxDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chntxx");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void hehcmvDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("hehcmv");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void humdystDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humdyst");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void humghcsDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humghcs");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void humhbbDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhbb");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void vaccgDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("vaccg");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void mtpacgaDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mtpacga");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void mpomtcgDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mpomtcg");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void humprtbDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humprtb");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+    @Test
+    public void humhdabDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhdab");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
     }
 
 }

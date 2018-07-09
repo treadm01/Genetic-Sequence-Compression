@@ -1,20 +1,16 @@
-public class Rule extends Symbol {
-    Symbol guard, last;
+public class Rule extends Symbol implements Comparable {
+    Symbol last;
     int count;
+    Guard actualGuard;
 
     public Rule(Integer ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
-        left = new Guard("?");
-        right = new Guard("?");
-
-        //TODO clean this up
-        // assigned to get a reference to the rule from a symbol..
-        guard = this;//new Terminal("!", ruleNumber);
-        guard.right.right = guard; // also have to do this to have a link from guard right to the rule again
-        guard.left = left;
-        guard.right = right;
-
-        last = guard.left;
+        actualGuard = new Guard("?");
+        actualGuard.assignLeft(this); // reference back to rule
+        assignLeft(actualGuard); // seems necessary for hashcode check, to check left symbol, use to point to guard
+        //assignRight(actualGuard);
+        last = actualGuard; // right right?
+        //not going to assign guard.right
     }
 
     /**
@@ -23,12 +19,10 @@ public class Rule extends Symbol {
      */
     public void addNextSymbol(Symbol symbol) {
         //TODO write out in english what is going on here again
-        symbol.left = last;
-        symbol.right = guard.right;
-        last.right = symbol;
-
+        symbol.assignLeft(last);
+        symbol.assignRight(actualGuard); // todo so this only ever adds at the end??
+        last.assignRight(symbol);
         last = symbol;
-        //System.out.println(guard.right.right);
     }
 
     /**
@@ -46,17 +40,20 @@ public class Rule extends Symbol {
      * @param rule
      * @param symbol
      */
-    public void updateNonTerminal(NonTerminal rule, Symbol symbol) {
-        if (symbol == last) {
-            last = rule;
+    public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+        if (symbol.right.isGuard()) {
+            last = nonTerminal; //TODO not sure that this is right
+        }
+        else {
+            symbol.right.assignLeft(nonTerminal); // moving this here to not reassign the left pointer
+            // of the guard to something other than the rule ... is it necessary to have one?
         }
 
         //TODO write out in english what is going on here again
-        rule.right = symbol.right;
-        rule.left = symbol.left.left;
+        nonTerminal.assignRight(symbol.right);
+        nonTerminal.assignLeft(symbol.left.left);
 
-        symbol.right.left = rule;
-        symbol.left.left.right = rule;
+        symbol.left.left.assignRight(nonTerminal);
     }
 
     /**
@@ -66,4 +63,23 @@ public class Rule extends Symbol {
     public Symbol getLast() {
         return last;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        Rule rule = (Rule) o;
+        if (rule.count < count) {
+            return -1;
+        }
+
+        if (rule.count > count) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+//    @Override
+//    public void assignLeft(Guard guard) {
+//        this.left = guard;
+//    }
 }

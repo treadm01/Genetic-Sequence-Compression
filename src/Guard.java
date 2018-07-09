@@ -6,6 +6,7 @@ public class Guard extends Symbol {
 
     @Override
     public void assignLeft(Symbol symbol)  {
+        //TODO implement these assignments properly, it shouldn't ever be being sent a rule
         if (!(symbol instanceof Rule)) {
             try {
                 throw new Exception("NO!");

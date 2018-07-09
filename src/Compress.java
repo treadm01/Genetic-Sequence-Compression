@@ -136,7 +136,7 @@ public class Compress {
      * might not be needed you know... just work the links of the symbols??
      * replace an instance of a digram with a nonterminal
      * @param ruleWithDigram
-     * @param rule
+     * @param newRule
      * @param symbol - the position of the digram to be replaced
      */
     public void replaceDigram(Rule ruleWithDigram, Rule newRule, Symbol symbol) {

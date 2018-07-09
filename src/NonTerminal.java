@@ -13,6 +13,7 @@ public class NonTerminal extends Symbol {
      * elements either side of this rule
      */
     public void removeRule() {
+        //TODO need to ensure all links are working correctly
         // if nonterminal being removed is not at the end of a rule or start:
         // update right.left and left.right
         if (!this.right.isGuard()) {

@@ -11,7 +11,14 @@ public class Compress {
     private Rule firstRule; // main base 'nonterminal'
     private HashSet<Rule> rules; // used for debugging, printing out rules //TODO make of actual rules
 
-    // TODO make sure all left and right assigned and handled properly
+    //TODO sometimes writefile crashes with
+    // java.lang.NullPointerException
+    //	at Compress.checkDigram(Compress.java:the initial check in checkdigram)
+    //todo deal with null
+
+    // order of updatenonterminal makes vac fail rather than hang
+
+    // TODO make sure all left and right assigned and handled properly!!!!!!!
     // TODO organise how left and right of symbols are assigned, including rules and guards
     // TODO reorder rules to rule usage
     // TODO access guard positions better, containing rule etc, use numbers rather than strings (didn't seem better and cause conflicts)
@@ -50,10 +57,13 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
-//            rules.clear();
-//            rules.add(getFirstRule());
-//            generateRules(getFirstRule().actualGuard.right);
-//            System.out.println(printRules());
+
+//            if (i > 3950) {
+//                rules.clear();
+//                rules.add(getFirstRule());
+//                generateRules(getFirstRule().actualGuard.right);
+//                System.out.println(printRules());
+//            }
         }
 
         rules.add(getFirstRule());
@@ -91,6 +101,7 @@ public class Compress {
         // as checkDigram is called recursively when digrams change,
         // this first check is to ensure that the digram is not at the edge
         // TODO better way to do this
+        //System.out.println(symbol);
         if (!(symbol.isGuard() || symbol.left.isGuard())) {
             // check existing digrams for last digram, update them with new rule
             if (digramMap.containsKey(symbol)) {
@@ -149,6 +160,7 @@ public class Compress {
 
     public void removeDigramsFromMap(Symbol symbol) {
         if (!symbol.left.isGuard()) {
+
             digramMap.remove(symbol.left);
         }
         if (!symbol.right.isGuard()) {

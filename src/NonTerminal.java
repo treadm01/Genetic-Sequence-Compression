@@ -13,22 +13,22 @@ public class NonTerminal extends Symbol {
      * elements either side of this rule
      */
     public void removeRule() {
-//        System.out.println("rule first " + rule.actualGuard.right);
-//        System.out.println("rule last " + rule.getLast());
+        // if nonterminal being removed is not at the end of a rule or start:
+        // update right.left and left.right
+        if (!this.right.isGuard()) {
+            right.assignLeft(rule.getLast());
+            left.assignRight(rule.actualGuard.right);
+        }
+        else {
+            left.assignRight(rule.actualGuard.right);
+        }
 
         rule.getLast().assignRight(right); // set right symbol of current last symbol in rule to this symbols right
-        //TODO same problem as below
+        //TODO similar problem as below, this seems like a bug, first element should never be a guard
+        // unless it is empty or something else has gone wrong
         if (!rule.actualGuard.right.isGuard()) {
             rule.actualGuard.right.assignLeft(left); // set first symbol in rule's left to this left
         }
-
-        //TODO another guard check - basically removing a terminal that is last in a rule causes a crash
-        // if the terminal is last in a rule you don't want to assign it's rights left, there is no way back
-        // from guard to last
-        if (!this.right.isGuard()) {
-            right.assignLeft(rule.getLast());
-        }
-        left.assignRight(rule.actualGuard.right);
     }
 
     public Rule getRule() {

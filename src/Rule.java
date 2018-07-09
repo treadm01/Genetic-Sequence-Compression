@@ -41,18 +41,26 @@ public class Rule extends Symbol implements Comparable {
      * @param symbol
      */
     public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+        //System.out.println("some kind of loop with careless else wiping??? " + symbol.left.left);
+        // think through what has to be done for each condition
         if (symbol.right.isGuard()) {
             last = nonTerminal; //TODO not sure that this is right
+          //  System.out.println("some kind of loop with careless else wiping??? " + symbol.left.left);
         }
         else {
             symbol.right.assignLeft(nonTerminal); // moving this here to not reassign the left pointer
             // of the guard to something other than the rule ... is it necessary to have one?
+            //System.out.println("some kind of loop with careless else wiping??? " + symbol.left.left);
         }
 
         //TODO write out in english what is going on here again
         nonTerminal.assignRight(symbol.right);
-        nonTerminal.assignLeft(symbol.left.left);
+       // System.out.println("ANYTHING " + symbol.left.left);
+        nonTerminal.assignLeft(symbol.left.left); // could be an issue here
 
+        // getting a null when replacing digram with a nonterminal
+        // the symbol before the digram is null, coming from create rule, for the first/existing digram
+        // so guessing it is the first in a rule
         symbol.left.left.assignRight(nonTerminal);
     }
 

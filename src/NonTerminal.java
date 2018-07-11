@@ -12,13 +12,11 @@ public class NonTerminal extends Symbol {
      * elements either side of this rule
      */
     public void removeRule() {
-
         right.assignLeft(rule.getLast());
         left.assignRight(rule.actualGuard.right);
 
         rule.getLast().assignRight(right); // set right symbol of current last symbol in rule to this symbols right
         rule.actualGuard.right.assignLeft(left); // set first symbol in rule's left to this left
-
     }
 
     public Rule getRule() {

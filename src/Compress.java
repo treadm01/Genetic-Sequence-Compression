@@ -52,9 +52,7 @@ public class Compress {
         rules.add(getFirstRule());
         generateRules(getFirstRule().actualGuard.right);
         System.out.println(printRules());
-
         // below for reodering ruls
-
 //
 //        List<Rule> orderedRules = rules.stream()
 //                .sorted(Rule::compareTo)
@@ -69,8 +67,6 @@ public class Compress {
 //        }
 //
 //        System.out.println(orderedRules);
-
-
     }
 
     /**
@@ -85,8 +81,6 @@ public class Compress {
             if (digramMap.containsKey(symbol)) {
                 // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
                 Symbol existingDigram = digramMap.get(symbol); // existing digram
-                //TODO a better way to check for existing rule
-                //TODO maintain a length of nonterminal? then just check if it is 2??
                 if (existingDigram.left.left.isGuard() && existingDigram.right.isGuard()) {
                     existingRule(symbol, existingDigram);
                 }
@@ -100,59 +94,45 @@ public class Compress {
             }
     }
 
+
     /**
-     * if a digram is being replaced with a new nonterminal and either symbols of that
-     * digram are a rule, their count/usage must be reduced
-     * if the count has reached one, then the rule is removed and it's occurence replaced with
-     * the symbols it stood for
+     * create the rule for a repeated digram, requires being done twice for both instances
+     * of the digram, rule has two instances, the nonterminal it represents only one
+     * takes the latest digram and the digram that occured earlier from the digram map
      * @param symbol
      */
-    public void replaceRule(Symbol symbol) {
-        if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
-            NonTerminal nonTerminal = (NonTerminal) symbol;
-            nonTerminal.rule.count--; // TODO getter setter
-            if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
-                removeDigramsFromMap(symbol);
-                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
-                checkNewDigrams(nonTerminal.left.right, nonTerminal.right, nonTerminal);
-            }
+    public void createRule(Symbol symbol, Symbol oldSymbol) {
+        Symbol secondDigram = symbol; // get new digram from last symbol added
+        Symbol firstDigram = oldSymbol; // matching digram in the rule
+        ruleNumber++; // increase rule number
+        Rule newRule = new Rule(ruleNumber); // create new rule to hold new Nonterminal
+
+        replaceDigram(newRule, firstDigram); // update rule for first instance of digram
+        replaceDigram(newRule, secondDigram);// update rule for last instance of digram
+
+        newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
+
+        if (newRule.representation.equals("4053")) {
+            System.out.println("before replace");
+            System.out.println("left " + newRule.actualGuard.right);
+            System.out.println("right " + newRule.actualGuard.right.right);
+            System.out.println(firstDigram.left);
+        }
+
+        // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
+        replaceRule(firstDigram.left);
+        if (newRule.representation.equals("4053")) {
+            System.out.println("first replace");
+            System.out.println("left " + newRule.actualGuard.right);
+            System.out.println("right " + newRule.actualGuard.right.right);
+        }
+        replaceRule(firstDigram);
+        if (newRule.representation.equals("4053")) {
+            System.out.println("second replace");
+            System.out.println("left " + newRule.actualGuard.right);
+            System.out.println("right " + newRule.actualGuard.right.right);
         }
     }
-
-    /**
-     * might not be needed you know... just work the links of the symbols??
-     * replace an instance of a digram with a nonterminal
-     * @param ruleWithDigram
-     * @param newRule
-     * @param symbol - the position of the digram to be replaced
-     */
-    public void replaceDigram(Rule newRule, Symbol symbol) {
-        removeDigramsFromMap(symbol);
-        NonTerminal nonTerminal = new NonTerminal(newRule);
-
-        // join the links
-        nonTerminal.assignRight(symbol.right);
-        nonTerminal.assignLeft(symbol.left.left);
-        symbol.left.left.assignRight(nonTerminal);
-        symbol.right.assignLeft(nonTerminal);
-
-        checkNewDigrams(nonTerminal, nonTerminal.right, nonTerminal);
-    }
-
-    public void removeDigramsFromMap(Symbol symbol) {
-        digramMap.remove(symbol.left);
-        digramMap.remove(symbol.right);
-    }
-
-    public void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
-        if (!nonTerminal.right.isGuard()) {
-            checkDigram(right);
-        }
-        if (!nonTerminal.left.isGuard()) {
-            checkDigram(left);
-        }
-    }
-
 
     /**
      * already a rule for the digram found, replace it with that rule
@@ -172,25 +152,64 @@ public class Compress {
     }
 
     /**
-     * create the rule for a repeated digram, requires being done twice for both instances
-     * of the digram, rule has two instances, the nonterminal it represents only one
-     * takes the latest digram and the digram that occured earlier from the digram map
+     * if a digram is being replaced with a new nonterminal and either symbols of that
+     * digram are a rule, their count/usage must be reduced
+     * if the count has reached one, then the rule is removed and it's occurence replaced with
+     * the symbols it stood for
      * @param symbol
      */
-    public void createRule(Symbol symbol, Symbol oldSymbol) {
-        Symbol secondDigram = symbol; // get new digram from last symbol added
-        Symbol firstDigram = oldSymbol; // matching digram in the rule
-        ruleNumber++; // increase rule number
-        Rule newRule = new Rule(ruleNumber); // create new rule to hold new Nonterminal
+    public void replaceRule(Symbol symbol) {
+        if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
+            NonTerminal nonTerminal = (NonTerminal) symbol;
+            //TODO the rule is down to two when here, will be removed,
+            //TODO not sure if a problem with updating rule count (don't think so added an extra)
+            // TODO or the removal of the rule when just assigned to a new rule
+            //TODO so the link reassinged is the new rule itself
+            if (nonTerminal.representation.equals("4052")) {
+                System.out.println("RULE HERE IS " + nonTerminal.rule.count);
+            }
 
-        replaceDigram(newRule, firstDigram); // update rule for first instance of digram
-        replaceDigram(newRule, secondDigram);// update rule for last instance of digram
+            nonTerminal.rule.count--; // TODO getter setter
+            if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
+                removeDigramsFromMap(symbol);
+                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
+                checkNewDigrams(nonTerminal.left.right, nonTerminal.right, nonTerminal);
+            }
+        }
+    }
 
-        newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
+    /**
+     * might not be needed you know... just work the links of the symbols??
+     * replace an instance of a digram with a nonterminal
+     * @param newRule
+     * @param symbol - the position of the digram to be replaced
+     */
+    public void replaceDigram(Rule newRule, Symbol symbol) {
+        removeDigramsFromMap(symbol);
+        NonTerminal nonTerminal = new NonTerminal(newRule);
 
-        // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
-        replaceRule(firstDigram.left);
-        replaceRule(firstDigram);
+        // join the links
+        nonTerminal.assignRight(symbol.right);
+        nonTerminal.assignLeft(symbol.left.left);
+        symbol.left.left.assignRight(nonTerminal);
+        symbol.right.assignLeft(nonTerminal);
+
+        checkNewDigrams(nonTerminal, nonTerminal.right, nonTerminal);
+    }
+
+    //TODO could be digrams, as hash if two with same values exist just gets the first?
+    public void removeDigramsFromMap(Symbol symbol) {
+        digramMap.remove(symbol.left);
+        digramMap.remove(symbol.right);
+    }
+
+    public void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
+        if (!nonTerminal.right.isGuard()) {
+            checkDigram(right);
+        }
+        if (!nonTerminal.left.isGuard()) {
+            checkDigram(left);
+        }
     }
 
     /**
@@ -222,11 +241,10 @@ public class Compress {
      * @param current
      */
     public void generateRules(Symbol current) {
-
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
-//                System.out.println("CURRENT IS " + current);
-//                System.out.println("right of nonterminal is " + current.right);
+   //             System.out.println("CURRENT IS " + current);
+     //           System.out.println("right of nonterminal is " + current.right);
 //                System.out.println("LEFT OF IT IS " + current.left);
                 Rule rule = ((NonTerminal) current).rule;
                 rules.add(rule);

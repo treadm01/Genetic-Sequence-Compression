@@ -22,15 +22,10 @@ public class Rule extends Symbol {
      * @param symbol
      */
     public void addNextSymbol(Symbol symbol) {
-        //TODO write out in english what is going on here again
-        symbol.assignLeft(actualGuard.left);
-        symbol.assignRight(actualGuard); // todo so this only ever adds at the end??
-        actualGuard.left.assignRight(symbol);
-        actualGuard.assignLeft(symbol);
-
-        if (representation.equals("4053")) {
-            System.out.println("add next symbol" + symbol);
-        }
+        symbol.assignLeft(actualGuard.left); // left of symbol is current last, actualguard.left
+        symbol.assignRight(actualGuard); // symbol right should be actual guard
+        actualGuard.left.assignRight(symbol); // assign current last right to this symbol
+        actualGuard.assignLeft(symbol); // assign last to symbol
     }
 
     /**
@@ -40,7 +35,8 @@ public class Rule extends Symbol {
      */
     public void addSymbols(Symbol left, Symbol right) {
         if (representation.equals("4053")) {
-            System.out.println("ADD SYMBOLS");
+            System.out.println("ADD SYMBOLS left " + left);
+            System.out.println("ADD SYMBOLS right " + right);
         }
         this.addNextSymbol(left);
         this.addNextSymbol(right);

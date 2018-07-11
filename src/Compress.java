@@ -57,13 +57,14 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
-
-//            if (i > 3950) {
+//
+//            if (i > 3500) {
 //                rules.clear();
 //                rules.add(getFirstRule());
 //                generateRules(getFirstRule().actualGuard.right);
 //                System.out.println(printRules());
 //            }
+
         }
 
         rules.add(getFirstRule());
@@ -101,7 +102,6 @@ public class Compress {
         // as checkDigram is called recursively when digrams change,
         // this first check is to ensure that the digram is not at the edge
         // TODO better way to do this
-        //System.out.println(symbol);
         if (!(symbol.isGuard() || symbol.left.isGuard())) {
             // check existing digrams for last digram, update them with new rule
             if (digramMap.containsKey(symbol)) {
@@ -138,7 +138,8 @@ public class Compress {
                 removeDigramsFromMap(symbol);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkDigram(nonTerminal.right);
-                checkDigram(nonTerminal.left.right);
+                checkDigram(nonTerminal.left.right); // todo this sending a null, because of remove rule or somehting else
+                //todo think nonterminal
             }
         }
     }
@@ -177,9 +178,10 @@ public class Compress {
      * @param symbol
      */
     public void existingRule(Symbol symbol, Symbol oldSymbol) {
-        Rule rule = (Rule) oldSymbol.left.left.left; // get rule using pointer to it in the guard// right.right will be guard
-        Symbol first = rule.last.left; // first symbol of digram
-        Symbol second = rule.last; // second symbol
+        Guard g = (Guard) oldSymbol.right;
+        Rule rule = (Rule) g.guardRule; // get rule using pointer to it in the guard// right.right will be guard
+        Symbol first = rule.getLast().left; // first symbol of digram
+        Symbol second = rule.getLast(); // second symbol
         replaceDigram(firstRule, rule, symbol);
         replaceRule(first);
         replaceRule(second);
@@ -206,7 +208,7 @@ public class Compress {
         newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
-        replaceRule(firstDigram.left);
+        replaceRule(firstDigram.left); // left right of this is null
         replaceRule(firstDigram);
     }
 
@@ -241,10 +243,16 @@ public class Compress {
     public void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
+//                System.out.println("CURRENT IS " + current);
+//                System.out.println("right of nonterminal is " + current.right);
                 Rule rule = ((NonTerminal) current).rule;
                 rules.add(rule);
+                //System.out.println("AND THE FIRST IS " + rule.actualGuard.right);
                 generateRules(rule.actualGuard.right);
             }
+
+            //System.out.println("The next symbol is " + current.right);
+            //System.out.println("IS GUARD " + current.right.isGuard());
             current = current.right;
         }
     }

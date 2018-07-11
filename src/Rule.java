@@ -1,15 +1,18 @@
-public class Rule extends Symbol implements Comparable {
-    Symbol last;
+public class Rule extends Symbol {
+    //Symbol last;
     int count;
     Guard actualGuard;
 
     public Rule(Integer ruleNumber) {
         this.representation = String.valueOf(ruleNumber);
         actualGuard = new Guard("?");
-        actualGuard.assignLeft(this); // reference back to rule
+        actualGuard.guardRule = this;
+        //actualGuard.assignLeft(this); // reference back to rule
+        assignRight(actualGuard);
         assignLeft(actualGuard); // seems necessary for hashcode check, to check left symbol, use to point to guard
         //assignRight(actualGuard);
-        last = actualGuard; // right right?
+        actualGuard.right = actualGuard;
+        actualGuard.left = actualGuard;
         //not going to assign guard.right
     }
 
@@ -19,10 +22,11 @@ public class Rule extends Symbol implements Comparable {
      */
     public void addNextSymbol(Symbol symbol) {
         //TODO write out in english what is going on here again
-        symbol.assignLeft(last);
+        symbol.assignLeft(actualGuard.left);
         symbol.assignRight(actualGuard); // todo so this only ever adds at the end??
-        last.assignRight(symbol);
-        last = symbol;
+        actualGuard.left.right = symbol;
+        actualGuard.assignLeft(symbol);
+        //last = symbol;
     }
 
     /**
@@ -37,27 +41,20 @@ public class Rule extends Symbol implements Comparable {
 
     /**
      * update this nonTerminal/rules digram with a nonTerminal
-     * @param rule
+     * @param nonTerminal
      * @param symbol
      */
     public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
-        //TODO need to clean up and make sure doing everything correctly
-
-        // TODO need to clean up everything... issue here where there seems to be some loop between nonterminals
-        if (symbol.right.isGuard()) {
-            last = nonTerminal; //TODO not sure that this is right
-        }
-        else {
-            symbol.right.assignLeft(nonTerminal);
-        }
-        symbol.left.left.assignRight(nonTerminal);
-
-        // not sure if below is better as vacg test just hangins probably in generate rules
-        //TODO swapped order of nontermian and symbol assignment to stop symbol.leftleft being null
-
         //TODO write out in english what is going on here again
+        // assign links to nonterminal
         nonTerminal.assignRight(symbol.right);
         nonTerminal.assignLeft(symbol.left.left); // could be an issue here
+
+        // reassign links of symbols either side
+        //TODO need to clean up and make sure doing everything correctly
+        symbol.left.left.assignRight(nonTerminal);
+        symbol.right.assignLeft(nonTerminal);
+
     }
 
     /**
@@ -65,25 +62,10 @@ public class Rule extends Symbol implements Comparable {
      * @return
      */
     public Symbol getLast() {
-        return last;
+        return actualGuard.left;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        Rule rule = (Rule) o;
-        if (rule.count < count) {
-            return -1;
-        }
-
-        if (rule.count > count) {
-            return 1;
-        }
-
-        return 0;
+    public void setLast(Symbol symbol) {
+        actualGuard.left = symbol;
     }
-
-//    @Override
-//    public void assignLeft(Guard guard) {
-//        this.left = guard;
-//    }
 }

@@ -27,18 +27,10 @@ public class Symbol {
     @Override
     public boolean equals(Object obj) {
         //TODO add all checks
-
         Symbol symbol = (Symbol) obj;
-
-        // if this symbol is also the right hand side of a digram, then they are not equal
-        // as they're dependent on each other
-        //TODO dealing with overlap in check digrams causes occasional crashes, digrams have to be re-added
-        // todo look into how the digrams are removed when creating a rule
-       // if (this == symbol.right) { return false; } // is this causing duplicate digrams to be made?
 
         return ((representation.equals(symbol.toString()))
                 && (left.representation.equals(symbol.left.toString()))
-        //&& (right.representation.equals(((Symbol)obj).right.representation))
         ); // switched check to look at left symbol rather than right
     }
 

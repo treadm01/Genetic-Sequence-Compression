@@ -7,13 +7,12 @@ import java.util.stream.Collectors;
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
-    private Integer ruleNumber; // count for created rules
     private Rule firstRule; // main base 'nonterminal'
     private HashSet<Rule> rules;
-    String mainInput;
 
     // TODO reorder rules to rule usage
     // TODO keep digrams from left to right
+    // TODO store as ints...
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -22,7 +21,6 @@ public class Compress {
         Rule.ruleNumber = 0;
         digramMap = new HashMap<>();
         rules = new HashSet<>();
-        ruleNumber = 0;
         firstRule = new Rule(); // create first rule;
     }
 
@@ -33,21 +31,18 @@ public class Compress {
      * @param input
      */
     public void processInput(String input) {
-        //TODO probably creating a digram fir first guard and first symbol that isn't needed
         getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
-        mainInput = input;
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
-//
-//            if (i > 340000) {
+
 //                rules.clear();
 //                rules.add(getFirstRule());
 //                generateRules(getFirstRule().actualGuard.right);
 //                System.out.println(printRules());
-//            }
+
         }
 
         rules.add(getFirstRule());
@@ -82,8 +77,9 @@ public class Compress {
         if (digramMap.containsKey(symbol)) {
             // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
             Symbol existingDigram = digramMap.get(symbol); // existing digram
+
             // if the matching digram is an overlap do nothing
-            if (existingDigram.right != symbol) { // todo find a better way to place this
+            if (existingDigram.getRight() != symbol) { // todo find a better way to place this
                 if (existingDigram.getLeft().getLeft().isGuard() && existingDigram.getRight().isGuard()) {
                     existingRule(symbol, existingDigram);
                 }
@@ -105,15 +101,16 @@ public class Compress {
      * @param symbol
      */
     public void createRule(Symbol symbol, Symbol oldSymbol) {
-        //ruleNumber++; // increase rule number
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
 
         replaceDigram(newRule, oldSymbol); // update rule for first instance of digram
         replaceDigram(newRule, symbol);// update rule for last instance of digram
 
+        // add the repeating digram to the new rule
         newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
-    // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
+        //check the symbols removed and deal with if they are rules
+        // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
     }
@@ -126,10 +123,11 @@ public class Compress {
      * @param symbol
      */
     public void existingRule(Symbol symbol, Symbol oldSymbol) {
+        //TODO could this be done more directly? - digram to nonterminal???
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
-        Rule rule = g.guardRule; // get rule using pointer to it in the guard// right.right will be guard
-        replaceDigram(rule, symbol);
-        replaceRule(rule.getLast().getLeft());
+        Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
+        replaceDigram(rule, symbol);// replace the repeated digram wtih rule
+        replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
     }
 

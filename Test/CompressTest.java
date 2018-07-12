@@ -17,6 +17,20 @@ public class CompressTest {
         assertEquals("1 > b c | 0 > a 1 d 1 | ", c.printRules());
     }
 
+    @Test
+    public void processMatchingDigrams() { // check which digram is replaced
+        c.processInput("aaabcabaa");
+        c.printRules();
+        assertEquals("1 > a b | 2 > a a | 0 > 2 1 c 1 2 | ", c.printRules());
+    }
+
+    @Test
+    public void processMatchingDigrams2() { // check which digram is replaced
+        c.processInput("aaabcabaaabc");
+        c.printRules();
+        assertEquals("1 > a b | 0 > 4 1 4 | 4 > a a 1 c | ", c.printRules());
+    }
+
         @Test
         public void processInput2() { // check for and use existing rules
             System.out.println();
@@ -264,7 +278,7 @@ public class CompressTest {
     @Test
     public void decompressTest() {
         InputOutput io = new InputOutput();
-        String input = io.readFile("15000");
+        String input = io.readFile("45000");
         c.processInput(input);
         assertEquals(input, c.decompress(c.getFirstRule()));
     }
@@ -356,6 +370,16 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+    }
+
+
+    @Test
+    public void nomatchDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("nomatch");
         c.processInput(originalFile);
         assertEquals(originalFile, c.decompress(c.getFirstRule()));
     }

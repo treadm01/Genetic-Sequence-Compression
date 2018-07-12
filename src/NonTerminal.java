@@ -12,10 +12,6 @@ public class NonTerminal extends Symbol {
      * elements either side of this rule
      */
     public void removeRule() {
-        if (representation.equals("4052")) {
-            System.out.println("left " + left);
-            System.out.println("actual guard " + rule.actualGuard.right);
-        }
         right.assignLeft(rule.getLast());
         left.assignRight(rule.actualGuard.right);
 

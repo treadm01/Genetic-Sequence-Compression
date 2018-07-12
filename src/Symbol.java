@@ -29,9 +29,12 @@ public class Symbol {
         //TODO add all checks
 
         Symbol symbol = (Symbol) obj;
+
         // if this symbol is also the right hand side of a digram, then they are not equal
         // as they're dependent on each other
-        if (this == symbol.right) { return false; }
+        //TODO dealing with overlap in check digrams causes occasional crashes, digrams have to be re-added
+        // todo look into how the digrams are removed when creating a rule
+       // if (this == symbol.right) { return false; } // is this causing duplicate digrams to be made?
 
         return ((representation.equals(symbol.toString()))
                 && (left.representation.equals(symbol.left.toString()))
@@ -45,5 +48,13 @@ public class Symbol {
 
     public void assignRight(Symbol right) {
         this.right = right;
+    }
+
+    public Symbol getLeft() {
+        return left;
+    }
+
+    public Symbol getRight() {
+        return right;
     }
 }

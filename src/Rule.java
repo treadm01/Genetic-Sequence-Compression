@@ -11,10 +11,6 @@ public class Rule extends Symbol {
         assignLeft(actualGuard); // seems necessary for hashcode check, to check left symbol, use to point to guard
         actualGuard.assignRight(actualGuard);
         actualGuard.assignLeft(actualGuard);
-
-        if (representation.equals("4053")) {
-            System.out.println("init");
-        }
     }
 
     /**
@@ -34,36 +30,9 @@ public class Rule extends Symbol {
      * @param right
      */
     public void addSymbols(Symbol left, Symbol right) {
-        if (representation.equals("4053")) {
-            System.out.println("ADD SYMBOLS left " + left);
-            System.out.println("ADD SYMBOLS right " + right);
-        }
         this.addNextSymbol(left);
         this.addNextSymbol(right);
     }
-
-//    /**
-//     * update this nonTerminal/rules digram with a nonTerminal
-//     * @param nonTerminal
-//     * @param symbol
-//     */
-//    public void updateNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
-//        //TODO write out in english what is going on here again
-//        // assign links to nonterminal
-//
-//        if (representation.equals("4053")) {
-//            System.out.println("update nonterminal");
-//        }
-//
-//        nonTerminal.assignRight(symbol.right);
-//        nonTerminal.assignLeft(symbol.left.left); // could be an issue here
-//
-//        // reassign links of symbols either side
-//        //TODO need to clean up and make sure doing everything correctly
-//        symbol.left.left.assignRight(nonTerminal);
-//        symbol.right.assignLeft(nonTerminal);
-//
-//    }
 
     /**
      * return the last element of the list, not the buffer

@@ -10,7 +10,11 @@ public class Compress {
     private Integer ruleNumber; // count for created rules
     private Rule firstRule; // main base 'nonterminal'
     private HashSet<Rule> rules; // used for debugging, printing out rules //TODO make of actual rules
+    String mainInput;
 
+    //TODO think bug may be to do with 'matching' digrams that overlap, then replacing them with which ever is found first in the map
+    // two digrams of overlap aa will be matched to another aa, but the first should be retrieved
+    // also somehow linking rule back to itself...
     // TODO make sure all left and right assigned and handled properly!!!!!!!
     // TODO reorder rules to rule usage
     // TODO keep digrams from left to right
@@ -34,11 +38,16 @@ public class Compress {
      */
     public void processInput(String input) {
         //TODO probably creating a digram fir first guard and first symbol that isn't needed
-        for (int i = 0; i < input.length(); i++) {
+        getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
+        mainInput = input;
+        for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
+           // printDigrams();
+
+
 //
 //            if (i > 340000) {
 //                rules.clear();
@@ -50,7 +59,7 @@ public class Compress {
         }
 
         rules.add(getFirstRule());
-        generateRules(getFirstRule().actualGuard.right);
+        generateRules(getFirstRule().actualGuard.getRight());
         System.out.println(printRules());
         // below for reodering ruls
 //
@@ -77,15 +86,26 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram(Symbol symbol) {
+
+        //TODO seems to be added twice without a nonterminal being created, possibly because they are overlapping
+        //TODO also seems to be removed twice yet then registers as being in the digram map...
+        //TODO replaces it with the rule it is in, thus creating the loop
             // check existing digrams for last digram, update them with new rule
             if (digramMap.containsKey(symbol)) {
                 // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
                 Symbol existingDigram = digramMap.get(symbol); // existing digram
-                if (existingDigram.left.left.isGuard() && existingDigram.right.isGuard()) {
-                    existingRule(symbol, existingDigram);
-                }
-                else { // if digram has been seen but only once, no rule, then create new rule
-                    createRule(symbol, existingDigram);
+
+
+                // if the matching digram is an overlap do nothing
+                if (existingDigram.right != symbol) { // todo added in replacement of check in symol equals method
+
+                    if (existingDigram.getLeft().getLeft().isGuard() && existingDigram.getRight().isGuard()) {
+
+                        existingRule(symbol, existingDigram);
+                    } else { // if digram has been seen but only once, no rule, then create new rule
+
+                        createRule(symbol, existingDigram);
+                    }
                 }
             }
             else {
@@ -102,36 +122,20 @@ public class Compress {
      * @param symbol
      */
     public void createRule(Symbol symbol, Symbol oldSymbol) {
-        Symbol secondDigram = symbol; // get new digram from last symbol added
-        Symbol firstDigram = oldSymbol; // matching digram in the rule
         ruleNumber++; // increase rule number
         Rule newRule = new Rule(ruleNumber); // create new rule to hold new Nonterminal
 
-        replaceDigram(newRule, firstDigram); // update rule for first instance of digram
-        replaceDigram(newRule, secondDigram);// update rule for last instance of digram
+        replaceDigram(newRule, oldSymbol); // update rule for first instance of digram
+        replaceDigram(newRule, symbol);// update rule for last instance of digram
 
-        newRule.addSymbols(firstDigram.left, firstDigram); // add symbols to the new rule/terminal
+        newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
-        if (newRule.representation.equals("4053")) {
-            System.out.println("before replace");
-            System.out.println("left " + newRule.actualGuard.right);
-            System.out.println("right " + newRule.actualGuard.right.right);
-            System.out.println(firstDigram.left);
-        }
+        //TODO because of the way digrams are only kept for one instance - have to put it back in
+       // digramMap.putIfAbsent(oldSymbol, oldSymbol); // adding back in the digram when placed in new rule
 
         // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
-        replaceRule(firstDigram.left);
-        if (newRule.representation.equals("4053")) {
-            System.out.println("first replace");
-            System.out.println("left " + newRule.actualGuard.right);
-            System.out.println("right " + newRule.actualGuard.right.right);
-        }
-        replaceRule(firstDigram);
-        if (newRule.representation.equals("4053")) {
-            System.out.println("second replace");
-            System.out.println("left " + newRule.actualGuard.right);
-            System.out.println("right " + newRule.actualGuard.right.right);
-        }
+        replaceRule(oldSymbol.getLeft());
+        replaceRule(oldSymbol);
     }
 
     /**
@@ -142,11 +146,15 @@ public class Compress {
      * @param symbol
      */
     public void existingRule(Symbol symbol, Symbol oldSymbol) {
-        Guard g = (Guard) oldSymbol.right; // have to get guard and then rule from there
+        Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.guardRule; // get rule using pointer to it in the guard// right.right will be guard
         Symbol first = rule.getLast().left; // first symbol of digram
         Symbol second = rule.getLast(); // second symbol
         replaceDigram(rule, symbol);
+
+        //TODO because of the way digrams are only kept for one instance - have to put it back in
+        //digramMap.putIfAbsent(oldSymbol, oldSymbol); // adding back in the digram when placed in new rule
+
         replaceRule(first);
         replaceRule(second);
     }
@@ -165,15 +173,13 @@ public class Compress {
             //TODO not sure if a problem with updating rule count (don't think so added an extra)
             // TODO or the removal of the rule when just assigned to a new rule
             //TODO so the link reassinged is the new rule itself
-            if (nonTerminal.representation.equals("4052")) {
-                System.out.println("RULE HERE IS " + nonTerminal.rule.count);
-            }
+
 
             nonTerminal.rule.count--; // TODO getter setter
             if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
-                checkNewDigrams(nonTerminal.left.right, nonTerminal.right, nonTerminal);
+                checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
             }
         }
     }
@@ -189,25 +195,35 @@ public class Compress {
         NonTerminal nonTerminal = new NonTerminal(newRule);
 
         // join the links
-        nonTerminal.assignRight(symbol.right);
-        nonTerminal.assignLeft(symbol.left.left);
-        symbol.left.left.assignRight(nonTerminal);
-        symbol.right.assignLeft(nonTerminal);
+        nonTerminal.assignRight(symbol.getRight());
+        nonTerminal.assignLeft(symbol.getLeft().getLeft());
+        symbol.getLeft().getLeft().assignRight(nonTerminal);
+        symbol.getRight().assignLeft(nonTerminal);
 
-        checkNewDigrams(nonTerminal, nonTerminal.right, nonTerminal);
+        checkNewDigrams(nonTerminal, nonTerminal.getRight(), nonTerminal);
     }
 
     //TODO could be digrams, as hash if two with same values exist just gets the first?
     public void removeDigramsFromMap(Symbol symbol) {
-        digramMap.remove(symbol.left);
-        digramMap.remove(symbol.right);
+        if (digramMap.containsKey(symbol.getLeft())){
+            Symbol existing = digramMap.get(symbol.getLeft());
+            if (existing == symbol.getLeft()) {
+                digramMap.remove(symbol.getLeft());
+            }
+        }
+
+
+        // don't remove digram if of an overlapping digram
+        if (!symbol.getRight().equals(symbol)) {
+            digramMap.remove(symbol.getRight());
+        }
     }
 
     public void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
-        if (!nonTerminal.right.isGuard()) {
+        if (!nonTerminal.getRight().isGuard()) {
             checkDigram(right);
         }
-        if (!nonTerminal.left.isGuard()) {
+        if (!nonTerminal.getLeft().isGuard()) {
             checkDigram(left);
         }
     }
@@ -249,12 +265,12 @@ public class Compress {
                 Rule rule = ((NonTerminal) current).rule;
                 rules.add(rule);
        //         System.out.println("AND THE FIRST IS " + rule.actualGuard.right);
-                generateRules(rule.actualGuard.right);
+                generateRules(rule.actualGuard.getRight());
             }
 
 //            System.out.println("The next symbol is " + current.right);
 //            System.out.println("IS GUARD " + current.right.isGuard());
-            current = current.right;
+            current = current.getRight();
         }
         //System.out.println("RETURNING");
     }
@@ -286,6 +302,7 @@ public class Compress {
                 output += decompress(((NonTerminal) s).getRule());
                 s = s.right;
             }
+
         } while (!s.isGuard());
         return output;
     }

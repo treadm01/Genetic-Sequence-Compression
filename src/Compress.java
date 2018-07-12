@@ -9,25 +9,21 @@ public class Compress {
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Integer ruleNumber; // count for created rules
     private Rule firstRule; // main base 'nonterminal'
-    private HashSet<Rule> rules; // used for debugging, printing out rules //TODO make of actual rules
+    private HashSet<Rule> rules;
     String mainInput;
 
-    //TODO think bug may be to do with 'matching' digrams that overlap, then replacing them with which ever is found first in the map
-    // two digrams of overlap aa will be matched to another aa, but the first should be retrieved
-    // also somehow linking rule back to itself...
-    // TODO make sure all left and right assigned and handled properly!!!!!!!
     // TODO reorder rules to rule usage
     // TODO keep digrams from left to right
-    // TODO need to check whether the digram in rule is entire rule or not
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
      */
     public Compress() {
+        Rule.ruleNumber = 0;
         digramMap = new HashMap<>();
         rules = new HashSet<>();
         ruleNumber = 0;
-        firstRule = new Rule(ruleNumber); // create first rule;
+        firstRule = new Rule(); // create first rule;
     }
 
     /**
@@ -45,9 +41,6 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
             checkDigram(getFirstRule().getLast());
-           // printDigrams();
-
-
 //
 //            if (i > 340000) {
 //                rules.clear();
@@ -55,7 +48,6 @@ public class Compress {
 //                generateRules(getFirstRule().actualGuard.right);
 //                System.out.println(printRules());
 //            }
-
         }
 
         rules.add(getFirstRule());
@@ -86,32 +78,23 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram(Symbol symbol) {
-
-        //TODO seems to be added twice without a nonterminal being created, possibly because they are overlapping
-        //TODO also seems to be removed twice yet then registers as being in the digram map...
-        //TODO replaces it with the rule it is in, thus creating the loop
-            // check existing digrams for last digram, update them with new rule
-            if (digramMap.containsKey(symbol)) {
-                // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
-                Symbol existingDigram = digramMap.get(symbol); // existing digram
-
-
-                // if the matching digram is an overlap do nothing
-                if (existingDigram.right != symbol) { // todo added in replacement of check in symol equals method
-
-                    if (existingDigram.getLeft().getLeft().isGuard() && existingDigram.getRight().isGuard()) {
-
-                        existingRule(symbol, existingDigram);
-                    } else { // if digram has been seen but only once, no rule, then create new rule
-
-                        createRule(symbol, existingDigram);
-                    }
+        // check existing digrams for last digram, update them with new rule
+        if (digramMap.containsKey(symbol)) {
+            // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
+            Symbol existingDigram = digramMap.get(symbol); // existing digram
+            // if the matching digram is an overlap do nothing
+            if (existingDigram.right != symbol) { // todo find a better way to place this
+                if (existingDigram.getLeft().getLeft().isGuard() && existingDigram.getRight().isGuard()) {
+                    existingRule(symbol, existingDigram);
+                }
+                else { // if digram has been seen but only once, no rule, then create new rule
+                    createRule(symbol, existingDigram);
                 }
             }
-            else {
-                // digram not been seen before, add to digram map
-                digramMap.putIfAbsent(symbol, symbol);
-            }
+        }
+        else { // digram not been seen before, add to digram map
+            digramMap.putIfAbsent(symbol, symbol);
+        }
     }
 
 
@@ -122,18 +105,15 @@ public class Compress {
      * @param symbol
      */
     public void createRule(Symbol symbol, Symbol oldSymbol) {
-        ruleNumber++; // increase rule number
-        Rule newRule = new Rule(ruleNumber); // create new rule to hold new Nonterminal
+        //ruleNumber++; // increase rule number
+        Rule newRule = new Rule(); // create new rule to hold new Nonterminal
 
         replaceDigram(newRule, oldSymbol); // update rule for first instance of digram
         replaceDigram(newRule, symbol);// update rule for last instance of digram
 
         newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
-        //TODO because of the way digrams are only kept for one instance - have to put it back in
-       // digramMap.putIfAbsent(oldSymbol, oldSymbol); // adding back in the digram when placed in new rule
-
-        // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
+    // reduce rule count if being replaced.... if either symbol of digram a nonterminal then rmeove
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
     }
@@ -148,15 +128,9 @@ public class Compress {
     public void existingRule(Symbol symbol, Symbol oldSymbol) {
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.guardRule; // get rule using pointer to it in the guard// right.right will be guard
-        Symbol first = rule.getLast().left; // first symbol of digram
-        Symbol second = rule.getLast(); // second symbol
         replaceDigram(rule, symbol);
-
-        //TODO because of the way digrams are only kept for one instance - have to put it back in
-        //digramMap.putIfAbsent(oldSymbol, oldSymbol); // adding back in the digram when placed in new rule
-
-        replaceRule(first);
-        replaceRule(second);
+        replaceRule(rule.getLast().getLeft());
+        replaceRule(rule.getLast());
     }
 
     /**
@@ -205,13 +179,12 @@ public class Compress {
 
     //TODO could be digrams, as hash if two with same values exist just gets the first?
     public void removeDigramsFromMap(Symbol symbol) {
-        if (digramMap.containsKey(symbol.getLeft())){
+        if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
             Symbol existing = digramMap.get(symbol.getLeft());
             if (existing == symbol.getLeft()) {
                 digramMap.remove(symbol.getLeft());
             }
         }
-
 
         // don't remove digram if of an overlapping digram
         if (!symbol.getRight().equals(symbol)) {

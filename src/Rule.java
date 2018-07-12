@@ -2,9 +2,11 @@ public class Rule extends Symbol {
     //Symbol last;
     int count;
     Guard actualGuard;
+    static Integer ruleNumber = 0;
 
-    public Rule(Integer ruleNumber) {
+    public Rule() {
         this.representation = String.valueOf(ruleNumber);
+        ruleNumber++;
         actualGuard = new Guard("?");
         actualGuard.guardRule = this;
         assignRight(actualGuard);

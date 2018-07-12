@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/textFiles/deco" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/textFiles/nomatch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NonTerminal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Symbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/textFiles/notes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/textFiles/nomatch" beforeDir="false" afterPath="$PROJECT_DIR$/textFiles/nomatch" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,10 +21,11 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="209" column="44" selection-start-line="209" selection-start-column="44" selection-end-line="209" selection-end-column="44" />
+            <state relative-caret-position="219">
+              <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2141#2143#0" />
                 <element signature="method#printDigrams#0;class#Compress#0" />
               </folding>
             </state>
@@ -64,8 +61,8 @@
       <file leaf-file-name="nomatch" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/textFiles/nomatch">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="12" selection-start-column="12" selection-end-column="12" />
+            <state relative-caret-position="90">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -83,8 +80,8 @@
       <file leaf-file-name="Rule.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Rule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="738">
-              <caret line="43" column="1" selection-start-line="43" selection-start-column="1" selection-end-line="43" selection-end-column="1" />
+            <state relative-caret-position="72">
+              <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -120,12 +117,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>removedig</find>
-      <find>write</find>
-      <find>t6</find>
       <find>0</find>
       <find>1</find>
-      <find>[0-9]</find>
       <find>printdigr</find>
       <find>printdig</find>
       <find>replacedigr</find>
@@ -149,6 +142,10 @@
       <find>digrammap.remo</find>
       <find>printdi</find>
       <find>printDi</find>
+      <find>[0-9]</find>
+      <find>302 &gt;</find>
+      <find>NOM</find>
+      <find>write</find>
       <find>digrammap.re</find>
     </findStrings>
     <replaceStrings>
@@ -206,13 +203,13 @@
         <option value="$PROJECT_DIR$/src/InputOutput.java" />
         <option value="$PROJECT_DIR$/src/Guard.java" />
         <option value="$PROJECT_DIR$/textFiles/abc" />
-        <option value="$PROJECT_DIR$/src/Rule.java" />
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
         <option value="$PROJECT_DIR$/textFiles/notes" />
         <option value="$PROJECT_DIR$/textFiles/deco" />
-        <option value="$PROJECT_DIR$/textFiles/nomatch" />
         <option value="$PROJECT_DIR$/src/Symbol.java" />
         <option value="$PROJECT_DIR$/Test/CompressTest.java" />
+        <option value="$PROJECT_DIR$/textFiles/nomatch" />
+        <option value="$PROJECT_DIR$/src/Rule.java" />
         <option value="$PROJECT_DIR$/src/Compress.java" />
       </list>
     </option>
@@ -361,13 +358,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="CompressTest.processMatchingDigrams" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CompressTest.processInputAgain" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="CompressTest" />
-      <option name="METHOD_NAME" value="processMatchingDigrams" />
+      <option name="METHOD_NAME" value="processInputAgain" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -378,13 +375,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="CompressTest.processMatchingDigrams2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CompressTest.writeFile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="CompressTest" />
-      <option name="METHOD_NAME" value="processMatchingDigrams2" />
+      <option name="METHOD_NAME" value="writeFile" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -434,19 +431,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.CompressTest.processMatchingDigrams" />
+      <item itemvalue="JUnit.CompressTest" />
+      <item itemvalue="JUnit.CompressTest.processInputAgain" />
       <item itemvalue="JUnit.CompressTest.nomatchDE" />
       <item itemvalue="JUnit.CompressTest.processInput" />
-      <item itemvalue="JUnit.CompressTest.processMatchingDigrams2" />
-      <item itemvalue="JUnit.CompressTest" />
+      <item itemvalue="JUnit.CompressTest.writeFile" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CompressTest" />
-        <item itemvalue="JUnit.CompressTest.processMatchingDigrams2" />
-        <item itemvalue="JUnit.CompressTest.processMatchingDigrams" />
+        <item itemvalue="JUnit.CompressTest.writeFile" />
         <item itemvalue="JUnit.CompressTest.processInput" />
         <item itemvalue="JUnit.CompressTest.nomatchDE" />
+        <item itemvalue="JUnit.CompressTest.processInputAgain" />
       </list>
     </recent_temporary>
   </component>
@@ -588,14 +585,7 @@
       <workItem from="1531378611160" duration="18734000" />
       <workItem from="1531397432404" duration="556000" />
       <workItem from="1531398084686" duration="84000" />
-      <workItem from="1531398238628" duration="959000" />
-    </task>
-    <task id="LOCAL-00115" summary="added a check to compare not just a digram overalpping in symbols equal">
-      <created>1530455256278</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1530455256278</updated>
+      <workItem from="1531398238628" duration="3224000" />
     </task>
     <task id="LOCAL-00116" summary="added proper test checks">
       <created>1530455697677</created>
@@ -933,43 +923,50 @@
       <option name="project" value="LOCAL" />
       <updated>1531330985109</updated>
     </task>
-    <option name="localTasksCounter" value="164" />
+    <task id="LOCAL-00164" summary="only adding digrams once and then handling the removal of digrams that might be overlap. Needs cleaning up but passes tests">
+      <created>1531399288621</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1531399288623</updated>
+    </task>
+    <option name="localTasksCounter" value="165" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CompressTest_processMatchingDigrams2 - 2018.07.12 at 13h 26m 27s.xml">
-      <configuration name="CompressTest.processMatchingDigrams2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processMatchingDigrams - 2018.07.12 at 13h 26m 33s.xml">
-      <configuration name="CompressTest.processMatchingDigrams" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processMatchingDigrams2 - 2018.07.12 at 13h 26m 38s.xml">
-      <configuration name="CompressTest.processMatchingDigrams2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processInput - 2018.07.12 at 13h 26m 52s.xml">
-      <configuration name="CompressTest.processInput" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processMatchingDigrams - 2018.07.12 at 13h 26m 55s.xml">
-      <configuration name="CompressTest.processMatchingDigrams" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processMatchingDigrams - 2018.07.12 at 13h 27m 13s.xml">
-      <configuration name="CompressTest.processMatchingDigrams" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processMatchingDigrams - 2018.07.12 at 13h 35m 51s.xml">
-      <configuration name="CompressTest.processMatchingDigrams" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest_processMatchingDigrams2 - 2018.07.12 at 13h 35m 55s.xml">
-      <configuration name="CompressTest.processMatchingDigrams2" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressTest - 2018.07.12 at 13h 36m 19s.xml">
+    <history-entry file="CompressTest - 2018.07.12 at 19h 29m 19s.xml">
       <configuration name="CompressTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CompressTest - 2018.07.12 at 13h 39m 54s.xml">
+    <history-entry file="CompressTest - 2018.07.12 at 19h 30m 49s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest - 2018.07.12 at 19h 37m 15s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest - 2018.07.12 at 19h 39m 49s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest - 2018.07.12 at 19h 41m 47s.xml">
+      <configuration name="CompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.12 at 19h 42m 09s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.12 at 19h 43m 03s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.12 at 19h 43m 36s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest_writeFile - 2018.07.12 at 19h 44m 12s.xml">
+      <configuration name="CompressTest.writeFile" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="CompressTest - 2018.07.12 at 19h 44m 43s.xml">
       <configuration name="CompressTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="629087000" />
+    <option name="totallyTimeSpent" value="631352000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
@@ -1008,7 +1005,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="checking existing rules and adding links" />
     <MESSAGE value="getting closer" />
     <MESSAGE value="had to reassign first of rule" />
     <MESSAGE value="passing most old tests" />
@@ -1033,7 +1029,8 @@
     <MESSAGE value="given guard a pointer to the rule and then using it as a more standard element with left and right links, simpler code and more tests pass" />
     <MESSAGE value="occasionally getting recursive rules, different grammars produced somehow" />
     <MESSAGE value="close to seeing what is going on.." />
-    <option name="LAST_COMMIT_MESSAGE" value="close to seeing what is going on.." />
+    <MESSAGE value="only adding digrams once and then handling the removal of digrams that might be overlap. Needs cleaning up but passes tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="only adding digrams once and then handling the removal of digrams that might be overlap. Needs cleaning up but passes tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1132,13 +1129,6 @@
     <entry file="file://$PROJECT_DIR$/textFiles/abc">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Rule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="43" column="1" selection-start-line="43" selection-start-column="1" selection-end-line="43" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/textFiles/notes" />
     <entry file="file://$PROJECT_DIR$/src/NonTerminal.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1157,13 +1147,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/textFiles/nomatch">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/textFiles/deco">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="346">
@@ -1171,14 +1154,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/textFiles/nomatch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="209" column="44" selection-start-line="209" selection-start-column="44" selection-end-line="209" selection-end-column="44" />
+        <state relative-caret-position="219">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2141#2143#0" />
             <element signature="method#printDigrams#0;class#Compress#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Rule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
         </state>
       </provider>
     </entry>

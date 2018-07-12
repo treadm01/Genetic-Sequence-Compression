@@ -278,7 +278,7 @@ public class CompressTest {
     @Test
     public void decompressTest() {
         InputOutput io = new InputOutput();
-        String input = io.readFile("45000");
+        String input = io.readFile("360000");
         c.processInput(input);
         assertEquals(input, c.decompress(c.getFirstRule()));
     }

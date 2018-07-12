@@ -51,7 +51,7 @@ public class Compress {
         }
 
         rules.add(getFirstRule());
-        generateRules(getFirstRule().actualGuard.getRight());
+        generateRules(getFirstRule().getGuard().getRight());
         System.out.println(printRules());
         // below for reodering ruls
 //
@@ -143,14 +143,8 @@ public class Compress {
     public void replaceRule(Symbol symbol) {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
-            //TODO the rule is down to two when here, will be removed,
-            //TODO not sure if a problem with updating rule count (don't think so added an extra)
-            // TODO or the removal of the rule when just assigned to a new rule
-            //TODO so the link reassinged is the new rule itself
-
-
-            nonTerminal.rule.count--; // TODO getter setter
-            if (nonTerminal.rule.count == USED_ONCE) { // if rule is down to one, remove completely
+            nonTerminal.getRule().decrementCount();
+            if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
@@ -177,8 +171,15 @@ public class Compress {
         checkNewDigrams(nonTerminal, nonTerminal.getRight(), nonTerminal);
     }
 
-    //TODO could be digrams, as hash if two with same values exist just gets the first?
+    /**
+     * when nonterminals are added or removed the old digrams must be removed from the map
+     * currently requires some extra checks for ensuring that the digrams being removed do not
+     * correspond with the same digram that is overlapping
+     * @param symbol
+     */
     public void removeDigramsFromMap(Symbol symbol) {
+        // don't remove digram if of an overlapping digram
+        //TODO better way to do this
         if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
             Symbol existing = digramMap.get(symbol.getLeft());
             if (existing == symbol.getLeft()) {
@@ -186,12 +187,18 @@ public class Compress {
             }
         }
 
-        // don't remove digram if of an overlapping digram
         if (!symbol.getRight().equals(symbol)) {
             digramMap.remove(symbol.getRight());
         }
     }
 
+    /**
+     * when a nonterminal is added or removed the corresponding changes in the surrounding digrams
+     * must be checked to maintain digram uniqueness and rule utility
+     * @param left
+     * @param right
+     * @param nonTerminal
+     */
     public void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
         if (!nonTerminal.getRight().isGuard()) {
             checkDigram(right);
@@ -202,23 +209,22 @@ public class Compress {
     }
 
     /**
-     * just returns a list of the rules generated in generate rules
-     * used for debugging at the moment
+     * prints out the symbols corresponding to the generated rules
      * @return
      */
     public String printRules() {
         String output = "";
         for (Rule r : rules) {
             output += r + " > ";
-            Symbol current = r.actualGuard.right;
+            Symbol current = r.getGuard().getRight();
             while (!current.isGuard()) {
                 if (current instanceof NonTerminal) {
-                    output += ((NonTerminal) current).rule.representation + " ";
+                    output += ((NonTerminal) current).getRule().representation + " ";
                 }
                 else {
                     output += current + " ";
                 }
-                current = current.right;
+                current = current.getRight();
             }
             output += "| ";
         }
@@ -226,26 +232,18 @@ public class Compress {
     }
 
     /**
-     * creates strings of the symbols for each nonterminal
+     * works through the symbols and collects all the rules in a set
      * @param current
      */
     public void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
-   //             System.out.println("CURRENT IS " + current);
-     //           System.out.println("right of nonterminal is " + current.right);
-//                System.out.println("LEFT OF IT IS " + current.left);
-                Rule rule = ((NonTerminal) current).rule;
+                Rule rule = ((NonTerminal) current).getRule();
                 rules.add(rule);
-       //         System.out.println("AND THE FIRST IS " + rule.actualGuard.right);
-                generateRules(rule.actualGuard.getRight());
+                generateRules(rule.getGuard().getRight());
             }
-
-//            System.out.println("The next symbol is " + current.right);
-//            System.out.println("IS GUARD " + current.right.isGuard());
             current = current.getRight();
         }
-        //System.out.println("RETURNING");
     }
 
     /**
@@ -253,7 +251,7 @@ public class Compress {
      */
     public void printDigrams() {
         for (Symbol s : digramMap.values()) {
-            System.out.print(s.left + " " + s + ", ");
+            System.out.print(s.getLeft() + " " + s + ", ");
         }
         System.out.println();
     }
@@ -264,16 +262,16 @@ public class Compress {
      * @return
      */
     public String decompress(Rule rule) {
-        Symbol s = rule.actualGuard.right;
+        Symbol s = rule.getGuard().getRight();
         String output = "";
         do {
             if (s instanceof Terminal) {
                 output += s.toString();
-                s = s.right;
+                s = s.getRight();
             }
             else {
                 output += decompress(((NonTerminal) s).getRule());
-                s = s.right;
+                s = s.getRight();
             }
 
         } while (!s.isGuard());

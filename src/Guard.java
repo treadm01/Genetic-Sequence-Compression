@@ -6,7 +6,9 @@ public class Guard extends Symbol {
         return true;
     }
 
-    public Guard(String representation) {
-        this.representation = representation;
+
+    public Guard(Rule rule) {
+        representation = "?"; // TODO needed to check equality...
+        guardRule = rule; // easy access to rule from guard
     }
 }

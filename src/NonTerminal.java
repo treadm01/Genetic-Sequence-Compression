@@ -3,7 +3,7 @@ public class NonTerminal extends Symbol {
 
     public NonTerminal(Rule rule) {
         this.rule = rule;
-        this.rule.count++; // increase use count
+        this.rule.incrementCount(); // increase use count
         representation = rule.representation; // rule has the same symbol rep as it's nonterminal...
     }
 
@@ -13,10 +13,10 @@ public class NonTerminal extends Symbol {
      */
     public void removeRule() {
         right.assignLeft(rule.getLast());
-        left.assignRight(rule.actualGuard.right);
+        left.assignRight(rule.getGuard().right);
 
         rule.getLast().assignRight(right); // set right symbol of current last symbol in rule to this symbols right
-        rule.actualGuard.right.assignLeft(left); // set first symbol in rule's left to this left
+        rule.getGuard().right.assignLeft(left); // set first symbol in rule's left to this left
     }
 
     public Rule getRule() {

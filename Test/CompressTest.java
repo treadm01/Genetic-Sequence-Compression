@@ -374,16 +374,6 @@ public class CompressTest {
         assertEquals(originalFile, c.decompress(c.getFirstRule()));
     }
 
-
-    @Test
-    public void nomatchDE() {
-        Compress c = new Compress();
-        InputOutput io = new InputOutput();
-        String originalFile = io.readFile("nomatch");
-        c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
-    }
-
     @Test
     public void humhdabDE() {
         Compress c = new Compress();

@@ -8,7 +8,7 @@ public class InputOutput {
     public String readCompressedFile() {
         String everything = "";
         byte[] fileContents = new byte[0];
-        Path path = Paths.get("/home/tread/IdeaProjects/GeneticCompression/textFiles/compressed.bin");
+        Path path = Paths.get("/home/tread/IdeaProjects/projectGC/textFiles/compressed.bin");
         try {
             fileContents = Files.readAllBytes(path);
         } catch (IOException e) {
@@ -26,7 +26,7 @@ public class InputOutput {
     public String readFile(String fileName) {
         //TODO improve implementation
         String everything = "";
-        try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/GeneticCompression/textFiles/" + fileName))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/projectGC/textFiles/" + fileName))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 

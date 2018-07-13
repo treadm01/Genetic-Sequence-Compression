@@ -1,8 +1,8 @@
-public class Rule extends Symbol {
+public class Rule extends Symbol implements Comparable {
     int count;
     Guard guard;
     static Integer ruleNumber = 2;
-    int index = 0;
+    int index = 2;
 
     public Rule() {
         this.representation = ruleNumber;
@@ -50,4 +50,17 @@ public class Rule extends Symbol {
     public void incrementCount() { count++;}
 
     public void decrementCount() { count--;}
+
+    @Override
+    public int compareTo(Object o) {
+        Rule compareRule = (Rule) o;
+        if (count < compareRule.count) {
+            return 1;
+        }
+
+        else if (count == compareRule.count) {
+            return 0;
+        }
+        return -1;
+    }
 }

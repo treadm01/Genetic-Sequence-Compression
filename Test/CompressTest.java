@@ -28,7 +28,7 @@ public class CompressTest {
     public void processMatchingDigrams2() { // check which digram is replaced
         c.processInput("aaabcabaaabc");
         c.printRules();
-        assertEquals("1 > a b | 0 > 4 1 4 | 4 > a a 1 c | ", c.printRules());
+        assertEquals("0 > 8 2 8 | 8 > a a 2 c | 2 > a b | ", c.printRules());
     }
 
         @Test
@@ -36,8 +36,7 @@ public class CompressTest {
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabc");
-
-            assertEquals("1 > b c | 2 > a 1 | 0 > 2 d 1 2 | ", c.printRules());
+            assertEquals("0 > 4 d 2 4 | 4 > a 2 | 2 > b c | ", c.printRules());
         }
 
         @Test
@@ -45,7 +44,7 @@ public class CompressTest {
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabcd");
-            assertEquals("1 > b c | 0 > 3 1 3 | 3 > a 1 d | ", c.printRules());
+            assertEquals("0 > 6 2 6 | 6 > a 2 d | 2 > b c | ", c.printRules());
         }
 
     @Test
@@ -61,7 +60,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaa");
-        assertEquals("1 > a a | 0 > 1 1 | ", c.printRules());
+        assertEquals("0 > 2 2 | 2 > a a | ", c.printRules());
     }
 
     @Test
@@ -69,7 +68,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaa");
-        assertEquals("1 > a a | 0 > 1 1 a | ", c.printRules());
+        assertEquals("0 > 2 2 a | 2 > a a | ", c.printRules());
     }
 
     @Test
@@ -77,7 +76,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaa");
-        assertEquals("1 > a a | 0 > 1 1 1 | ", c.printRules());
+        assertEquals("0 > 2 2 2 | 2 > a a | ", c.printRules());
     }
 
     @Test
@@ -85,7 +84,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaa");
-        assertEquals("1 > a a | 0 > 1 1 1 a | ", c.printRules());
+        assertEquals("0 > 2 2 2 a | 2 > a a | ", c.printRules());
     }
 
     @Test
@@ -109,7 +108,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdab"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("1 > b c | 0 > 3 1 3 a b | 3 > a 1 d | ", c.printRules());
+        assertEquals("0 > 6 2 6 a b | 6 > a 2 d | 2 > b c | ", c.printRules());
     }
 
     @Test
@@ -117,7 +116,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabc");
-        assertEquals("1 > b c | 0 > 3 1 3 4 | 4 > a 1 | 3 > 4 d | ", c.printRules());
+        assertEquals("0 > 6 2 6 8 | 8 > a 2 | 6 > 8 d | 2 > b c | ", c.printRules());
     }
 
     @Test
@@ -125,7 +124,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabcd");
-        assertEquals("1 > b c | 0 > 3 1 3 3 | 3 > a 1 d | ", c.printRules());
+        assertEquals("0 > 6 2 6 6 | 6 > a 2 d | 2 > b c | ", c.printRules());
     }
 
     @Test
@@ -177,7 +176,6 @@ public class CompressTest {
     }
 
 
-// sometimes get infinite recursion rule from generate rules/ the grammar built
     @Test
     public void writeFile() {
         Compress c = new Compress();

@@ -7,10 +7,10 @@ public class Compress {
     private Rule firstRule; // main rule
     private HashSet<Rule> rules;
     int numberOfRules;
-    List<Rule> ruleList = new ArrayList<>();
+    List<Rule> orderedRules;
 
-    // TODO reorder rules to rule usage
-    // TODO store as ints...
+    //TODO how to encode
+    //TODO how to decompress
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -36,33 +36,26 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-
-//                rules.clear();
-//                rules.add(getFirstRule());
-//                generateRules(getFirstRule().actualGuard.right);
-//                System.out.println(printRules());
-
         }
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
-        System.out.println(printRules());
-        // below for reodering ruls
-//
-//        List<Rule> orderedRules = rules.stream()
-//                .sorted(Rule::compareTo)
-//                .collect(Collectors.toList());
-//
-//        //System.out.println(orderedRules);
-//
-//        for (Rule r : orderedRules) {
-//            if (!r.representation.equals("0")) {
-//                r.representation = String.valueOf(orderedRules.indexOf(r)+1);
-//            }
-//        }
-//
-//        System.out.println(orderedRules);
 
+        firstRule.count = numberOfRules; // just to make sure 0 is first...
+        orderedRules = rules.stream() // order rules by use so more common has a lower representation
+                .sorted(Rule::compareTo)
+                .collect(Collectors.toList());
+
+
+        // TODO shuffle the actual values round?? depends on what will eventually be saved
+        // TODO odd or even can be checked in binary by last digit
+
+        // readding index
+        for (Rule r : orderedRules) {
+            r.index = orderedRules.indexOf(r) * 2;
+        }
+
+        System.out.println(printRules());
     }
 
     /**
@@ -214,12 +207,12 @@ public class Compress {
      */
     public String printRules() {
         String output = "";
-        for (Rule r : rules) {
-            output += r + " > ";
+        for (Rule r : orderedRules) {
+            output += r.index + " > ";
             Symbol current = r.getGuard().getRight();
             while (!current.isGuard()) {
                 if (current instanceof NonTerminal) {
-                    output += ((NonTerminal) current).getRule().representation + " ";
+                    output += ((NonTerminal) current).getRule().index + " ";
                 }
                 else {
                     output += current + " ";

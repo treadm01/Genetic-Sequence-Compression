@@ -1,23 +1,23 @@
 public class Symbol {
     Symbol left, right;
-    String representation;
+    long representation;
     private static final int PRIME = 2265539; // from sequitur
 
     public Boolean isGuard() {
-        return false;
+        return representation == 0;
     }
 
     @Override
     public String toString() {
-        return this.representation;
-    }
+        return String.valueOf(representation);
+    } //TODO convert to necessary symbol
 
     @Override
     public int hashCode() {
         long code;
         //from sequitur
-        int a = (int) this.toString().charAt(0);
-        int b = (int) left.toString().charAt(0); // switched check to look at left symbol rather than right
+        int a = (int) this.representation;
+        int b = (int) left.representation; // switched check to look at left symbol rather than right
         code = ((21599 * (long)a) + (20507 * (long)b));
         code = code % (long)PRIME;
         return (int)code;
@@ -29,8 +29,8 @@ public class Symbol {
         //TODO add all checks
         Symbol symbol = (Symbol) obj;
 
-        return ((representation.equals(symbol.toString()))
-                && (left.representation.equals(symbol.left.toString()))
+        return ((representation == symbol.getRepresentation())
+                && (left.representation == (symbol.left.getRepresentation()))
         ); // switched check to look at left symbol rather than right
     }
 
@@ -48,5 +48,9 @@ public class Symbol {
 
     public Symbol getRight() {
         return right;
+    }
+
+    public long getRepresentation() {
+        return representation;
     }
 }

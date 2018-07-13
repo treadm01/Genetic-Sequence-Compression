@@ -14,14 +14,14 @@ public class CompressTest {
     @Test
     public void processInput() { // create rules from digrams
         c.processInput("abcdbc");
-        assertEquals("1 > b c | 0 > a 1 d 1 | ", c.printRules());
+        assertEquals("0 > a 2 d 2 | 2 > b c | ", c.printRules());
     }
 
     @Test
     public void processMatchingDigrams() { // check which digram is replaced
         c.processInput("aaabcabaa");
         c.printRules();
-        assertEquals("1 > a b | 2 > a a | 0 > 2 1 c 1 2 | ", c.printRules());
+        assertEquals("0 > 4 2 c 2 4 | 4 > a a | 2 > a b | ", c.printRules());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        assertEquals("1 > a a | 2 > 1 1 | 0 > 4 4 | 4 > 3 3 | 3 > 2 2 | ", c.printRules());
+        assertEquals("0 > 8 8 | 8 > 6 6 | 6 > 4 4 | 4 > 2 2 | 2 > a a | ", c.printRules());
     }
 
     @Test
@@ -182,7 +182,7 @@ public class CompressTest {
     public void writeFile() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("45000");
+        String originalFile = io.readFile("testLong");
         c.processInput(originalFile);
     }
 
@@ -278,7 +278,7 @@ public class CompressTest {
     @Test
     public void decompressTest() {
         InputOutput io = new InputOutput();
-        String input = io.readFile("360000");
+        String input = io.readFile("15000");
         c.processInput(input);
         assertEquals(input, c.decompress(c.getFirstRule()));
     }

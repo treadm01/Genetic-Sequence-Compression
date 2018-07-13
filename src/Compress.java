@@ -1,17 +1,15 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
-    private Rule firstRule; // main base 'nonterminal'
+    private Rule firstRule; // main rule
     private HashSet<Rule> rules;
+    int numberOfRules;
+    List<Rule> ruleList = new ArrayList<>();
 
     // TODO reorder rules to rule usage
-    // TODO keep digrams from left to right
     // TODO store as ints...
 
     /**
@@ -22,6 +20,7 @@ public class Compress {
         digramMap = new HashMap<>();
         rules = new HashSet<>();
         firstRule = new Rule(); // create first rule;
+        numberOfRules++;
     }
 
     /**
@@ -31,11 +30,11 @@ public class Compress {
      * @param input
      */
     public void processInput(String input) {
-        getFirstRule().addNextSymbol(new Terminal(input.substring(0, 0 + 1)));
+        getFirstRule().addNextSymbol(new Terminal(input.charAt(0)));
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
-            getFirstRule().addNextSymbol(new Terminal(input.substring(i, i + 1)));
+            getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
 
 //                rules.clear();
@@ -63,6 +62,7 @@ public class Compress {
 //        }
 //
 //        System.out.println(orderedRules);
+
     }
 
     /**
@@ -102,6 +102,7 @@ public class Compress {
      */
     public void createRule(Symbol symbol, Symbol oldSymbol) {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
+        numberOfRules++;
 
         replaceDigram(newRule, oldSymbol); // update rule for first instance of digram
         replaceDigram(newRule, symbol);// update rule for last instance of digram
@@ -143,6 +144,7 @@ public class Compress {
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
+                numberOfRules--;
                 removeDigramsFromMap(symbol);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);

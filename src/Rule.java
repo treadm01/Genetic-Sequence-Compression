@@ -1,11 +1,12 @@
 public class Rule extends Symbol {
     int count;
     Guard guard;
-    static Integer ruleNumber = 0;
+    static Integer ruleNumber = 2;
+    int index = 0;
 
     public Rule() {
-        this.representation = String.valueOf(ruleNumber);
-        ruleNumber++;
+        this.representation = ruleNumber;
+        ruleNumber+=2;
         guard = new Guard(this);
         assignRight(guard);
         assignLeft(guard); // seems necessary for hashcode check, to check left symbol, use to point to guard

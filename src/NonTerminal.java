@@ -16,7 +16,7 @@ public class NonTerminal extends Symbol {
         left.assignRight(rule.getGuard().right);
 
         rule.getLast().assignRight(right); // set right symbol of current last symbol in rule to this symbols right
-        rule.getGuard().right.assignLeft(left); // set first symbol in rule's left to this left
+        rule.getGuard().getRight().assignLeft(left); // set first symbol in rule's left to this left
     }
 
     public Rule getRule() {

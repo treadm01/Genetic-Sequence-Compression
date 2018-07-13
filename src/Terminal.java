@@ -1,5 +1,13 @@
 public class Terminal extends Symbol {
-    public Terminal(String representation) {
-        this.representation = representation;
+    long originalValue;
+
+    public Terminal(int representation) {
+        originalValue = representation;
+        this.representation = (representation * 2) + 1;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf((char) originalValue);
     }
 }

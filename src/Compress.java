@@ -41,7 +41,7 @@ public class Compress {
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
 
-        firstRule.count = numberOfRules; // just to make sure 0 is first...
+        firstRule.count = numberOfRules+2; // just to make sure 0 is first...
         orderedRules = rules.stream() // order rules by use so more common has a lower representation
                 .sorted(Rule::compareTo)
                 .collect(Collectors.toList());

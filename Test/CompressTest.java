@@ -21,14 +21,14 @@ public class CompressTest {
     public void processMatchingDigrams() { // check which digram is replaced
         c.processInput("aaabcabaa");
         c.printRules();
-        assertEquals("0 > 4 2 c 2 4 | 4 > a a | 2 > a b | ", c.printRules());
+        assertEquals("0 > 2 4 c 4 2 | 2 > a a | 4 > a b | ", c.printRules());
     }
 
     @Test
     public void processMatchingDigrams2() { // check which digram is replaced
         c.processInput("aaabcabaaabc");
         c.printRules();
-        assertEquals("0 > 8 2 8 | 8 > a a 2 c | 2 > a b | ", c.printRules());
+        assertEquals("0 > 2 4 2 | 2 > a a 4 c | 4 > a b | ", c.printRules());
     }
 
         @Test
@@ -36,7 +36,7 @@ public class CompressTest {
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabc");
-            assertEquals("0 > 4 d 2 4 | 4 > a 2 | 2 > b c | ", c.printRules());
+            assertEquals("0 > 2 d 4 2 | 2 > a 4 | 4 > b c | ", c.printRules());
         }
 
         @Test
@@ -44,7 +44,7 @@ public class CompressTest {
             System.out.println();
             c = new Compress();
             c.processInput("abcdbcabcd");
-            assertEquals("0 > 6 2 6 | 6 > a 2 d | 2 > b c | ", c.printRules());
+            assertEquals("0 > 2 4 2 | 2 > a 4 d | 4 > b c | ", c.printRules());
         }
 
     @Test
@@ -92,7 +92,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        assertEquals("0 > 8 8 | 8 > 6 6 | 6 > 4 4 | 4 > 2 2 | 2 > a a | ", c.printRules());
+        assertEquals("0 > 2 2 | 2 > 4 4 | 4 > 6 6 | 6 > 8 8 | 8 > a a | ", c.printRules());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcdab"); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
-        assertEquals("0 > 6 2 6 a b | 6 > a 2 d | 2 > b c | ", c.printRules());
+        assertEquals("0 > 2 4 2 a b | 2 > a 4 d | 4 > b c | ", c.printRules());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabc");
-        assertEquals("0 > 6 2 6 8 | 8 > a 2 | 6 > 8 d | 2 > b c | ", c.printRules());
+        assertEquals("0 > 4 6 4 2 | 2 > a 6 | 4 > 2 d | 6 > b c | ", c.printRules());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdabcd");
-        assertEquals("0 > 6 2 6 6 | 6 > a 2 d | 2 > b c | ", c.printRules());
+        assertEquals("0 > 2 4 2 2 | 2 > a 4 d | 4 > b c | ", c.printRules());
     }
 
     @Test

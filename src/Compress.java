@@ -9,6 +9,7 @@ public class Compress {
     private int numberOfRules;
     private List<Rule> orderedRules;
     int index = 0;
+    int count = 2;
 
     //TODO how to encode
     //TODO how to decompress
@@ -41,20 +42,20 @@ public class Compress {
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
-
-        firstRule.count = numberOfRules+2; // just to make sure 0 is first...
-        orderedRules = rules.stream() // order rules by use so more common has a lower representation
-                .sorted(Rule::compareTo)
-                .collect(Collectors.toList());
+//
+//        firstRule.count = numberOfRules+2; // just to make sure 0 is first...
+//        orderedRules = rules.stream() // order rules by use so more common has a lower representation
+//                .sorted(Rule::compareTo)
+//                .collect(Collectors.toList());
 
 //
 //        // TODO shuffle the actual values round?? depends on what will eventually be saved
 //        // TODO odd or even can be checked in binary by last digit
 //
-//        // readding index
-        for (Rule r : orderedRules) {
-            r.index = orderedRules.indexOf(r) * 2;
-        }
+////        // readding index
+//        for (Rule r : orderedRules) {
+//            r.index = orderedRules.indexOf(r) * 2;
+//        }
 
         //TODO this slows things down on larger files a great deal
         System.out.println(printRules());
@@ -211,12 +212,12 @@ public class Compress {
      */
     public String printRules() {
         String output = "";
-        for (Rule r : orderedRules) {
-            output += r.index + " > ";
+        for (Rule r : rules) {
+            output += r + " > ";
             Symbol current = r.getGuard().getRight();
             while (!current.isGuard()) {
                 if (current instanceof NonTerminal) {
-                    output += ((NonTerminal) current).getRule().index + " ";
+                    output += ((NonTerminal) current).getRule().representation + " ";
                 }
                 else {
                     output += current + " ";
@@ -236,6 +237,8 @@ public class Compress {
             if (current instanceof NonTerminal) {
                 NonTerminal nt = (NonTerminal) current;
                 if (nt.rule.timeSeen == 0) {
+                    nt.rule.index = count;
+                    count+=2;
                     nt.rule.timeSeen++;
                     nt.rule.position = index; // wont work... might do
                     output += encode(nt.getRule().getGuard().getRight());
@@ -245,7 +248,7 @@ public class Compress {
                     output += "(" + nt.rule.position + "," + nt.rule.length + ")";
                 }
                 else if (nt.rule.timeSeen > 1) {
-                    output += " " + nt.rule.index + " " ;
+                    output += " " + nt.rule.index / 2 + " ";
                 }
 
                 //output += ((NonTerminal) current).getRule().index + " ";

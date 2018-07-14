@@ -5,10 +5,12 @@ import static org.junit.Assert.*;
 
 public class CompressTest {
     Compress c;
+    Decompress d;
 
     @Before
     public void setUp() throws Exception {
         c = new Compress();
+        d = new Decompress();
     }
 
     @Test
@@ -289,110 +291,122 @@ public class CompressTest {
 
     @Test
     public void decompressTest() {
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String input = io.readFile("15000");
         c.processInput(input);
-        assertEquals(input, c.decompress(c.getFirstRule()));
+        assertEquals(input, d.decompress(c.getFirstRule()));
     }
 
 
     @Test
     public void chmpxxDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void chntxxDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chntxx");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void hehcmvDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("hehcmv");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void humdystDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void humghcsDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void humhbbDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhbb");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void vaccgDE() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
+        Decompress d = new Decompress();
         String originalFile = io.readFile("vaccg");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void mtpacgaDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mtpacga");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void mpomtcgDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mpomtcg");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void humprtbDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
     @Test
     public void humhdabDE() {
         Compress c = new Compress();
+        Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
         c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule()));
+        assertEquals(originalFile, d.decompress(c.getFirstRule()));
     }
 
 }

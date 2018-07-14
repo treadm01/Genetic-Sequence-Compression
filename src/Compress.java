@@ -42,23 +42,23 @@ public class Compress {
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
-//
+
 //        firstRule.count = numberOfRules+2; // just to make sure 0 is first...
 //        orderedRules = rules.stream() // order rules by use so more common has a lower representation
 //                .sorted(Rule::compareTo)
 //                .collect(Collectors.toList());
 
-//
-//        // TODO shuffle the actual values round?? depends on what will eventually be saved
-//        // TODO odd or even can be checked in binary by last digit
-//
-////        // readding index
+
+        // TODO shuffle the actual values round?? depends on what will eventually be saved
+        // TODO odd or even can be checked in binary by last digit
+
+//        // readding index
 //        for (Rule r : orderedRules) {
 //            r.index = orderedRules.indexOf(r) * 2;
 //        }
 
-        //TODO this slows things down on larger files a great deal
-        System.out.println(printRules());
+//        TODO this slows things down on larger files a great deal
+        printRules(); // needed to compute length of rule at the moment
 
         System.out.println(encode(getFirstRule().getGuard().getRight()));
     }
@@ -288,27 +288,6 @@ public class Compress {
         System.out.println();
     }
 
-    /**
-     * for debugging, creates the string back from the cfg generated
-     * @param rule
-     * @return
-     */
-    public String decompress(Rule rule) {
-        Symbol s = rule.getGuard().getRight();
-        String output = "";
-        do {
-            if (s instanceof Terminal) {
-                output += s.toString();
-                s = s.getRight();
-            }
-            else {
-                output += decompress(((NonTerminal) s).getRule());
-                s = s.getRight();
-            }
-
-        } while (!s.isGuard());
-        return output;
-    }
 
     /**
      * getter for the main rule nonterminal

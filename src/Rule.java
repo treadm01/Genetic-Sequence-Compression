@@ -3,6 +3,9 @@ public class Rule extends Symbol implements Comparable {
     Guard guard;
     static Integer ruleNumber = 2;
     int index = 2;
+    int timeSeen = 0;
+    int position;
+    int length;
 
     public Rule() {
         this.representation = ruleNumber;

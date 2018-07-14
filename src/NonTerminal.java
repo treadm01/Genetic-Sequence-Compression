@@ -1,6 +1,5 @@
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
-    int timeSeen = 0;
 
     public NonTerminal(Rule rule) {
         this.rule = rule;

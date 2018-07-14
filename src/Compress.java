@@ -8,6 +8,7 @@ public class Compress {
     private HashSet<Rule> rules;
     private int numberOfRules;
     private List<Rule> orderedRules;
+    int index = 0;
 
     //TODO how to encode
     //TODO how to decompress
@@ -220,6 +221,7 @@ public class Compress {
                 else {
                     output += current + " ";
                 }
+                r.length++; // TODO updating length of rule here.... better place to do it.
                 current = current.getRight();
             }
             output += "| ";
@@ -233,13 +235,24 @@ public class Compress {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 NonTerminal nt = (NonTerminal) current;
-                if (nt.timeSeen == 0) {
+                if (nt.rule.timeSeen == 0) {
+                    nt.rule.timeSeen++;
+                    nt.rule.position = index; // wont work... might do
                     output += encode(nt.getRule().getGuard().getRight());
                 }
-                output += ((NonTerminal) current).getRule().index + " ";
+                else if (nt.rule.timeSeen == 1) {
+                    nt.rule.timeSeen++;
+                    output += "(" + nt.rule.position + "," + nt.rule.length + ")";
+                }
+                else if (nt.rule.timeSeen > 1) {
+                    output += " " + nt.rule.index + " " ;
+                }
+
+                //output += ((NonTerminal) current).getRule().index + " ";
             }
             else {
-                output += current + " ";
+                index++;
+                output += current;
             }
             current = current.getRight();
         }

@@ -135,6 +135,20 @@ public class CompressTest {
     }
 
     @Test
+    public void implicitEncoding() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("abcdebcdfbcdebcdfg");
+    }
+
+    @Test
+    public void implicitEncoding2() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("abcdbcabcdbc");
+    }
+
+    @Test
     public void testLongerInput() {
         System.out.println();
         c = new Compress();
@@ -180,7 +194,7 @@ public class CompressTest {
     public void writeFile() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("testLong");
+        String originalFile = io.readFile("mito");
         c.processInput(originalFile);
     }
 

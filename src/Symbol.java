@@ -1,7 +1,7 @@
 public class Symbol {
     Symbol left, right;
     long representation;
-    private static final int PRIME = 2265539; // from sequitur
+    private static final long PRIME = 2265539; // from sequitur
 
     public Boolean isGuard() {
         return representation == 0;
@@ -16,10 +16,10 @@ public class Symbol {
     public int hashCode() {
         long code;
         //from sequitur
-        int a = (int) this.representation;
-        int b = (int) left.representation; // switched check to look at left symbol rather than right
-        code = ((21599 * (long)a) + (20507 * (long)b));
-        code = code % (long)PRIME;
+        long a = this.representation;
+        long b = left.representation; // switched check to look at left symbol rather than right
+        code = ((21599 * a) + (20507 * b));
+        code = code % PRIME;
         return (int)code;
     }
 

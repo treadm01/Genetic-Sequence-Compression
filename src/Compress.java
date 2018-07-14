@@ -6,8 +6,8 @@ public class Compress {
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     private HashSet<Rule> rules;
-    int numberOfRules;
-    List<Rule> orderedRules;
+    private int numberOfRules;
+    private List<Rule> orderedRules;
 
     //TODO how to encode
     //TODO how to decompress
@@ -46,16 +46,19 @@ public class Compress {
                 .sorted(Rule::compareTo)
                 .collect(Collectors.toList());
 
-
-        // TODO shuffle the actual values round?? depends on what will eventually be saved
-        // TODO odd or even can be checked in binary by last digit
-
-        // readding index
+//
+//        // TODO shuffle the actual values round?? depends on what will eventually be saved
+//        // TODO odd or even can be checked in binary by last digit
+//
+//        // readding index
         for (Rule r : orderedRules) {
             r.index = orderedRules.indexOf(r) * 2;
         }
 
+        //TODO this slows things down on larger files a great deal
         System.out.println(printRules());
+
+        System.out.println(encode(getFirstRule().getGuard().getRight()));
     }
 
     /**
@@ -65,7 +68,7 @@ public class Compress {
      * if seen and not a rule, make a new rule
      * each new digram with the use of a rule must be checked also
      */
-    public void checkDigram(Symbol symbol) {
+    private void checkDigram(Symbol symbol) {
         // check existing digrams for last digram, update them with new rule
         if (digramMap.containsKey(symbol)) {
             // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
@@ -93,7 +96,7 @@ public class Compress {
      * takes the latest digram and the digram that occured earlier from the digram map
      * @param symbol
      */
-    public void createRule(Symbol symbol, Symbol oldSymbol) {
+    private void createRule(Symbol symbol, Symbol oldSymbol) {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
         numberOfRules++;
 
@@ -116,7 +119,7 @@ public class Compress {
      * the already exsiting rule/nonterminal for that digram
      * @param symbol
      */
-    public void existingRule(Symbol symbol, Symbol oldSymbol) {
+    private void existingRule(Symbol symbol, Symbol oldSymbol) {
         //TODO could this be done more directly? - digram to nonterminal???
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
@@ -132,7 +135,7 @@ public class Compress {
      * the symbols it stood for
      * @param symbol
      */
-    public void replaceRule(Symbol symbol) {
+    private void replaceRule(Symbol symbol) {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
@@ -151,7 +154,7 @@ public class Compress {
      * @param newRule
      * @param symbol - the position of the digram to be replaced
      */
-    public void replaceDigram(Rule newRule, Symbol symbol) {
+    private void replaceDigram(Rule newRule, Symbol symbol) {
         removeDigramsFromMap(symbol);
         NonTerminal nonTerminal = new NonTerminal(newRule);
 
@@ -170,7 +173,7 @@ public class Compress {
      * correspond with the same digram that is overlapping
      * @param symbol
      */
-    public void removeDigramsFromMap(Symbol symbol) {
+    private void removeDigramsFromMap(Symbol symbol) {
         // don't remove digram if of an overlapping digram
         //TODO better way to do this
         if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
@@ -192,7 +195,7 @@ public class Compress {
      * @param right
      * @param nonTerminal
      */
-    public void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
+    private void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
         if (!nonTerminal.getRight().isGuard()) {
             checkDigram(right);
         }
@@ -224,11 +227,31 @@ public class Compress {
         return output;
     }
 
+    public String encode(Symbol symbol) {
+        String output = "";
+        Symbol current = symbol;
+        while (!current.isGuard()) {
+            if (current instanceof NonTerminal) {
+                NonTerminal nt = (NonTerminal) current;
+                if (nt.timeSeen == 0) {
+                    output += encode(nt.getRule().getGuard().getRight());
+                }
+                output += ((NonTerminal) current).getRule().index + " ";
+            }
+            else {
+                output += current + " ";
+            }
+            current = current.getRight();
+        }
+        return output;
+    }
+
+
     /**
      * works through the symbols and collects all the rules in a set
      * @param current
      */
-    public void generateRules(Symbol current) {
+    private void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();

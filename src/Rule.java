@@ -1,16 +1,17 @@
-public class Rule extends Symbol implements Comparable {
+public class Rule extends Symbol {
     int count;
     Guard guard;
     static Integer ruleNumber = 2;
+
+    // for encoding...
     int index = 2;
-    int secondIndex;
     int timeSeen = 0;
     int position;
     int length;
 
     public Rule() {
         this.representation = ruleNumber;
-        ruleNumber+=2;
+        ruleNumber += 2;
         guard = new Guard(this);
         assignRight(guard);
         assignLeft(guard); // seems necessary for hashcode check, to check left symbol, use to point to guard
@@ -54,17 +55,4 @@ public class Rule extends Symbol implements Comparable {
     public void incrementCount() { count++;}
 
     public void decrementCount() { count--;}
-
-    @Override
-    public int compareTo(Object o) {
-        Rule compareRule = (Rule) o;
-        if (count < compareRule.count) {
-            return 1;
-        }
-
-        else if (count == compareRule.count) {
-            return 0;
-        }
-        return -1;
-    }
 }

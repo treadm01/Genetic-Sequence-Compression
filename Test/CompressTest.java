@@ -125,7 +125,7 @@ public class CompressTest {
     public void processInput12() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabcd");
+        c.processInput("abcdbcabcdabcdzzzzzz");
         assertEquals("0 > 2 4 2 2 | 2 > a 4 d | 4 > b c | ", c.printRules());
     }
 
@@ -133,7 +133,7 @@ public class CompressTest {
     public void processInput13() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabcdbcabcd");
+        c.processInput("abcdbcabcdabcdbcabcdabcdbcabcdabcdbcabcd");
     }
 
     @Test

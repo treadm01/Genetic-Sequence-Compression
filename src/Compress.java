@@ -1,16 +1,14 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     private HashSet<Rule> rules;
-    private int numberOfRules;
-    private List<Rule> orderedRules;
-    int index = 0;
-    int count = 2;
+    private int index = 0; // for position of a repeating pattern in the first rule used in encoding
+    private int count = 2; // another counter to keep track of rules as they are created in encoding
 
+    //TODO check that encoded can be decompressed in principal, position of start of rule etc
     //TODO how to encode
     //TODO how to decompress
 
@@ -22,7 +20,6 @@ public class Compress {
         digramMap = new HashMap<>();
         rules = new HashSet<>();
         firstRule = new Rule(); // create first rule;
-        numberOfRules++;
     }
 
     /**
@@ -43,22 +40,8 @@ public class Compress {
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
 
-//        firstRule.count = numberOfRules+2; // just to make sure 0 is first...
-//        orderedRules = rules.stream() // order rules by use so more common has a lower representation
-//                .sorted(Rule::compareTo)
-//                .collect(Collectors.toList());
-
-
-        // TODO shuffle the actual values round?? depends on what will eventually be saved
-        // TODO odd or even can be checked in binary by last digit
-
-//        // readding index
-//        for (Rule r : orderedRules) {
-//            r.index = orderedRules.indexOf(r) * 2;
-//        }
-
-//        TODO this slows things down on larger files a great deal
-        printRules(); // needed to compute length of rule at the moment
+//        TODO this slows things down on larger files a great deal when printint
+        System.out.println(printRules()); // needed to compute length of rule at the moment
 
         System.out.println(encode(getFirstRule().getGuard().getRight()));
     }
@@ -100,7 +83,6 @@ public class Compress {
      */
     private void createRule(Symbol symbol, Symbol oldSymbol) {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
-        numberOfRules++;
 
         replaceDigram(newRule, oldSymbol); // update rule for first instance of digram
         replaceDigram(newRule, symbol);// update rule for last instance of digram
@@ -142,7 +124,6 @@ public class Compress {
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
-                numberOfRules--;
                 removeDigramsFromMap(symbol);
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
@@ -230,6 +211,7 @@ public class Compress {
         return output;
     }
 
+    //TODO clean up
     public String encode(Symbol symbol) {
         String output = "";
         Symbol current = symbol;
@@ -237,21 +219,20 @@ public class Compress {
             if (current instanceof NonTerminal) {
                 NonTerminal nt = (NonTerminal) current;
                 if (nt.rule.timeSeen == 0) {
-                    nt.rule.index = count;
-                    count+=2;
-                    nt.rule.timeSeen++;
-                    nt.rule.position = index; // wont work... might do
+                    nt.rule.timeSeen++; // count for number of times rule has been seen
+                    nt.rule.position = index; // TODO index is a global variable, that keeps check of where in the grammar the first repetition/nonterminal occurs
                     output += encode(nt.getRule().getGuard().getRight());
                 }
                 else if (nt.rule.timeSeen == 1) {
-                    nt.rule.timeSeen++;
-                    output += "(" + nt.rule.position + "," + nt.rule.length + ")";
+                    nt.rule.index = count; // give index as the time seen
+                    count+=2; // TODO count is the index with which the rules are created implicitly
+                    nt.rule.timeSeen++; //TODO handle better
+                    //TODO keep length of following pointers
+                    output += String.valueOf(nt.rule.position).length() + "" + nt.rule.position + "" + String.valueOf(nt.rule.length).length() + nt.rule.length;
                 }
-                else if (nt.rule.timeSeen > 1) {
-                    output += " " + nt.rule.index / 2 + " ";
+                else {
+                    output += String.valueOf(nt.rule.index).length() + "" + nt.rule.index;
                 }
-
-                //output += ((NonTerminal) current).getRule().index + " ";
             }
             else {
                 index++;

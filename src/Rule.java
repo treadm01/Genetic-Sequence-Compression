@@ -55,4 +55,28 @@ public class Rule extends Symbol {
     public void incrementCount() { count++;}
 
     public void decrementCount() { count--;}
+
+
+//    /**
+//     * cycle through elements of rule to retrieve one, hopefully just for decompression debugging
+//     * @param index
+//     * @return
+//     */
+//    public Rule getElement(int index) {
+//        Symbol find = getGuard();
+//        for (int i = 0; i < index; i++) {
+//            find = find.getRight();
+//        }
+//        return ((NonTerminal)find).getRule();
+//    }
+
+    public String getRuleString() {
+        String symbols = "";
+        Symbol first = guard.getRight();
+        while (!first.isGuard()) {
+            symbols += first.toString();
+            first = first.getRight();
+        }
+        return symbols;
+    }
 }

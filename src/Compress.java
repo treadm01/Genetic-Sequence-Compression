@@ -4,9 +4,8 @@ public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
-    private HashSet<Rule> rules;
-    private int index = 0; // for position of a repeating pattern in the first rule used in encoding
-    private int count = 2; // another counter to keep track of rules as they are created in encoding
+    HashSet<Rule> rules;
+    int markerNum = 1;
 
     //TODO check that encoded can be decompressed in principal, position of start of rule etc
     //TODO how to encode
@@ -43,7 +42,7 @@ public class Compress {
 //        TODO this slows things down on larger files a great deal when printint
         System.out.println(printRules()); // needed to compute length of rule at the moment
 
-        System.out.println(encode(getFirstRule().getGuard().getRight()));
+        System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
     }
 
     /**
@@ -53,7 +52,7 @@ public class Compress {
      * if seen and not a rule, make a new rule
      * each new digram with the use of a rule must be checked also
      */
-    private void checkDigram(Symbol symbol) {
+    public void checkDigram(Symbol symbol) {
         // check existing digrams for last digram, update them with new rule
         if (digramMap.containsKey(symbol)) {
             // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
@@ -212,30 +211,28 @@ public class Compress {
     }
 
     //TODO clean up
-    public String encode(Symbol symbol) {
-        String output = "";
+    public String encode(Symbol symbol, String output) {
         Symbol current = symbol;
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 NonTerminal nt = (NonTerminal) current;
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
-                    nt.rule.position = index; // TODO index is a global variable, that keeps check of where in the grammar the first repetition/nonterminal occurs
-                    output += encode(nt.getRule().getGuard().getRight());
+                    nt.rule.position = markerNum;
+                    output += "M";
+                    markerNum++;
+                    output = encode(nt.getRule().getGuard().getRight(), output);
                 }
                 else if (nt.rule.timeSeen == 1) {
-                    nt.rule.index = count; // give index as the time seen
-                    count+=2; // TODO count is the index with which the rules are created implicitly
                     nt.rule.timeSeen++; //TODO handle better
                     //TODO keep length of following pointers
-                    output += String.valueOf(nt.rule.position).length() + "" + nt.rule.position + "" + String.valueOf(nt.rule.length).length() + nt.rule.length;
+                    output += "(" + nt.rule.position + ","  + nt.rule.length + ")";
                 }
                 else {
                     output += String.valueOf(nt.rule.index).length() + "" + nt.rule.index;
                 }
             }
             else {
-                index++;
                 output += current;
             }
             current = current.getRight();
@@ -248,7 +245,7 @@ public class Compress {
      * works through the symbols and collects all the rules in a set
      * @param current
      */
-    private void generateRules(Symbol current) {
+    public void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();

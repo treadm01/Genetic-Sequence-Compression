@@ -5,6 +5,9 @@ public class Decompress {
 
     //TODO clean up
     //TODO make sure working for diferent widths, longer that n
+    //TODO using compression methods....
+    //TODO multiple rule symbols after each other, how to differentiate if just numbers
+    //TODO if indicators around nonterminal symbols are used, could remove marker M symbol....
     public Rule buildGrammar(String input) {
         Compress c = new Compress();
         int position = 0; // for walking through the actual string, todo see if replaceable with for loop

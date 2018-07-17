@@ -40,9 +40,9 @@ public class Compress {
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
 
-//        TODO this slows things down on larger files a great deal when printint
-       // printRules();// needed to compute length of rule at the moment
-        System.out.println(printRules());
+//       //TODO make a method just to get length... or get length better
+        printRules();// needed to compute length of rule at the moment
+        //System.out.println(printRules());
 
         //System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
     }

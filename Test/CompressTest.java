@@ -121,6 +121,7 @@ public class CompressTest {
         assertEquals("0 > 6 2 6 8 | 8 > a 2 | 6 > 8 d | 2 > b c | ", c.printRules());
     }
 
+
     @Test
     public void processInput12() {
         System.out.println();
@@ -137,6 +138,15 @@ public class CompressTest {
     }
 
     @Test
+    public void processInput14() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("abcdbcabcdabcdbcabcdabcdbc");
+    }
+
+
+
+    @Test
     public void implicitEncoding() {
         System.out.println();
         c = new Compress();
@@ -148,6 +158,13 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("abcdbcabcdbc");
+    }
+
+    @Test
+    public void implicitEncoding3() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("acaccacacc");
     }
 
     @Test

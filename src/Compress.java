@@ -6,6 +6,7 @@ public class Compress {
     private Rule firstRule; // main rule
     HashSet<Rule> rules;
     int markerNum = 1;
+    int count = 2;
 
     //TODO check that encoded can be decompressed in principal, position of start of rule etc
     //TODO how to encode
@@ -40,9 +41,10 @@ public class Compress {
         generateRules(getFirstRule().getGuard().getRight());
 
 //        TODO this slows things down on larger files a great deal when printint
-        System.out.println(printRules()); // needed to compute length of rule at the moment
+       // printRules();// needed to compute length of rule at the moment
+        System.out.println(printRules());
 
-        System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
+        //System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
     }
 
     /**
@@ -210,7 +212,7 @@ public class Compress {
         return output;
     }
 
-    //TODO clean up
+    //TODO figure out a decent way to encode that actually works
     public String encode(Symbol symbol, String output) {
         Symbol current = symbol;
         while (!current.isGuard()) {
@@ -219,17 +221,18 @@ public class Compress {
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
                     nt.rule.position = markerNum;
-                    output += "M";
+                    output += "M" + nt.getRule().length;//nt.rule.position;
                     markerNum++;
                     output = encode(nt.getRule().getGuard().getRight(), output);
                 }
                 else if (nt.rule.timeSeen == 1) {
-                    nt.rule.timeSeen++; //TODO handle better
-                    //TODO keep length of following pointers
-                    output += "(" + nt.rule.position + ","  + nt.rule.length + ")";
+                    nt.rule.index = count; // give index as the time seen
+                    count+=2; // TODO count is the index with which the rules are created implicitly
+                    nt.rule.timeSeen++;
+                    output += "(" + nt.rule.position + ")";
                 }
                 else {
-                    output += String.valueOf(nt.rule.index).length() + "" + nt.rule.index;
+                    output += nt.rule.index;
                 }
             }
             else {

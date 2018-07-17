@@ -1,7 +1,7 @@
 public class Terminal extends Symbol {
     long originalValue;
 
-    public Terminal(int representation) {
+    public Terminal(int representation) { //TODO make long??
         originalValue = representation;
         this.representation = (representation * 2) + 1;
     }

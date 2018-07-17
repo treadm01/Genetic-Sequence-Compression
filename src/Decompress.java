@@ -41,15 +41,29 @@ public class Decompress {
 
                 NonTerminal nonTerminal = markers.get(Integer.parseInt(index)-1);
 
-                // second length of next symbols to add to rule, take from old rule...
-
                 // add the symbols to the rule
+                Symbol symbol = nonTerminal.getRight();
+
                 for (int z = 0; z < nonTerminal.rule.length; z++) {
-                    nonTerminal.assignRight(nonTerminal.getRight().getRight());
+                    //TODO specifically needs to be an uncompressed rule....
+                    if (nonTerminal.getRight() instanceof NonTerminal) { // if next symbol is an uncompressed rule
+                        NonTerminal nt = (NonTerminal) nonTerminal.getRight();
+                        if (!nt.getRule().compressed) {
+                            for (int x = 0; x < nt.rule.length; x++) { // add symbols for that rule length
+                                nonTerminal.assignRight(nonTerminal.getRight().getRight());
+                                nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
+                            }
+                        }
+                    }
+                    nonTerminal.assignRight(nonTerminal.getRight().getRight()); // assign next symbol in order
                     nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
+
+
                 }
+                //System.out.println(nonTerminal.getRule().getRuleString());
                 nonTerminal.getRight().assignLeft(nonTerminal); // assign new right of terminals left to the nonterminal
 
+                nonTerminal.getRule().compressed = true; //tOdo not sure this is in  the right place
                 // add the second instance of nonterminal
                 NonTerminal nt = new NonTerminal(nonTerminal.getRule());
                 c.getFirstRule().addNextSymbol(nt);

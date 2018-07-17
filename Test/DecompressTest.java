@@ -72,6 +72,17 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
+    @Test
+    public void buildGrammar8() {
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        String compress = "abcdbcabcdabcdbcabcdabcdbc";
+        c.processInput(compress);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
+        assertEquals(compress, d.decompress(d.buildGrammar(input)));
+    }
+
 
     @Test
     public void decompress() {

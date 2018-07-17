@@ -2,6 +2,7 @@ public class Rule extends Symbol {
     int count;
     Guard guard;
     static Integer ruleNumber = 2;
+    Boolean compressed = false;
 
     // for encoding...
     int index = 2;

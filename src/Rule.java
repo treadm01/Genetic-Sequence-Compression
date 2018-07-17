@@ -2,10 +2,11 @@ public class Rule extends Symbol {
     int count;
     Guard guard;
     static Integer ruleNumber = 2;
+
+    // for decompressing
     Boolean compressed = false;
 
     // for encoding...
-    int index = 2;
     int timeSeen = 0;
     int position;
     int length;
@@ -58,19 +59,10 @@ public class Rule extends Symbol {
     public void decrementCount() { count--;}
 
 
-//    /**
-//     * cycle through elements of rule to retrieve one, hopefully just for decompression debugging
-//     * @param index
-//     * @return
-//     */
-//    public Rule getElement(int index) {
-//        Symbol find = getGuard();
-//        for (int i = 0; i < index; i++) {
-//            find = find.getRight();
-//        }
-//        return ((NonTerminal)find).getRule();
-//    }
-
+    /**
+     * for debugging can get string output of an entire rule
+     * @return
+     */
     public String getRuleString() {
         String symbols = "";
         Symbol first = guard.getRight();

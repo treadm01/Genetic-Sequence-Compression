@@ -212,7 +212,8 @@ public class Compress {
         return output;
     }
 
-    //TODO figure out a decent way to encode that actually works
+    //TODO clean up
+    //TODO decide how to store rules, just numbered as they are seen or try to keep 2,4,6 etc
     public String encode(Symbol symbol, String output) {
         Symbol current = symbol;
         while (!current.isGuard()) {
@@ -220,25 +221,27 @@ public class Compress {
                 NonTerminal nt = (NonTerminal) current;
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
-                    nt.rule.position = markerNum;
-                    output += "M" + nt.getRule().length;//nt.rule.position;
+                    nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
+                    output += "M" + nt.getRule().length;//nt.rule.position; // store length with marker
+                    //TODO storing length with marker helps when dealing with rules that have yet to be unpacked
                     markerNum++;
-                    output = encode(nt.getRule().getGuard().getRight(), output);
+                    output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
                 else if (nt.rule.timeSeen == 1) {
-                    nt.rule.index = count; // give index as the time seen
-                    count+=2; // TODO count is the index with which the rules are created implicitly
+                    // TODO count is the index with which the rules are created implicitly, need to decide whterher to use
+                    //nt.rule.index = count; // give index as the time seen
+                    //count+=2;
                     nt.rule.timeSeen++;
-                    output += "(" + nt.rule.position + ")";
+                    output += "(" + nt.rule.position + ")"; // rule seen second time send a pointer back to it
                 }
                 else {
-                    output += nt.rule.position;
+                    output += nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
                 }
             }
             else {
-                output += current;
+                output += current; // add regular symbols to it
             }
-            current = current.getRight();
+            current = current.getRight(); // move to next symbol
         }
         return output;
     }

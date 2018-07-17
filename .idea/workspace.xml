@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/Test/DecompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/DecompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Decompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decompress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rule.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,20 +21,17 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="231" column="46" lean-forward="true" selection-start-line="231" selection-start-column="46" selection-end-line="231" selection-end-column="46" />
+            <state relative-caret-position="216">
+              <caret line="215" column="64" lean-forward="true" selection-start-line="215" selection-start-column="64" selection-end-line="215" selection-end-column="64" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Decompress.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Decompress.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Decompress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="68" column="55" lean-forward="true" selection-start-line="68" selection-start-column="55" selection-end-line="68" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="201">
+              <caret line="75" column="69" selection-start-line="75" selection-start-column="69" selection-end-line="75" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -47,7 +45,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DecompressTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DecompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
@@ -59,8 +57,8 @@
       <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="285" column="16" lean-forward="true" selection-start-line="285" selection-start-column="16" selection-end-line="285" selection-end-column="16" />
+            <state relative-caret-position="163">
+              <caret line="287" column="28" selection-start-line="287" selection-start-column="28" selection-end-line="287" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/textFiles/checkSizeImplUnorder">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="346">
-              <caret column="141244" selection-start-column="141244" selection-end-column="141244" />
+              <caret column="136518" selection-start-column="136518" selection-end-column="136518" />
             </state>
           </provider>
         </entry>
@@ -98,8 +96,8 @@
       <file leaf-file-name="Rule.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Rule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+            <state relative-caret-position="91">
+              <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -147,9 +145,9 @@
       <find>impl</find>
       <find>system</find>
       <find>replacedi</find>
-      <find>mpom</find>
       <find>new ru</find>
       <find>get</find>
+      <find>mpom</find>
       <find>encode</find>
       <find>marker.</find>
     </findStrings>
@@ -212,11 +210,11 @@
         <option value="$PROJECT_DIR$/textFiles/checkSizeImplIndex" />
         <option value="$PROJECT_DIR$/Test/CompressTest.java" />
         <option value="$PROJECT_DIR$/src/Terminal.java" />
-        <option value="$PROJECT_DIR$/src/Rule.java" />
         <option value="$PROJECT_DIR$/textFiles/checkSizeImplUnorder" />
         <option value="$PROJECT_DIR$/Test/DecompressTest.java" />
         <option value="$PROJECT_DIR$/src/Compress.java" />
         <option value="$PROJECT_DIR$/src/Decompress.java" />
+        <option value="$PROJECT_DIR$/src/Rule.java" />
       </list>
     </option>
   </component>
@@ -348,13 +346,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="DecompressTest.buildGrammar7" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.buildGrammar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DecompressTest" />
-      <option name="METHOD_NAME" value="buildGrammar7" />
+      <option name="METHOD_NAME" value="buildGrammar" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -365,13 +363,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="DecompressTest.buildGrammar8" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.buildGrammar10" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DecompressTest" />
-      <option name="METHOD_NAME" value="buildGrammar8" />
+      <option name="METHOD_NAME" value="buildGrammar10" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -438,19 +436,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.DecompressTest.buildGrammar7" />
       <item itemvalue="JUnit.DecompressTest" />
-      <item itemvalue="JUnit.DecompressTest.buildGrammar8" />
       <item itemvalue="JUnit.DecompressTest.buildGrammar9" />
+      <item itemvalue="JUnit.DecompressTest.buildGrammar10" />
       <item itemvalue="JUnit.CompressTest.mpomtcg" />
+      <item itemvalue="JUnit.DecompressTest.buildGrammar" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.DecompressTest" />
-        <item itemvalue="JUnit.DecompressTest.buildGrammar9" />
-        <item itemvalue="JUnit.DecompressTest.buildGrammar8" />
-        <item itemvalue="JUnit.DecompressTest.buildGrammar7" />
+        <item itemvalue="JUnit.DecompressTest.buildGrammar" />
+        <item itemvalue="JUnit.DecompressTest.buildGrammar10" />
         <item itemvalue="JUnit.CompressTest.mpomtcg" />
+        <item itemvalue="JUnit.DecompressTest.buildGrammar9" />
       </list>
     </recent_temporary>
   </component>
@@ -602,14 +600,7 @@
       <workItem from="1531648654267" duration="18054000" />
       <workItem from="1531730215563" duration="41891000" />
       <workItem from="1531816759202" duration="7032000" />
-      <workItem from="1531826195168" duration="11000000" />
-    </task>
-    <task id="LOCAL-00130" summary="bit more documentation">
-      <created>1530553388588</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1530553388588</updated>
+      <workItem from="1531826195168" duration="13193000" />
     </task>
     <task id="LOCAL-00131" summary="checking for nonterminal in map makes no difference">
       <created>1530697596274</created>
@@ -947,43 +938,50 @@
       <option name="project" value="LOCAL" />
       <updated>1531836886852</updated>
     </task>
-    <option name="localTasksCounter" value="179" />
+    <task id="LOCAL-00179" summary="have to decide how to keep count of rules generated...">
+      <created>1531838616553</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1531838616553</updated>
+    </task>
+    <option name="localTasksCounter" value="180" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DecompressTest_buildGrammar7 - 2018.07.17 at 15h 20m 32s.xml">
-      <configuration name="DecompressTest.buildGrammar7" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 15h 48m 04s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar8 - 2018.07.17 at 15h 20m 47s.xml">
-      <configuration name="DecompressTest.buildGrammar8" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 15h 59m 46s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 20m 55s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 16h 00m 03s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 20m 59s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 16h 00m 22s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 21m 08s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 16h 01m 07s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 21m 13s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 16h 01m 23s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 21m 18s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 16h 01m 49s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 37m 02s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.17 at 16h 01m 57s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 42m 23s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest - 2018.07.17 at 16h 10m 59s.xml">
+      <configuration name="DecompressTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar9 - 2018.07.17 at 15h 43m 08s.xml">
-      <configuration name="DecompressTest.buildGrammar9" configurationId="JUnit" />
+    <history-entry file="DecompressTest - 2018.07.17 at 16h 18m 27s.xml">
+      <configuration name="DecompressTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="764947000" />
+    <option name="totallyTimeSpent" value="767140000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1022,7 +1020,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="needed a check on the left there too" />
     <MESSAGE value="cleaned up code slightly" />
     <MESSAGE value="speed dependent on data, repeated text much quicker" />
     <MESSAGE value="added more tests, tried to clean up links and pointers but its a bit messy" />
@@ -1047,7 +1044,8 @@
     <MESSAGE value="encode not working properly has to be from marker" />
     <MESSAGE value="still trying to encode, putting the length after marker" />
     <MESSAGE value="pretty messy but working for some of the harder cases... need to deal with multiple nonterminal symbols probably" />
-    <option name="LAST_COMMIT_MESSAGE" value="pretty messy but working for some of the harder cases... need to deal with multiple nonterminal symbols probably" />
+    <MESSAGE value="have to decide how to keep count of rules generated..." />
+    <option name="LAST_COMMIT_MESSAGE" value="have to decide how to keep count of rules generated..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1186,44 +1184,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Rule.java">
+    <entry file="file://$PROJECT_DIR$/textFiles/checkSizeImplUnorder">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
+        <state relative-caret-position="346">
+          <caret column="136518" selection-start-column="136518" selection-end-column="136518" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="285" column="16" lean-forward="true" selection-start-line="285" selection-start-column="16" selection-end-line="285" selection-end-column="16" />
+        <state relative-caret-position="163">
+          <caret line="287" column="28" selection-start-line="287" selection-start-column="28" selection-end-line="287" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/textFiles/checkSizeImplUnorder">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret column="141244" selection-start-column="141244" selection-end-column="141244" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="231" column="46" lean-forward="true" selection-start-line="231" selection-start-column="46" selection-end-line="231" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Decompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="68" column="55" lean-forward="true" selection-start-line="68" selection-start-column="55" selection-end-line="68" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="216">
+          <caret line="215" column="64" lean-forward="true" selection-start-line="215" selection-start-column="64" selection-end-line="215" selection-end-column="64" />
         </state>
       </provider>
     </entry>
@@ -1231,6 +1212,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Rule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="62" column="48" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Decompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="75" column="69" selection-start-line="75" selection-start-column="69" selection-end-line="75" selection-end-column="69" />
         </state>
       </provider>
     </entry>

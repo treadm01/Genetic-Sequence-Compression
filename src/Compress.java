@@ -232,7 +232,7 @@ public class Compress {
                     output += "(" + nt.rule.position + ")";
                 }
                 else {
-                    output += nt.rule.index;
+                    output += nt.rule.position;
                 }
             }
             else {

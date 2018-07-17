@@ -4,19 +4,14 @@ import java.util.List;
 
 public class Decompress {
     List<NonTerminal> markers = new ArrayList<>();
-    HashMap<Long, NonTerminal> marker = new HashMap<>();
+    HashMap<Integer, NonTerminal> marker = new HashMap<>();
 
-    //TODO just from string, keep a hash of rules to access from there but the pointers refer to
-    // todo uncompressed string
-    //TODO or else try to rebuild the entire grammar with links
-
-    //build the complete grammar up from the string and return the first rule
-    // but need to maintain the string as well to use the indexes...
-    // when rules are created add to list, add nonterminals
-    // then string of first rule is gained at the end and can be ran through into a rule
+    //TODO clean up
+    //TODO make sure working for diferent widths, longer that n
     public Rule buildGrammar(String input) {
         Compress c = new Compress();
         int position = 0;
+        int makerNum = 0;
         while (position < input.length()) {
             if (input.charAt(position) == 'M') { // if a marker create rule for it and position it there
                 position++; // move again to get length
@@ -25,7 +20,8 @@ public class Decompress {
                 NonTerminal nonTerminal = new NonTerminal(r);
                 c.getFirstRule().addNextSymbol(nonTerminal);
                 markers.add(nonTerminal);
-                marker.put(nonTerminal.representation, nonTerminal);
+                makerNum++;
+                marker.put(makerNum, nonTerminal);
             }
             else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it
                 c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
@@ -63,14 +59,14 @@ public class Decompress {
                 //System.out.println(nonTerminal.getRule().getRuleString());
                 nonTerminal.getRight().assignLeft(nonTerminal); // assign new right of terminals left to the nonterminal
 
-                nonTerminal.getRule().compressed = true; //tOdo not sure this is in  the right place
+                nonTerminal.getRule().compressed = true; // rule has been evaluated
                 // add the second instance of nonterminal
                 NonTerminal nt = new NonTerminal(nonTerminal.getRule());
                 c.getFirstRule().addNextSymbol(nt);
             }
             else { // repeated terminal
                 char cb = input.charAt(position);
-                Long i = Long.valueOf(Character.getNumericValue(cb));
+                Integer i = Character.getNumericValue(cb);
                 NonTerminal nonTerminal = new NonTerminal(marker.get(i).getRule());
                 c.getFirstRule().addNextSymbol(nonTerminal);
             }

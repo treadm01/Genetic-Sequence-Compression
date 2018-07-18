@@ -145,6 +145,127 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
+    @Test
+    public void chmpxxDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chmpxx");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void chntxxDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chntxx");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void hehcmvDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("hehcmv");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void humdystDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humdyst");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void humghcsDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humghcs");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void humhbbDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhbb");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void vaccgDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        Decompress d = new Decompress();
+        String originalFile = io.readFile("vaccg");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void mtpacgaDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mtpacga");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void mpomtcgDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mpomtcg");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void humprtbDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humprtb");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
+    @Test
+    public void humhdabDE() {
+        Compress c = new Compress();
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhdab");
+        c.processInput(originalFile);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+    }
+
 
     @Test
     public void quickCheck() {
@@ -159,10 +280,5 @@ public class DecompressTest {
         c.processInput(compress);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
         return compress.equals(d.decompress(d.buildGrammar(input)));
-    }
-
-
-    @Test
-    public void decompress() {
     }
 }

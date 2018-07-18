@@ -101,6 +101,7 @@ public class DecompressTest {
         Compress c = new Compress();
         String compress = "dbcadbcabcabc"; //tODO problem is probably two unevaluated rules in a row
         c.processInput(compress);
+        System.out.println(c.printRules());
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
         System.out.println(input);
         assertEquals(compress, d.decompress(d.buildGrammar(input)));

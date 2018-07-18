@@ -38,30 +38,7 @@ public class Decompress {
                 Integer i = Integer.valueOf(index);
                 NonTerminal nonTerminal = marker.get(i);
 
-                // for the length of the rule add it's neighbours (what the rule refers to) to the rule
-                for (int z = 0; z < nonTerminal.rule.length; z++) {
-                    //sometimes a rule is not yet evaluated and this needs to be gone over
-                    //TODO specifically needs to be an uncompressed rule....
-                    //TODO this will have to be done recursively...
-                    if (nonTerminal.getRight() instanceof NonTerminal) { // if next symbol is an uncompressed rule
-                        NonTerminal nt = (NonTerminal) nonTerminal.getRight();
-                        if (!nt.getRule().compressed) {
-                            for (int x = 0; x < nt.rule.length; x++) { // add symbols for that rule length
-                                nonTerminal.assignRight(nonTerminal.getRight().getRight());
-                                nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
-                            }
-                        }
-                    }
-                    // move links around as symbols are added to rule
-                    nonTerminal.assignRight(nonTerminal.getRight().getRight()); // assign next symbol in order
-                    nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
-                }
-
-                // assign new right of terminals left to the nonterminal
-                nonTerminal.getRight().assignLeft(nonTerminal);
-
-                // rule has been evaluated so needs to be marked as to not check
-                nonTerminal.getRule().compressed = true;
+                evaluateRule(nonTerminal);
 
                 // add the second instance of nonterminal where the pointer was
                 NonTerminal nt = new NonTerminal(nonTerminal.getRule());
@@ -73,6 +50,7 @@ public class Decompress {
                 NonTerminal nonTerminal = new NonTerminal(marker.get(i).getRule()); // get rule from hashmap
                 c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
             }
+            System.out.println("Rule " + c.getFirstRule().getRuleString());
             position++; // increase position in string
         }
 
@@ -82,6 +60,31 @@ public class Decompress {
         System.out.println(c.printRules());
 
         return c.getFirstRule();
+    }
+
+
+    public void evaluateRule(NonTerminal nonTerminal) {
+        if (!nonTerminal.getRule().compressed) {
+            nonTerminal.getRule().compressed = true;
+            // for the length of the rule add it's neighbours (what the rule refers to) to the rule
+            for (int z = 0; z < nonTerminal.rule.length; z++) {
+                //sometimes a rule is not yet evaluated and this needs to be gone over
+                //TODO specifically needs to be an uncompressed rule....
+                if (nonTerminal.getRight() instanceof NonTerminal) { // if next symbol is an uncompressed rule
+                    NonTerminal nt = (NonTerminal) nonTerminal.getRight();
+                    if (!nt.getRule().compressed) {
+                        evaluateRule(nt);
+                        // rule has been evaluated so needs to be marked as to not check
+                    }
+                }
+                // move links around as symbols are added to rule
+                nonTerminal.assignRight(nonTerminal.getRight().getRight()); // assign next symbol in order
+                nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
+                System.out.println("Rule " + nonTerminal + " > " + nonTerminal.getRule().getRuleString());
+            }
+            // assign new right of terminals left to the nonterminal
+            nonTerminal.getRight().assignLeft(nonTerminal);
+        }
     }
 
 

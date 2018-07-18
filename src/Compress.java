@@ -195,6 +195,7 @@ public class Compress {
     public String printRules() {
         String output = "";
         for (Rule r : rules) {
+            r.length = 0; //TODO really need to separate getting length from printing
             output += r + " > ";
             Symbol current = r.getGuard().getRight();
             while (!current.isGuard()) {

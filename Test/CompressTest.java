@@ -168,6 +168,13 @@ public class CompressTest {
     }
 
     @Test
+    public void implicitEncoding4() {
+        System.out.println();
+        c = new Compress();
+        c.processInput("dbcadbcabcabc");
+    }
+
+    @Test
     public void testLongerInput() {
         System.out.println();
         c = new Compress();

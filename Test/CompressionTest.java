@@ -4,6 +4,15 @@ import static org.junit.Assert.*;
 
     public class CompressionTest {
 
+//        @Test
+//        public void compressBook() {
+//            Compress c = new Compress();
+//            InputOutput io = new InputOutput();
+//            String originalFile = io.readFile("book");
+//            c.processInput(originalFile);
+//            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+//        }
+
         @Test
         public void writeFile() {
             Compress c = new Compress();

@@ -44,13 +44,19 @@ public class Decompress {
                 NonTerminal nt = new NonTerminal(nonTerminal.getRule());
                 c.getFirstRule().addNextSymbol(nt);
             }
-            else { // repeated nonterminal that has already been seen twice
-                char cb = input.charAt(position);
-                Integer i = Character.getNumericValue(cb); // get marker indicator from string
+            else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
+                // get index from within brackets
+                String symbol = "";
+                position++;
+                while (input.charAt(position) != ']') {
+                    symbol += input.charAt(position);
+                    position++;
+                } // repeated nonterminal that has already been seen twice
+                Integer i = Integer.valueOf(symbol); // get marker indicator from string
                 NonTerminal nonTerminal = new NonTerminal(marker.get(i).getRule()); // get rule from hashmap
                 c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
             }
-            System.out.println("Rule " + c.getFirstRule().getRuleString());
+            //System.out.println("Rule " + c.getFirstRule().getRuleString());
             position++; // increase position in string
         }
 
@@ -80,7 +86,7 @@ public class Decompress {
                 // move links around as symbols are added to rule
                 nonTerminal.assignRight(nonTerminal.getRight().getRight()); // assign next symbol in order
                 nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
-                System.out.println("Rule " + nonTerminal + " > " + nonTerminal.getRule().getRuleString());
+                //System.out.println("Rule " + nonTerminal + " > " + nonTerminal.getRule().getRuleString());
             }
             // assign new right of terminals left to the nonterminal
             nonTerminal.getRight().assignLeft(nonTerminal);

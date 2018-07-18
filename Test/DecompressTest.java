@@ -93,19 +93,46 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
-    //cdbcadbcabbcabc
+    //
     //cdbcadbcabcabc
     @Test
     public void buildGrammar10() {
         Decompress d = new Decompress();
         Compress c = new Compress();
-        String compress = "dbcadbcabcabc"; //tODO problem is probably two unevaluated rules in a row
+        String compress = "dbcadbcabcabc";
         c.processInput(compress);
         System.out.println(c.printRules());
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
         System.out.println(input);
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
+
+    @Test
+    public void buildGrammar11() { // multiple rules that are not decompressed
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        String compress = "cdbcadbcabbcabc";
+        c.processInput(compress);
+        System.out.println(c.printRules());
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
+        assertEquals(compress, d.decompress(d.buildGrammar(input)));
+    }
+
+
+    @Test
+    public void buildGrammar12() { //TODO have to handle how nonterminal symbols are indicated
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        String compress = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA";
+        c.processInput(compress);
+        System.out.println(c.printRules());
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
+        assertEquals(compress, d.decompress(d.buildGrammar(input)));
+    }
+
+
 
     @Test
     public void decompress() {

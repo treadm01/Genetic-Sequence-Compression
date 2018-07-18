@@ -236,7 +236,7 @@ public class Compress {
                     output += "(" + nt.rule.position + ")"; // rule seen second time send a pointer back to it
                 }
                 else {
-                    output += nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
+                    output += "[" + nt.rule.position + "]"; // from then on just print the rule number, the marker orginally assigned to it
                 }
             }
             else {

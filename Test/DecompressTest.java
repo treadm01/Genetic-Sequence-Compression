@@ -121,10 +121,10 @@ public class DecompressTest {
 
 
     @Test
-    public void buildGrammar12() { //TODO have to handle how nonterminal symbols are indicated
+    public void buildGrammar12() {
         Decompress d = new Decompress();
         Compress c = new Compress();
-        String compress = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA";
+        String compress = "abc";
         c.processInput(compress);
         System.out.println(c.printRules());
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
@@ -132,6 +132,34 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
+    @Test
+    public void buildGrammar13() { // comparison failure todo clean code find bug, find smallest string that does this
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String compress = io.readFile("30000");
+        c.processInput(compress);
+        System.out.println(c.printRules());
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
+        assertEquals(compress, d.decompress(d.buildGrammar(input)));
+    }
+
+
+    @Test
+    public void quickCheck() {
+        assertTrue(check("45000"));
+    }
+
+    public Boolean check(String s) {
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String compress = io.readFile(s);
+        c.processInput(compress);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        return compress.equals(d.decompress(d.buildGrammar(input)));
+    }
 
 
     @Test

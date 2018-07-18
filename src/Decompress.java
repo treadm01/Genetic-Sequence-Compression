@@ -16,7 +16,15 @@ public class Decompress {
             if (input.charAt(position) == 'M') { // if a marker create rule for it and position it there
                 position++; // move again to get length
                 Rule r = new Rule();
-                r.length = Character.getNumericValue(input.charAt(position)); // rule length known from next symbol
+                // TODO rule length could be more than one
+                String length = "";
+                while (Character.isDigit(input.charAt(position))) {
+                    length += input.charAt(position);
+                    position++;
+                }
+                position--;
+                Integer i = Integer.valueOf(length); // get marker indicator from string
+                r.length = i; // rule length known from next symbol
                 NonTerminal nonTerminal = new NonTerminal(r);
                 c.getFirstRule().addNextSymbol(nonTerminal); // creating rule
                 makerNum++; // new rule made

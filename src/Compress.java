@@ -233,6 +233,7 @@ public class Compress {
                     //nt.rule.index = count; // give index as the time seen
                     //count+=2;
                     nt.rule.timeSeen++;
+                    //TODO removing right hand side symb ) helps with compression
                     output += "(" + nt.rule.position + ")"; // rule seen second time send a pointer back to it
                 }
                 else {

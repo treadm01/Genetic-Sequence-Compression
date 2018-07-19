@@ -5,12 +5,11 @@ public class Compress {
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     HashSet<Rule> rules;
-    int markerNum = 0;
+    int markerNum = 0; // todo set to 0 check if issue later
     List<Integer> adjustedMarkers = new ArrayList<>();
 
-    //TODO check that encoded can be decompressed in principal, position of start of rule etc
-    //TODO how to encode
-    //TODO how to decompress
+    //TODO keeping odd and even
+    //TODO characters will be as long? or given smallest binary for number of characters?
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -224,26 +223,26 @@ public class Compress {
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
-                    adjustedMarkers.add(markerNum);
+                    adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     output += "#";
 
+                    // length is often 2 so only add if not
                     if (nt.getRule().length != 2) {
                         output += nt.getRule().length;
                     }
 
-                    //TODO storing length with marker helps when dealing with rules that have yet to be unpacked
                     markerNum++;
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
                 else if (nt.rule.timeSeen == 1) {
                     //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
-                    int index = adjustedMarkers.indexOf(nt.rule.position);
-                    //output += "(" + nt.rule.position; // rule seen second time send a pointer back to it
-                    output += "(" + index;
-                    adjustedMarkers.remove(index);
+                    int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
+                    output += "(" + index; // the index of the rule position can be used instead but corresponds to the correct value
+                    adjustedMarkers.remove(index);// remove when used
                 }
                 else {
+                    //TODO can use similar method for nonterminal symbols???
                     output += "[" + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
                 }
             }

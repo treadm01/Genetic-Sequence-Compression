@@ -11,11 +11,11 @@ public class Decompress {
 
     //TODO CLEAN UP!!!
     //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
+    //TODO remember most rules are two....
     public Rule buildGrammar(String ruleString) {
         input = ruleString; //todo use by getter and setter
         c = new Compress();// todo split out the methods used by both
         while (position < input.length()) {
-            //TODO seems to be adding extra item to list, so might not be iterating properly
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
                 int length = 2; // most often the length will be 2
                 if (Character.isDigit(input.charAt(position + 1))) { // if the next position is a length not 2
@@ -24,7 +24,7 @@ public class Decompress {
                 Rule r = new Rule();
                 r.length = length; // rule length known from next symbol
                 addNonTerminal(r); // add nonterminal to rule
-                adjustedMarkers.add(marker.size());
+                adjustedMarkers.add(marker.size()); // add position of rule created to list which can then be used in place of the rule number iteself
                 marker.put(marker.size(), (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
             else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it to first rule
@@ -32,14 +32,14 @@ public class Decompress {
             }
             else if (input.charAt(position) == '(') { // if a pointer deal with it and its rule
                 int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
-                NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos));
-                adjustedMarkers.remove(pos); //TODO what about evaluate rules..
+                NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
+                adjustedMarkers.remove(pos); // remove from the list
                 evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
                 addNonTerminal(nonTerminal.getRule());
             }
             else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
                 int pos = retrieveStringSegment();
-                addNonTerminal(marker.get(pos).getRule()); // starting from 0 todo chekc if an issue, was 1
+                addNonTerminal(marker.get(pos).getRule());
             }
             position++; // increase position in string
         }

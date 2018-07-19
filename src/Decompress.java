@@ -1,24 +1,21 @@
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 public class Decompress {
     HashMap<Integer, NonTerminal> marker = new HashMap<>();
-    HashSet<Character> stops = new HashSet<>();
     int position = 0; // for walking through the actual string, todo see if replaceable with for loop
     String input;
     Compress c;
+    List<Integer> adjustedMarkers = new ArrayList<>();
 
     //TODO CLEAN UP!!!
-    //TODO make sure working for diferent widths, longer that n
-    //TODO using compression methods....
-    //TODO multiple rule symbols after each other, how to differentiate if just numbers
-    //TODO if indicators around nonterminal symbols are used, could remove marker M symbol....would need to specify the length of the length
-
     //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
     public Rule buildGrammar(String ruleString) {
         input = ruleString; //todo use by getter and setter
         c = new Compress();// todo split out the methods used by both
         while (position < input.length()) {
+            //TODO seems to be adding extra item to list, so might not be iterating properly
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
                 int length = 2; // most often the length will be 2
                 if (Character.isDigit(input.charAt(position + 1))) { // if the next position is a length not 2
@@ -27,20 +24,22 @@ public class Decompress {
                 Rule r = new Rule();
                 r.length = length; // rule length known from next symbol
                 addNonTerminal(r); // add nonterminal to rule
-                marker.put(marker.size()+1, (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
+                adjustedMarkers.add(marker.size());
+                marker.put(marker.size(), (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
             else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it to first rule
                 c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
             }
             else if (input.charAt(position) == '(') { // if a pointer deal with it and its rule
                 int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
-                NonTerminal nonTerminal = marker.get(pos);
+                NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos));
+                adjustedMarkers.remove(pos); //TODO what about evaluate rules..
                 evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
                 addNonTerminal(nonTerminal.getRule());
             }
             else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
                 int pos = retrieveStringSegment();
-                addNonTerminal(marker.get(pos).getRule());
+                addNonTerminal(marker.get(pos).getRule()); // starting from 0 todo chekc if an issue, was 1
             }
             position++; // increase position in string
         }

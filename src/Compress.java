@@ -5,8 +5,8 @@ public class Compress {
     private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     HashSet<Rule> rules;
-    int markerNum = 1;
-    int markerDifference = 0;
+    int markerNum = 0;
+    List<Integer> adjustedMarkers = new ArrayList<>();
 
     //TODO check that encoded can be decompressed in principal, position of start of rule etc
     //TODO how to encode
@@ -224,6 +224,7 @@ public class Compress {
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
+                    adjustedMarkers.add(markerNum);
                     output += "#";
 
                     if (nt.getRule().length != 2) {
@@ -237,7 +238,10 @@ public class Compress {
                 else if (nt.rule.timeSeen == 1) {
                     //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
-                    output += "(" + nt.rule.position; // rule seen second time send a pointer back to it
+                    int index = adjustedMarkers.indexOf(nt.rule.position);
+                    //output += "(" + nt.rule.position; // rule seen second time send a pointer back to it
+                    output += "(" + index;
+                    adjustedMarkers.remove(index);
                 }
                 else {
                     output += "[" + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it

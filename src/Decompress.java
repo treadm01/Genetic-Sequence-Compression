@@ -16,30 +16,30 @@ public class Decompress {
 
     //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
     public Rule buildGrammar(String ruleString) {
-        input = ruleString;
-        c = new Compress();
+        input = ruleString; //todo use by getter and setter
+        c = new Compress();// todo split out the methods used by both
         while (position < input.length()) {
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
-                int pos = 2;
-                if (Character.isDigit(input.charAt(position + 1))) {
-                    pos = retrieveNonTerminalSymbol();
+                int length = 2; // most often the length will be 2
+                if (Character.isDigit(input.charAt(position + 1))) { // if the next position is a length not 2
+                    length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
                 }
                 Rule r = new Rule();
-                r.length = pos; // rule length known from next symbol
-                addNonTerminal(r);
+                r.length = length; // rule length known from next symbol
+                addNonTerminal(r); // add nonterminal to rule
                 marker.put(marker.size()+1, (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
             else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it to first rule
                 c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
             }
             else if (input.charAt(position) == '(') { // if a pointer deal with it and its rule
-                int pos = retrieveNonTerminalSymbol();
+                int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
                 NonTerminal nonTerminal = marker.get(pos);
-                evaluateRule(nonTerminal);
+                evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
                 addNonTerminal(nonTerminal.getRule());
             }
             else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
-                int pos = retrieveNonTerminalSymbol();
+                int pos = retrieveStringSegment();
                 addNonTerminal(marker.get(pos).getRule());
             }
             position++; // increase position in string
@@ -47,24 +47,22 @@ public class Decompress {
         return c.getFirstRule();
     }
 
-    public int retrieveNonTerminalSymbol() {
-        position++;
-        String symbol = retrieveStringSegment();
-        position--;
-        Integer i = Integer.valueOf(symbol); // get marker indicator from string
-        return i;
-    }
-
-    public String retrieveStringSegment() {
+    /**
+     * loop through the string where a number occurs until no longer a digit
+     * retrieve the int value of all those digits
+     * @return
+     */
+    public int retrieveStringSegment() {
         String symbol = "";
-        while (Character.isDigit(input.charAt(position))) {
-            symbol += input.charAt(position);
+        while (Character.isDigit(input.charAt(position + 1))) {
+            symbol += input.charAt(position + 1);
             position++;
-            if (position >= input.length()) {
+            if (position + 1 >= input.length()) { //todo if it reaches the end of the string then break
+                //todo try to remove need to do this
                 break;
             }
         }
-        return symbol;
+        return Integer.valueOf(symbol);
     }
 
     public void addNonTerminal(Rule rule) {
@@ -77,13 +75,13 @@ public class Decompress {
      * recursively loop through rules and their lengths
      * @param nonTerminal
      */
+    //TODO clean up
     public void evaluateRule(NonTerminal nonTerminal) {
         if (!nonTerminal.getRule().compressed) {
             nonTerminal.getRule().compressed = true;
             // for the length of the rule add it's neighbours (what the rule refers to) to the rule
             for (int z = 0; z < nonTerminal.rule.length; z++) {
                 //sometimes a rule is not yet evaluated and this needs to be gone over
-                //TODO specifically needs to be an uncompressed rule....
                 if (nonTerminal.getRight() instanceof NonTerminal) { // if next symbol is an uncompressed rule
                     NonTerminal nt = (NonTerminal) nonTerminal.getRight();
                     if (!nt.getRule().compressed) {

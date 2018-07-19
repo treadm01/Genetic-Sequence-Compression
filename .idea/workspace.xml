@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/DecompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/DecompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Decompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decompress.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,11 +28,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Decompress.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Decompress.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Decompress.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+              <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -41,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DecompressTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DecompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+            <state relative-caret-position="126">
+              <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
               <folding>
                 <element signature="e#8806#8807#0" expanded="true" />
                 <element signature="e#8848#8849#0" expanded="true" />
@@ -586,14 +585,7 @@
       <workItem from="1531816759202" duration="7032000" />
       <workItem from="1531826195168" duration="14197000" />
       <workItem from="1531854483690" duration="1820000" />
-      <workItem from="1531899904661" duration="31460000" />
-    </task>
-    <task id="LOCAL-00139" summary="checking existing rules and adding links">
-      <created>1530885903839</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1530885903839</updated>
+      <workItem from="1531899904661" duration="32628000" />
     </task>
     <task id="LOCAL-00140" summary="getting closer">
       <created>1530888829801</created>
@@ -931,43 +923,50 @@
       <option name="project" value="LOCAL" />
       <updated>1531999362540</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <task id="LOCAL-00188" summary="cleaned up slightly, still messy">
+      <created>1532002666126</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1532002666126</updated>
+    </task>
+    <option name="localTasksCounter" value="189" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 12h 32m 11s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 12h 43m 10s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest - 2018.07.19 at 12h 43m 25s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 01m 56s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 06m 33s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest - 2018.07.19 at 13h 06m 52s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 07m 46s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 07m 53s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 08m 10s.xml">
-      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="DecompressTest - 2018.07.19 at 13h 08m 29s.xml">
+      <configuration name="DecompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 15m 40s.xml">
+      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest - 2018.07.19 at 13h 15m 59s.xml">
+      <configuration name="DecompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 27m 19s.xml">
+      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest - 2018.07.19 at 13h 30m 04s.xml">
+      <configuration name="DecompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 31m 25s.xml">
+      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 31m 52s.xml">
+      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest - 2018.07.19 at 13h 32m 11s.xml">
+      <configuration name="DecompressTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar - 2018.07.19 at 13h 33m 56s.xml">
+      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest - 2018.07.19 at 13h 34m 16s.xml">
       <configuration name="DecompressTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="801424000" />
+    <option name="totallyTimeSpent" value="802592000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1006,7 +1005,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="occasionally getting recursive rules, different grammars produced somehow" />
     <MESSAGE value="close to seeing what is going on.." />
     <MESSAGE value="only adding digrams once and then handling the removal of digrams that might be overlap. Needs cleaning up but passes tests" />
     <MESSAGE value="keeping rule count in class" />
@@ -1031,7 +1029,8 @@
     <MESSAGE value="had to deal with width of length... needs cleaning" />
     <MESSAGE value="added some tests" />
     <MESSAGE value="trying to reduce marker method as much as possible before using other methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to reduce marker method as much as possible before using other methods" />
+    <MESSAGE value="cleaned up slightly, still messy" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned up slightly, still messy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1255,23 +1254,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Decompress.java">
+    <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="126">
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#8806#8807#0" expanded="true" />
+            <element signature="e#8848#8849#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
+    <entry file="file://$PROJECT_DIR$/src/Decompress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="11" column="33" lean-forward="true" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        <state relative-caret-position="18">
+          <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
           <folding>
-            <element signature="e#8806#8807#0" expanded="true" />
-            <element signature="e#8848#8849#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

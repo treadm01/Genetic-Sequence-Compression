@@ -39,6 +39,7 @@ public class Compress {
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
+        //System.out.println(rules.size());
 
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
@@ -223,7 +224,12 @@ public class Compress {
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
-                    output += "M" + nt.getRule().length;//nt.rule.position; // store length with marker
+                    output += "#";
+
+                    if (nt.getRule().length != 2) {
+                        output += nt.getRule().length;
+                    }
+
                     //TODO storing length with marker helps when dealing with rules that have yet to be unpacked
                     markerNum++;
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
@@ -234,10 +240,10 @@ public class Compress {
                     //count+=2;
                     nt.rule.timeSeen++;
                     //TODO removing right hand side symb ) helps with compression
-                    output += "(" + nt.rule.position + ")"; // rule seen second time send a pointer back to it
+                    output += "(" + nt.rule.position; // rule seen second time send a pointer back to it
                 }
                 else {
-                    output += "[" + nt.rule.position + "]"; // from then on just print the rule number, the marker orginally assigned to it
+                    output += "[" + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
                 }
             }
             else {

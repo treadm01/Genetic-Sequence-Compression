@@ -10,7 +10,12 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("15000");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println(compare);
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -19,7 +24,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("testLong");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -28,7 +37,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("chmpxx");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -37,7 +50,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("chntxx");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -46,7 +63,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("hehcmv");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -55,7 +76,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("humdyst");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -64,7 +89,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("humghcs");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -73,7 +102,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("humhbb");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -82,7 +115,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("vaccg");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -91,7 +128,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("mtpacga");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -100,7 +141,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("mpomtcg");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -109,7 +154,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("humprtb");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
         @Test
@@ -118,7 +167,11 @@ import static org.junit.Assert.*;
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("humhdab");
             c.processInput(originalFile);
-            assertTrue(c.encode(c.getFirstRule().getGuard().getRight(), "").length() < originalFile.length());
+            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
+            System.out.println("original " + originalFile.length());
+            System.out.println("compressed " + compare.length());
+            System.out.println("Difference " + (originalFile.length() - compare.length()));
+            assertTrue(compare.length() < originalFile.length());
         }
 
 }

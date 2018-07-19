@@ -1,28 +1,41 @@
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Decompress {
     HashMap<Integer, NonTerminal> marker = new HashMap<>();
+    HashSet<Character> stops = new HashSet<>();
+    int position = 0; // for walking through the actual string, todo see if replaceable with for loop
+    String input;
 
-    //TODO clean up
+    //TODO CLEAN UP!!!
     //TODO make sure working for diferent widths, longer that n
     //TODO using compression methods....
     //TODO multiple rule symbols after each other, how to differentiate if just numbers
-    //TODO if indicators around nonterminal symbols are used, could remove marker M symbol....
-    public Rule buildGrammar(String input) {
+    //TODO if indicators around nonterminal symbols are used, could remove marker M symbol....would need to specify the length of the length
+
+    //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
+    public Rule buildGrammar(String ruleString) {
+        input = ruleString;
+        stops.add('(');
+        stops.add('[');
+        stops.add('#');
         Compress c = new Compress();
-        int position = 0; // for walking through the actual string, todo see if replaceable with for loop
         int makerNum = 0; // to keep implicit index of rules made
         while (position < input.length()) {
-            if (input.charAt(position) == 'M') { // if a marker create rule for it and position it there
+            if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
                 position++; // move again to get length
                 Rule r = new Rule();
-                // TODO rule length could be more than one
                 String length = "";
-                while (Character.isDigit(input.charAt(position))) {
-                    length += input.charAt(position);
-                    position++;
+
+                // if no length, means it is two
+                if (!Character.isDigit(input.charAt(position))) {
+                    length = "2";
                 }
-                position--;
+                else {
+                    length = retrieveStringSegment();
+                }
+                position--; // TODO have to pull back one as final place will be next check.....
+
                 Integer i = Integer.valueOf(length); // get marker indicator from string
                 r.length = i; // rule length known from next symbol
                 NonTerminal nonTerminal = new NonTerminal(r);
@@ -34,49 +47,49 @@ public class Decompress {
                 c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
             }
             else if (input.charAt(position) == '(') { // if a pointer deal with it and its rule
-                // get index from within brackets
-                String index = "";
-                position++;
-                while (input.charAt(position) != ')') {
-                    index += input.charAt(position);
-                    position++;
-                }
-
-                // convert index to int to get corresponding rule from nonterminal
-                Integer i = Integer.valueOf(index);
-                NonTerminal nonTerminal = marker.get(i);
-
+                int pos = retrieveNonTerminalSymbol();
+                NonTerminal nonTerminal = marker.get(pos);
                 evaluateRule(nonTerminal);
-
                 // add the second instance of nonterminal where the pointer was
                 NonTerminal nt = new NonTerminal(nonTerminal.getRule());
                 c.getFirstRule().addNextSymbol(nt);
             }
             else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
                 // get index from within brackets
-                String symbol = "";
-                position++;
-                while (input.charAt(position) != ']') {
-                    symbol += input.charAt(position);
-                    position++;
-                } // repeated nonterminal that has already been seen twice
-                Integer i = Integer.valueOf(symbol); // get marker indicator from string
-                NonTerminal nonTerminal = new NonTerminal(marker.get(i).getRule()); // get rule from hashmap
+                int pos = retrieveNonTerminalSymbol();
+                NonTerminal nonTerminal = new NonTerminal(marker.get(pos).getRule()); // get rule from hashmap
                 c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
             }
-            //System.out.println("Rule " + c.getFirstRule().getRuleString());
             position++; // increase position in string
         }
-
-        // these three lines just for debugging, looking at the rules
-        c.rules.add(c.getFirstRule());
-        c.generateRules(c.getFirstRule().getGuard().getRight());
-        System.out.println(c.printRules());
-
         return c.getFirstRule();
     }
 
+    public int retrieveNonTerminalSymbol() {
+        position++;
+        String symbol = retrieveStringSegment();
+        position--;
+        Integer i = Integer.valueOf(symbol); // get marker indicator from string
+        return i;
+    }
 
+    public String retrieveStringSegment() {
+        String symbol = "";
+        while (Character.isDigit(input.charAt(position))) {
+            symbol += input.charAt(position);
+            position++;
+            if (position >= input.length()) {
+                break;
+            }
+        }
+        return symbol;
+    }
+
+
+    /**
+     * recursively loop through rules and their lengths
+     * @param nonTerminal
+     */
     public void evaluateRule(NonTerminal nonTerminal) {
         if (!nonTerminal.getRule().compressed) {
             nonTerminal.getRule().compressed = true;

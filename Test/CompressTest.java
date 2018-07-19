@@ -216,11 +216,12 @@ public class CompressTest {
     }
 
 
+    // TODO thought speed of book was comparable when printing out, seems slow again(?)
     @Test
     public void writeFile() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("testLong");
+        String originalFile = io.readFile("book");
         c.processInput(originalFile);
     }
 

@@ -6,6 +6,7 @@ public class Decompress {
     HashSet<Character> stops = new HashSet<>();
     int position = 0; // for walking through the actual string, todo see if replaceable with for loop
     String input;
+    Compress c;
 
     //TODO CLEAN UP!!!
     //TODO make sure working for diferent widths, longer that n
@@ -16,32 +17,17 @@ public class Decompress {
     //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
     public Rule buildGrammar(String ruleString) {
         input = ruleString;
-        stops.add('(');
-        stops.add('[');
-        stops.add('#');
-        Compress c = new Compress();
-        int makerNum = 0; // to keep implicit index of rules made
+        c = new Compress();
         while (position < input.length()) {
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
-                position++; // move again to get length
+                int pos = 2;
+                if (Character.isDigit(input.charAt(position + 1))) {
+                    pos = retrieveNonTerminalSymbol();
+                }
                 Rule r = new Rule();
-                String length = "";
-
-                // if no length, means it is two
-                if (!Character.isDigit(input.charAt(position))) {
-                    length = "2";
-                }
-                else {
-                    length = retrieveStringSegment();
-                }
-                position--; // TODO have to pull back one as final place will be next check.....
-
-                Integer i = Integer.valueOf(length); // get marker indicator from string
-                r.length = i; // rule length known from next symbol
-                NonTerminal nonTerminal = new NonTerminal(r);
-                c.getFirstRule().addNextSymbol(nonTerminal); // creating rule
-                makerNum++; // new rule made
-                marker.put(makerNum, nonTerminal); // add rule to hashmap
+                r.length = pos; // rule length known from next symbol
+                addNonTerminal(r);
+                marker.put(marker.size()+1, (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
             else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it to first rule
                 c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
@@ -50,15 +36,11 @@ public class Decompress {
                 int pos = retrieveNonTerminalSymbol();
                 NonTerminal nonTerminal = marker.get(pos);
                 evaluateRule(nonTerminal);
-                // add the second instance of nonterminal where the pointer was
-                NonTerminal nt = new NonTerminal(nonTerminal.getRule());
-                c.getFirstRule().addNextSymbol(nt);
+                addNonTerminal(nonTerminal.getRule());
             }
             else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
-                // get index from within brackets
                 int pos = retrieveNonTerminalSymbol();
-                NonTerminal nonTerminal = new NonTerminal(marker.get(pos).getRule()); // get rule from hashmap
-                c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
+                addNonTerminal(marker.get(pos).getRule());
             }
             position++; // increase position in string
         }
@@ -83,6 +65,11 @@ public class Decompress {
             }
         }
         return symbol;
+    }
+
+    public void addNonTerminal(Rule rule) {
+        NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
+        c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
     }
 
 

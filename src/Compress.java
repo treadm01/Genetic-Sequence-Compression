@@ -6,7 +6,7 @@ public class Compress {
     private Rule firstRule; // main rule
     HashSet<Rule> rules;
     int markerNum = 1;
-    int count = 2;
+    int markerDifference = 0;
 
     //TODO check that encoded can be decompressed in principal, position of start of rule etc
     //TODO how to encode
@@ -235,11 +235,8 @@ public class Compress {
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
                 else if (nt.rule.timeSeen == 1) {
-                    // TODO count is the index with which the rules are created implicitly, need to decide whterher to use
-                    //nt.rule.index = count; // give index as the time seen
-                    //count+=2;
+                    //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
-                    //TODO removing right hand side symb ) helps with compression
                     output += "(" + nt.rule.position; // rule seen second time send a pointer back to it
                 }
                 else {

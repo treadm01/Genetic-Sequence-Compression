@@ -21,6 +21,7 @@ public class DecompressTest {
         String compress = "aaabcabaa";
         c.processInput(compress);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
@@ -95,8 +96,6 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
-    //
-    //cdbcadbcabcabc
     @Test
     public void buildGrammar10() {
         Decompress d = new Decompress();
@@ -104,6 +103,7 @@ public class DecompressTest {
         String compress = "dbcadbcabcabc";
         c.processInput(compress);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
@@ -114,6 +114,7 @@ public class DecompressTest {
         String compress = "cdbcadbcabbcabc";
         c.processInput(compress);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println(input);
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 

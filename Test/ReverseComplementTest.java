@@ -8,6 +8,15 @@ public class ReverseComplementTest {
     // reverse oder first and then switch
     // so cg = gc convert cg, either either, gc -> swap cg
     @Test
+    public void checkDigrams() {
+        String input = "acg";
+        Compress c = new Compress();
+        c.processInput(input);
+        assertEquals("g t, a c, c g, ", c.printDigrams());
+    }
+
+
+    @Test
     public void simpleReverseComplement() {
         String input = "acgtcgacgt";
 

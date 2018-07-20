@@ -33,8 +33,22 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
-            getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
+            char symbol = input.charAt(i);
+            getFirstRule().addNextSymbol(new Terminal(symbol));
             checkDigram(getFirstRule().getLast());
+
+            // create left complement
+            Terminal left = new Terminal(getComplement(symbol));
+            // todo pain to get original value,
+            //todo what if left symobl is n olonger a termianl
+            char oldChar = getFirstRule().getLast().getLeft().toString().charAt(0);
+            Terminal right = new Terminal(getComplement(oldChar));
+            left.assignRight(right);
+            right.assignLeft(left);
+            addToDigramMap(right);
+
+            // just reverse complement here? or could happen other places, reverse complement of nonterminals?
+            // need a separate method to add to the digram map, rule is not immediately affected
         }
 
         rules.add(getFirstRule());
@@ -46,6 +60,27 @@ public class Compress {
         //System.out.println(printRules());
 
         //System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
+    }
+
+    public void addToDigramMap(Symbol symbol) {
+        digramMap.putIfAbsent(symbol, symbol);
+    }
+
+    public char getComplement(char symbol) {
+        char complement = 0;
+        if (symbol == 'a') {
+            complement = 't';
+        }
+        else if (symbol == 'c') {
+            complement = 'g';
+        }
+        else if (symbol == 'g') {
+            complement = 'c';
+        }
+        else if (symbol == 't') {
+            complement = 'a';
+        }
+        return complement;
     }
 
     /**
@@ -282,11 +317,12 @@ public class Compress {
     /**
      * prints out all the digrams added to the digram map
      */
-    public void printDigrams() {
+    public String printDigrams() {
+        String output = "";
         for (Symbol s : digramMap.values()) {
-            System.out.print(s.getLeft() + " " + s + ", ");
+            output += s.getLeft() + " " + s + ", ";
         }
-        System.out.println();
+        return output;
     }
 
 

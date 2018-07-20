@@ -151,7 +151,7 @@ public class DecompressTest {
         c.processInput(originalFile);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
         System.out.println(input);
-        //assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
+        assertEquals(originalFile, d.decompress(d.buildGrammar(input)));
     }
 
     @Test

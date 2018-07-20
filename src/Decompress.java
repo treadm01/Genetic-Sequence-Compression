@@ -8,6 +8,7 @@ public class Decompress {
     String input;
     Compress c;
     List<Integer> adjustedMarkers = new ArrayList<>();
+    int previousMarker = 0;
 
     //TODO CLEAN UP!!!
     //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
@@ -39,6 +40,13 @@ public class Decompress {
             }
             else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
                 int pos = retrieveStringSegment();
+                previousMarker = pos;
+                addNonTerminal(marker.get(pos).getRule());
+            }
+            else if (input.charAt(position) == '{') { // if a pointer deal with it and its rule
+                int value = retrieveStringSegment();
+                int pos = value + previousMarker;
+                previousMarker = value;
                 addNonTerminal(marker.get(pos).getRule());
             }
             position++; // increase position in string
@@ -68,7 +76,6 @@ public class Decompress {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
         c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
     }
-
 
     /**
      * recursively loop through rules and their lengths

@@ -7,6 +7,7 @@ public class Compress {
     HashSet<Rule> rules;
     int markerNum = 0; // todo set to 0 check if issue later
     List<Integer> adjustedMarkers = new ArrayList<>();
+    int previousMarker = 0;
 
     //TODO keeping odd and even
     //TODO characters will be as long? or given smallest binary for number of characters?
@@ -243,8 +244,16 @@ public class Compress {
                 }
                 else {
                     //TODO can use similar method for nonterminal symbols???
-                    output += "[" + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
-                }
+                    //output += "[" + nt.rule.position;
+                        if (nt.getRule().position > previousMarker) {
+                            output += "{" + (nt.rule.position - previousMarker);
+                            previousMarker = nt.rule.position - previousMarker;
+                        }
+                        else {
+                            output += "[" + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
+                            previousMarker = nt.rule.position;
+                        }
+                    }
             }
             else {
                 output += current; // add regular symbols to it

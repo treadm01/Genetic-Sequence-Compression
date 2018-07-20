@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/DecompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/DecompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Decompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decompress.java" afterDir="false" />
     </list>
@@ -16,14 +17,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Compress.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="11" column="89" selection-start-line="11" selection-start-column="89" selection-end-line="11" selection-end-column="89" />
+            <state>
+              <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
               <folding>
-                <element signature="e#11786#11787#0" expanded="true" />
-                <element signature="e#11823#11824#0" expanded="true" />
+                <element signature="e#12302#12303#0" expanded="true" />
+                <element signature="e#12339#12340#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -32,8 +33,8 @@
       <file leaf-file-name="Decompress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Decompress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="41" column="58" selection-start-line="41" selection-start-column="58" selection-end-line="41" selection-end-column="58" />
+            <state relative-caret-position="162">
+              <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -41,15 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DecompressTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DecompressTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1854">
-              <caret line="105" column="26" selection-start-line="105" selection-start-column="26" selection-end-line="105" selection-end-column="26" />
-              <folding>
-                <element signature="e#8806#8807#0" expanded="true" />
-                <element signature="e#8848#8849#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="92">
+              <caret line="149" column="32" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -58,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
-              <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+              <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -69,8 +66,8 @@
       <file leaf-file-name="CompressionTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="180">
+              <caret line="10" column="47" lean-forward="true" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,8 +78,7 @@
       <file leaf-file-name="EncodingTechniqueTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/EncodingTechniqueTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1663">
-              <caret lean-forward="true" />
+            <state>
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -103,8 +99,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>decompre</find>
-      <find>creater</find>
       <find>abcdbcabcdabcdbcabcdabcdbc</find>
       <find>createru</find>
       <find>abcdbcabcdabcdbcabcdbcabcd</find>
@@ -125,14 +119,16 @@
       <find>printr</find>
       <find>printru</find>
       <find>lastpo</find>
-      <find>vacc</find>
       <find>M</find>
       <find>'M</find>
-      <find>vaccg</find>
       <find>adjustedma</find>
       <find>sys</find>
-      <find>encode</find>
       <find>retrieve</find>
+      <find>191</find>
+      <find>enco</find>
+      <find>vaccg</find>
+      <find>encode</find>
+      <find>vacc</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -195,10 +191,10 @@
         <option value="$PROJECT_DIR$/textFiles/30000" />
         <option value="$PROJECT_DIR$/Test/CompressTest.java" />
         <option value="$PROJECT_DIR$/Test/EncodingTechniqueTest.java" />
-        <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
         <option value="$PROJECT_DIR$/Test/DecompressTest.java" />
-        <option value="$PROJECT_DIR$/src/Decompress.java" />
+        <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
         <option value="$PROJECT_DIR$/src/Compress.java" />
+        <option value="$PROJECT_DIR$/src/Decompress.java" />
       </list>
     </option>
   </component>
@@ -223,7 +219,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -251,6 +246,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -296,23 +292,6 @@
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="CompressionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CompressionTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
     <configuration name="DecompressTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -347,13 +326,13 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="DecompressTest.buildGrammar3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.buildGrammar11" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DecompressTest" />
-      <option name="METHOD_NAME" value="buildGrammar3" />
+      <option name="METHOD_NAME" value="buildGrammar11" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -364,13 +343,30 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="DecompressTest.buildGrammar7" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.buildGrammar13" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DecompressTest" />
-      <option name="METHOD_NAME" value="buildGrammar7" />
+      <option name="METHOD_NAME" value="buildGrammar13" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="DecompressTest.chmpxxDE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DecompressTest" />
+      <option name="METHOD_NAME" value="chmpxxDE" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -420,19 +416,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.DecompressTest.buildGrammar3" />
-      <item itemvalue="JUnit.DecompressTest" />
-      <item itemvalue="JUnit.DecompressTest.buildGrammar7" />
       <item itemvalue="JUnit.DecompressTest.buildGrammar10" />
-      <item itemvalue="JUnit.CompressionTest" />
+      <item itemvalue="JUnit.DecompressTest.buildGrammar11" />
+      <item itemvalue="JUnit.DecompressTest.buildGrammar13" />
+      <item itemvalue="JUnit.DecompressTest.chmpxxDE" />
+      <item itemvalue="JUnit.DecompressTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.DecompressTest" />
-        <item itemvalue="JUnit.CompressionTest" />
+        <item itemvalue="JUnit.DecompressTest.chmpxxDE" />
+        <item itemvalue="JUnit.DecompressTest.buildGrammar13" />
+        <item itemvalue="JUnit.DecompressTest.buildGrammar11" />
         <item itemvalue="JUnit.DecompressTest.buildGrammar10" />
-        <item itemvalue="JUnit.DecompressTest.buildGrammar7" />
-        <item itemvalue="JUnit.DecompressTest.buildGrammar3" />
       </list>
     </recent_temporary>
   </component>
@@ -586,14 +582,8 @@
       <workItem from="1531816759202" duration="7032000" />
       <workItem from="1531826195168" duration="14197000" />
       <workItem from="1531854483690" duration="1820000" />
-      <workItem from="1531899904661" duration="48574000" />
-    </task>
-    <task id="LOCAL-00143" summary="slower on bigger files..">
-      <created>1530890554047</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1530890554047</updated>
+      <workItem from="1531899904661" duration="48828000" />
+      <workItem from="1532073269130" duration="4477000" />
     </task>
     <task id="LOCAL-00144" summary="removing digram, bug removed, but still slower..">
       <created>1530894124925</created>
@@ -931,43 +921,50 @@
       <option name="project" value="LOCAL" />
       <updated>1532029467042</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="added some comments">
+      <created>1532030237863</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1532030237863</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DecompressTest_buildGrammar5 - 2018.07.19 at 20h 26m 41s.xml">
-      <configuration name="DecompressTest.buildGrammar5" configurationId="JUnit" />
+    <history-entry file="CompressionTest_vaccg - 2018.07.20 at 10h 23m 47s.xml">
+      <configuration name="CompressionTest.vaccg" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar4 - 2018.07.19 at 20h 26m 47s.xml">
-      <configuration name="DecompressTest.buildGrammar4" configurationId="JUnit" />
+    <history-entry file="CompressionTest_compressBook - 2018.07.20 at 10h 25m 10s.xml">
+      <configuration name="CompressionTest.compressBook" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_buildGrammar3 - 2018.07.19 at 20h 26m 51s.xml">
-      <configuration name="DecompressTest.buildGrammar3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest - 2018.07.19 at 20h 27m 09s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar7 - 2018.07.19 at 20h 27m 40s.xml">
-      <configuration name="DecompressTest.buildGrammar7" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.19 at 20h 28m 07s.xml">
-      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.19 at 20h 42m 43s.xml">
-      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="DecompressTest - 2018.07.19 at 20h 43m 07s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CompressionTest - 2018.07.19 at 20h 45m 11s.xml">
+    <history-entry file="CompressionTest - 2018.07.20 at 10h 26m 08s.xml">
       <configuration name="CompressionTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest - 2018.07.19 at 20h 45m 27s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
+    <history-entry file="DecompressTest_buildGrammar - 2018.07.20 at 10h 40m 46s.xml">
+      <configuration name="DecompressTest.buildGrammar" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar2 - 2018.07.20 at 10h 40m 50s.xml">
+      <configuration name="DecompressTest.buildGrammar2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar6 - 2018.07.20 at 10h 41m 00s.xml">
+      <configuration name="DecompressTest.buildGrammar6" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar10 - 2018.07.20 at 10h 41m 07s.xml">
+      <configuration name="DecompressTest.buildGrammar10" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar11 - 2018.07.20 at 10h 41m 13s.xml">
+      <configuration name="DecompressTest.buildGrammar11" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_buildGrammar13 - 2018.07.20 at 10h 41m 19s.xml">
+      <configuration name="DecompressTest.buildGrammar13" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_chmpxxDE - 2018.07.20 at 10h 41m 33s.xml">
+      <configuration name="DecompressTest.chmpxxDE" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="818538000" />
+    <option name="totallyTimeSpent" value="823269000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1019,7 +1016,6 @@
     <MESSAGE value="still trying to encode, putting the length after marker" />
     <MESSAGE value="pretty messy but working for some of the harder cases... need to deal with multiple nonterminal symbols probably" />
     <MESSAGE value="have to decide how to keep count of rules generated..." />
-    <MESSAGE value="added some comments" />
     <MESSAGE value="cleaned up slightly" />
     <MESSAGE value="added test to more easily check compression" />
     <MESSAGE value="messy and probably not safe but passing current tests" />
@@ -1031,7 +1027,8 @@
     <MESSAGE value="cleaned up a bit more" />
     <MESSAGE value="trying to reduce marker footprint" />
     <MESSAGE value="had to shift a few values around, original value for index, but working and some extra space gained by reducing markers as they are used" />
-    <option name="LAST_COMMIT_MESSAGE" value="had to shift a few values around, original value for index, but working and some extra space gained by reducing markers as they are used" />
+    <MESSAGE value="added some comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="added some comments" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1216,8 +1213,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/EncodingTechniqueTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1663">
-          <caret lean-forward="true" />
+        <state>
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1227,7 +1223,7 @@
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="18" column="40" lean-forward="true" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1236,29 +1232,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1854">
-          <caret line="105" column="26" selection-start-line="105" selection-start-column="26" selection-end-line="105" selection-end-column="26" />
-          <folding>
-            <element signature="e#8806#8807#0" expanded="true" />
-            <element signature="e#8848#8849#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Decompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="41" column="58" selection-start-line="41" selection-start-column="58" selection-end-line="41" selection-end-column="58" />
+        <state relative-caret-position="180">
+          <caret line="10" column="47" lean-forward="true" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1267,12 +1242,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="89" selection-start-line="11" selection-start-column="89" selection-end-line="11" selection-end-column="89" />
+        <state>
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
           <folding>
-            <element signature="e#11786#11787#0" expanded="true" />
-            <element signature="e#11823#11824#0" expanded="true" />
+            <element signature="e#12302#12303#0" expanded="true" />
+            <element signature="e#12339#12340#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Decompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="149" column="32" selection-start-line="149" selection-start-column="32" selection-end-line="149" selection-end-column="32" />
         </state>
       </provider>
     </entry>

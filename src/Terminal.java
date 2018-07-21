@@ -16,6 +16,23 @@ public class Terminal extends Symbol {
         return originalValue;
     }
 
+
+    @Override
+    public boolean equals(Object obj) {
+        //TODO add all checks
+        Symbol symbol = (Symbol) obj;
+
+        if (symbol.getLeft() instanceof NonTerminal) {
+            return ((representation == symbol.getRepresentation())
+                    && (left.representation == (symbol.left.getRepresentation()))
+                    && left.isComplement == symbol.left.isComplement
+            ); // switched check to look at left symbol ra
+        }
+        else {
+            return super.equals(obj);
+        }
+    }
+
 //    public long reverseSymbol() {
 //        char complement = 0;
 //        if (originalValue == 'a') {

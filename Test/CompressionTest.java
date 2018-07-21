@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
         public void compressBook() {
             Compress c = new Compress();
             InputOutput io = new InputOutput();
-            String originalFile = io.readFile("15000");
+            String originalFile = io.readFile("30000");
             c.processInput(originalFile);
             String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
             System.out.println(compare);
@@ -129,6 +129,7 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println(c.printRules());
             assertTrue(compare.length() < originalFile.length());
         }
 

@@ -70,28 +70,23 @@ public class Compress {
             // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
             Symbol existingDigram = digramMap.get(symbol); // existing digram
 
-            if (existingDigram.isComplement == symbol.isComplement) { // todo need a proper way to check that they are different is one value is a complement
-
-                if (existingDigram.getRight() == null) { // existing digram should be g2 and complement, it is implicit but not reverse
-                    symbol.isComplement = true; //todo needed???
+            // if the existing digram found was added as a complement, refer it to the orginal digram
+                if (existingDigram.getRight() == null) {
+                    symbol.isComplement = true; // set the symbol to true, so the instance of the nonterminal created is known to refer to the complement
                     existingDigram = existingDigram.complement;
                 }
 
-                //           existingDigram = existingDigram.getLeft().getLeft().getRight();
                 // if the matching digram is an overlap do nothing
                 if (existingDigram.getRight() != symbol) { // todo find a better way to place this
                     //if existing digram is a rule or not
 
                     // check whether the digram is an entire independent rule
-                    if (existingDigram.getLeft().getLeft().isGuard()
-                            && existingDigram.getRight().isGuard()) {
+                    if (existingDigram.getLeft().getLeft().isGuard() && existingDigram.getRight().isGuard()) {
                         existingRule(symbol, existingDigram);
                     } else { // if digram has been seen but has no rule yet, then create new rule
                         createRule(symbol, existingDigram);// .getLeft().getLeft().getRight().getRight());
                     }
                 }
-            }
-            else { digramMap.putIfAbsent(symbol, symbol);}
         }
         else { // digram not been seen before, add to digram map
             digramMap.putIfAbsent(symbol, symbol);
@@ -106,6 +101,7 @@ public class Compress {
             }
             else {
                 left = new Terminal(reverseSymbol(symbol.toString().charAt(0)));
+                left.isComplement = true; // set the values to true, so if the matching digram is found it knows to refer to the originally seen non complemet
             }
 
             if (symbol.getLeft() instanceof NonTerminal) {
@@ -115,6 +111,7 @@ public class Compress {
             }
             else {
                 right = new Terminal(reverseSymbol(symbol.getLeft().toString().charAt(0)));
+                right.isComplement = true;
             }
 
             // link together, add to map, think add guards??
@@ -387,5 +384,58 @@ public class Compress {
      */
     public Rule getFirstRule() {
         return this.firstRule;
+    }
+
+    /**
+     * for debugging, creates the string back from the cfg generated
+     * @param rule
+     * @return
+     */
+    public String decompress(Rule rule, Boolean complement) {
+        Symbol s;
+        StringBuilder output = new StringBuilder();
+        if (complement) {
+            s = rule.getLast();
+        }
+        else {
+            s = rule.getGuard().getRight();
+        }
+
+
+        do {
+            if (s instanceof Terminal) {
+                if (complement) {
+                    output.append(reverseSymbol(s.toString().charAt(0)));
+                }
+                else {
+                    output.append(s.toString());
+                }
+
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+            else {
+
+                if (complement) {
+                    output.append(decompress(((NonTerminal) s).getRule(), !s.isComplement));
+                }
+                else {
+                    output.append(decompress(((NonTerminal) s).getRule(), s.isComplement));
+                }
+
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+
+        } while (!s.isGuard());
+        return output.toString();
     }
 }

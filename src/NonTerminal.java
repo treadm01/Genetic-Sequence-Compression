@@ -31,4 +31,24 @@ public class NonTerminal extends Symbol {
         }
         return s;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        //TODO add all checks
+        Symbol symbol = (Symbol) obj;
+
+        if (symbol.getLeft() instanceof NonTerminal) {
+            return ((representation == symbol.getRepresentation())
+                    && (left.representation == (symbol.left.getRepresentation()))
+                    && this.isComplement == symbol.isComplement
+                    && left.isComplement == symbol.left.isComplement
+            ); // switched check to look at left symbol ra
+        }
+        else {
+            return ((representation == symbol.getRepresentation())
+                    && (left.representation == (symbol.left.getRepresentation()))
+                    && this.isComplement == symbol.isComplement
+            ); // switched check to look at left symbol rather than right
+        }
+    }
 }

@@ -285,6 +285,7 @@ public class CompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("vaccg");
         c.processInput(originalFile);
+        System.out.println(c.printRules());
     }
 
     @Test

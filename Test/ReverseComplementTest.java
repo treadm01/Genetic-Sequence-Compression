@@ -52,8 +52,8 @@ public class ReverseComplementTest {
         System.out.println(c.printDigrams());
         //0 > 2 2 c g 2 | 2 > a c |
         // that should be creating a new rule to look like
-        // 0 > 2 4 4 | 2 > a c | 4 > 2c
-        // with digrams something like {AB, B' A' , BB' , ac, gt, A'c, gA}
+        // 0 > 2 4 4' | 2 > a c | 4 > 2c
+        // with digrams something like {AB, B' A' , BB' , ac, gt, A'c, gA} -> c4' not being removed....
         //g t, 2' c, 2 4, a c, 4 4', 4' 2', g 2,
         System.out.println(c.printRules());
     }
@@ -70,7 +70,7 @@ public class ReverseComplementTest {
 
     @Test
     public void anotherCorrespondingRule() {
-        //TODO rule utility of 4 being used only once not getting picked up,
+        //TODO need to remove overlapping c 4'
         String input = "acgtcgacgt";
         Compress c = new Compress();
         c.processInput(input);
@@ -102,6 +102,7 @@ public class ReverseComplementTest {
         String input = "gagcattacgatcagctagcta"; // so getting to ga, which is already seen, not a complement, just straight up match
         Compress c = new Compress();
         c.processInput(input);
+        System.out.println(c.printDigrams());
         System.out.println(c.printRules());
     }
 
@@ -118,10 +119,10 @@ public class ReverseComplementTest {
     @Test
     public void decompress2() {
         String input = "acgtcgac";
-
         //4' needs to convert 2'c to g2, ie gac
         Compress c = new Compress();
         c.processInput(input);
+        System.out.println(c.printDigrams());
         System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -142,6 +143,7 @@ public class ReverseComplementTest {
         String input = "gataga";
         Compress c = new Compress();
         c.processInput(input);
+        System.out.println(c.printDigrams());
         System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -177,13 +179,23 @@ public class ReverseComplementTest {
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
-    @Test //cagagattttgagcgt
+    @Test
     public void decompressX1() {
         //todo next symbol being g gets a hit on tg or ca, but these no longer occur in the grammar
         //todo remove digrams from map properly, kind of fixed for nonterminals, not for terminals it seems
         // todo ca added at beginning is it ever removed?
-        //todo ca is removed but not tg, same problem, not accessing correct complement/not setting correctly
-        String input = "cagag";//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        // todo ca is removed but not tg, same problem, not accessing correct complement/not setting correctly
+        String input = "cagagattttgagcgtg";
+        Compress c = new Compress();
+        c.processInput(input);
+        System.out.println(c.printDigrams());
+        System.out.println(c.printRules());
+        assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void testingRightHandComplementRemoval() {
+        String input = "cgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
         c.processInput(input);
         System.out.println(c.printDigrams());
@@ -193,13 +205,25 @@ public class ReverseComplementTest {
 
 
     @Test
-    public void decompress7() {
+    public void decompressX2() {
+        //last cc creates two instances of g 16' -> creates new rule 18' (should it be complement?) no, if it werent it would be g cc rather than ggg
+        String input = "agagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
-        InputOutput io = new InputOutput();
-        String originalFile = io.readFile("30000");
-        c.processInput(originalFile);
-        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(input);
+        System.out.println(c.printDigrams());
+        System.out.println(c.printRules());
+        assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
+//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+//
+//    @Test
+//    public void decompress7() {
+//        Compress c = new Compress();
+//        InputOutput io = new InputOutput();
+//        String originalFile = io.readFile("chmpxx");
+//        c.processInput(originalFile);
+//        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+//    }
 
 
 }

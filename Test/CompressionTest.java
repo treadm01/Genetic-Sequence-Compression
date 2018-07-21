@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
             Compress c = new Compress();
             InputOutput io = new InputOutput();
             String originalFile = io.readFile("30000");
-            c.processInput(originalFile);
+            c.processInput(originalFile.toLowerCase());
             String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
             System.out.println(compare);
             System.out.println("original " + originalFile.length());
@@ -100,7 +100,8 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
-            assertTrue(compare.length() < originalFile.length());
+            //assertTrue(compare.length() < originalFile.length());
+            assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
         }
 
         @Test

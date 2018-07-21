@@ -77,7 +77,7 @@ public class ReverseComplementTest {
         System.out.println(c.printDigrams());
         System.out.println(c.printRules());
         // looks like old nonterminal digrams are not being removed
-        //g t, 2' c, 2 4, 2 2', a c, 4' 2', g 2, 6 6', -> 2 4 does not appear
+        //g t, 2' c, 2 4, 2 2', a c, 4' 2', g 2, 6 6', -> 2 4 does not appear or 4' 2'
         //should be 0 > 6 6' | 6 > 2 2' c | 2 > a c |
     }
 
@@ -177,12 +177,13 @@ public class ReverseComplementTest {
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
-    @Test
+    @Test //cagagattttgagcgt
     public void decompressX1() {
         //todo next symbol being g gets a hit on tg or ca, but these no longer occur in the grammar
-        //todo remove digrams from map properly
+        //todo remove digrams from map properly, kind of fixed for nonterminals, not for terminals it seems
         // todo ca added at beginning is it ever removed?
-        String input = "cagagattttgagcgtg";//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        //todo ca is removed but not tg, same problem, not accessing correct complement/not setting correctly
+        String input = "cagag";//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         Compress c = new Compress();
         c.processInput(input);
         System.out.println(c.printDigrams());

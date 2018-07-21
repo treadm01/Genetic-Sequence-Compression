@@ -4,12 +4,8 @@
     <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/CompressionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressionTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/ReverseComplementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/ReverseComplementTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NonTerminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Symbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Terminal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +20,13 @@
       <file leaf-file-name="Compress.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2358">
-              <caret line="133" column="28" selection-start-line="133" selection-start-column="28" selection-end-line="133" selection-end-column="28" />
+            <state relative-caret-position="256">
+              <caret line="220" column="62" selection-start-line="220" selection-start-column="62" selection-end-line="220" selection-end-column="62" />
               <folding>
                 <element signature="e#2076#2077#0" expanded="true" />
                 <element signature="e#2129#2130#0" expanded="true" />
+                <element signature="e#17236#17237#0" expanded="true" />
+                <element signature="e#17273#17274#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,8 +53,8 @@
       <file leaf-file-name="CompressTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1782">
-              <caret line="102" column="144" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="144" />
+            <state relative-caret-position="216">
+              <caret line="142" column="43" lean-forward="true" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -89,8 +87,8 @@
       <file leaf-file-name="ReverseComplementTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/ReverseComplementTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="79" column="77" selection-start-line="79" selection-start-column="77" selection-end-line="79" selection-end-column="77" />
+            <state relative-caret-position="180">
+              <caret line="184" column="28" selection-start-line="184" selection-start-column="28" selection-end-line="184" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -132,36 +130,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>existingru</find>
-      <find>existing</find>
-      <find>existingr</find>
-      <find>creater</find>
-      <find>createru</find>
-      <find>replacedi</find>
-      <find>removedigramsfrom</find>
-      <find>checknew</find>
-      <find>removing</find>
-      <find>replacedigram</find>
       <find>checknewd</find>
       <find>isCompl</find>
       <find>replacedigra</find>
-      <find>removedigr</find>
-      <find>replacedigr</find>
       <find>checknewdi</find>
       <find>iscompl</find>
       <find>existingRu</find>
       <find>system</find>
-      <find>sys</find>
       <find>2 &gt;</find>
       <find>4 &gt;</find>
       <find>printdigr</find>
       <find>chmpxx</find>
       <find>vac</find>
       <find>150</find>
-      <find>replacer</find>
       <find>rever</find>
       <find>C</find>
       <find>T</find>
+      <find>removedigram</find>
+      <find>removing</find>
+      <find>removedigramsfrom</find>
+      <find>replaced</find>
+      <find>digrammap.pu</find>
+      <find>removedi</find>
+      <find>creater</find>
+      <find>removedigr</find>
+      <find>replacedigr</find>
+      <find>syste</find>
+      <find>sys</find>
+      <find>replacer</find>
+      <find>replacedi</find>
+      <find>replaceru</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -221,13 +219,13 @@
         <option value="$PROJECT_DIR$/src/Decompress.java" />
         <option value="$PROJECT_DIR$/src/Rule.java" />
         <option value="$PROJECT_DIR$/src/Symbol.java" />
-        <option value="$PROJECT_DIR$/Test/CompressTest.java" />
         <option value="$PROJECT_DIR$/src/NonTerminal.java" />
         <option value="$PROJECT_DIR$/src/Terminal.java" />
         <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
         <option value="$PROJECT_DIR$/textFiles/15000" />
-        <option value="$PROJECT_DIR$/src/Compress.java" />
         <option value="$PROJECT_DIR$/textFiles/abc" />
+        <option value="$PROJECT_DIR$/Test/CompressTest.java" />
+        <option value="$PROJECT_DIR$/src/Compress.java" />
         <option value="$PROJECT_DIR$/Test/ReverseComplementTest.java" />
       </list>
     </option>
@@ -242,9 +240,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="24" />
-    <option name="width" value="1366" />
-    <option name="height" value="744" />
+    <option name="x" value="-1" />
+    <option name="y" value="-4" />
+    <option name="width" value="1368" />
+    <option name="height" value="773" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -318,21 +317,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ReverseComplementTest.anotherCorrespondingRule">
+  <component name="RunManager" selected="JUnit.ReverseComplementTest.decompressX1">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="ReverseComplementTest.addAterminal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReverseComplementTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="ReverseComplementTest" />
-      <option name="METHOD_NAME" value="addAterminal" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
@@ -359,13 +358,30 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="ReverseComplementTest.digramUniquenessViolation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReverseComplementTest.checkDigrams" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="ReverseComplementTest" />
-      <option name="METHOD_NAME" value="digramUniquenessViolation" />
+      <option name="METHOD_NAME" value="checkDigrams" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="ReverseComplementTest.decompressX1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="ReverseComplementTest" />
+      <option name="METHOD_NAME" value="decompressX1" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -383,23 +399,6 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="ReverseComplementTest" />
       <option name="METHOD_NAME" value="firstRuleCreated" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="ReverseComplementTest.nextTerminalsAdded" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ReverseComplementTest" />
-      <option name="METHOD_NAME" value="nextTerminalsAdded" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -449,19 +448,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="JUnit.ReverseComplementTest.firstRuleCreated" />
-      <item itemvalue="JUnit.ReverseComplementTest.nextTerminalsAdded" />
-      <item itemvalue="JUnit.ReverseComplementTest.digramUniquenessViolation" />
       <item itemvalue="JUnit.ReverseComplementTest.anotherCorrespondingRule" />
-      <item itemvalue="JUnit.ReverseComplementTest.addAterminal" />
+      <item itemvalue="JUnit.ReverseComplementTest.checkDigrams" />
+      <item itemvalue="JUnit.ReverseComplementTest.firstRuleCreated" />
+      <item itemvalue="JUnit.ReverseComplementTest" />
+      <item itemvalue="JUnit.ReverseComplementTest.decompressX1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ReverseComplementTest.decompressX1" />
+        <item itemvalue="JUnit.ReverseComplementTest" />
         <item itemvalue="JUnit.ReverseComplementTest.anotherCorrespondingRule" />
-        <item itemvalue="JUnit.ReverseComplementTest.addAterminal" />
-        <item itemvalue="JUnit.ReverseComplementTest.digramUniquenessViolation" />
-        <item itemvalue="JUnit.ReverseComplementTest.nextTerminalsAdded" />
         <item itemvalue="JUnit.ReverseComplementTest.firstRuleCreated" />
+        <item itemvalue="JUnit.ReverseComplementTest.checkDigrams" />
       </list>
     </recent_temporary>
   </component>
@@ -623,14 +622,7 @@
       <workItem from="1532171648082" duration="148000" />
       <workItem from="1532171871287" duration="8973000" />
       <workItem from="1532181906269" duration="332000" />
-      <workItem from="1532182279357" duration="1103000" />
-    </task>
-    <task id="LOCAL-00148" summary="working probably more consistently although more messy with a lot of additional conditional checks. needs cleaning">
-      <created>1530956466586</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1530956466589</updated>
+      <workItem from="1532182279357" duration="9286000" />
     </task>
     <task id="LOCAL-00149" summary="cleaned up slightly and added a few more checks and removals">
       <created>1530960185799</created>
@@ -968,43 +960,50 @@
       <option name="project" value="LOCAL" />
       <updated>1532132158795</updated>
     </task>
-    <option name="localTasksCounter" value="197" />
+    <task id="LOCAL-00197" summary="still very messy but getting closer to functional">
+      <created>1532183406940</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1532183406943</updated>
+    </task>
+    <option name="localTasksCounter" value="198" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 15h 20m 53s.xml">
+    <history-entry file="ReverseComplementTest - 2018.07.21 at 17h 44m 39s.xml">
+      <configuration name="ReverseComplementTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 45m 55s.xml">
       <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 15h 21m 09s.xml">
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 46m 18s.xml">
       <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 15h 23m 08s.xml">
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 48m 28s.xml">
       <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_checkDigrams - 2018.07.21 at 15h 24m 08s.xml">
-      <configuration name="ReverseComplementTest.checkDigrams" configurationId="JUnit" />
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 48m 59s.xml">
+      <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_firstRuleCreated - 2018.07.21 at 15h 24m 12s.xml">
-      <configuration name="ReverseComplementTest.firstRuleCreated" configurationId="JUnit" />
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 49m 06s.xml">
+      <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_nextTerminalsAdded - 2018.07.21 at 15h 24m 17s.xml">
-      <configuration name="ReverseComplementTest.nextTerminalsAdded" configurationId="JUnit" />
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 49m 17s.xml">
+      <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_digramUniquenessViolation - 2018.07.21 at 15h 25m 18s.xml">
-      <configuration name="ReverseComplementTest.digramUniquenessViolation" configurationId="JUnit" />
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 49m 31s.xml">
+      <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_anotherCorrespondingRule - 2018.07.21 at 15h 25m 48s.xml">
-      <configuration name="ReverseComplementTest.anotherCorrespondingRule" configurationId="JUnit" />
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 49m 36s.xml">
+      <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_addAterminal - 2018.07.21 at 15h 26m 47s.xml">
-      <configuration name="ReverseComplementTest.addAterminal" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ReverseComplementTest_addAterminal - 2018.07.21 at 15h 26m 57s.xml">
-      <configuration name="ReverseComplementTest.addAterminal" configurationId="JUnit" />
+    <history-entry file="ReverseComplementTest_decompressX1 - 2018.07.21 at 17h 49m 42s.xml">
+      <configuration name="ReverseComplementTest.decompressX1" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="881310000" />
+    <option name="totallyTimeSpent" value="889493000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1043,7 +1042,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated tests" />
     <MESSAGE value="trying implicit encoding" />
     <MESSAGE value="implicit coding saves space, can string be retrieved" />
     <MESSAGE value="can't store ordered by frequency with implicit" />
@@ -1068,7 +1066,8 @@
     <MESSAGE value="trying to add checks for reverse complements" />
     <MESSAGE value="initial implementation of getting and adding reverse complement digrams" />
     <MESSAGE value="struggling to implement reverse complements" />
-    <option name="LAST_COMMIT_MESSAGE" value="struggling to implement reverse complements" />
+    <MESSAGE value="still very messy but getting closer to functional" />
+    <option name="LAST_COMMIT_MESSAGE" value="still very messy but getting closer to functional" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1277,27 +1276,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1782">
-          <caret line="102" column="144" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="144" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2358">
-          <caret line="133" column="28" selection-start-line="133" selection-start-column="28" selection-end-line="133" selection-end-column="28" />
-          <folding>
-            <element signature="e#2076#2077#0" expanded="true" />
-            <element signature="e#2129#2130#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -1315,10 +1293,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="142" column="43" lean-forward="true" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="220" column="62" selection-start-line="220" selection-start-column="62" selection-end-line="220" selection-end-column="62" />
+          <folding>
+            <element signature="e#2076#2077#0" expanded="true" />
+            <element signature="e#2129#2130#0" expanded="true" />
+            <element signature="e#17236#17237#0" expanded="true" />
+            <element signature="e#17273#17274#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Test/ReverseComplementTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="79" column="77" selection-start-line="79" selection-start-column="77" selection-end-line="79" selection-end-column="77" />
+        <state relative-caret-position="180">
+          <caret line="184" column="28" selection-start-line="184" selection-start-column="28" selection-end-line="184" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

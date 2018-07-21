@@ -118,7 +118,7 @@ public class Compress {
             left.assignLeft(new Terminal('!'));
             left.assignRight(right);
             right.assignLeft(left);
-            right.complement = symbol;
+            right.complement = symbol; //todo complements links not really reversed right compl should be symbol left??
             left.complement = symbol.getLeft();
             symbol.complement = right;
             symbol.getLeft().complement = left;
@@ -161,13 +161,13 @@ public class Compress {
         NonTerminal newNonTerminal = new NonTerminal(newRule);
         if (symbol.isComplement) {
             newNonTerminal.isComplement = true;
-            newNonTerminal.complement = oldNonTerminal; // need a link to the thing
-            oldNonTerminal.complement = newNonTerminal;
+//            newNonTerminal.complement = oldNonTerminal; // need a link to the thing
+//            oldNonTerminal.complement = newNonTerminal;
         }
         if (oldSymbol.isComplement){
             oldNonTerminal.isComplement = true;
-            oldNonTerminal.complement = newNonTerminal; // need a link to the thing
-            newNonTerminal.complement = oldNonTerminal;
+//            oldNonTerminal.complement = newNonTerminal; // need a link to the thing
+//            newNonTerminal.complement = oldNonTerminal;
         }
 
         replaceDigram(oldNonTerminal, oldSymbol); // update rule for first instance of digram
@@ -215,6 +215,12 @@ public class Compress {
             nonTerminal.getRule().decrementCount();
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
+//                System.out.println("symbol " + symbol.getLeft() + " " + symbol);
+//                System.out.println("symbol complement " + symbol.complement + " " + symbol.getLeft().complement.getRight());
+
+                // remove digrams when they are used only once
+                digramMap.remove(symbol);
+                digramMap.remove(symbol.getLeft().complement.getRight()); //todo don't know why its so hard to get reference to corresponding complement here - also causing crash
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
             }
@@ -244,11 +250,14 @@ public class Compress {
      * @param symbol
      */
     private void removeDigramsFromMap(Symbol symbol) {
+        //TODO if digram is not being moved somewhere else then remove the symbol from digram map too
+        //digramMap.remove(symbol);// want to remove symbol IF it is not being used elsewhere, doesn't usually happen
         // don't remove digram if of an overlapping digram
         //TODO better way to do this
         if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
             Symbol existing = digramMap.get(symbol.getLeft());
             if (existing == symbol.getLeft()) {
+                System.out.println("removing left " + symbol.getLeft() + " " + symbol);
                 digramMap.remove(symbol.getLeft());
                 digramMap.remove(symbol.getLeft().complement); //todo have to remove complement too, IF THERE IS ONE, and for right also???
             }

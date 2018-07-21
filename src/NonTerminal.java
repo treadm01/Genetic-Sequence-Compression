@@ -22,4 +22,13 @@ public class NonTerminal extends Symbol {
     public Rule getRule() {
         return this.rule;
     }
+
+    @Override
+    public String toString() {
+        String s = super.toString();
+        if (isComplement) {
+            s += "'";
+        }
+        return s;
+    }
 }

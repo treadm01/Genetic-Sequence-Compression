@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -28,6 +29,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -41,6 +43,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -54,6 +57,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -67,6 +71,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -80,6 +85,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -93,6 +99,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -106,6 +113,8 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
+            System.out.println(c.printRules());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -119,6 +128,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -132,6 +142,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -145,6 +156,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -158,6 +170,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -171,6 +184,7 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
+            System.out.println("length of rules " + c.printRules().length());
             assertTrue(compare.length() < originalFile.length());
         }
 

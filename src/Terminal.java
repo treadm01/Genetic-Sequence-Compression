@@ -1,7 +1,7 @@
 public class Terminal extends Symbol {
     long originalValue;
 
-    public Terminal(int representation) { //TODO make long??
+    public Terminal(long representation) { //TODO make long??
         originalValue = representation;
         this.representation = (representation * 2) + 1;
         left = new Symbol(); //todo having to add for equality check, not needed otherwise
@@ -15,4 +15,23 @@ public class Terminal extends Symbol {
     public long getOriginalValue() {
         return originalValue;
     }
+
+//    public long reverseSymbol() {
+//        char complement = 0;
+//        if (originalValue == 'a') {
+//            complement = 't';
+//        }
+//        else if (originalValue == 'c') {
+//            complement = 'g';
+//        }
+//        else if (originalValue == 'g') {
+//            complement = 'c';
+//        }
+//        else if (originalValue == 't') {
+//            complement = 'a';
+//        }
+//        return (complement * 2) + 1;
+//    }
+
+
 }

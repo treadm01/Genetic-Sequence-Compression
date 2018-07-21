@@ -100,7 +100,11 @@ public class CompressTest {
     @Test
     public void processInputAgain() {
         c = new Compress();
-        c.processInput("ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA");
+        String input = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA";
+        c.processInput(input);
+        System.out.println(c.printRules());
+        Decompress d = new Decompress();
+        //assertEquals(input, d.decompress(c.getFirstRule()));
     }
 
 
@@ -223,6 +227,7 @@ public class CompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("15000");
         c.processInput(originalFile);
+        System.out.println(c.printRules());
     }
 
     @Test
@@ -231,6 +236,7 @@ public class CompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
         c.processInput(originalFile);
+        System.out.println(c.printRules());
     }
 
     @Test

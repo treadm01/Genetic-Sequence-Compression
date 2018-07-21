@@ -30,6 +30,7 @@ public class Rule extends Symbol {
         symbol.assignRight(guard); // symbol right should be actual guard
         guard.left.assignRight(symbol); // assign current last right to this symbol
         guard.assignLeft(symbol); // assign last to symbol
+
     }
 
     /**

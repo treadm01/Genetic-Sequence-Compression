@@ -9,8 +9,15 @@ public class Compress {
     List<Integer> adjustedMarkers = new ArrayList<>();
     int previousMarker = 0;
 
+    //TODO implement properly... see if worthwhile...
+
     //TODO keeping odd and even
     //TODO characters will be as long? or given smallest binary for number of characters?
+
+    //TODO WHEN A COMPLEMENT NONTERMINAL - GOING TO STANDARD RULE,
+    //TODO COMPLEMENTS IN DIGRAMS ARE MESSY
+
+    //TODO is complement only seems worthwhile for symbol on nonterminals....
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -35,53 +42,19 @@ public class Compress {
             // add next symbol from input to the first rule
             char symbol = input.charAt(i);
             getFirstRule().addNextSymbol(new Terminal(symbol));
-            checkDigram(getFirstRule().getLast());
-
-            // create left complement
-            Terminal left = new Terminal(getComplement(symbol));
-            // todo pain to get original value,
-            //todo what if left symobl is n olonger a termianl
-            char oldChar = getFirstRule().getLast().getLeft().toString().charAt(0);
-            Terminal right = new Terminal(getComplement(oldChar));
-            left.assignRight(right);
-            right.assignLeft(left);
-            addToDigramMap(right);
-
-            // just reverse complement here? or could happen other places, reverse complement of nonterminals?
-            // need a separate method to add to the digram map, rule is not immediately affected
+            checkDigram(getFirstRule().getLast()); //todo should this be after the reverse complement has been added?
         }
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
-        //System.out.println(rules.size());
-
-//       //TODO make a method just to get length... or get length better
+        //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
-        //System.out.println(printRules());
-
-        //System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
     }
 
     public void addToDigramMap(Symbol symbol) {
         digramMap.putIfAbsent(symbol, symbol);
     }
 
-    public char getComplement(char symbol) {
-        char complement = 0;
-        if (symbol == 'a') {
-            complement = 't';
-        }
-        else if (symbol == 'c') {
-            complement = 'g';
-        }
-        else if (symbol == 'g') {
-            complement = 'c';
-        }
-        else if (symbol == 't') {
-            complement = 'a';
-        }
-        return complement;
-    }
 
     /**
      * method that checks through the main options of latest two symbols
@@ -92,23 +65,89 @@ public class Compress {
      */
     public void checkDigram(Symbol symbol) {
         // check existing digrams for last digram, update them with new rule
+       // System.out.println(printDigrams());
         if (digramMap.containsKey(symbol)) {
             // if the existing digram has ? either side, it must be a complete digram rule/ an existing rule
             Symbol existingDigram = digramMap.get(symbol); // existing digram
 
-            // if the matching digram is an overlap do nothing
-            if (existingDigram.getRight() != symbol) { // todo find a better way to place this
-                if (existingDigram.getLeft().getLeft().isGuard() && existingDigram.getRight().isGuard()) {
-                    existingRule(symbol, existingDigram);
+            if (existingDigram.isComplement == symbol.isComplement) { // todo need a proper way to check that they are different is one value is a complement
+
+                if (existingDigram.getRight() == null) { // existing digram should be g2 and complement, it is implicit but not reverse
+                    symbol.isComplement = true; //todo needed???
+                    existingDigram = existingDigram.complement;
                 }
-                else { // if digram has been seen but only once, no rule, then create new rule
-                    createRule(symbol, existingDigram);
+
+                //           existingDigram = existingDigram.getLeft().getLeft().getRight();
+                // if the matching digram is an overlap do nothing
+                if (existingDigram.getRight() != symbol) { // todo find a better way to place this
+                    //if existing digram is a rule or not
+
+                    // check whether the digram is an entire independent rule
+                    if (existingDigram.getLeft().getLeft().isGuard()
+                            && existingDigram.getRight().isGuard()) {
+                        existingRule(symbol, existingDigram);
+                    } else { // if digram has been seen but has no rule yet, then create new rule
+                        createRule(symbol, existingDigram);// .getLeft().getLeft().getRight().getRight());
+                    }
                 }
             }
+            else { digramMap.putIfAbsent(symbol, symbol);}
         }
         else { // digram not been seen before, add to digram map
             digramMap.putIfAbsent(symbol, symbol);
+
+            // still trying
+            Symbol left;
+            Symbol right;
+            if (symbol instanceof NonTerminal) {
+                left = new NonTerminal(((NonTerminal) symbol).getRule());
+                ((NonTerminal) symbol).getRule().decrementCount();
+                left.isComplement = !symbol.isComplement;
+            }
+            else {
+                left = new Terminal(reverseSymbol(symbol.toString().charAt(0)));
+            }
+
+            if (symbol.getLeft() instanceof NonTerminal) {
+                right = new NonTerminal(((NonTerminal) symbol.getLeft()).getRule());
+                ((NonTerminal) symbol.getLeft()).getRule().decrementCount();
+                right.isComplement = !symbol.getLeft().isComplement;
+            }
+            else {
+                right = new Terminal(reverseSymbol(symbol.getLeft().toString().charAt(0)));
+            }
+
+            // link together, add to map, think add guards??
+            left.assignLeft(new Terminal('!'));
+            left.assignRight(right);
+            right.assignLeft(left);
+            right.complement = symbol;
+            left.complement = symbol.getLeft();
+            symbol.complement = right;
+            symbol.getLeft().complement = left;
+            addToDigramMap(right);
+
+            //todo what if left symobl is n olonger a termianl
+            //todo what if latest is a complement checking to first?...  is it possible to have separate order?
+            //todo how to assign that nonterminal is a complement
         }
+    }
+
+    public char reverseSymbol(char symbol) {
+        char complement = 0;
+        if (symbol == 'a') {
+            complement = 't';
+        }
+        else if ( symbol == 'c') {
+            complement = 'g';
+        }
+        else if ( symbol == 'g') {
+            complement = 'c';
+        }
+        else if ( symbol == 't') {
+            complement = 'a';
+        }
+        return complement;
     }
 
 
@@ -121,8 +160,21 @@ public class Compress {
     private void createRule(Symbol symbol, Symbol oldSymbol) {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
 
-        replaceDigram(newRule, oldSymbol); // update rule for first instance of digram
-        replaceDigram(newRule, symbol);// update rule for last instance of digram
+        NonTerminal oldNonTerminal = new NonTerminal(newRule);
+        NonTerminal newNonTerminal = new NonTerminal(newRule);
+        if (symbol.isComplement) {
+            newNonTerminal.isComplement = true;
+            newNonTerminal.complement = oldNonTerminal; // need a link to the thing
+            oldNonTerminal.complement = newNonTerminal;
+        }
+        if (oldSymbol.isComplement){
+            oldNonTerminal.isComplement = true;
+            oldNonTerminal.complement = newNonTerminal; // need a link to the thing
+            newNonTerminal.complement = oldNonTerminal;
+        }
+
+        replaceDigram(oldNonTerminal, oldSymbol); // update rule for first instance of digram
+        replaceDigram(newNonTerminal, symbol);// update rule for last instance of digram
 
         // add the repeating digram to the new rule
         newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
@@ -142,9 +194,13 @@ public class Compress {
      */
     private void existingRule(Symbol symbol, Symbol oldSymbol) {
         //TODO could this be done more directly? - digram to nonterminal???
-        Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
+        Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there, as a rule digram, getright will be guard
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
-        replaceDigram(rule, symbol);// replace the repeated digram wtih rule
+        NonTerminal nonTerminal = new NonTerminal(rule); // todo how will this be complement????
+        if (symbol.isComplement) {
+            nonTerminal.isComplement = true;
+        }
+        replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
     }
@@ -171,19 +227,16 @@ public class Compress {
     /**
      * might not be needed you know... just work the links of the symbols??
      * replace an instance of a digram with a nonterminal
-     * @param newRule
+     * @param nonTerminal
      * @param symbol - the position of the digram to be replaced
      */
-    private void replaceDigram(Rule newRule, Symbol symbol) {
+    private void replaceDigram(NonTerminal nonTerminal, Symbol symbol) {
         removeDigramsFromMap(symbol);
-        NonTerminal nonTerminal = new NonTerminal(newRule);
-
         // join the links
         nonTerminal.assignRight(symbol.getRight());
         nonTerminal.assignLeft(symbol.getLeft().getLeft());
         symbol.getLeft().getLeft().assignRight(nonTerminal);
         symbol.getRight().assignLeft(nonTerminal);
-
         checkNewDigrams(nonTerminal, nonTerminal.getRight(), nonTerminal);
     }
 
@@ -200,11 +253,13 @@ public class Compress {
             Symbol existing = digramMap.get(symbol.getLeft());
             if (existing == symbol.getLeft()) {
                 digramMap.remove(symbol.getLeft());
+                digramMap.remove(symbol.getLeft().complement); //todo have to remove complement too, IF THERE IS ONE, and for right also???
             }
         }
 
         if (!symbol.getRight().equals(symbol)) {
             digramMap.remove(symbol.getRight());
+            digramMap.remove(symbol.getRight().complement);
         }
     }
 
@@ -236,7 +291,7 @@ public class Compress {
             Symbol current = r.getGuard().getRight();
             while (!current.isGuard()) {
                 if (current instanceof NonTerminal) {
-                    output += ((NonTerminal) current).getRule().representation + " ";
+                    output += current.toString() + " ";
                 }
                 else {
                     output += current + " ";

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
-    private Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
+    Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     Set<Rule> rules;
     int markerNum = 0; // todo set to 0 check if issue later
@@ -95,15 +95,42 @@ public class Compress {
         }
         else { // digram not been seen before, add to digram map
             addToDigramMap(symbol);
-
-            addReverseComplement(symbol);
+            addToDigramMap(getReverseComplement(symbol));
         }
     }
 
-    public void addReverseComplement(Symbol digram) {
+    public Symbol getReverseComplement(Symbol digram) {
+        Symbol left, right; // left and right symbols of reverse digram as it will be entered into the map
+        // that is, if digram is ag left will be c right will be t, however left will link to the right of the corresponding digram
+        // complements will be linked to each other, but will be linked to each other in reverse order, and entered in the map as such
 
+        if (digram instanceof Terminal) { // right hand side of digram
+            left = new Terminal(reverseSymbol(digram.toString().charAt(0))); //todo a better way to get char
+            left.isComplement = true;
+            left.complement = digram;
+            digram.complement = left;
+        }
+        else {left = new Symbol();}
+
+        if (digram.getLeft() instanceof Terminal) { // get left hand side of reverse digram
+            right = new Terminal(reverseSymbol(digram.getLeft().toString().charAt(0))); //todo a better way to get char
+            right.isComplement = true;
+            right.complement = digram.getLeft();
+            digram.getLeft().complement = right;
+        }
+        else {right = new Symbol();}
+
+        right.assignLeft(left);
+        left.assignRight(right);
+
+        //todo for terminal and nonterminal
+        return right;
     }
 
+    public void removeDigrams(Symbol digram) {
+        digramMap.remove(digram);
+        digramMap.remove(digram.getLeft().complement); // have to remove the digrams left complement, and the digram that indicates
+    }
 
     /**
      * create the rule for a repeated digram, requires being done twice for both instances

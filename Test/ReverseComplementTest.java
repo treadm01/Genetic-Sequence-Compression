@@ -10,6 +10,43 @@ public class ReverseComplementTest {
     //a == t and c == g, the swapped values and reverse order
     // reverse oder first and then switch
     // so cg = gc convert cg, either either, gc -> swap cg
+
+    @Test
+    public void checkReverseComplement() {
+        Compress c = new Compress();
+        Terminal tl = new Terminal('a');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl);
+        assertEquals("t", c.getReverseComplement(tr).toString());
+    }
+
+    @Test
+    public void checkReverseComplement2() {
+        Compress c = new Compress();
+        Terminal tl = new Terminal('a');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl);
+        assertEquals("g", c.getReverseComplement(tr).getLeft().toString());
+    }
+
+    @Test
+    public void checkLeftComplement2() {
+        Compress c = new Compress();
+        Terminal tl = new Terminal('a');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl);
+        assertEquals("a", c.getReverseComplement(tr).complement.toString());
+    }
+
+    @Test
+    public void checkRightComplement2() {
+        Compress c = new Compress();
+        Terminal tl = new Terminal('a');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl);
+        assertEquals("c", c.getReverseComplement(tr).getLeft().complement.toString());
+    }
+
     @Test
     public void checkDigrams() {
         String input = "acg";
@@ -18,6 +55,30 @@ public class ReverseComplementTest {
         System.out.println(c.printDigrams());
         System.out.println(c.printRules());
         assertEquals("g t, a c, c g, ", c.printDigrams());
+    }
+
+
+    @Test
+    public void checkDigrams2() {
+        String input = "acga";
+        Compress c = new Compress();
+        c.processInput(input);
+        System.out.println(c.printDigrams());
+        System.out.println(c.printRules());
+        assertEquals("g a, t c, g t, a c, c g, ", c.printDigrams());
+    }
+
+    @Test
+    public void removeDigrams() {
+        String input = "acga";
+        Compress c = new Compress();
+        c.processInput(input);
+        Terminal tl = new Terminal('a');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl);
+        Terminal t = (Terminal) c.digramMap.get(tr);
+        c.removeDigrams(t); // should remove ac and gt
+        assertEquals("g a, t c, c g, ", c.printDigrams());
     }
 
     @Test

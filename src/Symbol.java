@@ -4,7 +4,6 @@ public class Symbol {
     private static final long PRIME = 2265539; // from sequitur
     Boolean isComplement = false;
     Symbol complement;
-    Boolean isImplicit = false;
 
     public Boolean isGuard() {
         return representation == 0;

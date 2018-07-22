@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 public class ReverseComplementTest {
@@ -214,14 +216,70 @@ public class ReverseComplementTest {
         System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
-//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+
+
+    //"agagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtgg";
+    @Test
+    public void decompressX3() {
+        String input = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        Compress c = new Compress();
+        c.processInput(input);
+        System.out.println(c.printDigrams());
+        System.out.println(c.printRules());
+        assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    //"tatcgtctggctcgtatgacgcaggagaggtgtacttgaaagtgc"; // rule 2 not being removed
+    //taaagacaaactgga
+    //caagtgcaaactgg
+    //acagacactt
+    //gctggctca
+    //aatcaatga
+    //ctacctatgt
+    @Test
+    public void moreDecompressionBugTests() { //todo infinite recursoin of rules
+        String input = "ctacctatgt"; //todo rules only used once not getting removed???
+        Compress c = new Compress();
+        c.processInput(input);
+        System.out.println(c.printDigrams());
+        System.out.println(c.printRules());
+        assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+
+    String genRand (int length) {
+        Random rand = new Random();
+        String possibleLetters = "acgt";
+        StringBuilder sb = new StringBuilder(length);
+        for(int i = 0; i < length; i++)
+            sb.append(possibleLetters.charAt(rand.nextInt(possibleLetters.length())));
+        return sb.toString();
+    }
+
+    @Test
+    public void decompressX4() {
+        Random rand = new Random();
+        for (int i = 0; i < 10000; i++) {
+            String input = genRand(rand.nextInt((10 - 1) + 1) + 1);
+            System.out.println(input);
+            Compress c = new Compress();
+            c.processInput(input);
+            System.out.println(c.printDigrams());
+            System.out.println(c.printRules());
+            assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+        }
+    }
+
+
 //
 //    @Test
 //    public void decompress7() {
 //        Compress c = new Compress();
 //        InputOutput io = new InputOutput();
-//        String originalFile = io.readFile("chmpxx");
+//        String originalFile = io.readFile("humprtb");
 //        c.processInput(originalFile);
+//        System.out.println(c.printRules());
+//        System.out.println(c.getFirstRule().getRuleString());
 //        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
 //    }
 

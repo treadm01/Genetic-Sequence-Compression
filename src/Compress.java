@@ -10,6 +10,9 @@ public class Compress {
     int previousMarker = 0;
 
     //TODO implement properly... see if worthwhile...
+    //todo how reverse complement is designated
+    //todo how digrams are added and removed
+    //todo how the reverse complements are linked to each other
 
     //TODO keeping odd and even
     //TODO characters will be as long? or given smallest binary for number of characters?
@@ -43,11 +46,15 @@ public class Compress {
             char symbol = input.charAt(i);
             getFirstRule().addNextSymbol(new Terminal(symbol));
             checkDigram(getFirstRule().getLast()); //todo should this be after the reverse complement has been added?
+            System.out.println(getFirstRule().getRuleString());
+            System.out.println(printDigrams());
+            System.out.println();
 //            System.out.println(symbol);
-//            rules.add(getFirstRule());
-//            generateRules(getFirstRule().getGuard().getRight());
+//            System.out.println(printDigrams());
+            rules.add(getFirstRule());
+            generateRules(getFirstRule().getGuard().getRight());
 //            //TODO make a method just to get length... or get length better
-//            System.out.println(printRules());// needed to compute length of rule at the moment
+            System.out.println(printRules());// needed to compute length of rule at the moment
         }
 
         rules.add(getFirstRule());
@@ -162,19 +169,16 @@ public class Compress {
      */
     private void createRule(Symbol symbol, Symbol oldSymbol) {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
-
-        System.out.println("old " + oldSymbol);
+        //todo difference between them... if symbols are the same, same complement then not a complement
         NonTerminal oldNonTerminal = new NonTerminal(newRule);
         NonTerminal newNonTerminal = new NonTerminal(newRule);
-        if (symbol.isComplement) {
-            newNonTerminal.isComplement = true;
-//            newNonTerminal.complement = oldNonTerminal; // need a link to the thing
-//            oldNonTerminal.complement = newNonTerminal;
-        }
-        if (oldSymbol.isComplement){
-            oldNonTerminal.isComplement = true;
-//            oldNonTerminal.complement = newNonTerminal; // need a link to the thing
-//            newNonTerminal.complement = oldNonTerminal;
+
+        // if the digrams are the same the new rule is not a reverse complement
+        if (!symbol.equals(oldSymbol)) { //todo a problem is how to designate that the digram is actually the same and not a complement...
+            // if symbol being checked is marked as complement set new rule to complement too
+            if (symbol.isComplement) {
+                newNonTerminal.isComplement = true;
+            }
         }
 
         replaceDigram(oldNonTerminal, oldSymbol); // update rule for first instance of digram
@@ -190,8 +194,6 @@ public class Compress {
     }
 
     /**
-     * already a rule for the digram found, replace it with that rule
-     * this needs looking into - TODO recursive here? consolidate with other method?
      * takes the symbol being the latest digram of the main rule and
      * the already exsiting rule/nonterminal for that digram
      * @param symbol
@@ -201,9 +203,9 @@ public class Compress {
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there, as a rule digram, getright will be guard
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule); // todo how will this be complement????
-        if (symbol.isComplement) {
-            nonTerminal.isComplement = true;
-        }
+            if (symbol.isComplement) {
+                nonTerminal.isComplement = true;
+            }
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
@@ -220,6 +222,8 @@ public class Compress {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
+            System.out.println("rule " + nonTerminal);
+            System.out.println(" count " + nonTerminal.getRule().getCount());
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 // remove digrams when they are used only once
@@ -263,16 +267,22 @@ public class Compress {
             if (existing == symbol.getLeft()) {
                 // get value of complement to remove, as they are getting links messed up......
                 // doesn't work for right....
-                Symbol toRemove = symbol.getLeft().getLeft().complement;
-                toRemove.assignLeft(symbol.getLeft().complement);
-                digramMap.remove(toRemove); //todo have to remove complement too, IF THERE IS ONE, and for right also???
+             //   System.out.println("removing left " + symbol.getLeft().getLeft() + " " + symbol.getLeft());
+              //  System.out.println("removing left comp " + symbol.getLeft().complement + " " + symbol.getLeft().getLeft().complement);
+                symbol.getLeft().getLeft().complement.assignLeft(symbol.getLeft().complement);
+               // System.out.println("but what be complements left " + symbol.getLeft().getLeft().complement.getLeft() + " " + symbol.getLeft().getLeft().complement);
+                //Symbol toRemove = symbol.getLeft().getLeft().complement;
+                //toRemove.assignLeft(symbol.getLeft().complement);
+                //System.out.println(digramMap.containsKey(symbol.getLeft().getLeft().complement));
                 digramMap.remove(symbol.getLeft());
+                digramMap.remove(symbol.getLeft().getLeft().complement); //todo have to remove complement too, IF THERE IS ONE, and for right also???
             }
         }
 
         if (!symbol.getRight().equals(symbol)) {
             //System.out.println("removing right " + symbol + " " + symbol.getRight());
             digramMap.remove(symbol.getRight());
+            //System.out.println("comp " + symbol.complement);
             digramMap.remove(symbol.complement); // to get right hand side of digram, have to get complement of left hand
         }
     }

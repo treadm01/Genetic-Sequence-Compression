@@ -82,14 +82,44 @@ public class ReverseComplementTest {
     }
 
     @Test
+    public void testUsingOriginalDigram() {
+        String input = "acga";
+        Compress c = new Compress();
+        c.processInput(input);
+        Terminal tl = new Terminal('t');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl); // sending in tc which was implicitly added, should return ga
+        assertEquals("a", c.getOriginalDigram(tr).toString());
+        assertEquals("g", c.getOriginalDigram(tr).getLeft().toString());
+    }
+
+    @Test
+    public void testNotReverse() {
+        String input = "acga";
+        Compress c = new Compress();
+        c.processInput(input);
+        Terminal tl = new Terminal('a');
+        Terminal tr = new Terminal('c');
+        tr.assignLeft(tl); // sending in tc which was implicitly added, should return ga
+        assertEquals("a", c.getOriginalDigram(tr).getLeft().toString());
+        assertEquals("c", c.getOriginalDigram(tr).toString());
+    }
+
+    @Test
     public void firstRuleCreated() {
-        //todo its adding the complement of the check... might be ok, but you need to remove complement, when removing something else
         String input = "acgt";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
         System.out.println(c.printRules());
-        //assertEquals("g t, a c, c g, ", c.printDigrams());
+        assertEquals("0 > 2 2' | 2 > a c | ", c.printRules());
+    }
+
+    @Test
+    public void firstRuleCreatedDigramsRemoved() {
+        String input = "acgt";
+        Compress c = new Compress();
+        c.processInput(input);
+        assertEquals("g t, 2 2', a c, ", c.printDigrams());
     }
 
     @Test

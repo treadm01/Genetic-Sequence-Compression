@@ -177,8 +177,6 @@ public class ReverseComplementTest {
         String input = "acgtcgacgt"; // old digrams from removed rules not removed
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules()); // last digram not registering as complement
         assertEquals("g t, 2' c, 2 2', a c, g 2, 6 6', ", c.printDigrams());
     }
 
@@ -193,8 +191,8 @@ public class ReverseComplementTest {
         String input = "gataga"; // so getting to ga, which is already seen, not a complement, just straight up match
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
+        assertEquals("g a, t c, t a, a 2', a 2, 2 t, 2' t, ", c.printDigrams());
+        assertEquals("0 > 2 t a 2 | 2 > g a | ", c.printRules());
     }
 
     @Test
@@ -213,18 +211,14 @@ public class ReverseComplementTest {
         String input = "acgt";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
     public void decompress2() {
         String input = "acgtcgac";
-        //4' needs to convert 2'c to g2, ie gac
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -234,7 +228,6 @@ public class ReverseComplementTest {
         String input = "acgtcgacgt";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -244,8 +237,6 @@ public class ReverseComplementTest {
         String input = "gataga";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -255,7 +246,6 @@ public class ReverseComplementTest {
         String input = "gagcattacgatcagctagcta";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -265,8 +255,6 @@ public class ReverseComplementTest {
         String input = "ttaaattaatt";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -275,22 +263,14 @@ public class ReverseComplementTest {
         String input = "ttaaatt"; // registering that 2a is the same as 2'a, or t2, because terminal equals does not check value of nonterminals
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
     public void decompressX1() {
-        //todo next symbol being g gets a hit on tg or ca, but these no longer occur in the grammar
-        //todo remove digrams from map properly, kind of fixed for nonterminals, not for terminals it seems
-        // todo ca added at beginning is it ever removed?
-        // todo ca is removed but not tg, same problem, not accessing correct complement/not setting correctly
         String input = "cagagattttgagcgtg";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -299,8 +279,6 @@ public class ReverseComplementTest {
         String input = "cgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -311,8 +289,6 @@ public class ReverseComplementTest {
         String input = "agagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -323,25 +299,14 @@ public class ReverseComplementTest {
         String input = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
-    //"tatcgtctggctcgtatgacgcaggagaggtgtacttgaaagtgc"; // rule 2 not being removed
-    //taaagacaaactgga
-    //caagtgcaaactgg
-    //acagacactt
-    //gctggctca
-    //aatcaatga
-    //ctacctatgt
     @Test
-    public void moreDecompressionBugTests() { //todo infinite recursoin of rules
-        String input = "ctacctatgt"; //todo rules only used once not getting removed???
+    public void moreDecompressionBugTests() {
+        String input = "ctacctatgt";
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
         assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -355,6 +320,7 @@ public class ReverseComplementTest {
         return sb.toString();
     }
 
+    //tttcgaaaag
     @Test
     public void decompressX4() {
         Random rand = new Random();
@@ -363,24 +329,22 @@ public class ReverseComplementTest {
             System.out.println(input);
             Compress c = new Compress();
             c.processInput(input);
-            System.out.println(c.printDigrams());
-            System.out.println(c.printRules());
             assertEquals(input, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
         }
     }
 
 
 //
-//    @Test
-//    public void decompress7() {
-//        Compress c = new Compress();
-//        InputOutput io = new InputOutput();
-//        String originalFile = io.readFile("humprtb");
-//        c.processInput(originalFile);
-//        System.out.println(c.printRules());
-//        System.out.println(c.getFirstRule().getRuleString());
-//        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
-//    }
+    @Test
+    public void decompress7() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humprtb");
+        c.processInput(originalFile);
+        System.out.println(c.printRules());
+        System.out.println(c.getFirstRule().getRuleString());
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
 
 
 }

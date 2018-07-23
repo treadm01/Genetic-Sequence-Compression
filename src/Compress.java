@@ -36,7 +36,7 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-//            System.out.println(getFirstRule().getRuleString());
+            //System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
 
@@ -154,8 +154,10 @@ public class Compress {
 
     public void removeDigrams(Symbol digram) {
         // the digrams complements left is being reassigned
+        //System.out.println("removing " + digram.getLeft() + " " + digram);
         digramMap.remove(digram);
-        digramMap.remove(getReverseComplement(digram)); // have to remove the digrams left complement, and the digram that indicates
+        // creating to remove, if created with the objects could add that way too
+        digramMap.remove(getReverseComplement(digram));
     }
 
     /**
@@ -170,9 +172,9 @@ public class Compress {
         NonTerminal oldTerminal = new NonTerminal(newRule);
         NonTerminal newTerminal = new NonTerminal(newRule);
 
-        // if the symobls are not equal then one is a noncomplement and the rule is set for this
+        // if the symbols are not equal then one is a noncomplement and the rule is set for this
         if (!symbol.equals(oldSymbol)) {
-            newTerminal.isComplement = true; //
+            newTerminal.isComplement = true;
         }
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
@@ -223,6 +225,7 @@ public class Compress {
             nonTerminal.getRule().decrementCount();
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
+                removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
             }
@@ -259,13 +262,11 @@ public class Compress {
         if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
             Symbol existing = digramMap.get(symbol.getLeft());
             if (existing == symbol.getLeft()) {
-                //digramMap.remove(symbol.getLeft());
                 removeDigrams(symbol.getLeft());
             }
         }
 
         if (!symbol.getRight().equals(symbol)) {
-            //digramMap.remove(symbol.getRight());
             removeDigrams(symbol.getRight());
         }
     }

@@ -9,7 +9,7 @@ public class Compress {
     List<Integer> adjustedMarkers = new ArrayList<>();
     int previousMarker = 0;
 
-    //todo complement rules from existing...
+    //todo complement rules from existing... and removing complements when only used once
     //TODO keeping odd and even
     //TODO characters will be as long? or given smallest binary for number of characters?
 
@@ -36,8 +36,8 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-            System.out.println(getFirstRule().getRuleString());
-            System.out.println(printDigrams());
+//            System.out.println(getFirstRule().getRuleString());
+//            System.out.println(printDigrams());
         }
 
         rules.add(getFirstRule());
@@ -107,7 +107,8 @@ public class Compress {
      */
     public Symbol getOriginalDigram(Symbol digram) {
         Symbol symbol = digramMap.get(digram);
-        if (symbol.isComplement) {
+        // if digram was created as complement, should have no right hand symbol
+        if (symbol.getRight() == null) {//symbol.isComplement) { // can't really use is complement in this way as nonterminals might be part of a complement digram, but not a complement
             symbol = digramMap.get(symbol.getLeft().complement);
         }
         return symbol;
@@ -136,21 +137,23 @@ public class Compress {
         // shouldn't be an issue as all are unique and values aren't altered elsewhere
         left.isComplement = !digram.isComplement;
         left.complement = digram;
-        digram.complement = left;
+        //digram.complement = left;
 
         right.isComplement = !digram.getLeft().isComplement;
         right.complement = digram.getLeft();
-        digram.getLeft().complement = right;
+        //digram.getLeft().complement = right;
 
         right.assignLeft(left);
         left.assignRight(right);
+        left.assignLeft(new Terminal('!')); //todo for comparisons in hashmap, complement requires a left.left
 
         return right;
     }
 
     public void removeDigrams(Symbol digram) {
+        // the digrams complements left is being reassigned
         digramMap.remove(digram);
-        digramMap.remove(digram.getLeft().complement); // have to remove the digrams left complement, and the digram that indicates
+        digramMap.remove(getReverseComplement(digram)); // have to remove the digrams left complement, and the digram that indicates
     }
 
     /**

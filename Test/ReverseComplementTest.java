@@ -140,8 +140,15 @@ public class ReverseComplementTest {
         String input = "acgtcgac";
         Compress c = new Compress();
         c.processInput(input); // g2 is created by adding the last c, but g2 was implicitly added
+        assertEquals("0 > 2 4 4' | 4 > 2' c | 2 > a c | ", c.printRules());
+    }
+
+    @Test
+    public void digramUniquenessViolationCheckMap() { // next c creates a nonterminal terminal rule already implicitly added
+        String input = "acgtcgac";
+        Compress c = new Compress(); // should not have tc
+        c.processInput(input); // g2 is created by adding the last c, but g2 was implicitly added
         assertEquals("g t, 2' c, 2 4, a c, 4 4', 4' 2', g 2, ", c.printDigrams());
-        assertEquals("0 > 2 4 4' | 2 > a c | 4 > 2' c ", c.printRules());
     }
 
     @Test
@@ -151,7 +158,7 @@ public class ReverseComplementTest {
         c.processInput(input); // is 2 4 reverse of 4' 2' really?
         System.out.println(c.printDigrams());
         System.out.println(c.printRules());
-        //0 > 2 4 4' g | 4 > 2' c | 2 > a c |
+        assertEquals("0 > 2 4 4' g | 4 > 2' c | 2 > a c | ", c.printRules());
     }
 
     @Test

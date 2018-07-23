@@ -1,7 +1,7 @@
 public class Rule extends Symbol {
     int count;
     Guard guard;
-    static Integer ruleNumber = 2;
+    static Integer ruleNumber = 0;
 
     // for decompressing
     Boolean compressed = false;

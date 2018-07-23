@@ -129,26 +129,19 @@ public class ReverseComplementTest {
         // todo g2 should be here, but it is not
         Compress c = new Compress();
         c.processInput(input);
-        System.out.println(c.printDigrams());
-        System.out.println(c.printRules());
-        //ga, tc, gt, 2c, 22, ac, cg - missing g2
-        //{AA', ac, gt, A'c, gA, cg, ga, tc}
-        //assertEquals("g t, a c, c g, ", c.printDigrams());
-        //0 > 2 2' c g a | 2 > a c |
+        assertEquals("0 > 2 2' c g a | 2 > a c | ", c.printRules());
+        assertEquals("g a, t c, g t, 2' c, 2 2', a c, g 2, c g, ", c.printDigrams());
+
     }
 
+    //TODO CREATING NEW TERMINAL FROM REVERSE COMPLEMENTS GETTING NULL WHILST CHECKING FOR EXISTING RULE
     @Test
     public void digramUniquenessViolation() { // next c creates a nonterminal terminal rule already implicitly added
         String input = "acgtcgac";
         Compress c = new Compress();
         c.processInput(input); // g2 is created by adding the last c, but g2 was implicitly added
-        System.out.println(c.printDigrams());
-        //0 > 2 2 c g 2 | 2 > a c |
-        // that should be creating a new rule to look like
-        // 0 > 2 4 4' | 2 > a c | 4 > 2c
-        // with digrams something like {AB, B' A' , BB' , ac, gt, A'c, gA} -> c4' not being removed....
-        //g t, 2' c, 2 4, a c, 4 4', 4' 2', g 2,
-        System.out.println(c.printRules());
+        assertEquals("g t, 2' c, 2 4, a c, 4 4', 4' 2', g 2, ", c.printDigrams());
+        assertEquals("0 > 2 4 4' | 2 > a c | 4 > 2' c ", c.printRules());
     }
 
     @Test

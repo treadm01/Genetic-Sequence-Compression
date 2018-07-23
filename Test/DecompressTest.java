@@ -120,6 +120,27 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
+    @Test
+    public void decompressX3() {
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        String compress = "acgt";//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        c.processInput(compress);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        Rule r = d.buildGrammar(input);
+        assertEquals(compress, c.decompress(r, r.isComplement));
+    }
+
+    @Test
+    public void decompressX4() {
+        Decompress d = new Decompress();
+        Compress c = new Compress();
+        String compress = "gagcattacgatcagctagcta";//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        c.processInput(compress);
+        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        Rule r = d.buildGrammar(input);
+        assertEquals(compress, c.decompress(r, r.isComplement));
+    }
 
     @Test
     public void buildGrammar12() {

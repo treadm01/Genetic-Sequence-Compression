@@ -333,16 +333,119 @@ public class ReverseComplementTest {
         }
     }
 
-
-//
+    //todo bug in hash map management on certain strings
     @Test
     public void decompress7() {
+        Compress c = new Compress();
+        c.processInput("tttcgaaaag");
+        assertEquals("tttcgaaaag", c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void writeFile() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("15000");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void chmpxx() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chmpxx");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void chntxx() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("chntxx");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void hehcmv() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("hehcmv");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void humdyst() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humdyst");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void humghcs() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humghcs");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void humhbb() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhbb");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void vaccg() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("vaccg");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void mtpacga() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mtpacga");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void mpomtcg() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("mpomtcg");
+        c.processInput(originalFile);
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void humprtb() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile);
-        System.out.println(c.printRules());
-        System.out.println(c.getFirstRule().getRuleString());
+        assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void humhdab() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humhdab");
+        c.processInput(originalFile);
         assertEquals(originalFile, c.decompress(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 

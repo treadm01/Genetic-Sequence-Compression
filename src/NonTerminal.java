@@ -25,7 +25,7 @@ public class NonTerminal extends Symbol {
 
     @Override
     public String toString() {
-        String s = super.toString();
+        String s = String.valueOf(representation);
         if (isComplement) {
             s += "'";
         }

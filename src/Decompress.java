@@ -24,30 +24,42 @@ public class Decompress {
                 }
                 Rule r = new Rule();
                 r.length = length; // rule length known from next symbol
-                addNonTerminal(r); // add nonterminal to rule
+                addNonTerminal(r, false); // add nonterminal to rule
                 adjustedMarkers.add(marker.size()); // add position of rule created to list which can then be used in place of the rule number iteself
                 marker.put(marker.size(), (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
             else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it to first rule
                 c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
             }
-            else if (input.charAt(position) == '(') { // if a pointer deal with it and its rule
+            else if (input.charAt(position) == '(' || input.charAt(position) == ')') { // if a pointer deal with it and its rule
+                Boolean isComplement = false;
+                if (input.charAt(position) == ')' ){
+                    isComplement = true;
+                }
                 int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
                 NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
-                adjustedMarkers.remove(pos); // remove from the list
+                adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
                 evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
-                addNonTerminal(nonTerminal.getRule());
+                addNonTerminal(nonTerminal.getRule(), isComplement);
             }
-            else if (input.charAt(position) == '[') { // if a pointer deal with it and its rule
+            else if (input.charAt(position) == '[' || input.charAt(position) == ']') { // if a pointer deal with it and its rule
+                Boolean isComplement = false;
+                if (input.charAt(position) == ']' ){
+                    isComplement = true;
+                }
                 int pos = retrieveStringSegment();
                 previousMarker = pos;
-                addNonTerminal(marker.get(pos).getRule());
+                addNonTerminal(marker.get(pos).getRule(), isComplement);
             }
-            else if (input.charAt(position) == '{') { // if a pointer deal with it and its rule
+            else if (input.charAt(position) == '{' || input.charAt(position) == '}') { // if a pointer deal with it and its rule
+                Boolean isComplement = false;
+                if (input.charAt(position) == '}' ){
+                    isComplement = true;
+                }
                 int value = retrieveStringSegment();
                 int pos = value + previousMarker;
                 previousMarker = value;
-                addNonTerminal(marker.get(pos).getRule());
+                addNonTerminal(marker.get(pos).getRule(), isComplement);
             }
             position++; // increase position in string
         }
@@ -72,8 +84,9 @@ public class Decompress {
         return Integer.valueOf(symbol);
     }
 
-    public void addNonTerminal(Rule rule) {
+    public void addNonTerminal(Rule rule, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
+        nonTerminal.isComplement = isComplement;
         c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
     }
 

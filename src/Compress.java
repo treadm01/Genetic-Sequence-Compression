@@ -336,19 +336,30 @@ public class Compress {
                 else if (nt.rule.timeSeen == 1) {
                     //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
+                    String complementIndicator = "("; // non complement
+                    if (nt.isComplement) {
+                        complementIndicator = ")"; // complement
+                    }
                     int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
-                    output += "(" + index; // the index of the rule position can be used instead but corresponds to the correct value
+                    output += complementIndicator + index; // the index of the rule position can be used instead but corresponds to the correct value
                     adjustedMarkers.remove(index);// remove when used
                 }
                 else {
-                    //TODO can use similar method for nonterminal symbols???
                     //output += "[" + nt.rule.position;
                     if (nt.getRule().position > previousMarker) {
-                        output += "{" + (nt.rule.position - previousMarker);
+                        String complementIndicator = "{"; // non complement
+                        if (nt.isComplement) {
+                            complementIndicator = "}"; // complement
+                        }
+                        output += complementIndicator + (nt.rule.position - previousMarker);
                         previousMarker = nt.rule.position - previousMarker;
                     }
                     else {
-                        output += "[" + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
+                        String complementIndicator = "["; // non complement
+                        if (nt.isComplement) {
+                            complementIndicator = "]"; // complement
+                        }
+                        output += complementIndicator + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
                         previousMarker = nt.rule.position;
                     }
                 }

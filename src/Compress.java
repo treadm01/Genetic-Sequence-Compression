@@ -13,6 +13,11 @@ public class Compress {
     //TODO keeping odd and even
     //TODO characters will be as long? or given smallest binary for number of characters?
 
+    //todo ALTHOUGH TRICKS TO REDUCE SYMBOL ENCODING REDUCE SIZE BZIP PRODUCES LARGER FILES
+    //TODO HAVING REDUCED SYMBOLS JUST INDICATING COMPLEMENT OR NOT, NOT ENCODING DIFFERENCE ETC
+    // TODO, HAD A REDUCED SIZE.... WHAT WOULD BE BEST FOR ARITHMETIC CODING?
+    // probably better to keep alphabet size as low as possible
+
     /**
      * main constructor for compress, just initialises, maps and first rules etc
      */
@@ -311,6 +316,8 @@ public class Compress {
         }
         return output;
     }
+
+
 
     //TODO clean up
     //TODO decide how to store rules, just numbered as they are seen or try to keep 2,4,6 etc

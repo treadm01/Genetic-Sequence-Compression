@@ -169,9 +169,17 @@ public class ReverseComplementTest {
         c.processInput(input);
         System.out.println(c.printDigrams());
         System.out.println(c.printRules());
-        // looks like old nonterminal digrams are not being removed
-        //g t, 2' c, 2 4, 2 2', a c, 4' 2', g 2, 6 6', -> 2 4 does not appear or 4' 2'
-        //should be 0 > 6 6' | 6 > 2 2' c | 2 > a c |
+        assertEquals("0 > 6 6' | 6 > 2 2' c | 2 > a c | ", c.printRules());
+    }
+
+    @Test
+    public void anotherCorrespondingRuleCheckDigrams() {
+        String input = "acgtcgacgt"; // old digrams from removed rules not removed
+        Compress c = new Compress();
+        c.processInput(input);
+        System.out.println(c.printDigrams());
+        System.out.println(c.printRules()); // last digram not registering as complement
+        assertEquals("g t, 2' c, 2 2', a c, g 2, 6 6', ", c.printDigrams());
     }
 
 

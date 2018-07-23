@@ -124,6 +124,7 @@ public class Compress {
         }
         else if (digram instanceof NonTerminal) {
             left = new NonTerminal(((NonTerminal) digram).getRule());
+            ((NonTerminal) digram).getRule().decrementCount();
         }
 
         if (digram.getLeft() instanceof Terminal) { // get left hand side of reverse digram
@@ -131,6 +132,7 @@ public class Compress {
         }
         else if (digram.getLeft() instanceof NonTerminal) {
             right = new NonTerminal(((NonTerminal) digram.getLeft()).getRule());
+            ((NonTerminal) digram.getLeft()).getRule().decrementCount();
         }
 
         // if nonterminal is complement, it's complement wont be, same for terminals,
@@ -199,9 +201,9 @@ public class Compress {
         NonTerminal nonTerminal = new NonTerminal(rule);
 
         //todo is it possible for a value... no, if complement is looked for the noncomplement is returned
-//        if (!symbol.equals(oldSymbol)) {
-//            nonTerminal.isComplement = true; //true or alternate value, would have to alternate the nonterminal???
-//        }
+        if (!symbol.equals(oldSymbol)) {
+            nonTerminal.isComplement = true; //true or alternate value, would have to alternate the nonterminal???
+        }
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage

@@ -49,4 +49,28 @@ public class ArithmeticEncoderTest {
     @Test
     public void calculateSymbolProbabilityRatio() {
     }
+
+    @Test
+    public void setSymbolSegmentStart() {
+        ArithmeticEncoder ae = new ArithmeticEncoder();
+        String input = "012";
+        ae.setSourceAlphabet(input);
+        ae.setSymbolSegment();
+        // should be 0, 2, 6
+        for (ArithmeticSymbol as : ae.sourceAlphabet.values()) {
+            System.out.println(as.getSegmentStart());
+        }
+    }
+
+    @Test
+    public void setSymbolSegmentEnd() {
+        ArithmeticEncoder ae = new ArithmeticEncoder();
+        String input = "012";
+        ae.setSourceAlphabet(input);
+        ae.setSymbolSegment();
+        // should be 2, 6, 10
+        for (ArithmeticSymbol as : ae.sourceAlphabet.values()) {
+            System.out.println(as.getSegmentEnd());
+        }
+    }
 }

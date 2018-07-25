@@ -1,6 +1,4 @@
-import javafx.util.Pair;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ArithmeticEncoder {
@@ -9,9 +7,12 @@ public class ArithmeticEncoder {
     static final Integer WHOLE = 2 ^ PRECISION;
     static final Integer HALF = WHOLE / 2;
     static final Integer QUARTER = WHOLE / 4;
-    static final char END_OF_FILE_SYMBOL = '!';
+    static final char END_OF_FILE_SYMBOL = '0';//will be'!';
+    Integer denominator; // this is the value of all probabilities given and used to compute ratio
+    // todo will need to be able to represent integers from 0 up to denominator * whole, consider number of symbols
+    String input = "210"; // having to put this here for now as the order alphabter is generated depends on string
 
-    Map<Character, ArithmeticSymbol> sourceAlphabet = new HashMap();
+    Map<Character, ArithmeticSymbol> sourceAlphabet = new LinkedHashMap<>();
 
     public void processInput(String input) {
 
@@ -56,20 +57,36 @@ public class ArithmeticEncoder {
         return sumOfProbabilities;
     }
 
+    //todo will probably need rounding, needs to always equal 1
     public void calculateSymbolProbabilityRatio() {
-        Integer denominator = calculateRationalDenominator();
+        Integer denominator = calculateRationalDenominator(); // use getter and setter for global variable
         for (ArithmeticSymbol as : sourceAlphabet.values()) {
             as.setProbabiltiyRatio((double) as.getProbability() / denominator);
         }
     }
 
-    // need r for precision
-    //todo how best to store this??
-    // guess it depends which value would be used more often
-    //todo will probably need rounding, needs to always equal 1
-    // have to store real number of ri that creates the probability of of the symbol when divided by the
-    // sum of all the ri numbers 0 = 1, 1 = 2, 2 = 3 = r = 6 so
-    // 0 = 0.16... 1 = 0.333... 2 = 0.5
-    // or to get the values to check
-    // 0 = 2, 1 = 4, 2 = 4 R = 10
+    // calculating the start integers of segments, which correspond to the offset of the next
+    // first is 0, second would be 2 in this instance, then 6, storing as the integer values for now
+    //used to compute segments
+    public void setSymbolSegment() {
+        int sumOfSegmentStarts = 0;
+        ArithmeticSymbol as;
+        for (Map.Entry<Character, ArithmeticSymbol> entry : sourceAlphabet.entrySet()) {
+            as = entry.getValue();
+            as.setSegmentStart(sumOfSegmentStarts);
+            as.setSegmentEnd(sumOfSegmentStarts + as.getProbability());
+            sumOfSegmentStarts += as.getProbability();
+        }
+    }
+
+    public void encode(String input, Integer ratioDenominator) {
+        Integer lowerBound = 0;
+        Integer upperBound = WHOLE;
+        Integer numberOfMiddleRepeats = 0;
+        Integer widthBetweenBounds = 0;
+
+        for (int i = 0; i < input.length(); i++) { // loop over the input
+            widthBetweenBounds = upperBound - lowerBound;
+        }
+    }
 }

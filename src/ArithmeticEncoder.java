@@ -81,7 +81,7 @@ public class ArithmeticEncoder {
         }
     }
 
-    public void encode(String input) {
+    public String encode(String input) {
         Integer lowerBound = 0;
         Integer upperBound = WHOLE;
         Integer numberOfMiddleRepeats = 0;
@@ -92,8 +92,8 @@ public class ArithmeticEncoder {
             ArithmeticSymbol as = sourceAlphabet.get(input.charAt(i));
             //System.out.println("symbol is " + as.representation);
             widthBetweenBounds = upperBound - lowerBound;
-            upperBound = lowerBound + Math.round((widthBetweenBounds * as.getSegmentEnd()) / denominator);
-            lowerBound = lowerBound + Math.round((widthBetweenBounds * as.getSegmentStart()) / denominator);
+            upperBound = lowerBound + Math.round((float)(widthBetweenBounds * as.getSegmentEnd()) / denominator);
+            lowerBound = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentStart()) / denominator);
            // System.out.println("upper " + upperBound);
             //System.out.println("lower " + lowerBound);
             while (upperBound < HALF || lowerBound > HALF) {
@@ -122,6 +122,7 @@ public class ArithmeticEncoder {
                 upperBound = 2 * (upperBound - QUARTER);
             }
         }
+
         numberOfMiddleRepeats += 1;
         if (lowerBound <= QUARTER) {
             output += "0";
@@ -136,6 +137,84 @@ public class ArithmeticEncoder {
             }
         }
         System.out.println("output " + output);
+        return output;
     }
 
+    public void decode(String input) {
+        Integer lowerBound = 0;
+        Integer upperBound = WHOLE;
+        Integer inputValue = 0;
+        Integer widthBetweenBounds;// = upperBound - lowerBound;
+        Integer inputIndex = 0;
+        Integer limitOfInput = input.length();
+        String output = "";
+
+        while (inputIndex <= PRECISION && inputIndex < limitOfInput) { // approximate the float corresponding value
+            if (input.charAt(inputIndex) == '1') {
+                inputValue += 2 ^ (PRECISION - inputIndex);
+            }
+            inputIndex++;
+        }
+
+        System.out.println("INPUT VALUE " + inputValue);
+
+        //inputValue = Math.round((widthBetweenBounds * inputValue) / denominator); // rounding the inputvalue as well
+
+      //  System.out.println("THINK CHECK THIS " + inputValue);
+
+        Character endLoop = '!';
+
+        //while (true) { //find a proper condition, check for end of file symbol
+        for (int x = 0; x < 2; x++) {
+            for (ArithmeticSymbol as : sourceAlphabet.values()) {
+                System.out.println("symbol being checked " + as.representation);
+                widthBetweenBounds = upperBound - lowerBound;
+                Integer upperBoundCheck = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentEnd()) / denominator);
+                Integer lowerBoundCheck = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentStart()) / denominator);
+
+                System.out.println("lower " + lowerBoundCheck);
+                System.out.println("input value " + inputValue);
+                System.out.println("upper " + upperBoundCheck);
+                if (lowerBoundCheck <= inputValue && inputValue < upperBoundCheck) {
+                    output += as.representation;
+                    System.out.println(as.representation);
+//                    endLoop = as.representation;
+                    lowerBound = lowerBoundCheck;
+                    upperBound = upperBoundCheck;
+                    if (as.representation == END_OF_FILE_SYMBOL) {
+                        System.out.println(output);
+                        break;
+                    }
+                }
+            }
+
+            while (upperBound < HALF || lowerBound > HALF) { // rescaling
+                if (upperBound < HALF) {
+                    lowerBound = 2 * lowerBound;
+                    upperBound = 2 * upperBound;
+                    inputValue = 2 * inputValue;
+                } else if (lowerBound > HALF) {
+                    lowerBound = 2 * (lowerBound - HALF);
+                    upperBound = 2 * (upperBound - HALF);
+                    inputValue = 2 * (inputValue - HALF);
+                }
+
+                if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
+                    inputValue++;
+                }
+                inputIndex++;
+            }
+
+            while (lowerBound > QUARTER && upperBound < 3 * QUARTER) {
+                lowerBound = 2 * (lowerBound - QUARTER);
+                upperBound = 2 * (upperBound - QUARTER);
+                inputValue = 2 * (inputValue - QUARTER);
+
+                if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
+                    inputValue++;
+                }
+                inputIndex++;
+            }
+        }
+    }
 }

@@ -70,6 +70,7 @@ public class ArithmeticEncoderTest {
         ae.setSymbolSegment();
         // should be 2, 6, 10
         for (ArithmeticSymbol as : ae.sourceAlphabet.values()) {
+            System.out.println(as.representation);
             System.out.println(as.getSegmentEnd());
         }
     }
@@ -86,5 +87,16 @@ public class ArithmeticEncoderTest {
         ae.calculateSymbolProbabilityRatio();
         ae.setSymbolSegment();
         ae.encode("210");
+    }
+
+    @Test
+    public void decode() {
+        ArithmeticEncoder ae = new ArithmeticEncoder();
+        String input = "012";
+        ae.setSourceAlphabet(input);
+        ae.calculateSymbolProbabilityRatio();
+        ae.setSymbolSegment();
+        String binary  = ae.encode("210");
+        ae.decode(binary);//"10110");
     }
 }

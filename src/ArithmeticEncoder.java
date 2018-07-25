@@ -1,3 +1,4 @@
+import java.util.BitSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class ArithmeticEncoder {
     Integer denominator; // this is the value of all probabilities given and used to compute ratio
     // todo will need to be able to represent integers from 0 up to denominator * whole, consider number of symbols
     String input = "210"; // having to put this here for now as the order alphabter is generated depends on string
+    BitSet binaryEncoding = new BitSet();
 
     Map<Character, ArithmeticSymbol> sourceAlphabet = new LinkedHashMap<>();
 
@@ -59,7 +61,7 @@ public class ArithmeticEncoder {
 
     //todo will probably need rounding, needs to always equal 1
     public void calculateSymbolProbabilityRatio() {
-        Integer denominator = calculateRationalDenominator(); // use getter and setter for global variable
+        denominator = calculateRationalDenominator(); // use getter and setter for global variable
         for (ArithmeticSymbol as : sourceAlphabet.values()) {
             as.setProbabiltiyRatio((double) as.getProbability() / denominator);
         }
@@ -79,14 +81,61 @@ public class ArithmeticEncoder {
         }
     }
 
-    public void encode(String input, Integer ratioDenominator) {
+    public void encode(String input) {
         Integer lowerBound = 0;
         Integer upperBound = WHOLE;
         Integer numberOfMiddleRepeats = 0;
-        Integer widthBetweenBounds = 0;
+        Integer widthBetweenBounds;
+        String output = "";
 
         for (int i = 0; i < input.length(); i++) { // loop over the input
+            ArithmeticSymbol as = sourceAlphabet.get(input.charAt(i));
+            //System.out.println("symbol is " + as.representation);
             widthBetweenBounds = upperBound - lowerBound;
+            upperBound = lowerBound + Math.round((widthBetweenBounds * as.getSegmentEnd()) / denominator);
+            lowerBound = lowerBound + Math.round((widthBetweenBounds * as.getSegmentStart()) / denominator);
+           // System.out.println("upper " + upperBound);
+            //System.out.println("lower " + lowerBound);
+            while (upperBound < HALF || lowerBound > HALF) {
+                if (upperBound < HALF) {
+                    output += "0";
+                    for (int j = 0; j < numberOfMiddleRepeats; j++) {
+                        output += "1";
+                    }
+                    numberOfMiddleRepeats = 0;
+                    lowerBound = 2 * lowerBound;
+                    upperBound = 2 * upperBound;
+                }
+                else if (lowerBound > HALF) {
+                    output += "1";
+                    for (int j = 0; j < numberOfMiddleRepeats; j++) {
+                        output += "0";
+                    }
+                    numberOfMiddleRepeats = 0;
+                    lowerBound = 2 * (lowerBound - HALF);
+                    upperBound = 2 * (upperBound - HALF);
+                }
+            }
+            while (lowerBound > QUARTER && upperBound < 3 * QUARTER) {
+                numberOfMiddleRepeats += 1;
+                lowerBound = 2 * (lowerBound - QUARTER);
+                upperBound = 2 * (upperBound - QUARTER);
+            }
         }
+        numberOfMiddleRepeats += 1;
+        if (lowerBound <= QUARTER) {
+            output += "0";
+            for (int j = 0; j < numberOfMiddleRepeats; j++) {
+                output += "1";
+            }
+        }
+        else {
+            output += "1";
+            for (int j = 0; j < numberOfMiddleRepeats; j++) {
+                output += "0";
+            }
+        }
+        System.out.println("output " + output);
     }
+
 }

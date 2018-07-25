@@ -73,4 +73,18 @@ public class ArithmeticEncoderTest {
             System.out.println(as.getSegmentEnd());
         }
     }
+
+    @Test
+    public void setSymbolSegment() {
+    }
+
+    @Test
+    public void encode() {
+        ArithmeticEncoder ae = new ArithmeticEncoder();
+        String input = "012";
+        ae.setSourceAlphabet(input);
+        ae.calculateSymbolProbabilityRatio();
+        ae.setSymbolSegment();
+        ae.encode("210");
+    }
 }

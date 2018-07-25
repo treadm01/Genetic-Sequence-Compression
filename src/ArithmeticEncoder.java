@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class ArithmeticEncoder {
 
-    static final Integer PRECISION = 32; // use long could get closer to 64?
-    static final Integer WHOLE = 2 ^ PRECISION;
-    static final Integer HALF = WHOLE / 2;
-    static final Integer QUARTER = WHOLE / 4;
+    static final long PRECISION = 32; // use long could get closer to 64?
+    static final long WHOLE = (long) Math.pow(2, PRECISION);
+    static final long HALF = WHOLE / 2;
+    static final long QUARTER = WHOLE / 4;
     static final char END_OF_FILE_SYMBOL = '0';//will be'!';
     Integer denominator; // this is the value of all probabilities given and used to compute ratio
     // todo will need to be able to represent integers from 0 up to denominator * whole, consider number of symbols
@@ -44,17 +44,24 @@ public class ArithmeticEncoder {
     // must be values that all add up to one, kept as ratios
     public Integer getProbability(char c) {
         if (c == '0') {
-            return 2;
+            return 1;
         }
-        else {
-            return 4;
+        else if (c == '1'){
+            return 1;
         }
+        else if (c == '2'){
+            return 10;
+        }
+        else if (c == '3'){
+            return 8;
+        }
+        else return 0;
     }
 
     public Integer calculateRationalDenominator() {
         Integer sumOfProbabilities = 0;
         for (ArithmeticSymbol as : sourceAlphabet.values()) {
-            sumOfProbabilities+= as.getProbability();
+            sumOfProbabilities += as.getProbability();
         }
         return sumOfProbabilities;
     }
@@ -63,7 +70,7 @@ public class ArithmeticEncoder {
     public void calculateSymbolProbabilityRatio() {
         denominator = calculateRationalDenominator(); // use getter and setter for global variable
         for (ArithmeticSymbol as : sourceAlphabet.values()) {
-            as.setProbabiltiyRatio((double) as.getProbability() / denominator);
+            as.setProbabiltiyRatio((double) (as.getProbability() / denominator));
         }
     }
 
@@ -82,20 +89,21 @@ public class ArithmeticEncoder {
     }
 
     public String encode(String input) {
-        Integer lowerBound = 0;
-        Integer upperBound = WHOLE;
+        long lowerBound = 0;
+        long upperBound = WHOLE;
         Integer numberOfMiddleRepeats = 0;
-        Integer widthBetweenBounds;
+        long widthBetweenBounds;
         String output = "";
 
         for (int i = 0; i < input.length(); i++) { // loop over the input
             ArithmeticSymbol as = sourceAlphabet.get(input.charAt(i));
             //System.out.println("symbol is " + as.representation);
             widthBetweenBounds = upperBound - lowerBound;
-            upperBound = lowerBound + Math.round((float)(widthBetweenBounds * as.getSegmentEnd()) / denominator);
-            lowerBound = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentStart()) / denominator);
-           // System.out.println("upper " + upperBound);
-            //System.out.println("lower " + lowerBound);
+
+            upperBound = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
+            lowerBound = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
+
+
             while (upperBound < HALF || lowerBound > HALF) {
                 if (upperBound < HALF) {
                     output += "0";
@@ -123,7 +131,7 @@ public class ArithmeticEncoder {
             }
         }
 
-        numberOfMiddleRepeats += 1;
+        numberOfMiddleRepeats += 1; // this extra number of repeates seems to throw it off
         if (lowerBound <= QUARTER) {
             output += "0";
             for (int j = 0; j < numberOfMiddleRepeats; j++) {
@@ -141,26 +149,23 @@ public class ArithmeticEncoder {
     }
 
     public void decode(String input) {
-        Integer lowerBound = 0;
-        Integer upperBound = WHOLE;
-        Integer inputValue = 0;
-        Integer widthBetweenBounds;// = upperBound - lowerBound;
-        Integer inputIndex = 0;
+        long lowerBound = 0;
+        long upperBound = WHOLE;
+        long inputValue = 0;
+        long widthBetweenBounds;// = upperBound - lowerBound;
+        Integer inputIndex = 0; // set to 1?
         Integer limitOfInput = input.length();
         String output = "";
 
         while (inputIndex <= PRECISION && inputIndex < limitOfInput) { // approximate the float corresponding value
             if (input.charAt(inputIndex) == '1') {
-                inputValue += 2 ^ (PRECISION - inputIndex);
+                inputValue += Math.pow(2,  PRECISION - inputIndex);
             }
             inputIndex++;
         }
 
+        //inputValue =  inputValue / denominator; // rounding the inputvalue as well
         System.out.println("INPUT VALUE " + inputValue);
-
-        //inputValue = Math.round((widthBetweenBounds * inputValue) / denominator); // rounding the inputvalue as well
-
-      //  System.out.println("THINK CHECK THIS " + inputValue);
 
         Character endLoop = '!';
 
@@ -169,15 +174,15 @@ public class ArithmeticEncoder {
             for (ArithmeticSymbol as : sourceAlphabet.values()) {
                 System.out.println("symbol being checked " + as.representation);
                 widthBetweenBounds = upperBound - lowerBound;
-                Integer upperBoundCheck = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentEnd()) / denominator);
-                Integer lowerBoundCheck = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentStart()) / denominator);
+                long upperBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
+                long lowerBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
 
-                System.out.println("lower " + lowerBoundCheck);
-                System.out.println("input value " + inputValue);
-                System.out.println("upper " + upperBoundCheck);
+                System.out.println("l " + lowerBoundCheck);
+                System.out.println("i " + inputValue);
+                System.out.println("u " + upperBoundCheck);
                 if (lowerBoundCheck <= inputValue && inputValue < upperBoundCheck) {
                     output += as.representation;
-                    System.out.println(as.representation);
+                    System.out.println("DECIDED AS " + as.representation);
 //                    endLoop = as.representation;
                     lowerBound = lowerBoundCheck;
                     upperBound = upperBoundCheck;

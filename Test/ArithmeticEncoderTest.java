@@ -87,16 +87,28 @@ public class ArithmeticEncoderTest {
         ae.calculateSymbolProbabilityRatio();
         ae.setSymbolSegment();
         ae.encode("210");
+        assertEquals("10110", ae.encode("210"));
+    }
+
+    @Test
+    public void encodeTwo() {
+        ArithmeticEncoder ae = new ArithmeticEncoder();
+        String input = "0123";
+        ae.setSourceAlphabet(input);
+        ae.calculateSymbolProbabilityRatio();
+        ae.setSymbolSegment();
+        ae.encode("2320");
+        //assertEquals("10110", ae.encode("210"));
     }
 
     @Test
     public void decode() {
         ArithmeticEncoder ae = new ArithmeticEncoder();
-        String input = "012";
+        String input = "0123";
         ae.setSourceAlphabet(input);
         ae.calculateSymbolProbabilityRatio();
         ae.setSymbolSegment();
-        String binary  = ae.encode("210");
-        ae.decode(binary);//"10110");
+        String binary  = ae.encode("2320");
+        ae.decode(binary);
     }
 }

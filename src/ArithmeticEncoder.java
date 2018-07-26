@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.BitSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -5,7 +6,7 @@ import java.util.Map;
 public class ArithmeticEncoder {
 
     static final long PRECISION = 32; // use long could get closer to 64?
-    static final long WHOLE = (long) Math.pow(2, PRECISION);
+    static final long WHOLE = (long) Math.pow(2, PRECISION); // bigint?
     static final long HALF = WHOLE / 2;
     static final long QUARTER = WHOLE / 4;
     static final char END_OF_FILE_SYMBOL = '0';//will be'!';
@@ -43,10 +44,10 @@ public class ArithmeticEncoder {
     // hard coding for now just to get initial values
     // must be values that all add up to one, kept as ratios
     public Integer getProbability(char c) {
-//        if (c == '0') {
-//            return 2;
-//        }
-//        else {return 4;}
+//            if (c == '0') {
+//                return 2;
+//            }
+//            else {return 4;}
         if (c == '0') {
             return 1;
         }
@@ -146,7 +147,7 @@ public class ArithmeticEncoder {
                 output += "0";
             }
         }
-        System.out.println("output " + output);
+        //System.out.println("output " + output);
         return output;
     }
 
@@ -155,51 +156,66 @@ public class ArithmeticEncoder {
         long upperBound = WHOLE;
         long inputValue = 0;
         long widthBetweenBounds;// = upperBound - lowerBound;
-        Character endLoop = '!';
+        long valueToAdd = WHOLE;
         Integer inputIndex = 0; // set to 1?
         Integer limitOfInput = input.length();
+        Character endLoop = '!';
         String output = "";
 
+        System.out.println(input);
+        System.out.println(limitOfInput);
+
+
+        // get the segment from the binary by adding up corresponding values of segent widths
         while (inputIndex <= PRECISION && inputIndex < limitOfInput) { // approximate the float corresponding value
+            valueToAdd /= 2 ;
             if (input.charAt(inputIndex) == '1') {
-                inputValue += Math.pow(2,  PRECISION - inputIndex);
+                inputValue += valueToAdd;
             }
             inputIndex++;
         }
 
-        inputValue /= 2; // input value has assessed above seems out had to / by 2......
+        // loop through until output is indicated as end of file symbol
+        while (endLoop != END_OF_FILE_SYMBOL) { //find a proper condition, check for end of file symbol
 
-        while (endLoop != '0') { //find a proper condition, check for end of file symbol
+            // check through possible symbols in alphabet and create segments from their probabilities
             for (ArithmeticSymbol as : sourceAlphabet.values()) {
                 widthBetweenBounds = upperBound - lowerBound;
-                long upperBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentEnd() / denominator));
-                long lowerBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentStart() / denominator));
 
+                // variables for segments in current scale, if found within them they are assigned to the new actual bounds actual
+                long upperBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
+                long lowerBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
+
+                // check whether the segment is within the bounds for this scale, if so it is that symbol
                 if (lowerBoundCheck <= inputValue && inputValue < upperBoundCheck) {
                     output += as.representation;
-                    endLoop = as.representation;
-                    lowerBound = lowerBoundCheck;
+                    endLoop = as.representation; // check for the main loop
+                    lowerBound = lowerBoundCheck; // update bounds
                     upperBound = upperBoundCheck;
-                    break; // if found don't need to check other symbols??
+                    break; // if found don't need to check other symbols
                 }
             }
 
+            //SCALING
+            // if the upper bound is entirely in lower half of space or lower entirely above:
             while (upperBound < HALF || lowerBound > HALF) { // rescaling
-                if (upperBound < HALF) {
+                if (upperBound < HALF) { //todo less than or equal??
                     lowerBound = 2 * lowerBound;
                     upperBound = 2 * upperBound;
                     inputValue = 2 * inputValue;
-                } else if (lowerBound > HALF) {
+                }
+                else if (lowerBound > HALF) {
                     lowerBound = 2 * (lowerBound - HALF);
                     upperBound = 2 * (upperBound - HALF);
                     inputValue = 2 * (inputValue - HALF);
                 }
 
+                //todo PRETTY SURE THESE ARE THE ISSUE, BINARY CODE LONGER THAN 32 not RETURNING
+                // onse over 32 with only 0s seem to have no issue
                 if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
                     inputValue++;
                     inputIndex++;
                 }
-
             }
 
             while (lowerBound > QUARTER && upperBound < 3 * QUARTER) {

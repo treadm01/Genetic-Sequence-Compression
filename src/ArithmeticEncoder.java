@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ArithmeticEncoder {
 
-    static final long PRECISION = 32; // use long could get closer to 64?
+    static final long PRECISION = 16; // use long could get closer to 64?
     static final long WHOLE = (long) Math.pow(2, PRECISION);
     static final long HALF = WHOLE / 2;
     static final long QUARTER = WHOLE / 4;
@@ -43,6 +43,10 @@ public class ArithmeticEncoder {
     // hard coding for now just to get initial values
     // must be values that all add up to one, kept as ratios
     public Integer getProbability(char c) {
+//        if (c == '0') {
+//            return 2;
+//        }
+//        else {return 4;}
         if (c == '0') {
             return 1;
         }
@@ -100,9 +104,8 @@ public class ArithmeticEncoder {
             //System.out.println("symbol is " + as.representation);
             widthBetweenBounds = upperBound - lowerBound;
 
-            upperBound = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
-            lowerBound = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
-
+            upperBound = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentEnd()) / denominator);
+            lowerBound = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentStart()) / denominator);
 
             while (upperBound < HALF || lowerBound > HALF) {
                 if (upperBound < HALF) {
@@ -153,6 +156,7 @@ public class ArithmeticEncoder {
         long upperBound = WHOLE;
         long inputValue = 0;
         long widthBetweenBounds;// = upperBound - lowerBound;
+        Character endLoop = '!';
         Integer inputIndex = 0; // set to 1?
         Integer limitOfInput = input.length();
         String output = "";
@@ -164,32 +168,24 @@ public class ArithmeticEncoder {
             inputIndex++;
         }
 
-        //inputValue =  inputValue / denominator; // rounding the inputvalue as well
-        System.out.println("INPUT VALUE " + inputValue);
+        System.out.println("A " + inputValue);
+        inputValue /= 2;
 
-        Character endLoop = '!';
 
-        //while (true) { //find a proper condition, check for end of file symbol
-        for (int x = 0; x < 2; x++) {
+        while (endLoop != '0') { //find a proper condition, check for end of file symbol
+        //for (int x = 0; x < 2; x++) {
             for (ArithmeticSymbol as : sourceAlphabet.values()) {
-                System.out.println("symbol being checked " + as.representation);
                 widthBetweenBounds = upperBound - lowerBound;
-                long upperBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
-                long lowerBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
+                long upperBoundCheck = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentEnd() / denominator));
+                long lowerBoundCheck = lowerBound + Math.round((float) (widthBetweenBounds * as.getSegmentStart() / denominator));
 
-                System.out.println("l " + lowerBoundCheck);
-                System.out.println("i " + inputValue);
-                System.out.println("u " + upperBoundCheck);
                 if (lowerBoundCheck <= inputValue && inputValue < upperBoundCheck) {
                     output += as.representation;
                     System.out.println("DECIDED AS " + as.representation);
-//                    endLoop = as.representation;
+                    endLoop = as.representation;
                     lowerBound = lowerBoundCheck;
                     upperBound = upperBoundCheck;
-                    if (as.representation == END_OF_FILE_SYMBOL) {
-                        System.out.println(output);
-                        break;
-                    }
+                    break; // if found don't need to check other symbols??
                 }
             }
 
@@ -206,8 +202,9 @@ public class ArithmeticEncoder {
 
                 if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
                     inputValue++;
+                    inputIndex++;
                 }
-                inputIndex++;
+
             }
 
             while (lowerBound > QUARTER && upperBound < 3 * QUARTER) {
@@ -217,9 +214,11 @@ public class ArithmeticEncoder {
 
                 if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
                     inputValue++;
+                    inputIndex++;
                 }
-                inputIndex++;
+
             }
         }
+        System.out.println(output);
     }
 }

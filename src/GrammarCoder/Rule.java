@@ -1,3 +1,5 @@
+package GrammarCoder;
+
 public class Rule extends Symbol {
     int count;
     Guard guard;

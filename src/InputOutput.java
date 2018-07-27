@@ -47,7 +47,7 @@ public class InputOutput {
     }
 
 /*
-    public String writeFile(List<NonTerminal> finalRules) {
+    public String writeFile(List<GrammarCoder.NonTerminal> finalRules) {
         //TODO break this up into process binary and separate write file methods
         System.out.println("writing file");
         String fullBinary = "";
@@ -55,7 +55,7 @@ public class InputOutput {
         int largestRuleSize = Integer.toBinaryString(finalRules.size()).length();
         System.out.println(largestRuleSize);
 
-        for (NonTerminal r : finalRules) {
+        for (GrammarCoder.NonTerminal r : finalRules) {
             String binaryRuleLength = "";
             String ruleInBinary = Integer.toBinaryString(r.values.size());
             for (int i = 0; i < ruleInBinary.length(); i++) {
@@ -65,10 +65,10 @@ public class InputOutput {
 
             fullBinary += binaryRuleLength;
 
-            for (Symbol s : r.values) {
+            for (GrammarCoder.Symbol s : r.values) {
                 String binarySymbolRepresentation = "";
                 String lengthOfSymbol = "";
-                if (s instanceof NonTerminal) {
+                if (s instanceof GrammarCoder.NonTerminal) {
                     binarySymbolRepresentation = Integer.toBinaryString(Integer.valueOf(s.toString()));
 
                     for (int i = 0; i < binarySymbolRepresentation.length(); i++) {

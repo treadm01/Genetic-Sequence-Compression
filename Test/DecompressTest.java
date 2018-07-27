@@ -1,3 +1,6 @@
+    import GrammarCoder.Compress;
+    import GrammarCoder.Decompress;
+    import GrammarCoder.Rule;
     import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -128,7 +131,7 @@ public class DecompressTest {
         c.processInput(compress);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
         Rule r = d.buildGrammar(input);
-        assertEquals(compress, c.decompress(r, r.isComplement));
+        assertEquals(compress, c.decompress(r, r.isComplement)); //todo get with getter
     }
 
     @Test

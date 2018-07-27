@@ -1,9 +1,11 @@
+package GrammarCoder;
+
 public class Symbol {
     Symbol left, right;
     long representation;
     private static final long PRIME = 2265539; // from sequitur
-    Boolean isComplement = false;
-    Symbol complement;
+    public Boolean isComplement = false;
+    public Symbol complement;
 
     public Boolean isGuard() {
         return representation == 0;

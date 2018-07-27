@@ -1,3 +1,5 @@
+package GrammarCoder;
+
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
 

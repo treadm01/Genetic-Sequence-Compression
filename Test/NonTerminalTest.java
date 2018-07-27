@@ -4,20 +4,20 @@
 //import static org.junit.Assert.*;
 //
 //public class NonTerminalTest {
-//    NonTerminal nt;
+//    GrammarCoder.NonTerminal nt;
 //
 //    @Before
 //    public void setUp() throws Exception {
-//        nt = new NonTerminal(0);
+//        nt = new GrammarCoder.NonTerminal(0);
 //    }
 //
 //    @Test
 //    public void addNextSymbol() {
-////        nt.addNextSymbol(new Terminal("a"));
-////        nt.addNextSymbol(new Terminal("b"));
-////        nt.addNextSymbol(new Terminal("c"));
+////        nt.addNextSymbol(new GrammarCoder.Terminal("a"));
+////        nt.addNextSymbol(new GrammarCoder.Terminal("b"));
+////        nt.addNextSymbol(new GrammarCoder.Terminal("c"));
 //
-//        Symbol s = nt.guard.left.right;
+//        GrammarCoder.Symbol s = nt.guard.left.right;
 //        String output = "";
 //        do {
 //            output += s.toString();
@@ -29,9 +29,9 @@
 //
 //    @Test
 //    public void addSymbols() {
-////        nt.addSymbols(new Terminal("a"), new Terminal("b"));
+////        nt.addSymbols(new GrammarCoder.Terminal("a"), new GrammarCoder.Terminal("b"));
 //
-//        Symbol s = nt.guard.left.right;
+//        GrammarCoder.Symbol s = nt.guard.left.right;
 //        String output = "";
 //        do {
 //            output += s.toString();
@@ -43,21 +43,21 @@
 //
 //    @Test
 //    public void updateNonTerminal() {
-////        Terminal b = new Terminal("b");
-////        Terminal c = new Terminal("c");
-////        nt.addNextSymbol(new Terminal("a"));
-////        nt.addNextSymbol(new Terminal("b"));
-////        nt.addNextSymbol(new Terminal("c"));
+////        GrammarCoder.Terminal b = new GrammarCoder.Terminal("b");
+////        GrammarCoder.Terminal c = new GrammarCoder.Terminal("c");
+////        nt.addNextSymbol(new GrammarCoder.Terminal("a"));
+////        nt.addNextSymbol(new GrammarCoder.Terminal("b"));
+////        nt.addNextSymbol(new GrammarCoder.Terminal("c"));
 ////        nt.addNextSymbol(b);
 //        nt.addNextSymbol(c);
 //
-//        NonTerminal ntRule = new NonTerminal(0);
+//        GrammarCoder.NonTerminal ntRule = new GrammarCoder.NonTerminal(0);
 //        ntRule.addSymbols(b, c);
-//        Rule rule = new Rule(ntRule);
+//        GrammarCoder.Rule rule = new GrammarCoder.Rule(ntRule);
 //
 //        nt.updateNonTerminal(rule, c);
 //
-//        Symbol s = nt.guard.left.right;
+//        GrammarCoder.Symbol s = nt.guard.left.right;
 //        String output = "";
 //        do {
 //            output += s.toString();

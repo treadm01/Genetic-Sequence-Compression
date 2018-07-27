@@ -1,3 +1,5 @@
+import GrammarCoder.Compress;
+import GrammarCoder.Decompress;
 import org.junit.Before;
 import org.junit.Test;
 

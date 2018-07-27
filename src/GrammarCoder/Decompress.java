@@ -1,3 +1,5 @@
+package GrammarCoder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,7 +113,7 @@ public class Decompress {
                 // move links around as symbols are added to rule
                 nonTerminal.assignRight(nonTerminal.getRight().getRight()); // assign next symbol in order
                 nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
-                //System.out.println("Rule " + nonTerminal + " > " + nonTerminal.getRule().getRuleString());
+                //System.out.println("GrammarCoder.Rule " + nonTerminal + " > " + nonTerminal.getRule().getRuleString());
             }
             // assign new right of terminals left to the nonterminal
             nonTerminal.getRight().assignLeft(nonTerminal);

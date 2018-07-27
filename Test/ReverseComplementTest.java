@@ -1,3 +1,5 @@
+import GrammarCoder.Compress;
+import GrammarCoder.Terminal;
 import org.junit.Test;
 
 import java.util.Random;
@@ -35,7 +37,7 @@ public class ReverseComplementTest {
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
-        assertEquals("a", c.getReverseComplement(tr).complement.toString());
+        assertEquals("a", c.getReverseComplement(tr).complement.toString()); //todo get complement with getter
     }
 
     @Test
@@ -76,7 +78,7 @@ public class ReverseComplementTest {
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
-        Terminal t = (Terminal) c.digramMap.get(tr);
+        Terminal t = (Terminal) c.digramMap.get(tr); //todo get with getter
         c.removeDigrams(t); // should remove ac and gt
         assertEquals("g a, t c, c g, ", c.printDigrams());
     }

@@ -1,3 +1,5 @@
+package ArithmeticCoder;
+
 import java.math.BigInteger;
 import java.util.BitSet;
 import java.util.LinkedHashMap;
@@ -25,7 +27,6 @@ public class ArithmeticEncoder {
         String s = "";
         return s;
     }
-
 
     //not entirely sure how useful this will be, but to get dynamic alphabet from input
     // depends on how rigid the alphabet will be and how long this method takes
@@ -162,15 +163,13 @@ public class ArithmeticEncoder {
         Character endLoop = '!';
         String output = "";
 
-        System.out.println(input);
-        System.out.println(limitOfInput);
-
-
+        //todo don't use precision but the limit then use entire input up front?
         // get the segment from the binary by adding up corresponding values of segent widths
         while (inputIndex <= PRECISION && inputIndex < limitOfInput) { // approximate the float corresponding value
             valueToAdd /= 2 ;
             if (input.charAt(inputIndex) == '1') {
                 inputValue += valueToAdd;
+                System.out.println(inputValue);
             }
             inputIndex++;
         }
@@ -188,6 +187,7 @@ public class ArithmeticEncoder {
 
                 // check whether the segment is within the bounds for this scale, if so it is that symbol
                 if (lowerBoundCheck <= inputValue && inputValue < upperBoundCheck) {
+
                     output += as.representation;
                     endLoop = as.representation; // check for the main loop
                     lowerBound = lowerBoundCheck; // update bounds
@@ -210,10 +210,13 @@ public class ArithmeticEncoder {
                     inputValue = 2 * (inputValue - HALF);
                 }
 
-                //todo PRETTY SURE THESE ARE THE ISSUE, BINARY CODE LONGER THAN 32 not RETURNING
+                //todo PRETTY SURE THESE ARE THE ISSUE, BINARY CODE LONGER THAN 32 not RETURNING, could be rescaling on longer binary
                 // onse over 32 with only 0s seem to have no issue
-                if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
-                    inputValue++;
+
+                if (inputIndex < limitOfInput) {
+                    if (input.charAt(inputIndex) == '1') {
+                        inputValue += Math.pow(2, PRECISION - inputIndex);
+                    }
                     inputIndex++;
                 }
             }
@@ -223,8 +226,10 @@ public class ArithmeticEncoder {
                 upperBound = 2 * (upperBound - QUARTER);
                 inputValue = 2 * (inputValue - QUARTER);
 
-                if (inputIndex < limitOfInput && input.charAt(inputIndex) == '1') {
-                    inputValue++;
+                if (inputIndex < limitOfInput) {
+                    if (input.charAt(inputIndex) == '1') {
+                        inputValue += Math.pow(2, PRECISION - inputIndex);
+                    }
                     inputIndex++;
                 }
 

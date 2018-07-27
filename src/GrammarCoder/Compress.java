@@ -1,14 +1,20 @@
+package GrammarCoder;
+
 import java.util.*;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
-    Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
+    public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     Set<Rule> rules;
     int markerNum = 0; // todo set to 0 check if issue later
     List<Integer> adjustedMarkers = new ArrayList<>();
     int previousMarker = 0;
 
+    //todo use unique character symbols if possible??? - arithmetic coding may work better in that way...
+    //todo the paper seems to indicate specific symbols for a rule
+    //todo update grammar rule compression and decompression method, less symbols, not difference
+    //todo keep both as options?? compression is better that way, prior to arithmetic
     //todo complement rules from existing... and removing complements when only used once
     //TODO keeping odd and even
     //TODO characters will be as long? or given smallest binary for number of characters?

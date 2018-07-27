@@ -1,3 +1,5 @@
+package ArithmeticCoder;
+
 public class ArithmeticSymbol {
     Character representation;
     Integer probability;

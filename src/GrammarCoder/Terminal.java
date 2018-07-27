@@ -1,3 +1,5 @@
+package GrammarCoder;
+
 public class Terminal extends Symbol {
     long originalValue;
 

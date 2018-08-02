@@ -1,15 +1,21 @@
 package GrammarCoder;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     Set<Rule> rules;
-    int markerNum = 0; // todo set to 0 check if issue later
+    int markerNum = 128; // todo set to 0 check if issue later
     List<Integer> adjustedMarkers = new ArrayList<>();
-    int previousMarker = 0;
+    Set<Character> alphabet = new HashSet();
+    String mainInput;
+
+    //todo check that can be retrieved from a saved file like this
 
     //todo use unique character symbols if possible??? - arithmetic coding may work better in that way...
     //todo the paper seems to indicate specific symbols for a rule
@@ -32,6 +38,14 @@ public class Compress {
         digramMap = new HashMap<>();
         rules = new HashSet<>();
         firstRule = new Rule(); // create first rule;
+
+        alphabet.add('a');
+        alphabet.add('c');
+        alphabet.add('g');
+        alphabet.add('t');
+        alphabet.add('#');
+        alphabet.add('(');
+        alphabet.add(')');
     }
 
     /**
@@ -41,6 +55,7 @@ public class Compress {
      * @param input
      */
     public void processInput(String input) {
+        mainInput = input; //todo assign and set properly
         getFirstRule().addNextSymbol(new Terminal(input.charAt(0)));
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
@@ -59,6 +74,7 @@ public class Compress {
         printRules();// needed to compute length of rule at the moment
         //System.out.println(printRules());
         //System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
+        System.out.println(rules.size());
     }
 
     public void addToDigramMap(Symbol symbol) {
@@ -318,7 +334,7 @@ public class Compress {
                 r.length++; // TODO updating length of rule here.... better place to do it.
                 current = current.getRight();
             }
-            output += "| ";
+            output += "\n";
         }
         return output;
     }
@@ -342,38 +358,31 @@ public class Compress {
                     if (nt.getRule().length != 2) {
                         output += nt.getRule().length;
                     }
-
                     markerNum++;
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
                 else if (nt.rule.timeSeen == 1) {
                     //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
-                    String complementIndicator = "("; // non complement
+                    String complementIndicator = "!"; // non complement
                     if (nt.isComplement) {
-                        complementIndicator = ")"; // complement
+                        complementIndicator = "?"; // complement
                     }
                     int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
                     output += complementIndicator + index; // the index of the rule position can be used instead but corresponds to the correct value
                     adjustedMarkers.remove(index);// remove when used
                 }
                 else {
-                    //output += "[" + nt.rule.position;
-                    if (nt.getRule().position > previousMarker) {
-                        String complementIndicator = "{"; // non complement
-                        if (nt.isComplement) {
-                            complementIndicator = "}"; // complement
-                        }
-                        output += complementIndicator + (nt.rule.position - previousMarker);
-                        previousMarker = nt.rule.position - previousMarker;
+                    String complementIndicator; // non complement
+                    if (nt.isComplement) {
+                        complementIndicator = "?"; // complement
+                        output += complementIndicator + (char) nt.rule.position; //+ rules.size();
+                        //this METHOD STORING DIFFERENT SYMBOLS FOR REVERSE COMPLEMENT MIGHT WORK, IF YOU CAN COUNT THE AMOUNT
+                        // OF RULES IN DECODER AND SUBTRACT FROM THE COMPLEMENT CHARACTER
+                        //output += (char) (nt.rule.position + rules.size());
                     }
                     else {
-                        String complementIndicator = "["; // non complement
-                        if (nt.isComplement) {
-                            complementIndicator = "]"; // complement
-                        }
-                        output += complementIndicator + nt.rule.position; // from then on just print the rule number, the marker orginally assigned to it
-                        previousMarker = nt.rule.position;
+                        output += (char) nt.rule.position;
                     }
                 }
             }
@@ -382,6 +391,15 @@ public class Compress {
             }
             current = current.getRight(); // move to next symbol
         }
+
+
+        //todo implement properly
+        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest")) {
+            out.println(output);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return output;
     }
 
@@ -472,5 +490,29 @@ public class Compress {
 
         } while (!s.isGuard());
         return output.toString();
+    }
+
+    public List<Rule> orderRulesByLength() {
+        // initialise length of symbol string the rule represents to reprder
+        // the rules by their lengths
+        for (Rule r : rules) {
+            r.symbolRule = r.getSymbolString(r.getGuard().getRight());
+        }
+
+        // reorder the rules by their symbol length
+        List<Rule> orderedRules = rules.stream()
+                .sorted(Rule::compareTo)
+                .collect(Collectors.toList());
+        System.out.println(orderedRules);
+        System.out.println(orderedRules.get(1).getSymbolString(orderedRules.get(1).getGuard().getRight()));
+        return orderedRules;
+    }
+
+    public void findApproximateRepeats() {
+        List<Rule> ordered = orderRulesByLength();
+        int index;
+
+        System.out.println(mainInput.contains(ordered.get(1).symbolRule));
+
     }
 }

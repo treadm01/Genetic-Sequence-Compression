@@ -140,7 +140,9 @@ public class DecompressTest {
         Compress c = new Compress();
         String compress = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         c.processInput(compress);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        InputOutput io = new InputOutput();
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(compress, c.decompress(r, r.isComplement));
     }
@@ -174,7 +176,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chntxx");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -187,9 +190,11 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
-        Rule r = d.buildGrammar(input);
+        //todo have this called in process input
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         System.out.println(input);
+        Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
 
@@ -200,10 +205,12 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("hehcmv");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
+        //System.out.println(input);
         Rule r = d.buildGrammar(input);
-        System.out.println(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
+        //20475
     }
 
     @Test
@@ -213,7 +220,9 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
+        System.out.println(input);
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -225,7 +234,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -237,7 +247,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhbb");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -249,7 +260,8 @@ public class DecompressTest {
         Decompress d = new Decompress();
         String originalFile = io.readFile("vaccg");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         System.out.println(input);
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
@@ -262,7 +274,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mtpacga");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -274,7 +287,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mpomtcg");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -286,7 +300,9 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
+        System.out.println(input);
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }
@@ -298,7 +314,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
         c.processInput(originalFile);
-        String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.decompress(r, r.isComplement));
     }

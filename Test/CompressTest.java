@@ -3,6 +3,9 @@ import GrammarCoder.Decompress;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Objects;
+import java.util.stream.IntStream;
+
 import static org.junit.Assert.*;
 
 public class CompressTest {
@@ -323,5 +326,17 @@ public class CompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
         c.processInput(originalFile);
+    }
+
+    @Test
+    public void getSymbols() {
+        Compress c = new Compress();
+//        c.getSymbols();
+        System.out.println((char) 22 == (char) 23);
+        final long nrChars = IntStream.rangeClosed(0, 0x10ffff)
+                .mapToObj(Character.UnicodeBlock::of)
+                .filter(Objects::nonNull)
+                .count();
+        System.out.println(nrChars);
     }
 }

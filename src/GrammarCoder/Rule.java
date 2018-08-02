@@ -1,6 +1,6 @@
 package GrammarCoder;
 
-public class Rule extends Symbol {
+public class Rule extends Symbol implements Comparable {
     int count;
     Guard guard;
     static Integer ruleNumber = 0;
@@ -11,7 +11,8 @@ public class Rule extends Symbol {
     // for encoding...
     int timeSeen = 0;
     int position;
-    int length;
+    int length; // length of compressed rule
+    String symbolRule; // length of uncompressed rule
 
     public Rule() {
         this.representation = ruleNumber;
@@ -74,5 +75,33 @@ public class Rule extends Symbol {
             first = first.getRight();
         }
         return symbols;
+    }
+
+    // get the actual symbols string the rule encodes - this won't work for reverse complements at the moment
+    public String getSymbolString(Symbol symbol) {
+        String symbols = "";
+        Symbol first = symbol;//guard.getRight();
+        while (!first.isGuard()) {
+            if (first instanceof NonTerminal) {
+                symbols += getSymbolString(((NonTerminal) first).getRule().getGuard().getRight());
+            }
+            else {
+                symbols += first.toString();
+            }
+            first = first.getRight();
+        }
+        return symbols;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Rule r = (Rule) o;
+        if (r.symbolRule.length() > symbolRule.length()) {
+            return 1;
+        }
+        else if (r.symbolRule.length() < symbolRule.length()) {
+            return -1;
+        }
+        return 0;
     }
 }

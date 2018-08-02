@@ -21,7 +21,7 @@ public class Decompress {
         while (position < input.length()) {
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
                 int length = 2; // most often the length will be 2
-                if (Character.isDigit(input.charAt(position + 1))) { // if the next position is a length not 2
+                if (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) { // if the next position is a length not 2
                     length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
                 }
                 Rule r = new Rule();
@@ -30,38 +30,34 @@ public class Decompress {
                 adjustedMarkers.add(marker.size()); // add position of rule created to list which can then be used in place of the rule number iteself
                 marker.put(marker.size(), (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
-            else if (Character.isAlphabetic(input.charAt(position))) { // if terminal add it to first rule
-                c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
-            }
-            else if (input.charAt(position) == '(' || input.charAt(position) == ')') { // if a pointer deal with it and its rule
+            else if (input.charAt(position) == '!' || input.charAt(position) == '?') { // if a pointer deal with it and its rule
                 Boolean isComplement = false;
-                if (input.charAt(position) == ')' ){
+                if (input.charAt(position) == '?' ){
                     isComplement = true;
                 }
-                int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
-                NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
-                adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
-                evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
-                addNonTerminal(nonTerminal.getRule(), isComplement);
-            }
-            else if (input.charAt(position) == '[' || input.charAt(position) == ']') { // if a pointer deal with it and its rule
-                Boolean isComplement = false;
-                if (input.charAt(position) == ']' ){
-                    isComplement = true;
+                // if next symbol is a number, its a pointer so deal with that...
+                if (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) {
+                    int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+                   // System.out.println(position);
+                    NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
+                    adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
+                    evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
+                    addNonTerminal(nonTerminal.getRule(), isComplement);
                 }
-                int pos = retrieveStringSegment();
-                previousMarker = pos;
-                addNonTerminal(marker.get(pos).getRule(), isComplement);
-            }
-            else if (input.charAt(position) == '{' || input.charAt(position) == '}') { // if a pointer deal with it and its rule
-                Boolean isComplement = false;
-                if (input.charAt(position) == '}' ){
-                    isComplement = true;
+                else { // if it isn't then its a reverse complement rule
+                    position++; //move to get the symbol
+                    int pos = input.charAt(position) - 128; //added as seens so have to remove 128 initial marker number
+                    addNonTerminal(marker.get(pos).getRule(), isComplement);
                 }
-                int value = retrieveStringSegment();
-                int pos = value + previousMarker;
-                previousMarker = value;
-                addNonTerminal(marker.get(pos).getRule(), isComplement);
+            }
+            else {
+                if (input.charAt(position) < 128) { // if terminal add it to first rule
+                    c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
+                }
+                else { //if a rule that is not a reverse complement
+                    int pos = input.charAt(position) - 128;//retrieveStringSegment();
+                    addNonTerminal(marker.get(pos).getRule(), false);
+                }
             }
             position++; // increase position in string
         }
@@ -75,7 +71,8 @@ public class Decompress {
      */
     public int retrieveStringSegment() {
         String symbol = "";
-        while (Character.isDigit(input.charAt(position + 1))) {
+        //System.out.println(input.charAt(position+1));
+        while (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) {
             symbol += input.charAt(position + 1);
             position++;
             if (position + 1 >= input.length()) { //todo if it reaches the end of the string then break

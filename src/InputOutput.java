@@ -25,7 +25,7 @@ public class InputOutput {
 
     public String readFile(String fileName) {
         //TODO improve implementation
-        String everything = "";
+        String everything = ""; ///home/tread/IdeaProjects/projectGC/compressTest
         try(BufferedReader br = new BufferedReader(new FileReader("/home/tread/IdeaProjects/projectGC/textFiles/" + fileName))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();

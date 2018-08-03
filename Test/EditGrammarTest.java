@@ -32,7 +32,7 @@ public class EditGrammarTest {
         System.out.println(c.printRules());
         System.out.println(c.printRules().length());
         System.out.println(c.getFirstRule().getRuleString().length());
-        c.orderRulesByLength();
+        c.findApproximateRepeats();
     }
 
     @Test
@@ -42,6 +42,7 @@ public class EditGrammarTest {
         c.processInput(compress);
         System.out.println(c.printRules());
         System.out.println(c.encode(c.getFirstRule().getGuard().getRight(), "").length());
+        c.findApproximateRepeats();
     }
 
 

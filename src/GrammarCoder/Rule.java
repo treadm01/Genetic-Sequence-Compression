@@ -77,18 +77,35 @@ public class Rule extends Symbol implements Comparable {
         return symbols;
     }
 
+    //TODO has to work for reverse complement
     // get the actual symbols string the rule encodes - this won't work for reverse complements at the moment
-    public String getSymbolString(Symbol symbol) {
+    public String getSymbolString(Symbol symbol, Boolean complement) {
         String symbols = "";
         Symbol first = symbol;//guard.getRight();
         while (!first.isGuard()) {
             if (first instanceof NonTerminal) {
-                symbols += getSymbolString(((NonTerminal) first).getRule().getGuard().getRight());
+                NonTerminal nt = (NonTerminal) first;
+                if (!nt.isComplement) {
+                    symbols += getSymbolString(nt.getRule().getGuard().getRight(), nt.isComplement);
+                }
+                else {
+                    symbols += getSymbolString(nt.getRule().getLast(), nt.isComplement);
+                }
             }
             else {
-                symbols += first.toString();
+                if (!complement) {
+                    symbols += first.toString();
+                }
+                else {
+                    symbols += first.complement.toString();
+                }
             }
-            first = first.getRight();
+            if (!complement) {
+                first = first.getRight();
+            }
+            else {
+                first = first.getLeft();
+            }
         }
         return symbols;
     }

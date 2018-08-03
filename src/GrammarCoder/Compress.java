@@ -166,11 +166,11 @@ public class Compress {
         // shouldn't be an issue as all are unique and values aren't altered elsewhere
         left.isComplement = !digram.isComplement;
         left.complement = digram;
-        //digram.complement = left;
+        digram.complement = left;
 
         right.isComplement = !digram.getLeft().isComplement;
         right.complement = digram.getLeft();
-        //digram.getLeft().complement = right;
+        digram.getLeft().complement = right;
 
         right.assignLeft(left);
         left.assignRight(right);
@@ -496,23 +496,36 @@ public class Compress {
         // initialise length of symbol string the rule represents to reprder
         // the rules by their lengths
         for (Rule r : rules) {
-            r.symbolRule = r.getSymbolString(r.getGuard().getRight());
+            r.symbolRule = r.getSymbolString(r.getGuard().getRight(), false);
         }
 
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
                 .collect(Collectors.toList());
-        System.out.println(orderedRules);
-        System.out.println(orderedRules.get(1).getSymbolString(orderedRules.get(1).getGuard().getRight()));
         return orderedRules;
     }
 
+    //todo implement symbolrule with reverse complement
+    //todo start checking the two strings for similarities and differences
+    //todo decide what to do with the approximate matches found
+    //would it work to search through the grammar for rule?
+    //find the rule through subrules as well, then could have the same next rules
+    //if there are differences, check them symbol by symbol
+    //then could create a rule that incorporates the first bit and second is the same with edit
+    //replace rules with new one, but what if the comparison stops mid digram?
+    //as soon as difference, would have to check symbol by symbol anyway...
     public void findApproximateRepeats() {
         List<Rule> ordered = orderRulesByLength();
-        int index;
+        String matchingSymbols = ordered.get(1).symbolRule;
+        System.out.println(ordered.get(1));
+        System.out.println(matchingSymbols);
+        int firstIndex = mainInput.indexOf(matchingSymbols);
 
-        System.out.println(mainInput.contains(ordered.get(1).symbolRule));
+        while (firstIndex >= 0) {
+            System.out.println(firstIndex);
+            firstIndex = mainInput.indexOf(matchingSymbols, firstIndex + 1);
+        }
 
     }
 }

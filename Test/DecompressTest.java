@@ -131,7 +131,7 @@ public class DecompressTest {
         c.processInput(compress);
         String input = c.encode(c.getFirstRule().getGuard().getRight(), "");
         Rule r = d.buildGrammar(input);
-        assertEquals(compress, c.decompress(r, r.isComplement)); //todo get with getter
+        assertEquals(compress, c.getFirstRule().getSymbolString(r, r.isComplement)); //todo get with getter
     }
 
     @Test
@@ -144,7 +144,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(compress, c.decompress(r, r.isComplement));
+        assertEquals(compress, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
 
@@ -179,7 +179,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
 
@@ -195,7 +195,7 @@ public class DecompressTest {
         String input = io.readFile("compressTest");
         System.out.println(input);
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -209,7 +209,7 @@ public class DecompressTest {
         String input = io.readFile("compressTest");
         //System.out.println(input);
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
         //20475
     }
 
@@ -224,7 +224,7 @@ public class DecompressTest {
         String input = io.readFile("compressTest");
         System.out.println(input);
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -237,7 +237,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -250,7 +250,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -264,7 +264,7 @@ public class DecompressTest {
         String input = io.readFile("compressTest");
         System.out.println(input);
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -277,7 +277,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -290,7 +290,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -304,7 +304,7 @@ public class DecompressTest {
         String input = io.readFile("compressTest");
         System.out.println(input);
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
     @Test
@@ -317,7 +317,7 @@ public class DecompressTest {
         c.encode(c.getFirstRule().getGuard().getRight(), "");
         String input = io.readFile("compressTest");
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.decompress(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
 
 

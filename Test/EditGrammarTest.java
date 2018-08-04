@@ -23,6 +23,23 @@ public class EditGrammarTest {
         System.out.println(c.printRules());
     }
 
+    @Test
+    public void processMaDi() { // check which digram is replaced
+        c.processInput("tgtc");
+        System.out.println(c.printRules());
+    }
+
+
+    @Test
+    public void decompressX() {
+        Compress c = new Compress();
+        String compress = "gtgttcc";
+        c.processInput(compress);
+        System.out.println(c.printRules());
+        String s = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        System.out.println("Encoded: " + s);
+        System.out.println("Length: " + s.length());
+    }
 
     @Test
     public void decompressX4() {
@@ -32,7 +49,6 @@ public class EditGrammarTest {
         System.out.println(c.printRules());
         System.out.println(c.printRules().length());
         System.out.println(c.getFirstRule().getRuleString().length());
-        c.findApproximateRepeats();
     }
 
     @Test
@@ -40,9 +56,6 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "cgattctgttctctgcctcacttctctgactcac";
         c.processInput(compress);
-        System.out.println(c.printRules());
-        System.out.println(c.encode(c.getFirstRule().getGuard().getRight(), "").length());
-        c.findApproximateRepeats();
     }
 
 
@@ -52,11 +65,22 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
-        System.out.println(c.printRules());
-        System.out.println(c.encode(c.getFirstRule().getGuard().getRight(), "").length());
-        c.findApproximateRepeats();
     }
 
 
+    @Test
+    public void checkApproxRepeat() {
+        Compress c = new Compress();
+        String compress = "ttctc";
+        c.processInput(compress);
+    }
+
+    @Test
+    public void humdyst() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humdyst");
+        c.processInput(originalFile);
+    }
 
 }

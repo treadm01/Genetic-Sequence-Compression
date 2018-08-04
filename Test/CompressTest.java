@@ -276,7 +276,9 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
+        System.out.println(originalFile);
         c.processInput(originalFile);
+        System.out.println(c.printRules());
     }
 
     @Test

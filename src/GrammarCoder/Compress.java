@@ -15,20 +15,9 @@ public class Compress {
     Set<Character> alphabet = new HashSet();
     String mainInput;
 
-    //todo check that can be retrieved from a saved file like this
-
-    //todo use unique character symbols if possible??? - arithmetic coding may work better in that way...
-    //todo the paper seems to indicate specific symbols for a rule
-    //todo update grammar rule compression and decompression method, less symbols, not difference
-    //todo keep both as options?? compression is better that way, prior to arithmetic
-    //todo complement rules from existing... and removing complements when only used once
-    //TODO keeping odd and even
-    //TODO characters will be as long? or given smallest binary for number of characters?
-
-    //todo ALTHOUGH TRICKS TO REDUCE SYMBOL ENCODING REDUCE SIZE BZIP PRODUCES LARGER FILES
-    //TODO HAVING REDUCED SYMBOLS JUST INDICATING COMPLEMENT OR NOT, NOT ENCODING DIFFERENCE ETC
-    // TODO, HAD A REDUCED SIZE.... WHAT WOULD BE BEST FOR ARITHMETIC CODING?
-    // probably better to keep alphabet size as low as possible
+    //todo maybe go back to a huffman type code assignment for all individual ints and symbols
+    //todo a gammar code for each based on frequency of the symbols, use differences again
+    //todo consider trying single complement changes, so when tc is seen tg is stored also
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -62,7 +51,7 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-            //System.out.println(getFirstRule().getRuleString());
+            System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
 
@@ -70,32 +59,20 @@ public class Compress {
         generateRules(getFirstRule().getGuard().getRight());
         //System.out.println(rules.size());
 
+
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
-        //System.out.println(printRules());
-        //System.out.println(encode(getFirstRule().getGuard().getRight(), ""));
-        System.out.println(rules.size());
+        System.out.println(printRules());
+        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+        System.out.println();
+
+        checkApproximateRepeat();
     }
 
     public void addToDigramMap(Symbol symbol) {
         digramMap.putIfAbsent(symbol, symbol);
-    }
-
-    public char reverseSymbol(char symbol) {
-        char complement = 0;
-        if (symbol == 'a') {
-            complement = 't';
-        }
-        else if (symbol == 'c') {
-            complement = 'g';
-        }
-        else if (symbol == 'g') {
-            complement = 'c';
-        }
-        else if (symbol == 't') {
-            complement = 'a';
-        }
-        return complement;
     }
 
     /**
@@ -147,7 +124,7 @@ public class Compress {
         Symbol right = new Symbol(); // left and right symbols of reverse digram as it will be entered into the map
 
         if (digram instanceof Terminal) { // right hand side of digram
-            left = new Terminal(reverseSymbol(digram.toString().charAt(0))); //todo a better way to get char
+            left = new Terminal(Terminal.reverseSymbol(digram.toString().charAt(0))); //todo a better way to get char
         }
         else if (digram instanceof NonTerminal) {
             left = new NonTerminal(((NonTerminal) digram).getRule());
@@ -155,7 +132,7 @@ public class Compress {
         }
 
         if (digram.getLeft() instanceof Terminal) { // get left hand side of reverse digram
-            right = new Terminal(reverseSymbol(digram.getLeft().toString().charAt(0))); //todo a better way to get char
+            right = new Terminal(Terminal.reverseSymbol(digram.getLeft().toString().charAt(0))); //todo a better way to get char
         }
         else if (digram.getLeft() instanceof NonTerminal) {
             right = new NonTerminal(((NonTerminal) digram.getLeft()).getRule());
@@ -166,11 +143,11 @@ public class Compress {
         // shouldn't be an issue as all are unique and values aren't altered elsewhere
         left.isComplement = !digram.isComplement;
         left.complement = digram;
-        digram.complement = left;
+        //digram.complement = left;
 
         right.isComplement = !digram.getLeft().isComplement;
         right.complement = digram.getLeft();
-        digram.getLeft().complement = right;
+        //digram.getLeft().complement = right;
 
         right.assignLeft(left);
         left.assignRight(right);
@@ -214,6 +191,10 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
+
+        // add the nonterminals to the rules list
+        newRule.nonTerminalList.add(oldTerminal);
+        newRule.nonTerminalList.add(newTerminal);
     }
 
     /**
@@ -237,6 +218,9 @@ public class Compress {
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
+
+        //add nonterminal to rule list
+        rule.nonTerminalList.add(nonTerminal);
     }
 
     /**
@@ -250,6 +234,7 @@ public class Compress {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
+            nonTerminal.getRule().nonTerminalList.remove(nonTerminal); // remove link to nonterminal from list in rule - todo don't think necessary to do if rule is down to one as it is removed
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
@@ -399,7 +384,6 @@ public class Compress {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return output;
     }
 
@@ -439,64 +423,11 @@ public class Compress {
         return this.firstRule;
     }
 
-
-    /**
-     * for debugging, creates the string back from the cfg generated
-     * @param rule
-     * @return
-     */
-    public String decompress(Rule rule, Boolean complement) {
-        Symbol s;
-        StringBuilder output = new StringBuilder();
-        if (complement) {
-            s = rule.getLast();
-        }
-        else {
-            s = rule.getGuard().getRight();
-        }
-
-        do {
-            if (s instanceof Terminal) {
-                if (complement) {
-                    output.append(reverseSymbol(s.toString().charAt(0)));
-                }
-                else {
-                    output.append(s.toString());
-                }
-
-                if (complement) {
-                    s = s.getLeft();
-                }
-                else {
-                    s = s.getRight();
-                }
-            }
-            else {
-
-                if (complement) {
-                    output.append(decompress(((NonTerminal) s).getRule(), !s.isComplement));
-                }
-                else {
-                    output.append(decompress(((NonTerminal) s).getRule(), s.isComplement));
-                }
-
-                if (complement) {
-                    s = s.getLeft();
-                }
-                else {
-                    s = s.getRight();
-                }
-            }
-
-        } while (!s.isGuard());
-        return output.toString();
-    }
-
     public List<Rule> orderRulesByLength() {
         // initialise length of symbol string the rule represents to reprder
         // the rules by their lengths
         for (Rule r : rules) {
-            r.symbolRule = r.getSymbolString(r.getGuard().getRight(), false);
+            r.symbolRule = r.getSymbolString(r, false);
         }
 
         // reorder the rules by their symbol length
@@ -506,26 +437,32 @@ public class Compress {
         return orderedRules;
     }
 
-    //todo implement symbolrule with reverse complement
-    //todo start checking the two strings for similarities and differences
-    //todo decide what to do with the approximate matches found
-    //would it work to search through the grammar for rule?
-    //find the rule through subrules as well, then could have the same next rules
-    //if there are differences, check them symbol by symbol
-    //then could create a rule that incorporates the first bit and second is the same with edit
-    //replace rules with new one, but what if the comparison stops mid digram?
-    //as soon as difference, would have to check symbol by symbol anyway...
-    public void findApproximateRepeats() {
+    public void checkApproximateRepeat() {
+        // order rules by the length they encode
         List<Rule> ordered = orderRulesByLength();
-        String matchingSymbols = ordered.get(1).symbolRule;
-        System.out.println(ordered.get(1));
-        System.out.println(matchingSymbols);
-        int firstIndex = mainInput.indexOf(matchingSymbols);
+        ordered.remove(0); // remove initial 0 rule
 
-        while (firstIndex >= 0) {
-            System.out.println(firstIndex);
-            firstIndex = mainInput.indexOf(matchingSymbols, firstIndex + 1);
+
+        for (Rule r : ordered) { // for every rule
+            for (int i = 0; i < r.nonTerminalList.size(); i++) { // for every nonterminal
+                for (int j = i + 1; j < r.nonTerminalList.size(); j++) { // check it to the following ones
+                    int editNumber = 0;
+                    // check the following symbols for differences...
+                    // have to be able to compare symbols down to the terminal level
+                    //while number of edits < 5 etc
+                    while (editNumber < 1 && !r.nonTerminalList.get(j).getRight().isGuard()) {
+                        System.out.println(r.symbolRule + r.nonTerminalList.get(i).getRight());
+                        System.out.println(r.symbolRule + r.nonTerminalList.get(j).getRight());
+
+                        if (!r.nonTerminalList.get(i).getRight().equals(r.nonTerminalList.get(j).getRight())) {
+                            editNumber++;
+                        }
+                    }
+
+                }
+            }
         }
-
     }
+
 }
+

@@ -1,5 +1,8 @@
 package GrammarCoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rule extends Symbol implements Comparable {
     int count;
     Guard guard;
@@ -13,6 +16,8 @@ public class Rule extends Symbol implements Comparable {
     int position;
     int length; // length of compressed rule
     String symbolRule; // length of uncompressed rule
+
+    List<NonTerminal> nonTerminalList = new ArrayList<>(); // used as a link to the nonterminals that represent this rule
 
     public Rule() {
         this.representation = ruleNumber;
@@ -77,37 +82,52 @@ public class Rule extends Symbol implements Comparable {
         return symbols;
     }
 
-    //TODO has to work for reverse complement
-    // get the actual symbols string the rule encodes - this won't work for reverse complements at the moment
-    public String getSymbolString(Symbol symbol, Boolean complement) {
-        String symbols = "";
-        Symbol first = symbol;//guard.getRight();
-        while (!first.isGuard()) {
-            if (first instanceof NonTerminal) {
-                NonTerminal nt = (NonTerminal) first;
-                if (!nt.isComplement) {
-                    symbols += getSymbolString(nt.getRule().getGuard().getRight(), nt.isComplement);
-                }
-                else {
-                    symbols += getSymbolString(nt.getRule().getLast(), nt.isComplement);
-                }
-            }
-            else {
-                if (!complement) {
-                    symbols += first.toString();
-                }
-                else {
-                    symbols += first.complement.toString();
-                }
-            }
-            if (!complement) {
-                first = first.getRight();
-            }
-            else {
-                first = first.getLeft();
-            }
+    //todo clean up, used by decompress... better position for pieces if split up
+    public String getSymbolString(Rule rule, Boolean complement) {
+        Symbol s;
+        StringBuilder output = new StringBuilder();
+        if (complement) {
+            s = rule.getLast();
         }
-        return symbols;
+        else {
+            s = rule.getGuard().getRight();
+        }
+
+        do {
+            if (s instanceof Terminal) {
+                if (complement) {
+                    output.append(Terminal.reverseSymbol(s.toString().charAt(0)));
+                }
+                else {
+                    output.append(s.toString());
+                }
+
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+            else {
+
+                if (complement) {
+                    output.append(getSymbolString(((NonTerminal) s).getRule(), !s.isComplement));
+                }
+                else {
+                    output.append(getSymbolString(((NonTerminal) s).getRule(), s.isComplement));
+                }
+
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+
+        } while (!s.isGuard());
+        return output.toString();
     }
 
     @Override

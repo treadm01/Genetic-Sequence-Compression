@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 public class DecompressTest {
 
+    //TODO SLOWDOWN WITH MOVING DECOMPRESS METHOD TO RULE CLASS???
+
     @Test
     public void buildGrammar() {
         Decompress d = new Decompress();

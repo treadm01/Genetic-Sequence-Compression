@@ -63,10 +63,10 @@ public class Compress {
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
         System.out.println(printRules());
-        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-        System.out.println();
+//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+//        System.out.println();
 
         checkApproximateRepeat();
     }
@@ -234,7 +234,7 @@ public class Compress {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
-            nonTerminal.getRule().nonTerminalList.remove(nonTerminal); // remove link to nonterminal from list in rule - todo don't think necessary to do if rule is down to one as it is removed
+            //nonTerminal.getRule().nonTerminalList.remove(nonTerminal); // remove link to nonterminal from list in rule - todo don't think necessary to do if rule is down to one as it is removed
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
@@ -433,36 +433,86 @@ public class Compress {
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
+                //.filter(x -> x.symbolRule.length() > 3)
                 .collect(Collectors.toList());
         return orderedRules;
     }
 
+    //todo this is getting indexes for all instances of nonterminals in the condensed string
+    // they are kept as references within the rule nonterminallist
+    // from the indexes the following strings of symbols are generated and can be compared
+    // currently stops if second is longer than end of string
+    // or first overlaps second, or edit amount is too great
+    // hopefully from the substring and the indexes there will be a way to conveniently
+    // alter the grammar
+
+    //todo issues with patterns that are encoded differently, the longer repeat test
+    // pattern could be found but not actually apply to that nonterminal
+    // have to go back to string method and figure out how to make work
     public void checkApproximateRepeat() {
         // order rules by the length they encode
         List<Rule> ordered = orderRulesByLength();
         ordered.remove(0); // remove initial 0 rule
 
+        for (Rule r : ordered) {
+            int currentIndex = 0;
+            for (NonTerminal nt : r.nonTerminalList) {
+                nt.index = mainInput.indexOf(r.symbolRule, currentIndex); // adding symrolrule length here to get end of matching segment
+                currentIndex += nt.index + r.symbolRule.length();
+            }
+        }
 
         for (Rule r : ordered) { // for every rule
             for (int i = 0; i < r.nonTerminalList.size(); i++) { // for every nonterminal
                 for (int j = i + 1; j < r.nonTerminalList.size(); j++) { // check it to the following ones
                     int editNumber = 0;
-                    // check the following symbols for differences...
-                    // have to be able to compare symbols down to the terminal level
-                    //while number of edits < 5 etc
-                    while (editNumber < 1 && !r.nonTerminalList.get(j).getRight().isGuard()) {
-                        System.out.println(r.symbolRule + r.nonTerminalList.get(i).getRight());
-                        System.out.println(r.symbolRule + r.nonTerminalList.get(j).getRight());
+                    String firstSubString = "";
+                    String secondSubString = "";
+                    int firstIndex = r.nonTerminalList.get(i).index + r.symbolRule.length();
+                    int secondIndex = r.nonTerminalList.get(j).index + r.symbolRule.length();
 
-                        if (!r.nonTerminalList.get(i).getRight().equals(r.nonTerminalList.get(j).getRight())) {
+                    System.out.println("rule number " + r + " rule string " + r.getSymbolString(r, r.isComplement));
+
+                    while (editNumber < 3
+                            && firstIndex < r.nonTerminalList.get(j).index
+                            && secondIndex < mainInput.length()) {
+
+                        firstSubString += String.valueOf(mainInput.charAt(firstIndex));
+                        secondSubString += String.valueOf(mainInput.charAt(secondIndex));
+
+                        if (mainInput.charAt(firstIndex) != mainInput.charAt(secondIndex)) {
                             editNumber++;
                         }
+
+                        firstIndex++;
+                        secondIndex++;
                     }
 
+                    System.out.println(firstSubString);
+                    System.out.println(secondSubString);
                 }
             }
         }
     }
+
+
+//    // get string from symbols, no longer used
+//    public String getSubString(Symbol current, Symbol end) {
+//        String subString = "";
+//
+//        //calling getsymbol string gets rules nonterminal by nonterminal
+//        while (!current.equals(end) && !current.isGuard()) { // if haven't gotten to end of string
+//            if (current instanceof Terminal) {
+//                subString += current.toString();
+//            }
+//            else {
+//                subString += getFirstRule().getSymbolString(((NonTerminal) current).getRule(), current.isComplement);
+//            }
+//            current = current.getRight();
+//        }
+//
+//        return subString;
+//    }
 
 }
 

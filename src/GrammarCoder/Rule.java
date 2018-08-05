@@ -76,7 +76,7 @@ public class Rule extends Symbol implements Comparable {
         String symbols = "";
         Symbol first = guard.getRight();
         while (!first.isGuard()) {
-            symbols += first.toString();
+            symbols += " " + first.toString();
             first = first.getRight();
         }
         return symbols;

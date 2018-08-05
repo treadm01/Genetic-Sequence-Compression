@@ -2,7 +2,7 @@ package GrammarCoder;
 
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
-    Integer index; // location of rule in main input string
+    //Integer index; // location of rule in main input string
 
     public NonTerminal(Rule rule) {
         this.rule = rule;

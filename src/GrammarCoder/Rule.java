@@ -20,6 +20,7 @@ public class Rule extends Symbol implements Comparable {
     List<NonTerminal> nonTerminalList = new ArrayList<>(); // used as a link to the nonterminals that represent this rule
 
     public Rule() {
+        index = 0;
         this.representation = ruleNumber;
         ruleNumber += 2;
         guard = new Guard(this);
@@ -110,7 +111,6 @@ public class Rule extends Symbol implements Comparable {
                 }
             }
             else {
-
                 if (complement) {
                     output.append(getSymbolString(((NonTerminal) s).getRule(), !s.isComplement));
                 }
@@ -128,6 +128,55 @@ public class Rule extends Symbol implements Comparable {
 
         } while (!s.isGuard());
         return output.toString();
+    }
+
+
+    //todo have to use same method to generate terminals... as getting the string...
+    public void getTerminals(Rule rule, Boolean complement) {
+        Symbol s;
+        if (complement) {
+            s = rule.getLast();
+        }
+        else {
+            s = rule.getGuard().getRight();
+        }
+
+        do {
+            if (s instanceof Terminal) {
+                index++;
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+            else {
+                if (complement) {
+                    getTerminals(((NonTerminal) s).getRule(), !s.isComplement);
+                }
+                else {
+                    getTerminals(((NonTerminal) s).getRule(), s.isComplement);
+                }
+
+                if (s instanceof NonTerminal) {
+//                    System.out.println("symbol is " + s);
+//                    System.out.println("index is " + index);
+                    //have to create new nonterminals for indexes as each instance in a subrule is unique
+                    // todo decrement the rule usage...
+                    NonTerminal nt = new NonTerminal(((NonTerminal) s).getRule());
+                    ((NonTerminal) s).getRule().nonTerminalList.add(nt);
+                    nt.index = index;
+                }
+
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+        } while (!s.isGuard());
     }
 
     @Override

@@ -46,12 +46,13 @@ public class Compress {
     public void processInput(String input) {
         mainInput = input; //todo assign and set properly
         getFirstRule().addNextSymbol(new Terminal(input.charAt(0)));
+        // would need to set first symbols index
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-            System.out.println(getFirstRule().getRuleString());
+//            System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
 
@@ -191,10 +192,6 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
-
-        // add the nonterminals to the rules list
-        newRule.nonTerminalList.add(oldTerminal);
-        newRule.nonTerminalList.add(newTerminal);
     }
 
     /**
@@ -218,9 +215,6 @@ public class Compress {
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
-
-        //add nonterminal to rule list
-        rule.nonTerminalList.add(nonTerminal);
     }
 
     /**
@@ -433,7 +427,7 @@ public class Compress {
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
-                //.filter(x -> x.symbolRule.length() > 3)
+                .filter(x -> x.symbolRule.length() > 4)
                 .collect(Collectors.toList());
         return orderedRules;
     }
@@ -453,14 +447,19 @@ public class Compress {
         // order rules by the length they encode
         List<Rule> ordered = orderRulesByLength();
         ordered.remove(0); // remove initial 0 rule
+        getFirstRule().getTerminals(getFirstRule(), false);
 
-        for (Rule r : ordered) {
-            int currentIndex = 0;
-            for (NonTerminal nt : r.nonTerminalList) {
-                nt.index = mainInput.indexOf(r.symbolRule, currentIndex); // adding symrolrule length here to get end of matching segment
-                currentIndex += nt.index + r.symbolRule.length();
-            }
-        }
+        //will never work
+//
+//        for (Rule r : ordered) {
+//            int currentIndex = 0;
+//            for (NonTerminal nt : r.nonTerminalList) {
+//                System.out.println("nt is " + nt);
+//                System.out.println("index is " + nt.index);
+//                //nt.index = mainInput.indexOf(r.symbolRule, currentIndex); // adding symrolrule length here to get end of matching segment
+//                //currentIndex += nt.index + r.symbolRule.length();
+//            }
+//        }
 
         for (Rule r : ordered) { // for every rule
             for (int i = 0; i < r.nonTerminalList.size(); i++) { // for every nonterminal
@@ -468,8 +467,8 @@ public class Compress {
                     int editNumber = 0;
                     String firstSubString = "";
                     String secondSubString = "";
-                    int firstIndex = r.nonTerminalList.get(i).index + r.symbolRule.length();
-                    int secondIndex = r.nonTerminalList.get(j).index + r.symbolRule.length();
+                    int firstIndex = r.nonTerminalList.get(i).index;
+                    int secondIndex = r.nonTerminalList.get(j).index;
 
                     System.out.println("rule number " + r + " rule string " + r.getSymbolString(r, r.isComplement));
 

@@ -18,8 +18,8 @@ public class EditGrammarTest {
 
 
     @Test
-    public void processMatchingDigrams() { // check which digram is replaced
-        c.processInput("aaagcagaa");
+    public void checkIndexes() { // check which digram is replaced
+        c.processInput("aaagcagaaagc");
         System.out.println(c.printRules());
     }
 

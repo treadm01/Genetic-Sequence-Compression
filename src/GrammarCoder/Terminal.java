@@ -51,25 +51,4 @@ public class Terminal extends Symbol {
         }
         return complement;
     }
-
-
-//    public long reverseSymbol() {
-//        char complement = 0;
-//        if (originalValue == 'a') {
-//            complement = 't';
-//        }
-//        else if (originalValue == 'c') {
-//            complement = 'g';
-//        }
-//        else if (originalValue == 'g') {
-//            complement = 'c';
-//        }
-//        else if (originalValue == 't') {
-//            complement = 'a';
-//        }
-//        return (complement * 2) + 1;
-//    }
-
-
-
 }

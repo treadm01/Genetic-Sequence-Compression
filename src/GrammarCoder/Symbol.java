@@ -6,6 +6,7 @@ public class Symbol {
     private static final long PRIME = 2265539; // from sequitur
     public Boolean isComplement = false;
     public Symbol complement;
+    Integer index;
 
     public Boolean isGuard() {
         return representation == 0;

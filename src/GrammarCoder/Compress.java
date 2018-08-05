@@ -439,10 +439,13 @@ public class Compress {
     // or first overlaps second, or edit amount is too great
     // hopefully from the substring and the indexes there will be a way to conveniently
     // alter the grammar
-
-    //todo issues with patterns that are encoded differently, the longer repeat test
-    // pattern could be found but not actually apply to that nonterminal
-    // have to go back to string method and figure out how to make work
+    //todo decide on an edit, you have the index and rule number where it starts
+    // can then follow through by symbol length of match to see where it ends... for both...
+    // or alter the original maininput and scan again...
+    // OR edit the symbols and mark as edited somehow, then check again for digrams...
+    // but symbols in a rule will apply to ALL occurrences...
+    // go down to terminal level and mark as edited, if nonterminal, create new one and replace
+    // check for new digrams
     public void checkApproximateRepeat() {
         // order rules by the length they encode
         List<Rule> ordered = orderRulesByLength();

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="still trying to find some method of approximate repeats">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="a method to get repeats linked to terminals..">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/EditGrammarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/EditGrammarTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,14 +27,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="book" value="2" />
-          <entry key="java" value="27121" />
-          <entry key="txt" value="757" />
+          <entry key="java" value="27629" />
+          <entry key="txt" value="819" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="27121" />
-          <entry key="PLAIN_TEXT" value="759" />
+          <entry key="JAVA" value="27629" />
+          <entry key="PLAIN_TEXT" value="821" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -66,8 +61,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="475" column="54" lean-forward="true" selection-start-line="475" selection-start-column="54" selection-end-line="475" selection-end-column="54" />
+            <state relative-caret-position="144">
+              <caret line="448" column="28" selection-start-line="448" selection-start-column="28" selection-end-line="448" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#19331#19348#0" />
@@ -139,8 +134,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="81" column="19" lean-forward="true" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+            <state relative-caret-position="54">
+              <caret line="65" column="19" lean-forward="true" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -386,7 +381,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.EditGrammarTest.humdyst">
+  <component name="RunManager" selected="JUnit.EditGrammarTest.EditGrammarTestJustRepeats">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -477,9 +472,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EditGrammarTest.EditGrammarTestJustRepeats" />
         <item itemvalue="JUnit.EditGrammarTest.humdyst" />
         <item itemvalue="JUnit.EditGrammarTest.EditGrammarTest" />
-        <item itemvalue="JUnit.EditGrammarTest.EditGrammarTestJustRepeats" />
         <item itemvalue="JUnit.EditGrammarTest.checkIndexes" />
         <item itemvalue="JUnit.EditGrammarTest.processMatchingDigrams" />
       </list>
@@ -667,14 +662,7 @@
       <workItem from="1533199915439" duration="3315000" />
       <workItem from="1533215674731" duration="16462000" />
       <workItem from="1533287561714" duration="72557000" />
-      <workItem from="1533458804139" duration="11457000" />
-    </task>
-    <task id="LOCAL-00175" summary="cleaned up slightly">
-      <created>1531607020518</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1531607020518</updated>
+      <workItem from="1533458804139" duration="13885000" />
     </task>
     <task id="LOCAL-00176" summary="encode not working properly has to be from marker">
       <created>1531759670063</created>
@@ -1012,13 +1000,17 @@
       <option name="project" value="LOCAL" />
       <updated>1533429526678</updated>
     </task>
-    <option name="localTasksCounter" value="224" />
+    <task id="LOCAL-00224" summary="a method to get repeats linked to terminals..">
+      <created>1533478603384</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1533478603385</updated>
+    </task>
+    <option name="localTasksCounter" value="225" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.05 at 14h 31m 29s.xml">
-      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.05 at 14h 36m 53s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
@@ -1046,9 +1038,12 @@
     <history-entry file="EditGrammarTest_humdyst - 2018.08.05 at 15h 12m 42s.xml">
       <configuration name="EditGrammarTest.humdyst" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.05 at 15h 18m 40s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1187696000" />
+    <option name="totallyTimeSpent" value="1190124000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
@@ -1087,7 +1082,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="have to go over again and properly manage how complements are designated" />
     <MESSAGE value=".." />
     <MESSAGE value="trying again" />
     <MESSAGE value="added tests for adding reverse and removing" />
@@ -1112,7 +1106,8 @@
     <MESSAGE value="can get rule symbols including reverse complements" />
     <MESSAGE value="trying to find approx repeats from rules and nonterminals, requires a few loops" />
     <MESSAGE value="still trying to find some method of approximate repeats" />
-    <option name="LAST_COMMIT_MESSAGE" value="still trying to find some method of approximate repeats" />
+    <MESSAGE value="a method to get repeats linked to terminals.." />
+    <option name="LAST_COMMIT_MESSAGE" value="a method to get repeats linked to terminals.." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/testLong.txt" />
@@ -1371,8 +1366,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="81" column="19" lean-forward="true" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+        <state relative-caret-position="54">
+          <caret line="65" column="19" lean-forward="true" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1381,8 +1376,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="475" column="54" lean-forward="true" selection-start-line="475" selection-start-column="54" selection-end-line="475" selection-end-column="54" />
+        <state relative-caret-position="144">
+          <caret line="448" column="28" selection-start-line="448" selection-start-column="28" selection-end-line="448" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#19331#19348#0" />

@@ -52,7 +52,7 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-//            System.out.println(getFirstRule().getRuleString());
+            System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
 
@@ -192,6 +192,10 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
+
+        // add nonterminals to rule
+        newRule.nonTerminalList.add(oldTerminal);
+        newRule.nonTerminalList.add(newTerminal);
     }
 
     /**
@@ -215,6 +219,9 @@ public class Compress {
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
+
+        // add nonterminal to rule list
+        rule.nonTerminalList.add(nonTerminal);
     }
 
     /**
@@ -228,7 +235,7 @@ public class Compress {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
-            //nonTerminal.getRule().nonTerminalList.remove(nonTerminal); // remove link to nonterminal from list in rule - todo don't think necessary to do if rule is down to one as it is removed
+            nonTerminal.getRule().nonTerminalList.remove(nonTerminal); // remove link to nonterminal from list in rule - todo don't think necessary to do if rule is down to one as it is removed
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
@@ -427,76 +434,30 @@ public class Compress {
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
-                .filter(x -> x.symbolRule.length() > 4)
+  //              .filter(x -> x.symbolRule.length() > 4)
                 .collect(Collectors.toList());
         return orderedRules;
     }
 
-    //todo this is getting indexes for all instances of nonterminals in the condensed string
-    // they are kept as references within the rule nonterminallist
-    // from the indexes the following strings of symbols are generated and can be compared
-    // currently stops if second is longer than end of string
-    // or first overlaps second, or edit amount is too great
-    // hopefully from the substring and the indexes there will be a way to conveniently
-    // alter the grammar
-    //todo decide on an edit, you have the index and rule number where it starts
-    // can then follow through by symbol length of match to see where it ends... for both...
-    // or alter the original maininput and scan again...
-    // OR edit the symbols and mark as edited somehow, then check again for digrams...
-    // but symbols in a rule will apply to ALL occurrences...
-    // go down to terminal level and mark as edited, if nonterminal, create new one and replace
-    // check for new digrams
     public void checkApproximateRepeat() {
         // order rules by the length they encode
         List<Rule> ordered = orderRulesByLength();
         ordered.remove(0); // remove initial 0 rule
-        getFirstRule().getTerminals(getFirstRule(), false);
 
-        //will never work
-//
-//        for (Rule r : ordered) {
-//            int currentIndex = 0;
-//            for (NonTerminal nt : r.nonTerminalList) {
-//                System.out.println("nt is " + nt);
-//                System.out.println("index is " + nt.index);
-//                //nt.index = mainInput.indexOf(r.symbolRule, currentIndex); // adding symrolrule length here to get end of matching segment
-//                //currentIndex += nt.index + r.symbolRule.length();
-//            }
-//        }
 
+        //todo start building rule? or use string
         for (Rule r : ordered) { // for every rule
             for (int i = 0; i < r.nonTerminalList.size(); i++) { // for every nonterminal
+                System.out.println("nt is " + r.nonTerminalList.get(i));
+                System.out.println(r.nonTerminalList.get(i).getRight());
                 for (int j = i + 1; j < r.nonTerminalList.size(); j++) { // check it to the following ones
-                    int editNumber = 0;
-                    String firstSubString = "";
-                    String secondSubString = "";
-                    int firstIndex = r.nonTerminalList.get(i).index;
-                    int secondIndex = r.nonTerminalList.get(j).index;
-
-                    System.out.println("rule number " + r + " rule string " + r.getSymbolString(r, r.isComplement));
-
-                    while (editNumber < 3
-                            && firstIndex < r.nonTerminalList.get(j).index
-                            && secondIndex < mainInput.length()) {
-
-                        firstSubString += String.valueOf(mainInput.charAt(firstIndex));
-                        secondSubString += String.valueOf(mainInput.charAt(secondIndex));
-
-                        if (mainInput.charAt(firstIndex) != mainInput.charAt(secondIndex)) {
-                            editNumber++;
-                        }
-
-                        firstIndex++;
-                        secondIndex++;
-                    }
-
-                    System.out.println(firstSubString);
-                    System.out.println(secondSubString);
+                    // if next symbols are nore the same type
+                    // get next nonterminals
+                    //wait, if nonterminals and nonmatching needs terminal level too
                 }
             }
         }
     }
-
 
 //    // get string from symbols, no longer used
 //    public String getSubString(Symbol current, Symbol end) {

@@ -64,10 +64,10 @@ public class Compress {
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
         System.out.println(printRules());
-//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-//        System.out.println();
+        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+        System.out.println();
 
         checkApproximateRepeat();
     }
@@ -434,48 +434,93 @@ public class Compress {
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
-  //              .filter(x -> x.symbolRule.length() > 4)
+                .filter(x -> x.symbolRule.length() > 4)
                 .collect(Collectors.toList());
         return orderedRules;
     }
 
+    //todo code the actual looping back through past the end of subrule to the rules stored in lists above
+    //remember you can go back up to mainrule and correct location via the
     public void checkApproximateRepeat() {
         // order rules by the length they encode
         List<Rule> ordered = orderRulesByLength();
         ordered.remove(0); // remove initial 0 rule
 
-
-        //todo start building rule? or use string
         for (Rule r : ordered) { // for every rule
             for (int i = 0; i < r.nonTerminalList.size(); i++) { // for every nonterminal
-                System.out.println("nt is " + r.nonTerminalList.get(i));
-                System.out.println(r.nonTerminalList.get(i).getRight());
                 for (int j = i + 1; j < r.nonTerminalList.size(); j++) { // check it to the following ones
-                    // if next symbols are nore the same type
-                    // get next nonterminals
-                    //wait, if nonterminals and nonmatching needs terminal level too
+                    int editNumber = 0;
+                    //todo NNED TO BEABLE TO INCREASE EDIT AMOUNT ONLY WHEN BOTH TERMINALS BEING CHECKED
+                    // AND NOT MATCHING - CURRENTLY USING LIST FOR HISTORY OF NONTERMINALS
+                    //LOOPING OVER, GETTING SYMBOLS AT A TIME
+                    //todo get the following string until too many edits etc,
+                    //todo keep track of necessary edits
+                    //todo make the edits on the grammar and ensure encoded,
+                    //todo ensure the nonterminal indicates it requires an edit op
+                    // which will be where?? would have to be at top level
+                    // top level where two repeats differ... how to get there?
+                    // how to deal with the symbols replacing
+                    // i think uncondense what is necessary then edit
+                    // might uncondense first or second, but only edit second
+                    // so 10 12 > 10 gc edit, check digrams
+                    Symbol firstCurrentSymbol = r.nonTerminalList.get(i);
+                    Symbol secondCurrentSymbol = r.nonTerminalList.get(j);
+                    Symbol firstComplement = firstCurrentSymbol;
+                    Symbol secondComplement = secondCurrentSymbol;
+                    String firstSubString = "";
+                    String secondSubString = "";
+
+                    //TODO IS THE LIST METHOD GOING TO GET EVERY INSTANCE? FOR COMPARING
+                    List<Symbol> location = new ArrayList<>();
+                    location.add(firstComplement);
+
+                    //todo need to implement looking back also
+                    // if pattern comparing to is at the end of string, dont bother looking for further
+                    //send current symbol to get next, keep current nonterminal for complement, change that when necessary
+                    while (editNumber < 6
+                            && !secondCurrentSymbol.isGuard()) {
+
+                        firstCurrentSymbol = getNextSymbol(firstCurrentSymbol, firstComplement, location);
+
+
+                        // have to reassign complement for each new nonterminal
+                        if (firstCurrentSymbol instanceof NonTerminal) {
+                            firstComplement = firstCurrentSymbol;
+                            location.add(firstComplement); // keeping by a list todo are rule lists necessary??
+                            firstCurrentSymbol = ((NonTerminal) firstCurrentSymbol).getRule().getGuard();
+                        } else if (firstCurrentSymbol instanceof Terminal) {
+                            firstSubString += firstCurrentSymbol.toString();
+                            editNumber++;
+                        }
+                    }
+                    System.out.println(firstSubString);
                 }
             }
         }
     }
 
-//    // get string from symbols, no longer used
-//    public String getSubString(Symbol current, Symbol end) {
-//        String subString = "";
-//
-//        //calling getsymbol string gets rules nonterminal by nonterminal
-//        while (!current.equals(end) && !current.isGuard()) { // if haven't gotten to end of string
-//            if (current instanceof Terminal) {
-//                subString += current.toString();
-//            }
-//            else {
-//                subString += getFirstRule().getSymbolString(((NonTerminal) current).getRule(), current.isComplement);
-//            }
-//            current = current.getRight();
-//        }
-//
-//        return subString;
-//    }
+    // get string from symbols, no longer used
+    public Symbol getNextSymbol(Symbol current, Symbol isComplement, List<Symbol> location) {
+        Symbol nextSymbol;
+
+        // move left or right depending on complement of the nonterminal its in
+        if (!isComplement.isComplement) {
+            nextSymbol = current.getRight();
+        }
+        else {
+            nextSymbol = current.getLeft();
+        }
+
+        //todo will have to loop back for subrules here
+        // if reached the end of a rule check if a subrule
+        if (nextSymbol.isGuard()) {
+            Rule r = ((Guard)nextSymbol).getGuardRule();
+            if (!r.toString().equals("0")) { // GET PREVIOUS NONTERMINAL VISITED TO RETURN TO
+                nextSymbol = location.remove(location.size()-1).getRight();//r.nonTerminalList.get(0); // todo HOW TO GET THE CORRECT ONE???
+            }
+        }
+        return nextSymbol;
+    }
 
 }
 

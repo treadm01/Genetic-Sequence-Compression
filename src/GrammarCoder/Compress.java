@@ -52,22 +52,19 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             checkDigram(getFirstRule().getLast());
-            System.out.println(getFirstRule().getRuleString());
+            //System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
-
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
-        //System.out.println(rules.size());
-
 
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
         System.out.println(printRules());
-        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-        System.out.println();
+//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+//        System.out.println();
 
         checkApproximateRepeat();
     }
@@ -192,10 +189,6 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
-
-        // add nonterminals to rule
-        newRule.nonTerminalList.add(oldTerminal);
-        newRule.nonTerminalList.add(newTerminal);
     }
 
     /**
@@ -219,9 +212,6 @@ public class Compress {
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
-
-        // add nonterminal to rule list
-        rule.nonTerminalList.add(nonTerminal);
     }
 
     /**
@@ -235,7 +225,6 @@ public class Compress {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
-            nonTerminal.getRule().nonTerminalList.remove(nonTerminal); // remove link to nonterminal from list in rule - todo don't think necessary to do if rule is down to one as it is removed
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
@@ -434,90 +423,48 @@ public class Compress {
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
-                .filter(x -> x.symbolRule.length() > 4)
+                .filter(x -> x.symbolRule.length() > 18) // todo this needs to be as low as possible
                 .collect(Collectors.toList());
         return orderedRules;
     }
 
+    public Map<Long, List<NonTerminal>> getNonTerminals() {
+        // build map of nonterminals that occur in the mainrule
+        Map<Long, List<NonTerminal>> nonterminalMap = new HashMap<>();
+        Symbol s = getFirstRule().getGuard().getRight();
+        while (!s.isGuard()) {
+            if (nonterminalMap.containsKey(s.getRepresentation())) {
+                nonterminalMap.get(s.getRepresentation()).add((NonTerminal) s);
+            }
+            else if (s instanceof NonTerminal){
+                List<NonTerminal> nonTerminalList = new ArrayList<>();
+                nonTerminalList.add((NonTerminal) s);
+                nonterminalMap.put(s.getRepresentation(), nonTerminalList);
+            }
+            s = s.getRight();
+        }
+        return nonterminalMap;
+    }
+
+
+    //TODO JUST DO RULES AT THE TOP RULE
+    //todo get the following string until too many edits etc,
+    //todo keep track of necessary edits
+    //todo make the edits on the grammar and ensure encoded,
+    //todo ensure the nonterminal indicates it requires an edit op
+    // which will be where?? would have to be at top level
+    // top level where two repeats differ... how to get there?
+    // how to deal with the symbols replacing
+    // i think uncondense what is necessary then edit
+    // might uncondense first or second, but only edit second
+    // so 10 12 > 10 gc edit, check digrams
     //todo code the actual looping back through past the end of subrule to the rules stored in lists above
     //remember you can go back up to mainrule and correct location via the
     public void checkApproximateRepeat() {
-        // order rules by the length they encode
-        List<Rule> ordered = orderRulesByLength();
-        ordered.remove(0); // remove initial 0 rule
+        List<Rule> orderedRules = orderRulesByLength();
+        Map<Long, List<NonTerminal>> nonterminalMap = getNonTerminals();
 
-        for (Rule r : ordered) { // for every rule
-            for (int i = 0; i < r.nonTerminalList.size(); i++) { // for every nonterminal
-                for (int j = i + 1; j < r.nonTerminalList.size(); j++) { // check it to the following ones
-                    int editNumber = 0;
-                    //todo NNED TO BEABLE TO INCREASE EDIT AMOUNT ONLY WHEN BOTH TERMINALS BEING CHECKED
-                    // AND NOT MATCHING - CURRENTLY USING LIST FOR HISTORY OF NONTERMINALS
-                    //LOOPING OVER, GETTING SYMBOLS AT A TIME
-                    //todo get the following string until too many edits etc,
-                    //todo keep track of necessary edits
-                    //todo make the edits on the grammar and ensure encoded,
-                    //todo ensure the nonterminal indicates it requires an edit op
-                    // which will be where?? would have to be at top level
-                    // top level where two repeats differ... how to get there?
-                    // how to deal with the symbols replacing
-                    // i think uncondense what is necessary then edit
-                    // might uncondense first or second, but only edit second
-                    // so 10 12 > 10 gc edit, check digrams
-                    Symbol firstCurrentSymbol = r.nonTerminalList.get(i).getRight();
-                    Symbol secondCurrentSymbol = r.nonTerminalList.get(j).getRight();
-                    Symbol firstComplement = firstCurrentSymbol;
-                    Symbol secondComplement = secondCurrentSymbol;
-                    String firstSubString = "";
-                    String secondSubString = "";
-
-                    //TODO IS THE LIST METHOD GOING TO GET EVERY INSTANCE? FOR COMPARING
-                    List<Symbol> location = new ArrayList<>();
-                    location.add(firstComplement); // this wll be adding a terminal.....
-
-                    List<Symbol> secondLocation = new ArrayList<>();
-                    secondLocation.add(secondComplement);
-
-                    //todo need to implement looking back also
-                    // if pattern comparing to is at the end of string, dont bother looking for further
-                    //send current symbol to get next, keep current nonterminal for complement, change that when necessary
-                    while (editNumber < 2
-                           && !firstCurrentSymbol.equals(r.nonTerminalList.get(j))
-                            && !secondCurrentSymbol.equals(getFirstRule().getGuard())
-                    ) {
-
-                        // move through symbols until finding a terminal
-                        while (!(firstCurrentSymbol instanceof Terminal)) {
-                            if (firstCurrentSymbol instanceof NonTerminal) {
-                                firstComplement = firstCurrentSymbol;
-                                location.add(firstComplement); // keeping by a list todo are rule lists necessary??
-                            }
-                            firstCurrentSymbol = getNextSymbol(firstCurrentSymbol, firstComplement, location);
-                        }
-
-                        // todo two different methods of looping through ... seems to be working which is better?
-                        while (secondCurrentSymbol instanceof NonTerminal) {
-                            secondComplement = secondCurrentSymbol;
-                            secondLocation.add(secondComplement); // keeping by a list todo are rule lists necessary??
-                            secondCurrentSymbol = getNextSymbol(secondCurrentSymbol, secondComplement, secondLocation);
-                        }
-
-                        firstSubString += firstCurrentSymbol.toString();
-                        secondSubString += secondCurrentSymbol.toString();
-
-                        if (secondCurrentSymbol.getRepresentation() != firstCurrentSymbol.getRepresentation()) {
-                            editNumber++;
-                        }
-
-                        // have to call next symbol again here to move on for if it was a terminal
-                        firstCurrentSymbol = getNextSymbol(firstCurrentSymbol, firstComplement, location);
-                        secondCurrentSymbol = getNextSymbol(secondCurrentSymbol, secondComplement, secondLocation);
-
-                    }
-                    System.out.println(firstSubString);
-                    System.out.println(secondSubString);
-                }
-            }
-        }
+        System.out.println(nonterminalMap);
     }
 
     // get string from symbols, no longer used

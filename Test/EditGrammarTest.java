@@ -58,7 +58,6 @@ public class EditGrammarTest {
         c.processInput(compress);
     }
 
-
     // edit the string ? edit the grammar??? have to find the approx match first
     @Test
     public void EditGrammarTestJustRepeats() {

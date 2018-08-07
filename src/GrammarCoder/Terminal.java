@@ -18,6 +18,11 @@ public class Terminal extends Symbol {
         return originalValue;
     }
 
+    public void editTerminal(long representation) {
+        originalValue = representation;
+        this.representation = (representation * 2) + 1;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

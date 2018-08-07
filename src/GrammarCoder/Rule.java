@@ -17,7 +17,7 @@ public class Rule extends Symbol implements Comparable {
     int length; // length of compressed rule
     String symbolRule; // length of uncompressed rule
 
-    List<NonTerminal> nonTerminalList = new ArrayList<>(); // used as a link to the nonterminals that represent this rule
+    //List<NonTerminal> nonTerminalList = new ArrayList<>(); // used as a link to the nonterminals that represent this rule
 
     public Rule() {
         index = 0;

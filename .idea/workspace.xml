@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="having to go back to similar previous method..">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="trying to get approx repeats working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
     </list>
@@ -16,25 +16,25 @@
     <session id="772640652">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="21" />
+          <entry key="project.closed" value="22" />
           <entry key="project.open.time.1" value="11" />
           <entry key="project.open.time.16" value="6" />
-          <entry key="project.open.time.17" value="3" />
+          <entry key="project.open.time.17" value="4" />
           <entry key="project.open.time.18" value="2" />
-          <entry key="project.opened" value="22" />
+          <entry key="project.opened" value="23" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="book" value="2" />
-          <entry key="java" value="35941" />
-          <entry key="txt" value="865" />
+          <entry key="java" value="37546" />
+          <entry key="txt" value="903" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="35941" />
-          <entry key="PLAIN_TEXT" value="867" />
+          <entry key="JAVA" value="37546" />
+          <entry key="PLAIN_TEXT" value="905" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -61,12 +61,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="526" lean-forward="true" selection-start-line="526" selection-end-line="526" />
+            <state relative-caret-position="126">
+              <caret line="487" column="72" selection-start-line="487" selection-start-column="72" selection-end-line="487" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#19399#19483#0" />
-                <marker date="1533596847608" expanded="true" signature="18836:18938" ph="..." />
+                <marker date="1533643614623" expanded="true" signature="18836:18938" ph="..." />
               </folding>
             </state>
           </provider>
@@ -135,8 +134,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+            <state relative-caret-position="92">
+              <caret line="65" column="40" lean-forward="true" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -302,6 +301,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -341,7 +341,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -665,14 +664,8 @@
       <workItem from="1533215674731" duration="16462000" />
       <workItem from="1533287561714" duration="72557000" />
       <workItem from="1533458804139" duration="14039000" />
-      <workItem from="1533482127893" duration="41564000" />
-    </task>
-    <task id="LOCAL-00178" summary="pretty messy but working for some of the harder cases... need to deal with multiple nonterminal symbols probably">
-      <created>1531836886852</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1531836886852</updated>
+      <workItem from="1533482127893" duration="41612000" />
+      <workItem from="1533633396868" duration="9907000" />
     </task>
     <task id="LOCAL-00179" summary="have to decide how to keep count of rules generated...">
       <created>1531838616553</created>
@@ -1010,49 +1003,56 @@
       <option name="project" value="LOCAL" />
       <updated>1533563670025</updated>
     </task>
-    <option name="localTasksCounter" value="227" />
+    <task id="LOCAL-00227" summary="trying to get approx repeats working">
+      <created>1533596866782</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1533596866782</updated>
+    </task>
+    <option name="localTasksCounter" value="228" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 43m 21s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 12h 57m 17s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 43m 54s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 12h 57m 35s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 45m 57s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 12h 57m 43s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 46m 36s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 12h 59m 22s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 57m 17s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 13h 02m 10s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 58m 20s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 13h 02m 55s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.06 at 23h 59m 14s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 13h 03m 37s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 00h 00m 18s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 13h 05m 28s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 00h 00m 38s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 13h 05m 45s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 00h 02m 36s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.07 at 13h 05m 57s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1231842000" />
+    <option name="totallyTimeSpent" value="1241797000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3098485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21818182" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24963397" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -1085,7 +1085,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying again" />
     <MESSAGE value="added tests for adding reverse and removing" />
     <MESSAGE value="new rules with complement indication. tests added, a bit cleaner seems to be working more smoothly. Need to remove digrams" />
     <MESSAGE value="issue with creating a new rule between reverse and nonreverse digrams" />
@@ -1110,7 +1109,8 @@
     <MESSAGE value="still trying to find some method of approximate repeats" />
     <MESSAGE value="a method to get repeats linked to terminals.." />
     <MESSAGE value="having to go back to similar previous method.." />
-    <option name="LAST_COMMIT_MESSAGE" value="having to go back to similar previous method.." />
+    <MESSAGE value="trying to get approx repeats working" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to get approx repeats working" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/testLong.txt" />
@@ -1370,8 +1370,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="64" column="36" lean-forward="true" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+        <state relative-caret-position="92">
+          <caret line="65" column="40" lean-forward="true" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1380,12 +1380,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="526" lean-forward="true" selection-start-line="526" selection-end-line="526" />
+        <state relative-caret-position="126">
+          <caret line="487" column="72" selection-start-line="487" selection-start-column="72" selection-end-line="487" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#19399#19483#0" />
-            <marker date="1533596847608" expanded="true" signature="18836:18938" ph="..." />
+            <marker date="1533643614623" expanded="true" signature="18836:18938" ph="..." />
           </folding>
         </state>
       </provider>

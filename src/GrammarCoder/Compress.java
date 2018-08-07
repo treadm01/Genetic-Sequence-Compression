@@ -463,8 +463,8 @@ public class Compress {
                     // i think uncondense what is necessary then edit
                     // might uncondense first or second, but only edit second
                     // so 10 12 > 10 gc edit, check digrams
-                    Symbol firstCurrentSymbol = r.nonTerminalList.get(i);
-                    Symbol secondCurrentSymbol = r.nonTerminalList.get(j);
+                    Symbol firstCurrentSymbol = r.nonTerminalList.get(i).getRight();
+                    Symbol secondCurrentSymbol = r.nonTerminalList.get(j).getRight();
                     Symbol firstComplement = firstCurrentSymbol;
                     Symbol secondComplement = secondCurrentSymbol;
                     String firstSubString = "";
@@ -472,28 +472,49 @@ public class Compress {
 
                     //TODO IS THE LIST METHOD GOING TO GET EVERY INSTANCE? FOR COMPARING
                     List<Symbol> location = new ArrayList<>();
-                    location.add(firstComplement);
+                    location.add(firstComplement); // this wll be adding a terminal.....
+
+                    List<Symbol> secondLocation = new ArrayList<>();
+                    secondLocation.add(secondComplement);
 
                     //todo need to implement looking back also
                     // if pattern comparing to is at the end of string, dont bother looking for further
                     //send current symbol to get next, keep current nonterminal for complement, change that when necessary
-                    while (editNumber < 6
-                            && !secondCurrentSymbol.isGuard()) {
+                    while (editNumber < 2
+                           && !firstCurrentSymbol.equals(r.nonTerminalList.get(j))
+                            && !secondCurrentSymbol.equals(getFirstRule().getGuard())
+                    ) {
 
-                        firstCurrentSymbol = getNextSymbol(firstCurrentSymbol, firstComplement, location);
+                        // move through symbols until finding a terminal
+                        while (!(firstCurrentSymbol instanceof Terminal)) {
+                            if (firstCurrentSymbol instanceof NonTerminal) {
+                                firstComplement = firstCurrentSymbol;
+                                location.add(firstComplement); // keeping by a list todo are rule lists necessary??
+                            }
+                            firstCurrentSymbol = getNextSymbol(firstCurrentSymbol, firstComplement, location);
+                        }
 
+                        // todo two different methods of looping through ... seems to be working which is better?
+                        while (secondCurrentSymbol instanceof NonTerminal) {
+                            secondComplement = secondCurrentSymbol;
+                            secondLocation.add(secondComplement); // keeping by a list todo are rule lists necessary??
+                            secondCurrentSymbol = getNextSymbol(secondCurrentSymbol, secondComplement, secondLocation);
+                        }
 
-                        // have to reassign complement for each new nonterminal
-                        if (firstCurrentSymbol instanceof NonTerminal) {
-                            firstComplement = firstCurrentSymbol;
-                            location.add(firstComplement); // keeping by a list todo are rule lists necessary??
-                            firstCurrentSymbol = ((NonTerminal) firstCurrentSymbol).getRule().getGuard();
-                        } else if (firstCurrentSymbol instanceof Terminal) {
-                            firstSubString += firstCurrentSymbol.toString();
+                        firstSubString += firstCurrentSymbol.toString();
+                        secondSubString += secondCurrentSymbol.toString();
+
+                        if (secondCurrentSymbol.getRepresentation() != firstCurrentSymbol.getRepresentation()) {
                             editNumber++;
                         }
+
+                        // have to call next symbol again here to move on for if it was a terminal
+                        firstCurrentSymbol = getNextSymbol(firstCurrentSymbol, firstComplement, location);
+                        secondCurrentSymbol = getNextSymbol(secondCurrentSymbol, secondComplement, secondLocation);
+
                     }
                     System.out.println(firstSubString);
+                    System.out.println(secondSubString);
                 }
             }
         }
@@ -502,6 +523,10 @@ public class Compress {
     // get string from symbols, no longer used
     public Symbol getNextSymbol(Symbol current, Symbol isComplement, List<Symbol> location) {
         Symbol nextSymbol;
+
+        if (current instanceof NonTerminal) {
+            current = ((NonTerminal) current).getRule().getGuard();
+        }
 
         // move left or right depending on complement of the nonterminal its in
         if (!isComplement.isComplement) {
@@ -513,10 +538,13 @@ public class Compress {
 
         //todo will have to loop back for subrules here
         // if reached the end of a rule check if a subrule
-        if (nextSymbol.isGuard()) {
+        while (nextSymbol.isGuard()) {
             Rule r = ((Guard)nextSymbol).getGuardRule();
             if (!r.toString().equals("0")) { // GET PREVIOUS NONTERMINAL VISITED TO RETURN TO
                 nextSymbol = location.remove(location.size()-1).getRight();//r.nonTerminalList.get(0); // todo HOW TO GET THE CORRECT ONE???
+            }
+            else {
+                break; //todo if in the first rule and hitting the end has to break...
             }
         }
         return nextSymbol;

@@ -60,11 +60,11 @@ public class Compress {
 
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
-        System.out.println(printRules());
-        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-        System.out.println();
+//        System.out.println(printRules());
+//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+//        System.out.println();
 
         checkApproximateRepeat();
     }
@@ -458,8 +458,11 @@ public class Compress {
     // i think uncondense what is necessary then edit
     // might uncondense first or second, but only edit second
     // so 10 12 > 10 gc edit, check digrams
-    //todo code the actual looping back through past the end of subrule to the rules stored in lists above
-    //remember you can go back up to mainrule and correct location via the
+
+    //TODO not just substitute but insert delete
+    //todo check by whole nonterminal to save time
+    //todo ensure each nonterminal is checked, seems like 1582 in humprt should have two pair checks
+    //nope, there is another match with very similar following symbol, but it is in a subrule, or encoded some other way
     public void checkApproximateRepeat() {
         List<Rule> orderedRules = orderRulesByLength(); // todo necessary or just store those that are best and try them all
         Map<Long, List<NonTerminal>> nonterminalMap = getNonTerminals();
@@ -486,22 +489,20 @@ public class Compress {
         int index = 0;
         Symbol firstNext = first.getRight();
         Symbol secondNext = second.getRight();
-        //todo while edit number down get next string of symbols, check through them, repeat...
-        while (editNumber < 5
+
+        while (editNumber < 20
                 && !firstNext.equals(second) // ensure not overlapping second
+                && !secondNext.isGuard()
                 && !(firstNext.equals(second) && secondNext.isGuard())) {
 
             // if not overlapping string being checked, get string and move right
-                firstSubString += getNextSubString(firstNext);
-                firstNext = firstNext.getRight();
+            firstSubString += getNextSubString(firstNext);
+            firstNext = firstNext.getRight();
 
             // if second string has not reached the end, do the same for it
-            if (!secondNext.isGuard()) {
-                secondSubString += getNextSubString(secondNext);
-                secondNext = secondNext.getRight();
-            }
+            secondSubString += getNextSubString(secondNext);
+            secondNext = secondNext.getRight();
 
-            //todo while loop waits only for edits to be certain amount
             while (index < firstSubString.length() && index < secondSubString.length()) {
                 if (firstSubString.charAt(index) != secondSubString.charAt(index)) {
                     editNumber++;
@@ -509,46 +510,27 @@ public class Compress {
                 index++;
             }
         }
-        System.out.println(first + " = " + first.getRule().getSymbolString(first.getRule(), first.isComplement));
-        System.out.println("f " + firstSubString);
-        System.out.println("s " + secondSubString);
-        System.out.println();
+
+        if (firstSubString.length() > 4 && editNumber < firstSubString.length() * 0.3) {
+            System.out.println(first + " = " + first.getRule().getSymbolString(first.getRule(), first.isComplement));
+            System.out.println("f " + firstSubString);
+            System.out.println("s " + secondSubString);
+            System.out.println();
+        }
     }
 
     public String getNextSubString(Symbol currentSymbol) {
         String subString = "";
         if (currentSymbol instanceof Terminal) {
-            subString += currentSymbol.toString();
+            subString = currentSymbol.toString();
         }
         else {
             Rule r = ((NonTerminal) currentSymbol).getRule();
-            subString += r.getSymbolString(r, r.isComplement);
+            subString = r.getSymbolString(r, currentSymbol.isComplement);
+           // System.out.println("rule is " + r);
+            //System.out.println("string is " + subString);
         }
         return subString;
     }
-
-    // get string from symbols, no longer used
-    public Symbol getNextSymbol(Symbol current, Boolean isComplement) {
-        Symbol nextSymbol = null;
-
-        // move left or right depending on complement of the nonterminal its in
-        if (current instanceof Terminal) {
-            if (isComplement) {
-                nextSymbol = current.getLeft();
-            } else {
-                nextSymbol = current.getRight();
-            }
-        }
-        else { //todo shouldnt be getting a guard here so just for nonterminals
-            if (isComplement) {
-                nextSymbol = ((NonTerminal) current).getRule().getLast();
-            }
-            else {
-                nextSymbol = ((NonTerminal) current).getRule().getGuard().getRight();
-            }
-        }
-        return nextSymbol;
-    }
-
 }
 

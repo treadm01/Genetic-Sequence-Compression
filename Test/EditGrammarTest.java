@@ -1,10 +1,8 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
-import GrammarCoder.Rule;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 
 public class EditGrammarTest {
     Compress c;
@@ -46,15 +44,26 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "cagagattttgagcgtgatattattccaatggctaggcattttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         c.processInput(compress);
-        System.out.println(c.printRules());
-        System.out.println(c.printRules().length());
-        System.out.println(c.getFirstRule().getRuleString().length());
     }
 
     @Test
     public void EditGrammarTest() { // approximate repeats with some extra symbols before
         Compress c = new Compress();
         String compress = "cgattctgttctctgcctcacttctctgactcac";
+        c.processInput(compress);
+    }
+
+    @Test
+    public void EditGrammarReverseComplementTest() {
+        Compress c = new Compress();
+        String compress = "cgtgatattattccaatggctaggcatttcggtatggccctcgcc";
+        c.processInput(compress);
+    }
+
+    @Test
+    public void EditGrammarReverseComplementTestTwo() {
+        Compress c = new Compress();
+        String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
         c.processInput(compress);
     }
 
@@ -80,6 +89,15 @@ public class EditGrammarTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
+    }
+
+    @Test
+    public void humprtbDE() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humprtb");
+        c.processInput(originalFile);
+        System.out.println(c.printRules());
     }
 
 }

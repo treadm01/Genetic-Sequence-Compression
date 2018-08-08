@@ -61,10 +61,10 @@ public class Compress {
 //       //TODO make a method just to get length... or get length better
         printRules();// needed to compute length of rule at the moment
         System.out.println(printRules());
-//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-//        System.out.println();
+        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+        System.out.println();
 
         checkApproximateRepeat();
     }
@@ -423,7 +423,7 @@ public class Compress {
         // reorder the rules by their symbol length
         List<Rule> orderedRules = rules.stream()
                 .sorted(Rule::compareTo)
-                .filter(x -> x.symbolRule.length() > 18) // todo this needs to be as low as possible
+                //.filter(x -> x.symbolRule.length() > 5) // todo this needs to be as low as possible
                 .collect(Collectors.toList());
         return orderedRules;
     }
@@ -461,37 +461,90 @@ public class Compress {
     //todo code the actual looping back through past the end of subrule to the rules stored in lists above
     //remember you can go back up to mainrule and correct location via the
     public void checkApproximateRepeat() {
-        List<Rule> orderedRules = orderRulesByLength();
+        List<Rule> orderedRules = orderRulesByLength(); // todo necessary or just store those that are best and try them all
         Map<Long, List<NonTerminal>> nonterminalMap = getNonTerminals();
 
-        System.out.println(nonterminalMap);
+        for (Rule r : orderedRules) {
+            // not every rule in the map
+            if (nonterminalMap.containsKey(r.representation)) {
+                List<NonTerminal> nonTerminalList = nonterminalMap.get(r.representation);
+                for (int i = 0; i < nonTerminalList.size(); i++) {
+                    for (int j = i + 1; j < nonTerminalList.size(); j++) {
+                        //todo return bool? indicator of what to do?
+                        nonTerminalRepeats(nonTerminalList.get(i), nonTerminalList.get(j));
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void nonTerminalRepeats(NonTerminal first, NonTerminal second) {
+        String firstSubString = "";
+        String secondSubString = "";
+        int editNumber = 0;
+        int index = 0;
+        Symbol firstNext = first.getRight();
+        Symbol secondNext = second.getRight();
+        //todo while edit number down get next string of symbols, check through them, repeat...
+        while (editNumber < 5
+                && !firstNext.equals(second) // ensure not overlapping second
+                && !(firstNext.equals(second) && secondNext.isGuard())) {
+
+            // if not overlapping string being checked, get string and move right
+                firstSubString += getNextSubString(firstNext);
+                firstNext = firstNext.getRight();
+
+            // if second string has not reached the end, do the same for it
+            if (!secondNext.isGuard()) {
+                secondSubString += getNextSubString(secondNext);
+                secondNext = secondNext.getRight();
+            }
+
+            //todo while loop waits only for edits to be certain amount
+            while (index < firstSubString.length() && index < secondSubString.length()) {
+                if (firstSubString.charAt(index) != secondSubString.charAt(index)) {
+                    editNumber++;
+                }
+                index++;
+            }
+        }
+        System.out.println(first + " = " + first.getRule().getSymbolString(first.getRule(), first.isComplement));
+        System.out.println("f " + firstSubString);
+        System.out.println("s " + secondSubString);
+        System.out.println();
+    }
+
+    public String getNextSubString(Symbol currentSymbol) {
+        String subString = "";
+        if (currentSymbol instanceof Terminal) {
+            subString += currentSymbol.toString();
+        }
+        else {
+            Rule r = ((NonTerminal) currentSymbol).getRule();
+            subString += r.getSymbolString(r, r.isComplement);
+        }
+        return subString;
     }
 
     // get string from symbols, no longer used
-    public Symbol getNextSymbol(Symbol current, Symbol isComplement, List<Symbol> location) {
-        Symbol nextSymbol;
-
-        if (current instanceof NonTerminal) {
-            current = ((NonTerminal) current).getRule().getGuard();
-        }
+    public Symbol getNextSymbol(Symbol current, Boolean isComplement) {
+        Symbol nextSymbol = null;
 
         // move left or right depending on complement of the nonterminal its in
-        if (!isComplement.isComplement) {
-            nextSymbol = current.getRight();
+        if (current instanceof Terminal) {
+            if (isComplement) {
+                nextSymbol = current.getLeft();
+            } else {
+                nextSymbol = current.getRight();
+            }
         }
-        else {
-            nextSymbol = current.getLeft();
-        }
-
-        //todo will have to loop back for subrules here
-        // if reached the end of a rule check if a subrule
-        while (nextSymbol.isGuard()) {
-            Rule r = ((Guard)nextSymbol).getGuardRule();
-            if (!r.toString().equals("0")) { // GET PREVIOUS NONTERMINAL VISITED TO RETURN TO
-                nextSymbol = location.remove(location.size()-1).getRight();//r.nonTerminalList.get(0); // todo HOW TO GET THE CORRECT ONE???
+        else { //todo shouldnt be getting a guard here so just for nonterminals
+            if (isComplement) {
+                nextSymbol = ((NonTerminal) current).getRule().getLast();
             }
             else {
-                break; //todo if in the first rule and hitting the end has to break...
+                nextSymbol = ((NonTerminal) current).getRule().getGuard().getRight();
             }
         }
         return nextSymbol;

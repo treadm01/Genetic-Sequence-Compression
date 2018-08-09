@@ -491,12 +491,15 @@ public class Compress {
         String secondSubString = "";
         int editNumber = 0;
         int index = 0;
+        int offset = first.getRule().getSymbolString(first.getRule(), first.isComplement).length();
 
         List<Symbol> firstSymbols = new ArrayList<>();
         firstSymbols.add(first);
+        List<String> editsFirst = new ArrayList<>();
 
         List<Symbol> secondSymbols = new ArrayList<>();
         secondSymbols.add(second);
+        List<String> editsSecond = new ArrayList<>();
 
         Symbol firstNext = first.getRight();
         Symbol secondNext = second.getRight();
@@ -514,19 +517,26 @@ public class Compress {
             if (!firstNext.equals(second)) {
                 firstSubString += getNextSubString(firstNext);
                 firstNext = firstNext.getRight();
-                firstSymbols.add(firstNext);
+                if (!firstNext.equals(second)) { //todo having to check again to ensure not adding an extra symbol....
+                    firstSymbols.add(firstNext);
+                }
             }
 
             // if second string has not reached the end, do the same for it
             if (!secondNext.isGuard()) {
                 secondSubString += getNextSubString(secondNext);
                 secondNext = secondNext.getRight();
-                secondSymbols.add(secondNext);
+                if (!secondNext.isGuard()) {
+                    secondSymbols.add(secondNext);
+                }
             }
 
             while (index < firstSubString.length() && index < secondSubString.length()) {
                 if (firstSubString.charAt(index) != secondSubString.charAt(index)) {
                     editNumber++;
+                    int position = index + offset;
+                    editsFirst.add(position + "" + firstSubString.charAt(index));
+                    editsSecond.add(position + "" + secondSubString.charAt(index));
                 }
                 index++; // to move through the string
             }
@@ -538,8 +548,20 @@ public class Compress {
             System.out.println("s " + secondSubString);
             System.out.println("f list " + firstSymbols);
             System.out.println("s list " + secondSymbols);
+            System.out.println(editsFirst);
+            System.out.println(editsSecond);
             System.out.println();
         }
+
+        // todo might not be able to do the shortest but have to do the first?
+        Rule newRule = new Rule();
+        for (Symbol s : secondSymbols) {
+            newRule.addNextSymbol(s);
+        }
+
+        System.out.println("rule is " + newRule + " : " + newRule.getRuleString() + " : " + newRule.getSymbolString(newRule, newRule.isComplement));
+        //todo find the shortest to use, create a rule with the symbols, register the edits -
+        //todo replace the symbols with new rule and edit details
     }
 
     public String getNextSubString(Symbol currentSymbol) {

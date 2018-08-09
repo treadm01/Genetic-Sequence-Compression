@@ -3,6 +3,8 @@ package GrammarCoder;
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
     //Integer index; // location of rule in main input string
+    Boolean isEdit = false;
+    String edits;
 
     public NonTerminal(Rule rule) {
         this.rule = rule;
@@ -22,6 +24,11 @@ public class NonTerminal extends Symbol {
         rule.getGuard().getRight().assignLeft(left); // set first symbol in rule's left to this left
     }
 
+    public void setIsEdit(String edits) {
+        this.edits = edits;
+        isEdit = true;
+    }
+
     public Rule getRule() {
         return this.rule;
     }
@@ -31,6 +38,9 @@ public class NonTerminal extends Symbol {
         String s = String.valueOf(representation);
         if (isComplement) {
             s += "'";
+        }
+        if (isEdit) {
+            s += "*" + edits;
         }
         return s;
     }

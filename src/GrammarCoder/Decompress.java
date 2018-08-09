@@ -38,6 +38,8 @@ public class Decompress {
                 // if next symbol is a number, its a pointer so deal with that...
                 if (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) {
                     int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+                    //todo would think after this section would check for * and add edit string to nonterminal
+                    //todo maybe, plus below if necessary (will third time seen ever be edit?). need to go through again
                    // System.out.println(position);
                     NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
                     adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
@@ -46,7 +48,7 @@ public class Decompress {
                 }
                 else { // if it isn't then its a reverse complement rule
                     position++; //move to get the symbol
-                    int pos = input.charAt(position) - 128; //added as seens so have to remove 128 initial marker number
+                    int pos = input.charAt(position) - 128; //added as seems so have to remove 128 initial marker number
                     addNonTerminal(marker.get(pos).getRule(), isComplement);
                 }
             }
@@ -83,6 +85,7 @@ public class Decompress {
         return Integer.valueOf(symbol);
     }
 
+    //todo or here to add if an edit...
     public void addNonTerminal(Rule rule, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
         nonTerminal.isComplement = isComplement;
@@ -118,8 +121,9 @@ public class Decompress {
     }
 
 
+    //TODO NOT USED!!! RULE HAS ITS OWN DECOMPRESS... NEEDS LOOKING INTO
     /**
-     * for debugging, creates the string back from the cfg generated
+     * for debugging, creates the string back from the cfg generated,
      * @param rule
      * @return
      */

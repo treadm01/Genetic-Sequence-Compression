@@ -459,7 +459,11 @@ public class Compress {
     // might uncondense first or second, but only edit second
     // so 10 12 > 10 gc edit, check digrams
 
+    //todo the edit number needs to be relational to the length
+    //todo length of strings needs to be close - i THINK given the way strings are retrived
+    // some are just bound to be a lot longer than their matches, could be trimmed down
     //TODO not just substitute but insert delete
+    //todo how to keep track of edits? how to decide and use?
     //todo check by whole nonterminal to save time
     //todo ensure each nonterminal is checked, seems like 1582 in humprt should have two pair checks
     //nope, there is another match with very similar following symbol, but it is in a subrule, or encoded some other way
@@ -487,34 +491,53 @@ public class Compress {
         String secondSubString = "";
         int editNumber = 0;
         int index = 0;
+
+        List<Symbol> firstSymbols = new ArrayList<>();
+        firstSymbols.add(first);
+
+        List<Symbol> secondSymbols = new ArrayList<>();
+        secondSymbols.add(second);
+
         Symbol firstNext = first.getRight();
         Symbol secondNext = second.getRight();
 
+        firstSymbols.add(firstNext);
+        secondSymbols.add(secondNext);
+
+        //todo still an issue, strings shouldnt be so much longer than the other and takes too long
+        //todo some tests like hehcmv dont finish... need to get it one by one, check, then proceed...
+        // problem is as both substrings are separate, and could be very different lengths
         while (editNumber < 20
-                && !firstNext.equals(second) // ensure not overlapping second
-                && !secondNext.isGuard()
-                && !(firstNext.equals(second) && secondNext.isGuard())) {
+                && !(firstNext.equals(second) && secondNext.isGuard())) { //if both reached end then stop
 
             // if not overlapping string being checked, get string and move right
-            firstSubString += getNextSubString(firstNext);
-            firstNext = firstNext.getRight();
+            if (!firstNext.equals(second)) {
+                firstSubString += getNextSubString(firstNext);
+                firstNext = firstNext.getRight();
+                firstSymbols.add(firstNext);
+            }
 
             // if second string has not reached the end, do the same for it
-            secondSubString += getNextSubString(secondNext);
-            secondNext = secondNext.getRight();
+            if (!secondNext.isGuard()) {
+                secondSubString += getNextSubString(secondNext);
+                secondNext = secondNext.getRight();
+                secondSymbols.add(secondNext);
+            }
 
             while (index < firstSubString.length() && index < secondSubString.length()) {
                 if (firstSubString.charAt(index) != secondSubString.charAt(index)) {
                     editNumber++;
                 }
-                index++;
+                index++; // to move through the string
             }
         }
 
-        if (firstSubString.length() > 4 && editNumber < firstSubString.length() * 0.3) {
+        if (firstSubString.length() > 4 && editNumber < firstSubString.length() * 0.2) {
             System.out.println(first + " = " + first.getRule().getSymbolString(first.getRule(), first.isComplement));
             System.out.println("f " + firstSubString);
             System.out.println("s " + secondSubString);
+            System.out.println("f list " + firstSymbols);
+            System.out.println("s list " + secondSymbols);
             System.out.println();
         }
     }

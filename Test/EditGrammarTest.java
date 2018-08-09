@@ -73,6 +73,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
+        System.out.println(c.printRules());
     }
 
 
@@ -86,9 +87,10 @@ public class EditGrammarTest {
     @Test
     public void humdyst() {
         Compress c = new Compress();
-        InputOutput io = new InputOutput();
+        InputOutput io  = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
+        System.out.println(c.printRules());
     }
 
     @Test

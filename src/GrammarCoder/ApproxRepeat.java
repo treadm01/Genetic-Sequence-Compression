@@ -6,7 +6,7 @@ public class ApproxRepeat implements Comparable {
     List<Symbol> firstSymbolList;
     List<Symbol> secondSymbolList;
     String edits;
-    int length;
+    int length; //to compare to each other use longest encoding first
 
     public ApproxRepeat(List<Symbol> firstSymbols, List<Symbol> secondSymbols, String edits, int length) {
         this.firstSymbolList = firstSymbols;

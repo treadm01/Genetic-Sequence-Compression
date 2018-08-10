@@ -99,7 +99,7 @@ public class EditGrammarTest {
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("humhdab");
+        String originalFile = io.readFile("humhbb");
         c.processInput(originalFile);
     }
 

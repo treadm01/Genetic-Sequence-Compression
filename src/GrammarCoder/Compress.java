@@ -58,13 +58,14 @@ public class Compress {
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
 //       //TODO make a method just to get length... or get length better
-        //printRules();// needed to compute length of rule at the moment
-        System.out.println(printRules());
+        printRules();// needed to compute length of rule at the moment
+        //System.out.println(printRules());
 
         checkApproximateRepeat();
         rules.clear();
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
+        //System.out.println(printRules());
 //        System.out.println(printRules());
         String encoded = encode(getFirstRule().getGuard().getRight(), "");
         System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
@@ -92,6 +93,7 @@ public class Compress {
             // if the matching digram is an overlap do nothing
             if (existingDigram.getRight() != symbol) { // todo find a better way to place this
                 // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
+                //todo this can't be working for longer rules??? not chekcing longer rules just digrams
                 if (existingDigram.getLeft().getLeft().isGuard()
                         && existingDigram.getRight().isGuard()) {
                     existingRule(symbol, existingDigram);
@@ -505,39 +507,60 @@ public class Compress {
         }
 
         // ORDERING MAKES SOME FILES WORSE
-//        possibleRepeats = possibleRepeats.stream()
-//                .sorted(ApproxRepeat::compareTo)
-//                .collect(Collectors.toList());
+        possibleRepeats = possibleRepeats.stream()
+                .sorted(ApproxRepeat::compareTo)
+                .filter(x -> x.edits != "!")
+                .filter(x -> x.length - x.edits.length() > x.length * 0.6)
+                .collect(Collectors.toList());
 
+        System.out.println("how many " + possibleRepeats.size());
+        //create hashmap of approximate repeats... no hasmap of approx repeat rules
+
+        //TODO NEED TO KEEP A STORE OF CONVERTED REPEATS AND REUSE, HASHMAP
+        //TODO ALSO NEED TO PROPERLY CHECK FOR OVERLAP
         //todo check new digrams could be messing something... or could be usable
         //todo order by the amount of symbols to be removed? number of edits? not symbols, string length if possible
+        Set<Symbol> seenSymbols = new HashSet<>();
         for (ApproxRepeat ar : possibleRepeats) {
-            if (ar.edits.length() > 1) { // because nonworthwhile are just set to ! at the moment
-                if (nonterminalMap.containsKey(ar.firstSymbolList.get(0).getRepresentation())) { // could still contain it somewhere else dingbat
-                    // need another check, is the actual instance in the list from the map.......
-                    //todo need to be able to check for ... well the problem is overlap... but...
+                Boolean stop = false;
+                for (Symbol s : ar.firstSymbolList) {
+                    if (seenSymbols.contains(s)) {
+                        stop = true;
+                        break;
+                    }
+                }
 
-                    // just checking that the first and the last is in the list, if so then they haven't been removed
-                    //todo check for both lists as they will both be removed
-                    if (nonterminalMap.get(ar.firstSymbolList.get(0).getRepresentation()).contains(ar.firstSymbolList.get(0))
-                            && nonterminalMap.get(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1).getRepresentation()).contains(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1))) {
-                        createRepeat(ar);
-                        nonterminalMap = getNonTerminals(); // todo just reassesing all nonterminals in main rule... stop
+                for (Symbol s : ar.secondSymbolList) {
+                    if (seenSymbols.contains(s)) {
+                        stop = true;
+                        break;
+                    }
+                }
+
+                if (!stop) {
+
+                    createRepeat(ar);
+
+                    for (Symbol s : ar.firstSymbolList) {
+                        seenSymbols.add(s);
+                    }
+
+                    for (Symbol s : ar.secondSymbolList) {
+                        seenSymbols.add(s);
                     }
                 }
             }
-        }
     }
 
 
+    //NEED TO GO OVER, GET CONSISTENTLY AND CHECK EDIT AMOUNT WITHIN THE INITIAL CHECK
+    //todo multiple matches, need to be able to use the same main rule with different edits
     //TODO PROBLEM IS IF NONTERMINAL BEING CHECKED IS INCORPORATED IN ANOTHER SOMEWHERE
     //todo need to produce the viable edits and then loop through them, can't do from within lists
     public ApproxRepeat nonTerminalRepeats(NonTerminal first, NonTerminal second) {
-        String firstSubString = "";
-        String secondSubString = "";
         int editNumber = 0;
         int index = 0;
-        int difference = 0; //difference between edit locatoins
+        int difference; //difference between edit locatoins
         int lastIndex = 0;
         int offset = first.getRule().getSymbolString(first.getRule(), first.isComplement).length();
         String edits = ""; //just use a string to get edits..
@@ -552,22 +575,33 @@ public class Compress {
         Symbol secondNext = second.getRight();
 
         firstSymbols.add(firstNext);
-        secondSymbols.add(secondNext);
+        if (!secondNext.isGuard()) {
+            secondSymbols.add(secondNext); //todo can be adding a guard here... presumably could be extending past overlap too
+        }
 
-        // when doing straight substitution, have to ensure substrings are the same length?
+        //TODO ENSURE NONTERMINALS ROPED INTO THIS ACTUALLY ENCODE THE SAME LENGTH TOO
+        String actualFirst = "";
+        for (Symbol s : firstSymbols) {
+            actualFirst += getNextSubString(s);
+        }
+
+        String actualSecond = "";
+        for (Symbol s : secondSymbols) {
+            actualSecond += getNextSubString(s);
+        }
 
         //TODO DO BY NONTERMINAL
         //todo still an issue, strings shouldnt be so much longer than the other and takes too long
-        //todo some tests like hehcmv dont finish... need to get it one by one, check, then proceed...
         // problem is as both substrings are separate, and could be very different lengths
         // not working for editnumber, needs to be proportional, getting to end or join and having more than 20 edits....
         // perhaps not counting properly - while index less than both, means not counting while still adding...
-        while (editNumber < 10
-                && !(firstNext.equals(second) && secondNext.isGuard())) { //if both reached end then stop
-
+        while (//editNumber < (actualFirst.length() - offset) * 0.5
+        actualFirst.length() < 25
+                //&& actualFirst.length() != actualSecond.length() // this here could just stop it whenever they happen to match
+                    && !(firstNext.equals(second) && secondNext.isGuard())) {
             // if not overlapping string being checked, get string and move right
             if (!firstNext.equals(second)) {
-                firstSubString += getNextSubString(firstNext);
+                actualFirst += getNextSubString(firstNext);
                 firstNext = firstNext.getRight();
                 if (!firstNext.equals(second)) { //todo having to check again to ensure not adding an extra symbol....
                     firstSymbols.add(firstNext);
@@ -576,48 +610,72 @@ public class Compress {
 
             // if second string has not reached the end, do the same for it
             if (!secondNext.isGuard()) {
-                secondSubString += getNextSubString(secondNext);
+                actualSecond += getNextSubString(secondNext);
                 secondNext = secondNext.getRight();
                 if (!secondNext.isGuard()) {
-                    secondSymbols.add(secondNext);
+                    secondSymbols.add(secondNext); //todo somehow guards are still getting added
                 }
             }
 
-            while (index < firstSubString.length() && index < secondSubString.length()) {
-                if (firstSubString.charAt(index) != secondSubString.charAt(index)) {
+            while (index < actualFirst.length() && index < actualSecond.length()) {
+                if (actualFirst.charAt(index) != actualSecond.charAt(index)) {
                     editNumber++;
-                    int position = index + offset; //offset being length of first rule being checked
-                    difference = position - lastIndex;
-                    lastIndex = position;
-                    //TODO USED DISTANCE BETWEEN EDITS
-                    //editsSecond.add(position + "" + secondSubString.charAt(index));
-                    edits += difference + "" + secondSubString.charAt(index);
                 }
                 index++; // to move through the string
             }
         }
-        //System.out.println(editNumber + " " + firstSubString.length() * 0.2);
-        if (firstSubString.length() != secondSubString.length()
-                || editNumber > firstSubString.length() * 0.3
-                || firstSubString.isEmpty()) {
+
+        index = 0;
+        editNumber = 0;
+        edits = "";
+        while (index < actualFirst.length() && index < actualSecond.length()) {
+            if (actualFirst.charAt(index) != actualSecond.charAt(index)) {
+                editNumber++;
+                int position = index + offset; //offset being length of first rule being checked
+                difference = position - lastIndex;
+                lastIndex = position;
+                edits += difference + "" + actualSecond.charAt(index);
+            }
+            index++; // to move through the string
+        }
+
+                    //TODO INDEX IS OUT OF SYNC FOR REVERSE COMPS
+            // edits hsouldn't ever be empty....
+        if (actualFirst.isEmpty() || actualFirst.length() != actualSecond.length()
+                || editNumber > ((actualFirst.length()) * 0.3)) {
             edits = "!";
         }
         else {
-//            System.out.println("f " + firstSymbols);
-//            System.out.println("s " + secondSymbols);
-//            System.out.println("f " + firstSubString);
-//            System.out.println("s " + secondSubString);
-//            System.out.println("e " + edits);
+            System.out.println("f " + firstSymbols);
+            System.out.println("s " + secondSymbols);
+            System.out.println("afrepeat " + actualFirst);
+            System.out.println("asrepeat " + actualSecond);
+            System.out.println("e " + edits);
         }
-        return new ApproxRepeat(firstSymbols, secondSymbols, edits, firstSubString.length());
+        return new ApproxRepeat(firstSymbols, secondSymbols, edits, actualFirst.length());
     }
 
 
     public void createRepeat(ApproxRepeat ar) {
-        Rule newRule = new Rule();
+        Rule newRule;
+        // todo reuse approx rules
+        if (digramMap.containsKey(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1))) {
+            if (digramMap.get(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1)).getRight().isGuard()) {
+                Guard g = (Guard) digramMap.get(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1)).getRight();
+                newRule = g.getGuardRule();
+            }
+            else {
+                newRule = new Rule();
+            }
+        }
+        else {
+            newRule = new Rule();
+        }
+
+      //  System.out.println("rule is " + newRule);
+
         NonTerminal firstNonterminal = new NonTerminal(newRule);
         NonTerminal secondNonterminal = new NonTerminal(newRule);
-        //System.out.println("Rule " + newRule);
 
         secondNonterminal.setIsEdit(ar.edits);
 
@@ -629,14 +687,20 @@ public class Compress {
             newRule.addNextSymbol(s);
         }
 
+
+        // todo need to do replace rule for every symbol in the new rule...
+//        replaceRule(.getLeft());
+//        replaceRule(oldSymbol);
+
         //System.out.println("NEW MAIN RULE " + getFirstRule().getRuleString());
     }
 
 
     // can't use replace digram as potentially many symbols being moved
     public void insertApproximateRepeat(NonTerminal newNonTerminal, Symbol start, Symbol end) {
-        removeDigramsFromMap(start);
-        removeDigramsFromMap(end.getRight());
+        // todo need orrect way to deal with digrams being moved with approx rule
+        //removeDigramsFromMap(start);
+        //removeDigramsFromMap(end);
 
         newNonTerminal.assignRight(end.getRight());
         newNonTerminal.assignLeft(start.getLeft());

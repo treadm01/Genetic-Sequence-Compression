@@ -51,9 +51,8 @@ public class Compress {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
-            System.out.println(getFirstRule().getRuleString());
+            //System.out.println(getFirstRule().getRuleString());
             checkDigram(getFirstRule().getLast());
-            System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
         rules.add(getFirstRule());
@@ -65,8 +64,6 @@ public class Compress {
         System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println();
-
-
     }
 
     public void addToDigramMap(Symbol symbol) {
@@ -90,7 +87,6 @@ public class Compress {
         // this is just checking a digram from the last nonterminal
         if (lastNonTerminal != null) {
             if (symbol.getLeft().getLeft().getRepresentation() == lastNonTerminal.getRepresentation()) {
-                System.out.println(lastNonTerminal);
                     // if the second of the digram does not equal second following nonterminal
                     if (symbol.getRepresentation() != lastNonTerminal.getRight().getRight().getRepresentation()) {
                         editCount++;
@@ -102,19 +98,30 @@ public class Compress {
                         editSymbol = symbol.getLeft();
                         lastEdit = lastNonTerminal.getRight();
                     }
-                System.out.println(editCount);
             }
         }
 
         // if only one following symbol is different change that symbol... and check digrams
         // indicate symbol and send it through?
         // WOULD ONLY WANT TO DO AT THE TERMINAL LEVEL?
+        //TODO NEED TO DO LIKE REVERSE COMPLEMENTS 12 IS A RULE FOR CC 12' IS FOR AC
+        //TODO SO IF AC IS SEEN THAT IS USED BUT UNDERLYING IT IS 12 CC
+        // BUT THEN WHEN ARE RULES CREATED?? AND WOULD THERE BE ANY BEENFIT TO THIS?
+        // ???? NOT SURE
         if (editCount == 1) {
             Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
-            newSymbol.assignRight(editSymbol.getRight());
+            newSymbol.assignRight(editSymbol.getRight()); // the new one
             newSymbol.assignLeft(editSymbol.getLeft());
-            editSymbol.getRight().assignLeft(newSymbol);
+            editSymbol.getRight().assignLeft(newSymbol); // the one being edited
             editSymbol.getLeft().assignRight(newSymbol);
+            newSymbol.isEdited = true;
+            if (editSymbol.getRight().isGuard()) { // if second symbol
+                newSymbol.edits = "1" + editSymbol.getRepresentation(); //todo need to get the char
+            }
+            else { // else first
+                newSymbol.edits = "0" + editSymbol.getRepresentation();
+            }
+            // but what if the edited one is the symbol being checked???
         }
 
             // check existing digrams for last digram, update them with new rule
@@ -213,6 +220,12 @@ public class Compress {
         // if the symbols are not equal then one is a noncomplement and the rule is set for this
         if (!symbol.equals(oldSymbol)) {
             newTerminal.isComplement = true;
+        }
+
+        // todo needs to work for either left or right
+        if (symbol.getLeft().isEdited) {
+            newTerminal.isEdited = true;
+            newTerminal.edits = symbol.getLeft().edits;
         }
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
@@ -390,7 +403,7 @@ public class Compress {
 
                     String isEdit = "";
 
-                    if (nt.isEdit) {
+                    if (nt.isEdited) {
                         isEdit += "*" + nt.edits;
                     }
 
@@ -403,7 +416,7 @@ public class Compress {
 
                     String isEdit = "";
 
-                    if (nt.isEdit) {
+                    if (nt.isEdited) {
                         isEdit += "*" + nt.edits;
                     }
 

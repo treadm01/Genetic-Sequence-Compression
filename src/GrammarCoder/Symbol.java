@@ -5,6 +5,8 @@ public class Symbol {
     long representation;
     private static final long PRIME = 2265539; // from sequitur
     public Boolean isComplement = false;
+    Boolean isEdited = false;
+    String edits;
     public Symbol complement;
     Integer index;
 

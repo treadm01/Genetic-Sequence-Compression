@@ -3,7 +3,6 @@ package GrammarCoder;
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
     //Integer index; // location of rule in main input string
-    Boolean isEdit = false;
     String edits;
 
     public NonTerminal(Rule rule) {
@@ -26,7 +25,7 @@ public class NonTerminal extends Symbol {
 
     public void setIsEdit(String edits) {
         this.edits = edits;
-        isEdit = true;
+        isEdited = true;
     }
 
     public Rule getRule() {
@@ -39,7 +38,7 @@ public class NonTerminal extends Symbol {
         if (isComplement) {
             s += "'";
         }
-        if (isEdit) {
+        if (isEdited) {
             s += "*" + edits;
         }
         return s;

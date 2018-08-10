@@ -75,6 +75,13 @@ public class EditGrammarTest {
         c.processInput(compress);
     }
 
+    @Test
+    public void ats() {
+        Compress c = new Compress();
+        String compress = "";
+        c.processInput(compress);
+    }
+
 
     @Test
     public void checkApproxRepeat() {

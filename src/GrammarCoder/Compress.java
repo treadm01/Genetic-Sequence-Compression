@@ -3,7 +3,6 @@ package GrammarCoder;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
@@ -14,6 +13,7 @@ public class Compress {
     List<Integer> adjustedMarkers = new ArrayList<>();
     Set<Character> alphabet = new HashSet();
     String mainInput;
+    NonTerminal lastNonTerminal;
 
     //todo maybe go back to a huffman type code assignment for all individual ints and symbols
     //todo a gammar code for each based on frequency of the symbols, use differences again
@@ -51,27 +51,21 @@ public class Compress {
             //System.out.println(i + " of " + input.length());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
+            System.out.println(getFirstRule().getRuleString());
             checkDigram(getFirstRule().getLast());
-            //System.out.println(getFirstRule().getRuleString());
+            System.out.println(getFirstRule().getRuleString());
 //            System.out.println(printDigrams());
         }
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
 //       //TODO make a method just to get length... or get length better
-        printRules();// needed to compute length of rule at the moment
-        //System.out.println(printRules());
+        System.out.println(printRules());// needed to compute length of rule at the moment
 
-        checkApproximateRepeat();
-        rules.clear();
-        rules.add(getFirstRule());
-        generateRules(getFirstRule().getGuard().getRight());
-        //System.out.println(printRules());
-//        System.out.println(printRules());
         String encoded = encode(getFirstRule().getGuard().getRight(), "");
         System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println();
-        //System.out.println(printRules());
+
 
     }
 
@@ -87,27 +81,62 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram(Symbol symbol) {
-        // check existing digrams for last digram, update them with new rule
-        if (digramMap.containsKey(symbol)) {
-            Symbol existingDigram = getOriginalDigram(symbol); // retrieves existing digram, if complement returns original
-            // if the matching digram is an overlap do nothing
-            if (existingDigram.getRight() != symbol) { // todo find a better way to place this
-                // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
-                //todo this can't be working for longer rules??? not chekcing longer rules just digrams
-                if (existingDigram.getLeft().getLeft().isGuard()
-                        && existingDigram.getRight().isGuard()) {
-                    existingRule(symbol, existingDigram);
-                }
-                else { // if digram has been seen but only once, no rule, then create new rule
-                    createRule(symbol, existingDigram);
-                }
+        int editCount = 0;
+        Symbol editSymbol = null;
+        Symbol lastEdit = null;
+        // if the last ... might not work, if symbol has been converted to a nonterminal...
+        // if the last two back is the one to check might have an approximate repeat nonterminal
+        // if the following are both equal, carry on, if slightly different try edit
+        // this is just checking a digram from the last nonterminal
+        if (lastNonTerminal != null) {
+            if (symbol.getLeft().getLeft().getRepresentation() == lastNonTerminal.getRepresentation()) {
+                System.out.println(lastNonTerminal);
+                    // if the second of the digram does not equal second following nonterminal
+                    if (symbol.getRepresentation() != lastNonTerminal.getRight().getRight().getRepresentation()) {
+                        editCount++;
+                        editSymbol = symbol;
+                        lastEdit = lastNonTerminal.getRight().getRight();
+                    }
+                    if (symbol.getLeft().getRepresentation() != lastNonTerminal.getRight().getRepresentation()) {
+                        editCount++;
+                        editSymbol = symbol.getLeft();
+                        lastEdit = lastNonTerminal.getRight();
+                    }
+                System.out.println(editCount);
             }
         }
-        else { // digram not been seen before, add to digram map
-            addToDigramMap(symbol);
-            addToDigramMap(getReverseComplement(symbol));
+
+        // if only one following symbol is different change that symbol... and check digrams
+        // indicate symbol and send it through?
+        // WOULD ONLY WANT TO DO AT THE TERMINAL LEVEL?
+        if (editCount == 1) {
+            Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
+            newSymbol.assignRight(editSymbol.getRight());
+            newSymbol.assignLeft(editSymbol.getLeft());
+            editSymbol.getRight().assignLeft(newSymbol);
+            editSymbol.getLeft().assignRight(newSymbol);
         }
+
+            // check existing digrams for last digram, update them with new rule
+            if (digramMap.containsKey(symbol)) {
+                Symbol existingDigram = getOriginalDigram(symbol); // retrieves existing digram, if complement returns original
+                // if the matching digram is an overlap do nothing
+                if (existingDigram.getRight() != symbol) { // todo find a better way to place this
+                    // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
+                    //todo this can't be working for longer rules??? not chekcing longer rules just digrams
+                    if (existingDigram.getLeft().getLeft().isGuard()
+                            && existingDigram.getRight().isGuard()) {
+                        existingRule(symbol, existingDigram);
+                    } else { // if digram has been seen but only once, no rule, then create new rule
+                        createRule(symbol, existingDigram);
+                    }
+                }
+            } else { // digram not been seen before, add to digram map
+                addToDigramMap(symbol);
+                addToDigramMap(getReverseComplement(symbol));
+            }
     }
+
 
     /**
      * when a digram has occured but was first entered as a reverse complement, ie never seen
@@ -196,6 +225,13 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
+
+        // set the last terminal to check next symbols for approx repeat to
+        lastNonTerminal = oldTerminal;
+        // done by digram so only really need to check two
+        // if only one edit required? if two? could end up changing everything?
+        // if you get two symbols after a nonterminal and no direct match, check for edit first
+        // rather than taking a digram
     }
 
     /**
@@ -434,294 +470,6 @@ public class Compress {
      */
     public Rule getFirstRule() {
         return this.firstRule;
-    }
-
-    public List<Rule> orderRulesByLength() {
-        // initialise length of symbol string the rule represents to reprder
-        // the rules by their lengths
-        for (Rule r : rules) {
-            r.symbolRule = r.getSymbolString(r, false);
-        }
-
-        // reorder the rules by their symbol length
-        List<Rule> orderedRules = rules.stream()
-                .sorted(Rule::compareTo)
-                //.filter(x -> x.symbolRule.length() > 5) // todo this needs to be as low as possible
-                .collect(Collectors.toList());
-        return orderedRules;
-    }
-
-    public Map<Long, List<NonTerminal>> getNonTerminals() {
-        // build map of nonterminals that occur in the mainrule
-        Map<Long, List<NonTerminal>> nonterminalMap = new HashMap<>();
-        Symbol s = getFirstRule().getGuard().getRight();
-        while (!s.isGuard()) {
-            if (nonterminalMap.containsKey(s.getRepresentation())) {
-                nonterminalMap.get(s.getRepresentation()).add((NonTerminal) s);
-            }
-            else if (s instanceof NonTerminal){
-                List<NonTerminal> nonTerminalList = new ArrayList<>();
-                nonTerminalList.add((NonTerminal) s);
-                nonterminalMap.put(s.getRepresentation(), nonTerminalList);
-            }
-            s = s.getRight();
-        }
-        return nonterminalMap;
-    }
-
-
-    //TODO JUST DO RULES AT THE TOP RULE
-    //todo get the following string until too many edits etc,
-    //todo keep track of necessary edits
-    //todo make the edits on the grammar and ensure encoded,
-    //todo ensure the nonterminal indicates it requires an edit op
-    // which will be where?? would have to be at top level
-    // top level where two repeats differ... how to get there?
-    // how to deal with the symbols replacing
-    // i think uncondense what is necessary then edit
-    // might uncondense first or second, but only edit second
-    // so 10 12 > 10 gc edit, check digrams
-
-    //todo the edit number needs to be relational to the length
-    //todo length of strings needs to be close - i THINK given the way strings are retrived
-    // some are just bound to be a lot longer than their matches, could be trimmed down
-    //TODO not just substitute but insert delete
-    //todo how to keep track of edits? how to decide and use?
-    //todo check by whole nonterminal to save time
-    //todo ensure each nonterminal is checked, seems like 1582 in humprt should have two pair checks
-    //nope, there is another match with very similar following symbol, but it is in a subrule, or encoded some other way
-    public void checkApproximateRepeat() {
-        List<Rule> orderedRules = orderRulesByLength(); // todo necessary or just store those that are best and try them all
-        Map<Long, List<NonTerminal>> nonterminalMap = getNonTerminals(); //todo might want to get digrams of nonterminals?
-        List<ApproxRepeat> possibleRepeats = new ArrayList<>();
-        for (Rule r : orderedRules) {
-            // not every rule in the map
-            if (nonterminalMap.containsKey(r.representation)) {
-                List<NonTerminal> nonTerminalList = nonterminalMap.get(r.representation);
-                for (int i = 0; i < nonTerminalList.size(); i++) {
-                    for (int j = i + 1; j < nonTerminalList.size(); j++) {
-                        possibleRepeats.add(nonTerminalRepeats(nonTerminalList.get(i), nonTerminalList.get(j)));
-                    }
-                }
-            }
-        }
-
-        // ORDERING MAKES SOME FILES WORSE
-        possibleRepeats = possibleRepeats.stream()
-                .sorted(ApproxRepeat::compareTo)
-                .filter(x -> x.edits != "!")
-                .filter(x -> x.length - x.edits.length() > x.length * 0.6)
-                .collect(Collectors.toList());
-
-        System.out.println("how many " + possibleRepeats.size());
-        //create hashmap of approximate repeats... no hasmap of approx repeat rules
-
-        //TODO NEED TO KEEP A STORE OF CONVERTED REPEATS AND REUSE, HASHMAP
-        //TODO ALSO NEED TO PROPERLY CHECK FOR OVERLAP
-        //todo check new digrams could be messing something... or could be usable
-        //todo order by the amount of symbols to be removed? number of edits? not symbols, string length if possible
-        Set<Symbol> seenSymbols = new HashSet<>();
-        for (ApproxRepeat ar : possibleRepeats) {
-                Boolean stop = false;
-                for (Symbol s : ar.firstSymbolList) {
-                    if (seenSymbols.contains(s)) {
-                        stop = true;
-                        break;
-                    }
-                }
-
-                for (Symbol s : ar.secondSymbolList) {
-                    if (seenSymbols.contains(s)) {
-                        stop = true;
-                        break;
-                    }
-                }
-
-                if (!stop) {
-
-                    createRepeat(ar);
-
-                    for (Symbol s : ar.firstSymbolList) {
-                        seenSymbols.add(s);
-                    }
-
-                    for (Symbol s : ar.secondSymbolList) {
-                        seenSymbols.add(s);
-                    }
-                }
-            }
-    }
-
-
-    //NEED TO GO OVER, GET CONSISTENTLY AND CHECK EDIT AMOUNT WITHIN THE INITIAL CHECK
-    //todo multiple matches, need to be able to use the same main rule with different edits
-    //TODO PROBLEM IS IF NONTERMINAL BEING CHECKED IS INCORPORATED IN ANOTHER SOMEWHERE
-    //todo need to produce the viable edits and then loop through them, can't do from within lists
-    public ApproxRepeat nonTerminalRepeats(NonTerminal first, NonTerminal second) {
-        int editNumber = 0;
-        int index = 0;
-        int difference; //difference between edit locatoins
-        int lastIndex = 0;
-        int offset = first.getRule().getSymbolString(first.getRule(), first.isComplement).length();
-        String edits = ""; //just use a string to get edits..
-
-        List<Symbol> firstSymbols = new ArrayList<>();
-        firstSymbols.add(first);
-
-        List<Symbol> secondSymbols = new ArrayList<>();
-        secondSymbols.add(second);
-
-        Symbol firstNext = first.getRight();
-        Symbol secondNext = second.getRight();
-
-        firstSymbols.add(firstNext);
-        if (!secondNext.isGuard()) {
-            secondSymbols.add(secondNext); //todo can be adding a guard here... presumably could be extending past overlap too
-        }
-
-        //TODO ENSURE NONTERMINALS ROPED INTO THIS ACTUALLY ENCODE THE SAME LENGTH TOO
-        String actualFirst = "";
-        for (Symbol s : firstSymbols) {
-            actualFirst += getNextSubString(s);
-        }
-
-        String actualSecond = "";
-        for (Symbol s : secondSymbols) {
-            actualSecond += getNextSubString(s);
-        }
-
-        //TODO DO BY NONTERMINAL
-        //todo still an issue, strings shouldnt be so much longer than the other and takes too long
-        // problem is as both substrings are separate, and could be very different lengths
-        // not working for editnumber, needs to be proportional, getting to end or join and having more than 20 edits....
-        // perhaps not counting properly - while index less than both, means not counting while still adding...
-        while (//editNumber < (actualFirst.length() - offset) * 0.5
-        actualFirst.length() < 25
-                //&& actualFirst.length() != actualSecond.length() // this here could just stop it whenever they happen to match
-                    && !(firstNext.equals(second) && secondNext.isGuard())) {
-            // if not overlapping string being checked, get string and move right
-            if (!firstNext.equals(second)) {
-                actualFirst += getNextSubString(firstNext);
-                firstNext = firstNext.getRight();
-                if (!firstNext.equals(second)) { //todo having to check again to ensure not adding an extra symbol....
-                    firstSymbols.add(firstNext);
-                }
-            }
-
-            // if second string has not reached the end, do the same for it
-            if (!secondNext.isGuard()) {
-                actualSecond += getNextSubString(secondNext);
-                secondNext = secondNext.getRight();
-                if (!secondNext.isGuard()) {
-                    secondSymbols.add(secondNext); //todo somehow guards are still getting added
-                }
-            }
-
-            while (index < actualFirst.length() && index < actualSecond.length()) {
-                if (actualFirst.charAt(index) != actualSecond.charAt(index)) {
-                    editNumber++;
-                }
-                index++; // to move through the string
-            }
-        }
-
-        index = 0;
-        editNumber = 0;
-        edits = "";
-        while (index < actualFirst.length() && index < actualSecond.length()) {
-            if (actualFirst.charAt(index) != actualSecond.charAt(index)) {
-                editNumber++;
-                int position = index + offset; //offset being length of first rule being checked
-                difference = position - lastIndex;
-                lastIndex = position;
-                edits += difference + "" + actualSecond.charAt(index);
-            }
-            index++; // to move through the string
-        }
-
-                    //TODO INDEX IS OUT OF SYNC FOR REVERSE COMPS
-            // edits hsouldn't ever be empty....
-        if (actualFirst.isEmpty() || actualFirst.length() != actualSecond.length()
-                || editNumber > ((actualFirst.length()) * 0.3)) {
-            edits = "!";
-        }
-        else {
-            System.out.println("f " + firstSymbols);
-            System.out.println("s " + secondSymbols);
-            System.out.println("afrepeat " + actualFirst);
-            System.out.println("asrepeat " + actualSecond);
-            System.out.println("e " + edits);
-        }
-        return new ApproxRepeat(firstSymbols, secondSymbols, edits, actualFirst.length());
-    }
-
-
-    public void createRepeat(ApproxRepeat ar) {
-        Rule newRule;
-        // todo reuse approx rules
-        if (digramMap.containsKey(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1))) {
-            if (digramMap.get(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1)).getRight().isGuard()) {
-                Guard g = (Guard) digramMap.get(ar.firstSymbolList.get(ar.firstSymbolList.size() - 1)).getRight();
-                newRule = g.getGuardRule();
-            }
-            else {
-                newRule = new Rule();
-            }
-        }
-        else {
-            newRule = new Rule();
-        }
-
-      //  System.out.println("rule is " + newRule);
-
-        NonTerminal firstNonterminal = new NonTerminal(newRule);
-        NonTerminal secondNonterminal = new NonTerminal(newRule);
-
-        secondNonterminal.setIsEdit(ar.edits);
-
-        insertApproximateRepeat(firstNonterminal, ar.firstSymbolList.get(0), ar.firstSymbolList.get(ar.firstSymbolList.size() - 1));
-        insertApproximateRepeat(secondNonterminal, ar.secondSymbolList.get(0), ar.secondSymbolList.get(ar.secondSymbolList.size() - 1));
-
-        // todo always encode the first? and edit the second?
-        for (Symbol s : ar.firstSymbolList) {
-            newRule.addNextSymbol(s);
-        }
-
-
-        // todo need to do replace rule for every symbol in the new rule...
-//        replaceRule(.getLeft());
-//        replaceRule(oldSymbol);
-
-        //System.out.println("NEW MAIN RULE " + getFirstRule().getRuleString());
-    }
-
-
-    // can't use replace digram as potentially many symbols being moved
-    public void insertApproximateRepeat(NonTerminal newNonTerminal, Symbol start, Symbol end) {
-        // todo need orrect way to deal with digrams being moved with approx rule
-        //removeDigramsFromMap(start);
-        //removeDigramsFromMap(end);
-
-        newNonTerminal.assignRight(end.getRight());
-        newNonTerminal.assignLeft(start.getLeft());
-
-        start.getLeft().assignRight(newNonTerminal);
-        end.getRight().assignLeft(newNonTerminal);
-        checkNewDigrams(newNonTerminal, newNonTerminal.getRight(), newNonTerminal); //todo necessary? or bonus?
-    }
-
-    public String getNextSubString(Symbol currentSymbol) {
-        String subString = "";
-        if (currentSymbol instanceof Terminal) {
-            subString = currentSymbol.toString();
-        }
-        else {
-            Rule r = ((NonTerminal) currentSymbol).getRule();
-            subString = r.getSymbolString(r, currentSymbol.isComplement);
-           // System.out.println("rule is " + r);
-            //System.out.println("string is " + subString);
-        }
-        return subString;
     }
 }
 

@@ -1,10 +1,13 @@
 package GrammarCoder;
 
+import java.util.ArrayList;
+
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
     //Integer index; // location of rule in main input string
 
     public NonTerminal(Rule rule) {
+        editSymbols = new ArrayList<>();
         this.rule = rule;
         this.rule.incrementCount(); // increase use count
         representation = rule.representation; // rule has the same symbol rep as it's nonterminal...
@@ -33,13 +36,19 @@ public class NonTerminal extends Symbol {
             s += "'";
         }
         if (isEdited) {
-            s += "*" + getEditIndex(getRule(), isComplement) + edits;
+            String editIndexes = "";
+            int count = 0;
+            for (Symbol symbol : editSymbols) {
+                editIndexes += getEditIndex(getRule(), isComplement, symbol);
+                editIndexes += String.valueOf(edits.charAt(count));
+            }
+            s += "*" + editIndexes;
         }
         return s;
     }
 
-    public int getEditIndex(Rule rule, Boolean complement) {
-        int editIndex = -1;
+    public int getEditIndex(Rule rule, Boolean complement, Symbol editSymbol) {
+        int editIndex = 0;
         Symbol s;
         if (complement) {
             s = rule.getLast();
@@ -47,34 +56,31 @@ public class NonTerminal extends Symbol {
         else {
             s = rule.getGuard().getRight();
         }
+        while (!s.equals(editSymbol)) {
+            do {
+                if (s instanceof Terminal) {
+                    editIndex++;
+                    if (complement) {
+                        s = s.getLeft();
+                    } else {
+                        s = s.getRight();
+                    }
+                } else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
+                    if (complement) {
+                        getEditIndex(((NonTerminal) s).getRule(), !s.isComplement, editSymbol);
+                    } else {
+                        getEditIndex(((NonTerminal) s).getRule(), s.isComplement, editSymbol);
+                    }
 
-        do {
-            if (s instanceof Terminal) {
-                editIndex++;
-                if (complement) {
-                    s = s.getLeft();
-                }
-                else {
-                    s = s.getRight();
-                }
-            }
-            else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
-                if (complement) {
-                    getEditIndex(((NonTerminal) s).getRule(), !s.isComplement);
-                }
-                else {
-                    getEditIndex(((NonTerminal) s).getRule(), s.isComplement);
+                    if (complement) {
+                        s = s.getLeft();
+                    } else {
+                        s = s.getRight();
+                    }
                 }
 
-                if (complement) {
-                    s = s.getLeft();
-                }
-                else {
-                    s = s.getRight();
-                }
-            }
-
-        } while (!s.isGuard() && !s.equals(editSymbol));
+            } while (!s.isGuard());
+        }
         return editIndex;
     }
 

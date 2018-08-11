@@ -21,6 +21,7 @@ public class Compress {
     // work with 'second' symbol of a digram
     //todo work with existing rules
     // try insert or delete, reverser matches, symbols before a rule... length of the nonterminal
+    //TODO CAN IT BE DONE WITH NONTERMINALS?
     //todo maybe go back to a huffman type code assignment for all individual ints and symbols
     //todo a gammar code for each based on frequency of the symbols, use differences again
     //todo consider trying single complement changes, so when tc is seen tg is stored also
@@ -97,8 +98,8 @@ public class Compress {
                         // if the second of the digram does not equal second following nonterminal
                         if (symbol.getRepresentation() != lastNonTerminal.getRight().getRight().getRepresentation()) {
                             editCount++;
-//                        editSymbol = symbol; //todo not sure how this will work
-//                        lastEdit = lastNonTerminal.getRight().getRight();
+                        editSymbol = symbol; //todo not sure how this will work
+                        lastEdit = lastNonTerminal.getRight().getRight();
                         }
                         if (currentLast.getRepresentation() != lastNonTerminal.getRight().getRepresentation()) {
                             editCount++;
@@ -121,14 +122,14 @@ public class Compress {
         // todo i think it has to bubble up... to get any benefit...
         // problem is that you miss a digram check 10 c
         if (editCount == 1) {
-            Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
-            newSymbol.assignRight(editSymbol.getRight()); // the new one
-            newSymbol.assignLeft(editSymbol.getLeft());
-            editSymbol.getRight().assignLeft(newSymbol); // the one being edited
-            editSymbol.getLeft().assignRight(newSymbol);
-            //todo this bit not relevan as always last... but the edit will be in a different place...
-            newSymbol.setIsEdit(String.valueOf(editSymbol.toString().charAt(0)));
             if (editSymbol.equals(currentLast)) {
+                Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
+                newSymbol.assignRight(editSymbol.getRight()); // the new one
+                newSymbol.assignLeft(editSymbol.getLeft());
+                editSymbol.getRight().assignLeft(newSymbol); // the one being edited
+                editSymbol.getLeft().assignRight(newSymbol);
+                //todo this bit not relevan as always last... but the edit will be in a different place...
+                newSymbol.setIsEdit(String.valueOf(editSymbol.toString().charAt(0)));
                 checkDigram(newSymbol);
             }
             // if the one needing an edit is the last, edit it and return to go normal route
@@ -271,11 +272,11 @@ public class Compress {
         // todo needs to work for either left or right
         if (symbol.isEdited) {
             newTerminal.setIsEdit(symbol.edits);
-            newTerminal.editSymbol = symbol;
+            newTerminal.editSymbols.add(oldSymbol);
         }
         else if (symbol.getLeft().isEdited) {
             newTerminal.setIsEdit(symbol.getLeft().edits);
-            newTerminal.editSymbol = symbol.getLeft();
+            newTerminal.editSymbols.add(oldSymbol.getLeft());
         }
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
@@ -454,7 +455,13 @@ public class Compress {
                     String isEdit = "";
 
                     if (nt.isEdited) {
-                        isEdit += "*" + nt.getEditIndex(nt.getRule(), nt.isComplement) + nt.edits;
+                        String editIndexes = "";
+                        int count = 0;
+                        for (Symbol sym : nt.editSymbols) {
+                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, sym);
+                            editIndexes += String.valueOf(nt.edits.charAt(count));
+                        }
+                        isEdit += "*" + editIndexes;
                     }
 
 
@@ -467,7 +474,13 @@ public class Compress {
                     String isEdit = "";
 
                     if (nt.isEdited) {
-                        isEdit += "*" + nt.getEditIndex(nt.getRule(), nt.isComplement) + nt.edits;
+                        String editIndexes = "";
+                        int count = 0;
+                        for (Symbol sym : nt.editSymbols) {
+                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, symbol);
+                            editIndexes += String.valueOf(nt.edits.charAt(count));
+                        }
+                        isEdit += "*" + editIndexes;
                     }
 
                     String complementIndicator; // non complement

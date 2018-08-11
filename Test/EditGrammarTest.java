@@ -60,11 +60,13 @@ public class EditGrammarTest {
         c.processInput(compress);
     }
 
+    //tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa
+    //tggctcacgcctgtaatcccagcactttggg
     @Test
     //todo example of multiple edits not being recorded
     public void EditGrammarReverseComplementTestTwo() {
         Compress c = new Compress();
-        String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
+        String compress = "tggctcacgcctgtaatcccagcac";
         c.processInput(compress);
     }
 

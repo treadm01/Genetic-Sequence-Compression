@@ -1,18 +1,20 @@
 package GrammarCoder;
 
+import java.util.List;
+
 public class Symbol {
     Symbol left, right;
     long representation;
     private static final long PRIME = 2265539; // from sequitur
     public Boolean isComplement = false;
     Boolean isEdited = false;
-    String edits;
+    String edits = "";
     public Symbol complement;
     Integer index;
-    Symbol editSymbol; // todo will require a list for multiple edits?
+    List<Symbol> editSymbols; // todo will require a list for multiple edits?
 
     public void setIsEdit(String edits) {
-        this.edits = edits;
+        this.edits += edits;
         isEdited = true;
     }
 

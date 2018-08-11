@@ -53,7 +53,6 @@ public class Compress {
             getFirstRule().addNextSymbol(new Terminal(input.charAt(i)));
             //System.out.println(getFirstRule().getRuleString());
             checkDigram(getFirstRule().getLast());
-//            System.out.println(printDigrams());
         }
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
@@ -108,20 +107,21 @@ public class Compress {
         //TODO SO IF AC IS SEEN THAT IS USED BUT UNDERLYING IT IS 12 CC
         // BUT THEN WHEN ARE RULES CREATED?? AND WOULD THERE BE ANY BEENFIT TO THIS?
         // ???? NOT SURE
+        // todo i think it has to bubble up... to get any benefit...
         if (editCount == 1) {
-            Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
-            newSymbol.assignRight(editSymbol.getRight()); // the new one
-            newSymbol.assignLeft(editSymbol.getLeft());
-            editSymbol.getRight().assignLeft(newSymbol); // the one being edited
-            editSymbol.getLeft().assignRight(newSymbol);
-            newSymbol.isEdited = true;
-            if (editSymbol.getRight().isGuard()) { // if second symbol
-                newSymbol.edits = "1" + editSymbol.getRepresentation(); //todo need to get the char
-            }
-            else { // else first
-                newSymbol.edits = "0" + editSymbol.getRepresentation();
-            }
-            // but what if the edited one is the symbol being checked???
+//            Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
+//            newSymbol.assignRight(editSymbol.getRight()); // the new one
+//            newSymbol.assignLeft(editSymbol.getLeft());
+//            editSymbol.getRight().assignLeft(newSymbol); // the one being edited
+//            editSymbol.getLeft().assignRight(newSymbol);
+//            newSymbol.isEdited = true;
+//            if (editSymbol.getRight().isGuard()) { // if second symbol
+//                newSymbol.edits = "1" + editSymbol.getRepresentation(); //todo need to get the char
+//            }
+//            else { // else first
+//                newSymbol.edits = "0" + editSymbol.getRepresentation();
+//            }
+//            // but what if the edited one is the symbol being checked???
         }
 
             // check existing digrams for last digram, update them with new rule
@@ -223,10 +223,10 @@ public class Compress {
         }
 
         // todo needs to work for either left or right
-        if (symbol.getLeft().isEdited) {
-            newTerminal.isEdited = true;
-            newTerminal.edits = symbol.getLeft().edits;
-        }
+//        if (symbol.getLeft().isEdited) {
+//            newTerminal.isEdited = true;
+//            newTerminal.edits = symbol.getLeft().edits;
+//        }
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
         replaceDigram(newTerminal, symbol);// update rule for last instance of digram

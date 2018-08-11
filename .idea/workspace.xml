@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="bit cleaner and works on small case ok">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="trying to implement">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/EditGrammarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/EditGrammarTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,14 +30,14 @@
         <counts>
           <entry key="abc" value="305" />
           <entry key="book" value="2" />
-          <entry key="java" value="57043" />
-          <entry key="txt" value="1386" />
+          <entry key="java" value="57293" />
+          <entry key="txt" value="1417" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="57043" />
-          <entry key="PLAIN_TEXT" value="1693" />
+          <entry key="JAVA" value="57293" />
+          <entry key="PLAIN_TEXT" value="1724" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -67,11 +66,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="109" column="24" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
+            <state relative-caret-position="203">
+              <caret line="412" column="15" lean-forward="true" selection-start-line="412" selection-start-column="15" selection-end-line="412" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#20870#20871#0" expanded="true" />
@@ -132,17 +131,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="37" column="20" lean-forward="true" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
+            <state relative-caret-position="143">
+              <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="59">
-              <caret line="73" column="53" selection-start-line="73" selection-start-column="27" selection-end-line="73" selection-end-column="53" />
+              <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -181,14 +180,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$</find>
       <find>3764</find>
       <find>3766</find>
       <find>3768</find>
       <find>there is</find>
       <find>new main r</find>
       <find>sorted</find>
-      <find>encode</find>
       <find>length</find>
       <find>38', 594, 78</find>
       <find>printrul</find>
@@ -210,7 +207,9 @@
       <find>sys</find>
       <find>createru</find>
       <find>create</find>
+      <find>checknew</find>
       <find>creater</find>
+      <find>encode</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -276,10 +275,10 @@
         <option value="$PROJECT_DIR$/textFiles/abc" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/ApproxRepeat.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" />
         <option value="$PROJECT_DIR$/Test/EditGrammarTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" />
       </list>
     </option>
   </component>
@@ -666,14 +665,7 @@
       <workItem from="1533633396868" duration="38763000" />
       <workItem from="1533717369897" duration="35027000" />
       <workItem from="1533804977960" duration="34374000" />
-      <workItem from="1533892150437" duration="37305000" />
-    </task>
-    <task id="LOCAL-00188" summary="cleaned up slightly, still messy">
-      <created>1532002666126</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1532002666126</updated>
+      <workItem from="1533892150437" duration="42578000" />
     </task>
     <task id="LOCAL-00189" summary="cleaned up a bit more">
       <created>1532003718036</created>
@@ -1011,43 +1003,50 @@
       <option name="project" value="LOCAL" />
       <updated>1533925171267</updated>
     </task>
-    <option name="localTasksCounter" value="237" />
+    <task id="LOCAL-00237" summary="trying to implement">
+      <created>1533936670328</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1533936670328</updated>
+    </task>
+    <option name="localTasksCounter" value="238" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 04m 38s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 30m 07s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 05m 12s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 30m 44s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 06m 12s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 31m 47s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 06m 31s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 32m 58s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 06m 45s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 34m 19s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 06m 59s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 34m 42s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 09m 09s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 36m 36s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 09m 29s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 51m 21s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_ats - 2018.08.10 at 21h 09m 45s.xml">
-      <configuration name="EditGrammarTest.ats" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 54m 23s.xml">
+      <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.10 at 21h 11m 19s.xml">
+    <history-entry file="EditGrammarTest_EditGrammarTestJustRepeats - 2018.08.11 at 00h 54m 52s.xml">
       <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1377359000" />
+    <option name="totallyTimeSpent" value="1382632000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1070,7 +1069,7 @@
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.52018636" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.5015528" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3990964" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -1095,7 +1094,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added code to initialise probability variables for first attempt" />
     <MESSAGE value="trying the encoder" />
     <MESSAGE value="encoder implemented and returns binary string, need to see whether initial value can be retrieved" />
     <MESSAGE value="bit of difficulty implementing, but ensuring floats are rounded returns the intended binary encoding" />
@@ -1120,7 +1118,8 @@
     <MESSAGE value=".." />
     <MESSAGE value="lengths to encode the edits and methods of finding the repeats don't appear to give good compression" />
     <MESSAGE value="bit cleaner and works on small case ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="bit cleaner and works on small case ok" />
+    <MESSAGE value="trying to implement" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to implement" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/180000.txt" />
@@ -1377,13 +1376,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="37" column="20" lean-forward="true" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -1398,24 +1390,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="73" column="53" selection-start-line="73" selection-start-column="27" selection-end-line="73" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="109" column="24" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
+        <state relative-caret-position="203">
+          <caret line="412" column="15" lean-forward="true" selection-start-line="412" selection-start-column="15" selection-end-line="412" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#20870#20871#0" expanded="true" />
             <element signature="e#20907#20908#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

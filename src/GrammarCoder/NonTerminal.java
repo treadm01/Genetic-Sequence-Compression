@@ -3,7 +3,6 @@ package GrammarCoder;
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
     //Integer index; // location of rule in main input string
-    String edits;
 
     public NonTerminal(Rule rule) {
         this.rule = rule;
@@ -23,11 +22,6 @@ public class NonTerminal extends Symbol {
         rule.getGuard().getRight().assignLeft(left); // set first symbol in rule's left to this left
     }
 
-    public void setIsEdit(String edits) {
-        this.edits = edits;
-        isEdited = true;
-    }
-
     public Rule getRule() {
         return this.rule;
     }
@@ -39,9 +33,49 @@ public class NonTerminal extends Symbol {
             s += "'";
         }
         if (isEdited) {
-            s += "*" + edits;
+            s += "*" + getEditIndex(getRule(), isComplement) + edits;
         }
         return s;
+    }
+
+    public int getEditIndex(Rule rule, Boolean complement) {
+        int editIndex = -1;
+        Symbol s;
+        if (complement) {
+            s = rule.getLast();
+        }
+        else {
+            s = rule.getGuard().getRight();
+        }
+
+        do {
+            if (s instanceof Terminal) {
+                editIndex++;
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+            else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
+                if (complement) {
+                    getEditIndex(((NonTerminal) s).getRule(), !s.isComplement);
+                }
+                else {
+                    getEditIndex(((NonTerminal) s).getRule(), s.isComplement);
+                }
+
+                if (complement) {
+                    s = s.getLeft();
+                }
+                else {
+                    s = s.getRight();
+                }
+            }
+
+        } while (!s.isGuard() && !s.equals(editSymbol));
+        return editIndex;
     }
 
     @Override

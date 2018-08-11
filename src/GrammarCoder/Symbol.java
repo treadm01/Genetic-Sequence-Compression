@@ -9,6 +9,12 @@ public class Symbol {
     String edits;
     public Symbol complement;
     Integer index;
+    Symbol editSymbol; // todo will require a list for multiple edits?
+
+    public void setIsEdit(String edits) {
+        this.edits = edits;
+        isEdited = true;
+    }
 
     public Boolean isGuard() {
         return representation == 0;

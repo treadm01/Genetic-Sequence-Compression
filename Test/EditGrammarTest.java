@@ -61,6 +61,7 @@ public class EditGrammarTest {
     }
 
     @Test
+    //todo example of multiple edits not being recorded
     public void EditGrammarReverseComplementTestTwo() {
         Compress c = new Compress();
         String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
@@ -72,6 +73,26 @@ public class EditGrammarTest {
     public void EditGrammarTestJustRepeats() {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
+        c.processInput(compress);
+    }
+
+    @Test
+    // works ok for duplicates
+    public void EditGrammarTestJustRepeatsDouble() {
+        Compress c = new Compress();
+        String compress = "ttctctgcctcacttctctgactcacttctctgcctcacttctctgactcac";
+        c.processInput(compress);
+    }
+
+    @Test
+    //todo example of second part of digram not matching.. suspect not worth doing
+    // approximate repeats like this couldn't be found so easily, had it working with method
+    // but, not sure, effectively like checking every symbol...
+    // no just if there is a 50% similarity between, approx repeats not added if
+    //both following symbols are different.....
+    public void EditGrammarTestJustRepeatsSecondEdit() {
+        Compress c = new Compress();
+        String compress = "ttctctgcctcacttctctgcatcac";
         c.processInput(compress);
     }
 
@@ -106,7 +127,7 @@ public class EditGrammarTest {
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("humhbb");
+        String originalFile = io.readFile("humhdab");
         c.processInput(originalFile);
     }
 

@@ -5,6 +5,7 @@ public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
     //Integer index; // location of rule in main input string
     Boolean indexFound; // have to use to break out of recursive index find
+    String editIndexes = "";
 
     public NonTerminal(Rule rule) {
         editSymbols = new ArrayList<>(); // init to store edits
@@ -36,7 +37,7 @@ public class NonTerminal extends Symbol {
             s += "'";
         }
         if (isEdited) {
-            String editIndexes = "";
+            editIndexes = "";
             int count = 0;
             for (Symbol symbol : editSymbols) {
                 indexFound = false;
@@ -58,19 +59,24 @@ public class NonTerminal extends Symbol {
         }
 
         if (s.equals(editSymbol)) {
+            indexFound = true;
             return editIndex;
         }
 
         while (!s.isGuard() && !indexFound) {
             if (s instanceof Terminal) {
-                editIndex++;
+
+                if (s.equals(editSymbol)) {
+                    indexFound = true;
+                } else {
+                    editIndex++;
+                }
                 if (complement) {
                     s = s.getLeft();
                 } else {
                     s = s.getRight();
                 }
 
-                indexFound = s.equals(editSymbol);
             }
             else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
                 if (complement) {
@@ -86,6 +92,9 @@ public class NonTerminal extends Symbol {
                     }
             }
         }
+
+        System.out.println(s);
+        System.out.println("edit " + editIndex);
         return editIndex;
     }
 

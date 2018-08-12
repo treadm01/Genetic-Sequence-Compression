@@ -15,6 +15,7 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
+    // TODO ENSURE DECODING FROM GRAMMAR IS WORKING, DECODE FROM ENCODED STREAM
     // edit digrams, then try existing rules, or nonterminal checks
     //when large nonterminal found do a side check of the next however many symbols?
     //todo to check approx repeats with existing would have to find a specific use of a rule in the encoding

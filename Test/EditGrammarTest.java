@@ -1,6 +1,5 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -111,6 +110,15 @@ public class EditGrammarTest {
     public void DecompressApproxRepeat(){
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
+        c.processInput(compress);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+
+    @Test
+    public void DecompressApproxRepeatLargeIndex(){
+        Compress c = new Compress();
+        String compress = "ttctctgcctcacacatatcattctctgactcac";
         c.processInput(compress);
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }

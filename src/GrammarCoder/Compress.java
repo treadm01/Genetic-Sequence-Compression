@@ -15,6 +15,14 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
+    //TODO BUGS CROPPING UP - UNDER DECOMPRESS DOUBLE DIGIT TEST, EDITS BEING WIPED OUT?
+    //edits lost when using existing rule, edits now added there too, however it indicates that
+    // the index could potentially be wrong when a rule uses the same subrule numerous times...
+    //todo index for second 54 should be 21, index must be maintained not worked out at the end
+    // would that be possible???
+    //TODO ALSO SYMBOL 2 BEING GIVEN AS AN EDIT IN REPEAT LARGE INDEX TEST
+    // STILL TRYING TO FIND AN EXAMPLE OF A DOUBLE DIGIT INDEX....
+
     // TODO ENSURE DECODING FROM GRAMMAR IS WORKING, DECODE FROM ENCODED STREAM
     // edit digrams, then try existing rules, or nonterminal checks
     //when large nonterminal found do a side check of the next however many symbols?
@@ -66,6 +74,7 @@ public class Compress {
             Terminal nextTerminal = new Terminal(input.charAt(i));
             checkApproxRepeat(nextTerminal);
             // add next symbol from input to the first rule
+            System.out.println(getFirstRule().getRuleString());
             getFirstRule().addNextSymbol(nextTerminal);
             checkDigram(getFirstRule().getLast());
         }
@@ -122,12 +131,13 @@ public class Compress {
         Symbol currentLast = getFirstRule().getLast();
 
         if (lastNonTerminal != null && lastNonTerminal.getRight() instanceof Terminal) { // nonterminal has been added
+            Symbol nextLeft = lastNonTerminal.getRight();
+            //todo need to account for reverse complement again
+            Symbol nextRight = getNextTerminal(nextLeft.getRight(), false);
             // if the last nonterminal is actually the last one (might not be needed later with existing rule incorporated)
-            if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()) {
+            if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()
+                    ) {
                 //get the following terminal digram
-                Symbol nextLeft = lastNonTerminal.getRight();
-                //todo need to account for reverse complement again
-                Symbol nextRight = getNextTerminal(nextLeft.getRight(), false);
 
                 //if next right matches then that SHOULD be it...
                 // as if the last terminal had matched it would have been added
@@ -282,7 +292,7 @@ public class Compress {
 
 //        System.out.println("symbol " + symbol.getLeft() + symbol.getLeft().isEdited);
 //        System.out.println("symbol " + symbol + symbol.isEdited);
-        // todo needs to work for either left or right
+
         if (symbol.isEdited) {
             newTerminal.setIsEdit(symbol.edits);
             //newTerminal.editSymbols.add(oldSymbol);
@@ -344,6 +354,34 @@ public class Compress {
         //todo is it possible for a value... no, if complement is looked for the noncomplement is returned
         if (!symbol.equals(oldSymbol)) {
             nonTerminal.isComplement = true; //true or alternate value, would have to alternate the nonterminal???
+        }
+
+
+        //todo make sep method
+        if (symbol.isEdited) {
+            nonTerminal.setIsEdit(symbol.edits);
+            //newTerminal.editSymbols.add(oldSymbol);
+            if (symbol instanceof Terminal) {
+                nonTerminal.editSymbols.add(oldSymbol);
+            }
+            else {
+                for (Symbol s : symbol.editSymbols) {
+                    nonTerminal.editSymbols.add(s);
+                }
+            }
+        }
+
+        if (symbol.getLeft().isEdited) {
+            //System.out.println("symbol " + symbol.getLeft());
+            nonTerminal.setIsEdit(symbol.getLeft().edits);
+            if (symbol.getLeft() instanceof Terminal) {
+                nonTerminal.editSymbols.add(oldSymbol.getLeft());
+            }
+            else {
+                for (Symbol s : symbol.getLeft().editSymbols) {
+                    nonTerminal.editSymbols.add(s);
+                }
+            }
         }
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule

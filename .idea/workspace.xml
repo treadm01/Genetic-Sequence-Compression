@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="using first terminals of a nonterminal to check for approx repeats as well">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="sorted index position again, probably still need to check double digit indexes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/EditGrammarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/EditGrammarTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,14 +30,14 @@
         <counts>
           <entry key="abc" value="305" />
           <entry key="book" value="2" />
-          <entry key="java" value="67100" />
-          <entry key="txt" value="1654" />
+          <entry key="java" value="68541" />
+          <entry key="txt" value="1740" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="67100" />
-          <entry key="PLAIN_TEXT" value="1961" />
+          <entry key="JAVA" value="68541" />
+          <entry key="PLAIN_TEXT" value="2047" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -69,11 +68,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="17" column="79" selection-start-line="17" selection-start-column="79" selection-end-line="17" selection-end-column="79" />
+            <state relative-caret-position="72">
+              <caret line="19" column="95" selection-start-line="19" selection-start-column="95" selection-end-line="19" selection-end-column="95" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#27018#27019#0" expanded="true" />
@@ -157,17 +156,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="72" column="17" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
+            <state relative-caret-position="111">
+              <caret line="52" column="103" selection-start-line="52" selection-start-column="103" selection-end-line="52" selection-end-column="103" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="120" column="22" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+            <state relative-caret-position="72">
+              <caret line="121" column="8" selection-start-line="121" selection-start-column="8" selection-end-line="122" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -206,7 +205,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>replacerule</find>
       <find>removedigramsfrom</find>
       <find>addsy</find>
       <find>[388, 452, 578]</find>
@@ -229,13 +227,14 @@
       <find>lastNonTer</find>
       <find>10</find>
       <find>existingr</find>
-      <find>creater</find>
       <find>*</find>
-      <find>existin</find>
       <find>reverse</find>
       <find>getnex</find>
       <find>abcdbcabcd</find>
       <find>getlas</find>
+      <find>creater</find>
+      <find>existin</find>
+      <find>justre</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -301,10 +300,10 @@
         <option value="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" />
         <option value="$PROJECT_DIR$/Test/CompressTest.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Rule.java" />
-        <option value="$PROJECT_DIR$/Test/EditGrammarTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" />
+        <option value="$PROJECT_DIR$/Test/EditGrammarTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
       </list>
     </option>
   </component>
@@ -407,7 +406,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.EditGrammarTest">
+  <component name="RunManager" selected="JUnit.EditGrammarTest.DecompressDoubleDigitIndex">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -429,17 +428,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EditGrammarTest.DecompressApproxRepeat" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EditGrammarTest" />
-      <option name="METHOD_NAME" value="DecompressApproxRepeat" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
@@ -451,11 +439,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EditGrammarTest.EditGrammarTestJustRepeats" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="EditGrammarTest" />
-      <option name="METHOD_NAME" value="EditGrammarTestJustRepeats" />
+      <option name="METHOD_NAME" value="DecompressDoubleDigitIndex" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EditGrammarTest.humprtbDE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EditGrammarTest" />
+      <option name="METHOD_NAME" value="humprtbDE" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -488,19 +487,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.EditGrammarTest.longerString" />
-      <item itemvalue="JUnit.EditGrammarTest.EditGrammarTestJustRepeats" />
-      <item itemvalue="JUnit.EditGrammarTest.DecompressApproxRepeat" />
       <item itemvalue="JUnit.EditGrammarTest.DecompressApproxRepeatLargeIndex" />
       <item itemvalue="JUnit.EditGrammarTest" />
+      <item itemvalue="JUnit.EditGrammarTest.humprtbDE" />
+      <item itemvalue="JUnit.EditGrammarTest.longerString" />
+      <item itemvalue="JUnit.EditGrammarTest.DecompressDoubleDigitIndex" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.EditGrammarTest" />
+        <item itemvalue="JUnit.EditGrammarTest.DecompressDoubleDigitIndex" />
         <item itemvalue="JUnit.EditGrammarTest.DecompressApproxRepeatLargeIndex" />
-        <item itemvalue="JUnit.EditGrammarTest.DecompressApproxRepeat" />
-        <item itemvalue="JUnit.EditGrammarTest.EditGrammarTestJustRepeats" />
         <item itemvalue="JUnit.EditGrammarTest.longerString" />
+        <item itemvalue="JUnit.EditGrammarTest.humprtbDE" />
+        <item itemvalue="JUnit.EditGrammarTest" />
       </list>
     </recent_temporary>
   </component>
@@ -692,14 +691,7 @@
       <workItem from="1533717369897" duration="35027000" />
       <workItem from="1533804977960" duration="34374000" />
       <workItem from="1533892150437" duration="43465000" />
-      <workItem from="1533984375580" duration="65308000" />
-    </task>
-    <task id="LOCAL-00193" summary="encoding difference between certain rule values provides a bit more space saving">
-      <created>1532080009648</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1532080009650</updated>
+      <workItem from="1533984375580" duration="67510000" />
     </task>
     <task id="LOCAL-00194" summary="trying to add checks for reverse complements">
       <created>1532083104416</created>
@@ -1037,43 +1029,50 @@
       <option name="project" value="LOCAL" />
       <updated>1534088410666</updated>
     </task>
-    <option name="localTasksCounter" value="242" />
+    <task id="LOCAL-00242" summary="sorted index position again, probably still need to check double digit indexes">
+      <created>1534091568137</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1534091568137</updated>
+    </task>
+    <option name="localTasksCounter" value="243" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="EditGrammarTest_DecompressApproxRepeat - 2018.08.12 at 17h 16m 42s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeat" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 45m 45s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeat - 2018.08.12 at 17h 17m 34s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeat" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 46m 13s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 18m 18s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 46m 39s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 23m 27s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 47m 17s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 24m 12s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 47m 27s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 25m 42s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 48m 11s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 26m 36s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 48m 32s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 27m 49s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 51m 38s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 28m 34s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 53m 59s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_DecompressApproxRepeatLargeIndex - 2018.08.12 at 17h 30m 25s.xml">
-      <configuration name="EditGrammarTest.DecompressApproxRepeatLargeIndex" configurationId="JUnit" />
+    <history-entry file="EditGrammarTest_DecompressDoubleDigitIndex - 2018.08.12 at 17h 59m 23s.xml">
+      <configuration name="EditGrammarTest.DecompressDoubleDigitIndex" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1448827000" />
+    <option name="totallyTimeSpent" value="1451029000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1121,7 +1120,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="dividing initial inputvalue by 2 gives a better evaluation of the number..." />
     <MESSAGE value="removing round and float casting passes a few more tests...." />
     <MESSAGE value="problem seems to be in dealing with binary code longer than the precision" />
     <MESSAGE value="not much progress with rescaling arithmetic coder, moved code into separate packages" />
@@ -1146,7 +1144,8 @@
     <MESSAGE value="trying to implement still" />
     <MESSAGE value="should have been assigning oldsymbols as links" />
     <MESSAGE value="using first terminals of a nonterminal to check for approx repeats as well" />
-    <option name="LAST_COMMIT_MESSAGE" value="using first terminals of a nonterminal to check for approx repeats as well" />
+    <MESSAGE value="sorted index position again, probably still need to check double digit indexes" />
+    <option name="LAST_COMMIT_MESSAGE" value="sorted index position again, probably still need to check double digit indexes" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/longTest.txt" />
@@ -1441,18 +1440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="17" column="79" selection-start-line="17" selection-start-column="79" selection-end-line="17" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#27018#27019#0" expanded="true" />
-            <element signature="e#27055#27056#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="93">
@@ -1462,17 +1449,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="72" column="17" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
+        <state relative-caret-position="111">
+          <caret line="52" column="103" selection-start-line="52" selection-start-column="103" selection-end-line="52" selection-end-column="103" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="120" column="22" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+        <state relative-caret-position="72">
+          <caret line="121" column="8" selection-start-line="121" selection-start-column="8" selection-end-line="122" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="19" column="95" selection-start-line="19" selection-start-column="95" selection-end-line="19" selection-end-column="95" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#27018#27019#0" expanded="true" />
+            <element signature="e#27055#27056#0" expanded="true" />
           </folding>
         </state>
       </provider>

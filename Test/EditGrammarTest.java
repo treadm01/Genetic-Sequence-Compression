@@ -114,11 +114,23 @@ public class EditGrammarTest {
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
+    //todo worth considering , doesn't register as approx repeat...
+    // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaa
+    @Test
+    public void DecompressDoubleDigitIndex() {
+        Compress c = new Compress();
+        //todo index for second 54 should be 21, index must be maintained not worked out at the end
+        // would that be possible???
+        String compress = "ttctctgcctcacttctctgcctcacttctctgcctcacttctctgactcac"; //TODO EDITS BEING ADDED THEN LOST...
+        c.processInput(compress);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
 
     @Test
-    public void DecompressApproxRepeatLargeIndex(){
+    public void DecompressApproxRepeatLargeIndex(){ // TODO NOT SURE WHAT IS HAPPENING HERE... EDIT GIVEN AS A 2 NONTERMINAL... REVERSE COMPLEMENT? TYPE NOT SPECIFIC ENOUGH??
         Compress c = new Compress();
-        String compress = "ttctctgcctcacacatatcattctctgactcac";
+        String compress = "ttctctttttttttttttttttttttttttttttttttttttcttttttttttttttatttttttttttatttttttttattgcctcaccctctcttcttttcttcttcacataaccacccctcattacatacatgaacatccccacac";
         c.processInput(compress);
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -140,13 +152,6 @@ public class EditGrammarTest {
     public void EditGrammarTestJustRepeatsSecondEdit() {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgcatcac";
-        c.processInput(compress);
-    }
-
-    @Test
-    public void ats() {
-        Compress c = new Compress();
-        String compress = "";
         c.processInput(compress);
     }
 

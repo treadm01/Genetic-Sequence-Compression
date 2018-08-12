@@ -49,6 +49,8 @@ public class NonTerminal extends Symbol {
         return s;
     }
 
+    // might not be able to do direct link to symbol, when a rule contains two instances of same rule,
+    // which one will you find???? - todo will have to add on the offset of rules, keep the exact index
     public int getEditIndex(Rule rule, Boolean complement, Symbol editSymbol, int editIndex) {
         Symbol s;
 
@@ -92,9 +94,6 @@ public class NonTerminal extends Symbol {
                     }
             }
         }
-
-        System.out.println(s);
-        System.out.println("edit " + editIndex);
         return editIndex;
     }
 

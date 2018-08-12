@@ -119,9 +119,7 @@ public class EditGrammarTest {
     @Test
     public void DecompressDoubleDigitIndex() {
         Compress c = new Compress();
-        //todo index for second 54 should be 21, index must be maintained not worked out at the end
-        // would that be possible???
-        String compress = "ttctctgcctcacttctctgcctcacttctctgcctcacttctctgactcac"; //TODO EDITS BEING ADDED THEN LOST...
+        String compress = "ttctctgcctcacttctctgcctcacttctctgcctcacttctctgactcac";
         c.processInput(compress);
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -169,19 +167,21 @@ public class EditGrammarTest {
         InputOutput io  = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
+        //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     //humhdab - symbols getting lost?
     //humghcs
     //humhbb
-    //mtpacga - apparent improvement
-    //vaccg - apparent improvement
+    //mtpacga - apparent improvement - 21594 - chunk of seqence not returned
+    //vaccg - apparent improvement 58103 - not matching but only 2 symbols less.....
     @Test
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
         String originalFile = io.readFile("humhdab");
         c.processInput(originalFile);
+        //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test

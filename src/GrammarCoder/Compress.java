@@ -15,11 +15,7 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
-    //TODO BUGS CROPPING UP - UNDER DECOMPRESS DOUBLE DIGIT TEST, EDITS BEING WIPED OUT?
-    //edits lost when using existing rule, edits now added there too, however it indicates that
-    // the index could potentially be wrong when a rule uses the same subrule numerous times...
-    //todo index for second 54 should be 21, index must be maintained not worked out at the end
-    // would that be possible???
+    //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
     //TODO ALSO SYMBOL 2 BEING GIVEN AS AN EDIT IN REPEAT LARGE INDEX TEST
     // STILL TRYING TO FIND AN EXAMPLE OF A DOUBLE DIGIT INDEX....
 
@@ -72,9 +68,10 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             Terminal nextTerminal = new Terminal(input.charAt(i));
+            nextTerminal.symbolIndex = i;
             checkApproxRepeat(nextTerminal);
             // add next symbol from input to the first rule
-            System.out.println(getFirstRule().getRuleString());
+            //System.out.println(getFirstRule().getRuleString());
             getFirstRule().addNextSymbol(nextTerminal);
             checkDigram(getFirstRule().getLast());
         }
@@ -157,7 +154,7 @@ public class Compress {
                 editSymbol.getRight().assignLeft(newSymbol); // the one being edited
                 editSymbol.getLeft().assignRight(newSymbol);
                 //todo this bit not relevan as always last... but the edit will be in a different place...
-                newSymbol.setIsEdit(String.valueOf(editSymbol.toString().charAt(0)));
+                newSymbol.setIsEdit(editSymbol.symbolIndex + String.valueOf(editSymbol.toString().charAt(0)));
                 checkDigram(newSymbol);
         }
     }
@@ -169,28 +166,6 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram(Symbol symbol) {
-
-        // if a last symbol was a new rule then the last terminals added will match
-//        // edit the current symbol to continue match... but this will continue for ever
-//        if (lastNonTerminal != null) {
-//                if (symbol.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()) {
-//                    // if the following symbols do not match then edit current one
-//                    if (symbol instanceof Terminal
-//                            && lastNonTerminal.getRight() instanceof Terminal) {
-//                        if (symbol.getRepresentation() != lastNonTerminal.getRight().getRepresentation()) {
-//                            Symbol newSymbol = new Terminal(lastNonTerminal.getRight().toString().charAt(0));
-//                            newSymbol.assignRight(symbol.getRight()); // the new one
-//                            newSymbol.assignLeft(symbol.getLeft());
-//                            symbol.getRight().assignLeft(newSymbol); // the one being edited
-//                            symbol.getLeft().assignRight(newSymbol);
-//                            //todo this bit not relevan as always last... but the edit will be in a different place...
-//                            newSymbol.setIsEdit(String.valueOf(symbol.toString().charAt(0)));
-//                            symbol = newSymbol;
-//                        }
-//                    }
-//                }
-//            }
-
             // check existing digrams for last digram, update them with new rule
             if (digramMap.containsKey(symbol)) {
                 Symbol existingDigram = getOriginalDigram(symbol); // retrieves existing digram, if complement returns original
@@ -288,7 +263,6 @@ public class Compress {
         if (!symbol.equals(oldSymbol)) {
             newTerminal.isComplement = true;
         }
-
 
 //        System.out.println("symbol " + symbol.getLeft() + symbol.getLeft().isEdited);
 //        System.out.println("symbol " + symbol + symbol.isEdited);
@@ -519,19 +493,10 @@ public class Compress {
                         complementIndicator = "?"; // complement
                     }
 
-
                     String isEdit = "";
-
                     if (nt.isEdited) {
-                        String editIndexes = "";
-                        int count = 0;
-                        for (Symbol sym : nt.editSymbols) {
-                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, sym, 0);
-                            editIndexes += String.valueOf(nt.edits.charAt(count));
-                        }
-                        isEdit += "*" + editIndexes;
+                        isEdit += "*" + nt.edits;
                     }
-
 
                     int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
                     output += complementIndicator + index + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
@@ -540,15 +505,8 @@ public class Compress {
                 else {
 
                     String isEdit = "";
-
                     if (nt.isEdited) {
-                        String editIndexes = "";
-                        int count = 0;
-                        for (Symbol sym : nt.editSymbols) {
-                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, symbol, 0);
-                            editIndexes += String.valueOf(nt.edits.charAt(count));
-                        }
-                        isEdit += "*" + editIndexes;
+                        isEdit += "*" + nt.edits;
                     }
 
                     String complementIndicator; // non complement

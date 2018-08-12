@@ -11,6 +11,7 @@ public class Symbol {
     String edits = "";
     public Symbol complement;
     Integer index;
+    int symbolIndex; // to keep location of actual symbol for edit
     List<Symbol> editSymbols; // todo will require a list for multiple edits?
 
     public void setIsEdit(String edits) {

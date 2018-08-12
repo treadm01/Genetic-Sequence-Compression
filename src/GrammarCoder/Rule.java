@@ -15,7 +15,7 @@ public class Rule extends Symbol implements Comparable {
     String symbolRule; // length of uncompressed rule
 
     public Rule() {
-        index = 0;
+        index = 0; // todo not sure this is used anymore
         this.representation = ruleNumber;
         ruleNumber += 2;
         guard = new Guard(this);
@@ -120,7 +120,7 @@ public class Rule extends Symbol implements Comparable {
                     System.out.println(currentLength);
                     System.out.println(((NonTerminal) s).editIndexes);
                     System.out.println(output);
-                    String editString = ((NonTerminal) s).editIndexes;
+                    String editString = ((NonTerminal) s).edits;
                     int i = 0;
                     String index = "";
                     while (i < editString.length()) {
@@ -130,7 +130,7 @@ public class Rule extends Symbol implements Comparable {
                         else {
                             System.out.println(index);
                             System.out.println(String.valueOf(editString.charAt(i)));
-                            int intIndex = Integer.parseInt(index) + currentLength;
+                            int intIndex = Integer.parseInt(index); //+ currentLength;
                             System.out.println(intIndex);
                             output.replace(intIndex, intIndex + 1, String.valueOf(editString.charAt(i)));
                             index = "";

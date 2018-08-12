@@ -15,9 +15,15 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
+    // edit digrams, then try existing rules, or nonterminal checks
+    //when large nonterminal found do a side check of the next however many symbols?
+    //todo to check approx repeats with existing would have to find a specific use of a rule in the encoding
+    // break out of the main loop and check for possible matches
+    //todo problem is probably having to indicate each time which edit it is in the
+    //encoding sent, rather than refering back to just one...seems to be used only once so maybe not
+    // problem is probably not finding approx repeats well
     //TODO WHAT HAPPENS WHEN A EDIT RULE IS REMOVED?
     // WHAT IF MATCHES IN A SUBRULE?...
-    // todo store multiple edits
     // work with 'second' symbol of a digram
     //todo work with existing rules
     // try insert or delete, reverser matches, symbols before a rule... length of the nonterminal
@@ -58,7 +64,6 @@ public class Compress {
             //System.out.println(i + " of " + input.length());
             Terminal nextTerminal = new Terminal(input.charAt(i));
             checkApproxRepeat(nextTerminal);
-            //checkApproxRepeat(nextTerminal);
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextTerminal);
             checkDigram(getFirstRule().getLast());
@@ -78,51 +83,63 @@ public class Compress {
         digramMap.putIfAbsent(symbol, symbol);
     }
 
+    public Symbol getNextTerminal(Symbol currentSymbol, Boolean isComplement) {
+        //todo is guard an ok check, does this really always get the next terminal
+        while (!(currentSymbol instanceof Terminal) && !currentSymbol.isGuard()) {
+            if (currentSymbol instanceof Terminal) {
+                System.out.println(currentSymbol);
+                if (isComplement) {
+                    currentSymbol = currentSymbol.getLeft();
+                }
+                else {
+                    currentSymbol = currentSymbol.getRight();
+                }
+            }
+            else {
+                if (isComplement) {
+                    currentSymbol = getNextTerminal(((NonTerminal) currentSymbol).getRule().getLast(),
+                            currentSymbol.isComplement);
+                } else {
+                    currentSymbol = getNextTerminal(((NonTerminal) currentSymbol).getRule().getGuard().getRight(),
+                            currentSymbol.isComplement);
+                }
+            }
+        }
+        if (currentSymbol instanceof Terminal && isComplement) {
+            Symbol complementSymbol = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0)));
+            complementSymbol.assignRight(currentSymbol.getRight());
+            complementSymbol.assignLeft(currentSymbol.getLeft());
+            currentSymbol = complementSymbol;
+        }
+        return currentSymbol;
+    }
 
-    //todo not sure this would be recording all edits, no doesn't look like it is
-    // what happens when two lots 20 20* 20 20* is edit stored?
     public void checkApproxRepeat(Terminal symbol) {
         int editCount = 0;
         Symbol editSymbol = null;
         Symbol lastEdit = null;
         Symbol currentLast = getFirstRule().getLast();
-        // if the last ... might not work, if symbol has been converted to a nonterminal...
-        // if the last two back is the one to check might have an approximate repeat nonterminal
-        // if the following are both equal, carry on, if slightly different try edit
-        // this is just checking a digram from the last nonterminal
-        if (lastNonTerminal != null) {
-                if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()) {
-                    //todo just for terminals? edit nonterminals could be more than approx repeat
-                    if (lastNonTerminal.getRight().getRight() instanceof Terminal
-                            && lastNonTerminal.getRight() instanceof Terminal) {
-                        // if the second of the digram does not equal second following nonterminal
-                        if (symbol.getRepresentation() != lastNonTerminal.getRight().getRight().getRepresentation()) {
-                            editCount++;
-                        editSymbol = symbol; //todo not sure how this will work
-                        lastEdit = lastNonTerminal.getRight().getRight();
-                        }
-                        if (currentLast.getRepresentation() != lastNonTerminal.getRight().getRepresentation()) {
-                            editCount++;
-                            editSymbol = currentLast;
-                            lastEdit = lastNonTerminal.getRight();
-                        }
-                    }
+
+        if (lastNonTerminal != null && lastNonTerminal.getRight() instanceof Terminal) { // nonterminal has been added
+            // if the last nonterminal is actually the last one (might not be needed later with existing rule incorporated)
+            if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()) {
+                //get the following terminal digram
+                Symbol nextLeft = lastNonTerminal.getRight();
+                //todo need to account for reverse complement again
+                Symbol nextRight = getNextTerminal(nextLeft.getRight(), false);
+
+                //if next right matches then that SHOULD be it...
+                // as if the last terminal had matched it would have been added
+                if (nextRight.getRepresentation() == symbol.getRepresentation()
+                        && currentLast.getRepresentation() != nextLeft.getRepresentation()) {
+                    editCount++;
+                    editSymbol = currentLast; // the one to be edited
+                    lastEdit = nextLeft; // the one it is changed to
                 }
             }
+        }
 
-
-        //TODO JUST DO BY EACH SYMBOL??? WOULD END UP EDITING EVERYTHING I THINK. YOU NEED TO CHECK TO THE NEW RULES LAST SYMBOL
-        // if only one following symbol is different change that symbol... and check digrams
-        // indicate symbol and send it through?
-        // WOULD ONLY WANT TO DO AT THE TERMINAL LEVEL?
-        //TODO NEED TO DO LIKE REVERSE COMPLEMENTS 12 IS A RULE FOR CC 12' IS FOR AC
-        //TODO SO IF AC IS SEEN THAT IS USED BUT UNDERLYING IT IS 12 CC
-        // BUT THEN WHEN ARE RULES CREATED?? AND WOULD THERE BE ANY BEENFIT TO THIS?
-        // ???? NOT SURE
-        // todo i think it has to bubble up... to get any benefit...
-        // problem is that you miss a digram check 10 c
         if (editCount == 1) {
-            if (editSymbol.equals(currentLast)) {
                 Symbol newSymbol = new Terminal(lastEdit.toString().charAt(0));
                 newSymbol.assignRight(editSymbol.getRight()); // the new one
                 newSymbol.assignLeft(editSymbol.getLeft());
@@ -131,15 +148,7 @@ public class Compress {
                 //todo this bit not relevan as always last... but the edit will be in a different place...
                 newSymbol.setIsEdit(String.valueOf(editSymbol.toString().charAt(0)));
                 checkDigram(newSymbol);
-            }
-            // if the one needing an edit is the last, edit it and return to go normal route
-//            else if (editSymbol == symbol) {
-//                System.out.println("hello");
-//                symbol = (Terminal) newSymbol;
-//            }
-            //      but what if the edited one is the symbol being checked???
         }
-        //return symbol; // which should be new symbol if edited
     }
     /**
      * method that checks through the main options of latest two symbols
@@ -269,14 +278,34 @@ public class Compress {
             newTerminal.isComplement = true;
         }
 
+
+//        System.out.println("symbol " + symbol.getLeft() + symbol.getLeft().isEdited);
+//        System.out.println("symbol " + symbol + symbol.isEdited);
         // todo needs to work for either left or right
         if (symbol.isEdited) {
             newTerminal.setIsEdit(symbol.edits);
-            newTerminal.editSymbols.add(oldSymbol);
+            //newTerminal.editSymbols.add(oldSymbol);
+            if (symbol instanceof Terminal) {
+                newTerminal.editSymbols.add(oldSymbol);
+            }
+            else {
+                for (Symbol s : symbol.editSymbols) {
+                    newTerminal.editSymbols.add(s);
+                }
+            }
         }
-        else if (symbol.getLeft().isEdited) {
+
+        if (symbol.getLeft().isEdited) {
+            //System.out.println("symbol " + symbol.getLeft());
             newTerminal.setIsEdit(symbol.getLeft().edits);
-            newTerminal.editSymbols.add(oldSymbol.getLeft());
+            if (symbol.getLeft() instanceof Terminal) {
+                newTerminal.editSymbols.add(oldSymbol.getLeft());
+            }
+            else {
+                for (Symbol s : symbol.getLeft().editSymbols) {
+                    newTerminal.editSymbols.add(s);
+                }
+            }
         }
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
@@ -458,7 +487,7 @@ public class Compress {
                         String editIndexes = "";
                         int count = 0;
                         for (Symbol sym : nt.editSymbols) {
-                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, sym);
+                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, sym, 0);
                             editIndexes += String.valueOf(nt.edits.charAt(count));
                         }
                         isEdit += "*" + editIndexes;
@@ -477,7 +506,7 @@ public class Compress {
                         String editIndexes = "";
                         int count = 0;
                         for (Symbol sym : nt.editSymbols) {
-                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, symbol);
+                            editIndexes += nt.getEditIndex(nt.getRule(), nt.isComplement, symbol, 0);
                             editIndexes += String.valueOf(nt.edits.charAt(count));
                         }
                         isEdit += "*" + editIndexes;

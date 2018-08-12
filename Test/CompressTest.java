@@ -341,4 +341,12 @@ public class CompressTest {
                 .count();
         System.out.println(nrChars);
     }
+
+    @Test
+    public void getNextTerminal() {
+        c = new Compress();
+        c.processInput("abcdbcabcd");
+        System.out.println(c.printRules());
+        System.out.println(c.getNextTerminal(c.getFirstRule().getGuard().getRight().getRight().getRight(), false));
+    }
 }

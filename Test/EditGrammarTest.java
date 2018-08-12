@@ -1,7 +1,10 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
 
 
 public class EditGrammarTest {
@@ -60,15 +63,40 @@ public class EditGrammarTest {
         c.processInput(compress);
     }
 
-    //tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa
-    //tggctcacgcctgtaatcccagcactttggg
     @Test
-    //todo example of multiple edits not being recorded
-    public void EditGrammarReverseComplementTestTwo() {
+    // indexes corrected
+    public void EditGrammarCheckIndexes() {
         Compress c = new Compress();
         String compress = "tggctcacgcctgtaatcccagcac";
         c.processInput(compress);
     }
+
+
+    @Test
+    //todo example of multiple edits not being recorded
+    public void multipleEdits() {
+        Compress c = new Compress();
+        String compress = "gctcacgcctgtaatcccagcact"; //todo the a is being set as edited... c set to t, a should just be a....
+        c.processInput(compress);
+        assertEquals(" 2 t 4 c 2 6 12 c c 6' 12*2c0c", c.getFirstRule().getRuleString());
+    }
+
+    @Test
+    public void multipleEditsTwo() {
+        Compress c = new Compress();
+        String compress = "tggctcacgcctgtaatcccagcactttggg";
+        c.processInput(compress);
+        assertEquals(" 2 4 t 2' c 4 6 12 16 6' 12*2c0c 14' 16' g", c.getFirstRule().getRuleString());
+    }
+
+    @Test
+    public void multipleEditsLong() {
+        Compress c = new Compress();
+        String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
+        c.processInput(compress);
+    }
+
+
 
     // edit the string ? edit the grammar??? have to find the approx match first
     @Test
@@ -76,6 +104,15 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
+        assertEquals(" 20 20*7a", c.getFirstRule().getRuleString());
+    }
+
+    @Test
+    public void DecompressApproxRepeat(){
+        Compress c = new Compress();
+        String compress = "ttctctgcctcacttctctgactcac";
+        c.processInput(compress);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
@@ -121,10 +158,11 @@ public class EditGrammarTest {
         c.processInput(originalFile);
     }
 
-    //humhdab
+    //humhdab - symbols getting lost?
     //humghcs
     //humhbb
-    //mtpacga
+    //mtpacga - apparent improvement
+    //vaccg - apparent improvement
     @Test
     public void longerString() {
         Compress c = new Compress();

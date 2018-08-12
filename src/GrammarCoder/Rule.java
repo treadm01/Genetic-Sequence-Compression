@@ -74,6 +74,7 @@ public class Rule extends Symbol implements Comparable {
         while (!first.isGuard()) {
             symbols += " " + first.toString();
             first = first.getRight();
+            //System.out.println(symbols);
         }
         return symbols;
     }
@@ -118,7 +119,6 @@ public class Rule extends Symbol implements Comparable {
                 //TODO add the edited one to the list and get that way rather than string indexes?
                 if (s.isEdited) {
                     System.out.println(currentLength);
-                    System.out.println(((NonTerminal) s).editIndexes);
                     System.out.println(output);
                     String editString = ((NonTerminal) s).edits;
                     int i = 0;

@@ -16,10 +16,7 @@ public class Compress {
     NonTerminal lastNonTerminal;
 
     //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
-    //TODO ALSO SYMBOL 2 BEING GIVEN AS AN EDIT IN REPEAT LARGE INDEX TEST
-    // STILL TRYING TO FIND AN EXAMPLE OF A DOUBLE DIGIT INDEX....
-
-    // TODO ENSURE DECODING FROM GRAMMAR IS WORKING, DECODE FROM ENCODED STREAM
+    // TODO ENSURE DECODING FROM GRAMMAR IS WORKING, DECODE FROM ENCODED STREAM also
     // edit digrams, then try existing rules, or nonterminal checks
     //when large nonterminal found do a side check of the next however many symbols?
     //todo to check approx repeats with existing would have to find a specific use of a rule in the encoding
@@ -68,10 +65,9 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
             Terminal nextTerminal = new Terminal(input.charAt(i));
-            nextTerminal.symbolIndex = i;
+            nextTerminal.symbolIndex = i; // keeping index for edits
             checkApproxRepeat(nextTerminal);
             // add next symbol from input to the first rule
-            //System.out.println(getFirstRule().getRuleString());
             getFirstRule().addNextSymbol(nextTerminal);
             checkDigram(getFirstRule().getLast());
         }
@@ -94,7 +90,6 @@ public class Compress {
         //todo is guard an ok check, does this really always get the next terminal
         while (!(currentSymbol instanceof Terminal) && !currentSymbol.isGuard()) {
             if (currentSymbol instanceof Terminal) {
-                System.out.println(currentSymbol);
                 if (isComplement) {
                     currentSymbol = currentSymbol.getLeft();
                 }
@@ -114,6 +109,7 @@ public class Compress {
         }
         if (currentSymbol instanceof Terminal && isComplement) {
             Symbol complementSymbol = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0)));
+            //todo ordering of links ok here for complement?
             complementSymbol.assignRight(currentSymbol.getRight());
             complementSymbol.assignLeft(currentSymbol.getLeft());
             currentSymbol = complementSymbol;
@@ -133,7 +129,8 @@ public class Compress {
             Symbol nextRight = getNextTerminal(nextLeft.getRight(), false);
             // if the last nonterminal is actually the last one (might not be needed later with existing rule incorporated)
             if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()
-                    ) {
+                    && currentLast.getLeft().isComplement == lastNonTerminal.isComplement
+                    && !currentLast.getLeft().equals(lastNonTerminal.getRight().getRight())) {
                 //get the following terminal digram
 
                 //if next right matches then that SHOULD be it...
@@ -168,7 +165,8 @@ public class Compress {
     public void checkDigram(Symbol symbol) {
             // check existing digrams for last digram, update them with new rule
             if (digramMap.containsKey(symbol)) {
-                Symbol existingDigram = getOriginalDigram(symbol); // retrieves existing digram, if complement returns original
+                // retrieve existing digram, if complement return original
+                Symbol existingDigram = getOriginalDigram(symbol);
                 // if the matching digram is an overlap do nothing
                 if (existingDigram.getRight() != symbol) { // todo find a better way to place this
                     // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
@@ -303,7 +301,6 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
-
         // set the last terminal to check next symbols for approx repeat to
         lastNonTerminal = oldTerminal;
         // done by digram so only really need to check two
@@ -377,8 +374,8 @@ public class Compress {
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
-                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
+                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
             }
         }
     }

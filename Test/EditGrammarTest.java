@@ -1,7 +1,10 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Random;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -124,11 +127,10 @@ public class EditGrammarTest {
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
-
     @Test
-    public void DecompressApproxRepeatLargeIndex(){ // TODO NOT SURE WHAT IS HAPPENING HERE... EDIT GIVEN AS A 2 NONTERMINAL... REVERSE COMPLEMENT? TYPE NOT SPECIFIC ENOUGH??
+    public void DecompressApproxRepeatOVERLAP(){
         Compress c = new Compress();
-        String compress = "ttctctttttttttttttttttttttttttttttttttttttcttttttttttttttatttttttttttatttttttttattgcctcaccctctcttcttttcttcttcacataaccacccctcattacatacatgaacatccccacac";
+        String compress = "gcggaggccg";
         c.processInput(compress);
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -157,8 +159,27 @@ public class EditGrammarTest {
     @Test
     public void checkApproxRepeat() {
         Compress c = new Compress();
-        String compress = "ttctc";
+        String compress = "cggtcccc";
         c.processInput(compress);
+    }
+
+    // rule that has been implicitly added in an earlier reverse complement,
+    // two in a row equals the wrong link?? infinite loop //todo reordered remove rules and check digrams in replace rule... enough to fix?
+    @Test
+    public void stackOverflow() { // reverse complement issue...
+        Compress c = new Compress();
+        String compress = "cgggagtccc"; // suspect reverse complement matching
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+
+    @Test
+    public void guardCantBeNonTerminal() {
+        Compress c = new Compress();
+        String compress = "aaggaagctt";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
@@ -190,6 +211,31 @@ public class EditGrammarTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile);
+    }
+
+
+    String genRand (int length) {
+        Random rand = new Random();
+        String possibleLetters = "acgt";
+        StringBuilder sb = new StringBuilder(length);
+        for(int i = 0; i < length; i++)
+            sb.append(possibleLetters.charAt(rand.nextInt(possibleLetters.length())));
+        return sb.toString();
+    }
+
+    //cggtcccc - editing when a complement but they are not the same
+    //gtagcgtag - did have the terminal 2 error one time gcggagga , gcggaggccg
+    //ccctcagggc - stack overflow cgggagtccc
+    @Test
+    public void decompressApproxTest() {
+        Random rand = new Random();
+        for (int i = 0; i < 10000; i++) {
+            String input = genRand(rand.nextInt((10 - 1) + 1) + 1);
+            System.out.println(input);
+            Compress c = new Compress();
+            c.processInput(input);
+            Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        }
     }
 
 }

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
     //Integer index; // location of rule in main input string
-    Boolean indexFound; // have to use to break out of recursive index find
-    String editIndexes = "";
+    //Boolean indexFound; // have to use to break out of recursive index find
 
     public NonTerminal(Rule rule) {
         editSymbols = new ArrayList<>(); // init to store edits
@@ -19,8 +18,9 @@ public class NonTerminal extends Symbol {
      * elements either side of this rule
      */
     public void removeRule() {
+        //todo something bad happening when a nonterminal is in a sub rule
         right.assignLeft(rule.getLast());
-        left.assignRight(rule.getGuard().right);
+        left.assignRight(rule.getGuard().getRight());
 
         rule.getLast().assignRight(right); // set right symbol of current last symbol in rule to this symbols right
         rule.getGuard().getRight().assignLeft(left); // set first symbol in rule's left to this left
@@ -37,7 +37,7 @@ public class NonTerminal extends Symbol {
             s += "'";
         }
         if (isEdited) {
-            editIndexes = "";
+//            editIndexes = "";
 //            int count = 0;
 //            for (Symbol symbol : editSymbols) {
 //                indexFound = false;

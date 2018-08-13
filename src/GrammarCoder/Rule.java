@@ -43,6 +43,9 @@ public class Rule extends Symbol implements Comparable {
      * @param right
      */
     public void addSymbols(Symbol left, Symbol right) {
+        // set the edits to false so subrule is generic
+        left.isEdited = false;
+        right.isEdited = false;
         this.addNextSymbol(left);
         this.addNextSymbol(right);
     }

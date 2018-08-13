@@ -7,7 +7,7 @@ public class NonTerminal extends Symbol {
     //Boolean indexFound; // have to use to break out of recursive index find
 
     public NonTerminal(Rule rule) {
-        editSymbols = new ArrayList<>(); // init to store edits
+       // editSymbols = new ArrayList<>(); // init to store edits
         this.rule = rule;
         this.rule.incrementCount(); // increase use count
         representation = rule.representation; // rule has the same symbol rep as it's nonterminal...

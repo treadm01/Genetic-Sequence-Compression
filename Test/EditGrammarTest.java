@@ -202,14 +202,30 @@ public class EditGrammarTest {
 
     @Test
     public void stringIndexOutofBounds() {
-        //edits in subrules and how to index them/should they exist
-        // again the issue of where the edit is... if edit is used multiple time via subrule
-        // then index will be different, so has to be in relation to something
-        // bigger problem, maybe, think this is instance of edited rule being...
-        //nope, there are two edits required one is being stored in a subrule, the other is in main rule
-        // so subrule edit is duplicated
+        //subrules were being created with edits rather than passed on to new nonterminals
+        // now oldterminals and symbols are updated and symbols added to rules are wiped of edits
         Compress c = new Compress();
         String compress = "tcgggtctgatctgacagaa";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void digramsOfeditedRulesRemoved() {
+        //subrules were being created with edits rather than passed on to new nonterminals
+        // now oldterminals and symbols are updated and symbols added to rules are wiped of edits
+        // have to remove digram from edited rules?
+        Compress c = new Compress();
+        String compress = "cattgtgtttcacgtg";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+
+    @Test
+    public void wrongMatch() {
+        Compress c = new Compress();
+        String compress = "gtttgacttgcggaacgt";
         c.processInput(compress);
         Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -220,30 +236,34 @@ public class EditGrammarTest {
         InputOutput io  = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     //humhdab - symbols getting lost?
     //humghcs
     //humhbb
-    //mtpacga - apparent improvement - 21594 - chunk of seqence not returned
-    //vaccg - apparent improvement 58103 - not matching but only 2 symbols less..... 57640
+    //mtpacga - apparent improvement - 21594 - chunk of seqence not returned 32846
+    //chmpxx
+    //chntxx
+    //mpomtcg -
+    //vaccg - apparent improvement 58103 - not matching but only 2 symbols less..... 57640, 57631
+    //hehcmv
     @Test
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("vaccg");
+        String originalFile = io.readFile("hehcmv");
         c.processInput(originalFile);
-        //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
     public void humprtbDE() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("humprtb");
+        String originalFile = io.readFile("humprtbe");
         c.processInput(originalFile);
-        //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
 

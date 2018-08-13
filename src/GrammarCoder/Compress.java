@@ -15,7 +15,7 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
-    //todo dupelicate edits in subrules...
+    //todo duplicate edits in subrules...
     // TODO + either generate rules overflow or missing subrule/guard conversion
 
     //TODO //order of calls in replacerule... in relation to removing rules used only once, noncomplement
@@ -71,8 +71,19 @@ public class Compress {
             Terminal nextTerminal = new Terminal(input.charAt(i));
             nextTerminal.symbolIndex = i; // keeping index for edits
             checkApproxRepeat(nextTerminal);
+
+//            rules.add(getFirstRule());
+//            generateRules(getFirstRule().getGuard().getRight());
+//            System.out.println(printRules());// needed to compute length of rule at the moment
+
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextTerminal);
+//
+//            rules.add(getFirstRule());
+//            generateRules(getFirstRule().getGuard().getRight());
+//            System.out.println(printRules());// needed to compute length of rule at the moment
+
+
             checkDigram(getFirstRule().getLast());
         }
 
@@ -135,7 +146,9 @@ public class Compress {
             // if the last nonterminal is actually the last one (might not be needed later with existing rule incorporated)
             if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()
                     && currentLast.getLeft().isComplement == lastNonTerminal.isComplement
-                    && !currentLast.getLeft().equals(lastNonTerminal.getRight().getRight())) {
+                    && !currentLast.getLeft().equals(lastNonTerminal.getRight().getRight())
+            //        && !currentLast.getLeft().equals(lastNonTerminal)
+            ) {
                 //get the following terminal digram
                 //if next right matches then that SHOULD be it...
                 // as if the last terminal had matched it would have been added
@@ -156,6 +169,7 @@ public class Compress {
                 editSymbol.getLeft().assignRight(newSymbol);
                 //todo this bit not relevan as always last... but the edit will be in a different place...
                 newSymbol.setIsEdit(editSymbol.symbolIndex + String.valueOf(editSymbol.toString().charAt(0)));
+                removeDigrams(editSymbol);
                 checkDigram(newSymbol);
         }
     }
@@ -269,31 +283,20 @@ public class Compress {
 //        System.out.println("symbol " + symbol.getLeft() + symbol.getLeft().isEdited);
 //        System.out.println("symbol " + symbol + symbol.isEdited);
 
+        //todo needs to be for old terminals too, when relevant
         if (symbol.isEdited) {
             newTerminal.setIsEdit(symbol.edits);
-            //newTerminal.editSymbols.add(oldSymbol);
-            if (symbol instanceof Terminal) {
-                newTerminal.editSymbols.add(oldSymbol);
-            }
-            else {
-                for (Symbol s : symbol.editSymbols) {
-                    newTerminal.editSymbols.add(s);
-                }
-            }
+        }
+        if (symbol.getLeft().isEdited) {
+            newTerminal.setIsEdit(symbol.getLeft().edits);
+        }
+        if (oldSymbol.isEdited) {
+            oldTerminal.setIsEdit(oldSymbol.edits);
+        }
+        if (oldSymbol.getLeft().isEdited) {
+            oldTerminal.setIsEdit(oldSymbol.getLeft().edits);
         }
 
-        if (symbol.getLeft().isEdited) {
-            //System.out.println("symbol " + symbol.getLeft());
-            newTerminal.setIsEdit(symbol.getLeft().edits);
-            if (symbol.getLeft() instanceof Terminal) {
-                newTerminal.editSymbols.add(oldSymbol.getLeft());
-            }
-            else {
-                for (Symbol s : symbol.getLeft().editSymbols) {
-                    newTerminal.editSymbols.add(s);
-                }
-            }
-        }
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
         replaceDigram(newTerminal, symbol);// update rule for last instance of digram
@@ -335,28 +338,9 @@ public class Compress {
         //todo make sep method
         if (symbol.isEdited) {
             nonTerminal.setIsEdit(symbol.edits);
-            //newTerminal.editSymbols.add(oldSymbol);
-            if (symbol instanceof Terminal) {
-                nonTerminal.editSymbols.add(oldSymbol);
-            }
-            else {
-                for (Symbol s : symbol.editSymbols) {
-                    nonTerminal.editSymbols.add(s);
-                }
-            }
         }
-
         if (symbol.getLeft().isEdited) {
-            //System.out.println("symbol " + symbol.getLeft());
             nonTerminal.setIsEdit(symbol.getLeft().edits);
-            if (symbol.getLeft() instanceof Terminal) {
-                nonTerminal.editSymbols.add(oldSymbol.getLeft());
-            }
-            else {
-                for (Symbol s : symbol.getLeft().editSymbols) {
-                    nonTerminal.editSymbols.add(s);
-                }
-            }
         }
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule

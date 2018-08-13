@@ -15,7 +15,13 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
+    // TODO CHECK WHICH PREVIOUS NONTERMINAL TO MATCH TO - JUST THE FIRST THAT MATCHES? might not work if checking whole nonterminals
+    // TRY IF NEXT SYMBOL IS A NONTERMINAL START LOOPING THROUGH THE SAME NUMBER OF NEXT SYMBOLS
+    // WITH EDITS, A PERCENTAGE OF THE LENGTH.... YEH MIGHT WORK, SUB RULES SHOULD MATCH... WOULD HAVE TO EDIT
+    // TO MATCH THE ENTIRE LENGTH
     // TODO + either generate rules overflow or missing subrule/guard conversion
+    // todo disappearing subrule under wrong match test
+
     //TODO //order of calls in replacerule... in relation to removing rules used only once, noncomplement
     //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
     // TODO ENSURE DECODING FROM ENCODED STREAM works
@@ -87,12 +93,13 @@ public class Compress {
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
+        printRules();
 //       //TODO make a method just to get length... or get length better
-        System.out.println(printRules());// needed to compute length of rule at the moment
-        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-        System.out.println();
+//        System.out.println(printRules());// needed to compute length of rule at the moment
+//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+//        System.out.println();
     }
 
     public void addToDigramMap(Symbol symbol) {
@@ -330,6 +337,7 @@ public class Compress {
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule);
+        rule.nonTerminalList.add(nonTerminal); //TODO ADDING EXSITING RULE NONTERMINALS - WHAT ABOUT REMOVING THEM???????
 
         //todo is it possible for a value... no, if complement is looked for the noncomplement is returned
         if (!symbol.equals(oldSymbol)) {
@@ -350,7 +358,15 @@ public class Compress {
         // you need to be able to set from one of the instances...
         //send a list through and rather than one nonterminal, then check all in the list
 
-        lastNonTerminal = rule.nonTerminalList.get(1); //unlikely to be different as first would already have been done
+        // will be difficult to pick a better instance, without knowing what is coming
+        // can only be done once on current, todo possible to add edits to previous nonterminals?
+        //check lengths of following
+
+        //todo remember each one will be different or potentially an edit (shou;dn't matter)
+        // and each one will be different, dont have to match to the same each time
+        // if you get the checking ahead working might work ok or be able to use more efficiently
+        lastNonTerminal = rule.nonTerminalList.get(9); //unlikely to be different as first would already have been done
+
         // second might not exist
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule

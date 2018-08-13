@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
             String originalFile = io.readFile("30000");
             c.processInput(originalFile.toLowerCase());
             String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
-            System.out.println(compare);
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -31,6 +31,7 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
         }
 
@@ -45,8 +46,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
-            System.out.println(c.printRules());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 38656);
         }
 
         @Test
@@ -60,7 +62,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 50165);
         }
 
         @Test
@@ -74,7 +78,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 74259);
         }
 
         @Test
@@ -88,7 +94,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 14918);
         }
 
         @Test
@@ -102,7 +110,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 21787);
         }
 
         @Test
@@ -116,8 +126,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
-            System.out.println(c.printRules());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 26797);
         }
 
         @Test
@@ -131,9 +142,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
-            System.out.println(c.printRules());
-            System.out.println(compare);
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 57154);
         }
 
         @Test
@@ -146,8 +157,9 @@ import static org.junit.Assert.*;
             System.out.println("original " + originalFile.length());
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
-            System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 33785);
         }
 
         @Test
@@ -161,7 +173,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 58697);
         }
 
         @Test
@@ -175,7 +189,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 20670);
         }
 
         @Test
@@ -189,7 +205,9 @@ import static org.junit.Assert.*;
             System.out.println("compressed " + compare.length());
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
+            System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
             assertTrue(compare.length() < originalFile.length());
+            assertTrue(compare.length() <= 21497);
         }
 
 }

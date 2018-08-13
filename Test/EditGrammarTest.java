@@ -261,7 +261,7 @@ public class EditGrammarTest {
     public void humprtbDE() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("humprtbe");
+        String originalFile = io.readFile("humprtb");
         c.processInput(originalFile);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }

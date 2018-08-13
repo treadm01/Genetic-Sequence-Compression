@@ -1,9 +1,13 @@
 package GrammarCoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rule extends Symbol implements Comparable {
     int count;
     Guard guard;
     static Integer ruleNumber = 0;
+    List<NonTerminal> nonTerminalList = new ArrayList<>();
 
     // for decompressing
     Boolean compressed = false;

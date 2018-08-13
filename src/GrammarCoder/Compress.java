@@ -15,12 +15,10 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
-    //todo duplicate edits in subrules...
     // TODO + either generate rules overflow or missing subrule/guard conversion
-
     //TODO //order of calls in replacerule... in relation to removing rules used only once, noncomplement
     //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
-    // TODO ENSURE DECODING FROM GRAMMAR IS WORKING, DECODE FROM ENCODED STREAM also
+    // TODO ENSURE DECODING FROM ENCODED STREAM works
     // edit digrams, then try existing rules, or nonterminal checks
     //when large nonterminal found do a side check of the next however many symbols?
     //todo to check approx repeats with existing would have to find a specific use of a rule in the encoding
@@ -275,6 +273,10 @@ public class Compress {
         NonTerminal oldTerminal = new NonTerminal(newRule);
         NonTerminal newTerminal = new NonTerminal(newRule);
 
+        // add nonterminals to list, when using exsting rule check each instance for possible repeat
+        newRule.nonTerminalList.add(oldTerminal);
+        newRule.nonTerminalList.add(newTerminal);
+
         // if the symbols are not equal then one is a noncomplement and the rule is set for this
         if (!symbol.equals(oldSymbol)) {
             newTerminal.isComplement = true;
@@ -335,13 +337,21 @@ public class Compress {
         }
 
 
-        //todo make sep method
+        //todo make sep method - OLD SYMBOL NEED PULLING UP?
         if (symbol.isEdited) {
             nonTerminal.setIsEdit(symbol.edits);
         }
         if (symbol.getLeft().isEdited) {
             nonTerminal.setIsEdit(symbol.getLeft().edits);
         }
+
+        // problem is when you have an existing rule that is a complete rule
+        // there is nothing to check it to... nonterminal here is the new nonterminal
+        // you need to be able to set from one of the instances...
+        //send a list through and rather than one nonterminal, then check all in the list
+
+        lastNonTerminal = rule.nonTerminalList.get(1); //unlikely to be different as first would already have been done
+        // second might not exist
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage

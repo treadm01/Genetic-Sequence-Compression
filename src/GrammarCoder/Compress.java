@@ -15,6 +15,10 @@ public class Compress {
     String mainInput;
     NonTerminal lastNonTerminal;
 
+    //todo dupelicate edits in subrules...
+    // TODO + either generate rules overflow or missing subrule/guard conversion
+
+    //TODO //order of calls in replacerule... in relation to removing rules used only once, noncomplement
     //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
     // TODO ENSURE DECODING FROM GRAMMAR IS WORKING, DECODE FROM ENCODED STREAM also
     // edit digrams, then try existing rules, or nonterminal checks
@@ -123,7 +127,8 @@ public class Compress {
         Symbol lastEdit = null;
         Symbol currentLast = getFirstRule().getLast();
 
-        if (lastNonTerminal != null && lastNonTerminal.getRight() instanceof Terminal) { // nonterminal has been added
+        if (lastNonTerminal != null && lastNonTerminal.getRight() instanceof Terminal
+                && currentLast instanceof Terminal) { // nonterminal has been added
             Symbol nextLeft = lastNonTerminal.getRight();
             //todo need to account for reverse complement again
             Symbol nextRight = getNextTerminal(nextLeft.getRight(), false);
@@ -132,7 +137,6 @@ public class Compress {
                     && currentLast.getLeft().isComplement == lastNonTerminal.isComplement
                     && !currentLast.getLeft().equals(lastNonTerminal.getRight().getRight())) {
                 //get the following terminal digram
-
                 //if next right matches then that SHOULD be it...
                 // as if the last terminal had matched it would have been added
                 if (nextRight.getRepresentation() == symbol.getRepresentation()
@@ -374,8 +378,12 @@ public class Compress {
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
-                checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
+
+                //todo this order seems less guaranteed to crash, other more consistent error
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
+                //order of these two... in relation to removing rules used only once, noncomplement
+                checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
+
             }
         }
     }

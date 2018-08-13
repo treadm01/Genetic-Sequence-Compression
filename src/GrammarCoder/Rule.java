@@ -74,7 +74,6 @@ public class Rule extends Symbol implements Comparable {
         while (!first.isGuard()) {
             symbols += " " + first.toString();
             first = first.getRight();
-            //System.out.println(symbols);
         }
         return symbols;
     }
@@ -118,8 +117,8 @@ public class Rule extends Symbol implements Comparable {
                 //TODO THIS IS ASSUMING THAT ALL INDEXES ARE ONE DIGIT POSITIONS
                 //TODO add the edited one to the list and get that way rather than string indexes?
                 if (s.isEdited) {
-                    System.out.println(currentLength);
-                    System.out.println(output);
+//                    System.out.println(currentLength);
+//                    System.out.println(output);
                     String editString = ((NonTerminal) s).edits;
                     int i = 0;
                     String index = "";
@@ -128,10 +127,13 @@ public class Rule extends Symbol implements Comparable {
                              index += String.valueOf(editString.charAt(i));
                         }
                         else {
-                            System.out.println(index);
+//                            System.out.println(index);
                             System.out.println(String.valueOf(editString.charAt(i)));
+                            System.out.println(output.toString());
                             int intIndex = Integer.parseInt(index); //+ currentLength;
                             System.out.println(intIndex);
+                            System.out.println(intIndex + 1);
+
                             output.replace(intIndex, intIndex + 1, String.valueOf(editString.charAt(i)));
                             index = "";
                         }

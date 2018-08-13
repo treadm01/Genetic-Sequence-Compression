@@ -174,10 +174,42 @@ public class EditGrammarTest {
     }
 
 
+    // doesn't work with new order but encoding before was not correct??? oh wait
     @Test
     public void guardCantBeNonTerminal() {
         Compress c = new Compress();
         String compress = "aaggaagctt";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void wrondDecoding() {
+        Compress c = new Compress();
+        String compress = "taggtatag"; //its 02 again //HAD TO SPECIFY THAT THE LAST SYMBOL WAS ALSO A TERMINAL
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    @Test
+    public void wrondDecodingLong() {
+        Compress c = new Compress();
+        String compress = "tcaatagtttgacgtgggagcgtaagattgccacgaattggcaccggggggccctcgc"; //its 02 again //HAD TO SPECIFY THAT THE LAST SYMBOL WAS ALSO A TERMINAL
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+
+    @Test
+    public void stringIndexOutofBounds() {
+        //edits in subrules and how to index them/should they exist
+        // again the issue of where the edit is... if edit is used multiple time via subrule
+        // then index will be different, so has to be in relation to something
+        // bigger problem, maybe, think this is instance of edited rule being...
+        //nope, there are two edits required one is being stored in a subrule, the other is in main rule
+        // so subrule edit is duplicated
+        Compress c = new Compress();
+        String compress = "tcgggtctgatctgacagaa";
         c.processInput(compress);
         Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -195,12 +227,12 @@ public class EditGrammarTest {
     //humghcs
     //humhbb
     //mtpacga - apparent improvement - 21594 - chunk of seqence not returned
-    //vaccg - apparent improvement 58103 - not matching but only 2 symbols less.....
+    //vaccg - apparent improvement 58103 - not matching but only 2 symbols less..... 57640
     @Test
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("humhdab");
+        String originalFile = io.readFile("vaccg");
         c.processInput(originalFile);
         //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -211,6 +243,7 @@ public class EditGrammarTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile);
+        //assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
 
@@ -230,8 +263,8 @@ public class EditGrammarTest {
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
-            String input = genRand(rand.nextInt((10 - 1) + 1) + 1);
-            System.out.println(input);
+            String input = genRand(rand.nextInt((20 - 1) + 1) + 1);
+            System.out.println("INPUT: " + input);
             Compress c = new Compress();
             c.processInput(input);
             Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));

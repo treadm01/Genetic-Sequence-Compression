@@ -88,7 +88,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "tggctcacgcctgtaatcccagcactttggg"; // need to find an example of this
         c.processInput(compress);
-        //assertEquals(" 2 4 t 8 4 6 t 10 t 12 6' 8 10' 2 12'", c.getFirstRule().getRuleString());
+        assertEquals(" 2 4 t 8 4 6 t 10 t 12 6' 8 10' 2 12'", c.getFirstRule().getRuleString());
     }
 
     @Test
@@ -107,6 +107,7 @@ public class EditGrammarTest {
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
         assertEquals(" 20 20*7a", c.getFirstRule().getRuleString());
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
@@ -141,6 +142,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcacttctctgcctcacttctctgactcac";
         c.processInput(compress);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
     @Test
@@ -167,8 +169,16 @@ public class EditGrammarTest {
     // two in a row equals the wrong link?? infinite loop //todo reordered remove rules and check digrams in replace rule... enough to fix?
     @Test
     public void stackOverflow() { // reverse complement issue...
+        Compress c = new Compress();String compress = "cgggagtccc"; // suspect reverse complement matching
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
+    //aaagctttgg
+    @Test
+    public void HeapLeak() {
         Compress c = new Compress();
-        String compress = "cgggagtccc"; // suspect reverse complement matching
+        String compress = "aaagctttgg";
         c.processInput(compress);
         Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -230,6 +240,15 @@ public class EditGrammarTest {
         Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
+    //
+    @Test // not sure what is happening here, disappearing subrule again?
+    public void wrongMatchTwo() {
+        Compress c = new Compress();
+        String compress = "atttgatgttgctg";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
     //todo keep a comparison to previous lengths for each example
     @Test
     public void humdyst() {
@@ -253,7 +272,7 @@ public class EditGrammarTest {
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("mtpacga");
+        String originalFile = io.readFile("vaccg");
         c.processInput(originalFile);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
@@ -284,7 +303,7 @@ public class EditGrammarTest {
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
-            String input = genRand(rand.nextInt((20 - 1) + 1) + 1);
+            String input = genRand(rand.nextInt((15 - 1) + 1) + 1);
             System.out.println("INPUT: " + input);
             Compress c = new Compress();
             c.processInput(input);

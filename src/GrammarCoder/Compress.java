@@ -14,30 +14,30 @@ public class Compress {
     Set<Character> alphabet = new HashSet();
     String mainInput;
     NonTerminal lastNonTerminal;
+    Map<String, Integer> allSymbols = new HashMap<>();
+    List<Rule> orderedRules;
 
+    // go back to numbers rather than symbols - get frequency of each individual symbol again
+    //TODO EDIT INDEXES FROM BEGINNING OF RULE, RATHER THAN BEGINNGIN OF STRING, THEN DIFFERENCE BETWEEN?
+    //todo how to set lastnonterminal
+    //todo would it be better to register edited rules as distinct?
+    //todo existing rules, which ones to check to?
+    //todo edit digrams, then try existing rules, or nonterminal checks
     // TODO CHECK WHICH PREVIOUS NONTERMINAL TO MATCH TO - JUST THE FIRST THAT MATCHES? might not work if checking whole nonterminals
     // TRY IF NEXT SYMBOL IS A NONTERMINAL START LOOPING THROUGH THE SAME NUMBER OF NEXT SYMBOLS
     // WITH EDITS, A PERCENTAGE OF THE LENGTH.... YEH MIGHT WORK, SUB RULES SHOULD MATCH... WOULD HAVE TO EDIT
     // TO MATCH THE ENTIRE LENGTH
-    // TODO + either generate rules overflow or missing subrule/guard conversion
-    // todo disappearing subrule under wrong match test
-
+    // TODO BUG 1 either generate rules overflow or missing subrule/guard conversion
     //TODO //order of calls in replacerule... in relation to removing rules used only once, noncomplement
+    // todo BUG 2disappearing subrule under wrong match test
+
     //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
     // TODO ENSURE DECODING FROM ENCODED STREAM works
-    // edit digrams, then try existing rules, or nonterminal checks
-    //when large nonterminal found do a side check of the next however many symbols?
-    //todo to check approx repeats with existing would have to find a specific use of a rule in the encoding
-    // break out of the main loop and check for possible matches
-    //todo problem is probably having to indicate each time which edit it is in the
-    //encoding sent, rather than refering back to just one...seems to be used only once so maybe not
-    // problem is probably not finding approx repeats well
+
     //TODO WHAT HAPPENS WHEN A EDIT RULE IS REMOVED?
-    // WHAT IF MATCHES IN A SUBRULE?...
     // work with 'second' symbol of a digram
-    //todo work with existing rules
     // try insert or delete, reverser matches, symbols before a rule... length of the nonterminal
-    //TODO CAN IT BE DONE WITH NONTERMINALS?
+
     //todo maybe go back to a huffman type code assignment for all individual ints and symbols
     //todo a gammar code for each based on frequency of the symbols, use differences again
     //todo consider trying single complement changes, so when tc is seen tg is stored also
@@ -50,6 +50,7 @@ public class Compress {
         digramMap = new HashMap<>();
         rules = new HashSet<>();
         firstRule = new Rule(); // create first rule;
+        //lastNonTerminal = new NonTerminal(firstRule);
 
         alphabet.add('a');
         alphabet.add('c');
@@ -72,34 +73,56 @@ public class Compress {
         // would need to set first symbols index
         for (int i = 1; i < input.length(); i++) {
             //System.out.println(i + " of " + input.length());
-            Terminal nextTerminal = new Terminal(input.charAt(i));
-            nextTerminal.symbolIndex = i; // keeping index for edits
-            checkApproxRepeat(nextTerminal);
+            Symbol nextSymbol = new Terminal(input.charAt(i));
+            nextSymbol.symbolIndex = i; // keeping index for edits
+            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is a[pprox match add a nonterminal next
+            i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
 
 //            rules.add(getFirstRule());
 //            generateRules(getFirstRule().getGuard().getRight());
 //            System.out.println(printRules());// needed to compute length of rule at the moment
 
             // add next symbol from input to the first rule
-            getFirstRule().addNextSymbol(nextTerminal);
-//
+            getFirstRule().addNextSymbol(nextSymbol);
+////
 //            rules.add(getFirstRule());
 //            generateRules(getFirstRule().getGuard().getRight());
 //            System.out.println(printRules());// needed to compute length of rule at the moment
-
+//
 
             checkDigram(getFirstRule().getLast());
         }
 
         rules.add(getFirstRule());
         generateRules(getFirstRule().getGuard().getRight());
-        printRules();
-//       //TODO make a method just to get length... or get length better
-//        System.out.println(printRules());// needed to compute length of rule at the moment
-//        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-//        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
-//        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
-//        System.out.println();
+//
+//        firstRule.count = rules.size()+2; // just to make sure 0 is first...
+//        orderedRules = rules.stream() // order rules by use so more common has a lower representation
+//                .sorted(Rule::compareTo)
+//                .collect(Collectors.toList());
+
+//
+////        // TODO shuffle the actual values round?? depends on what will eventually be saved
+////        // TODO odd or even can be checked in binary by last digit
+////
+////        // readding index
+//        for (Rule r : orderedRules) {
+//            r.index = orderedRules.indexOf(r) * 2;
+//        }
+//
+//        System.out.println(printRules());
+
+//
+//        printRules();
+////       //TODO make a method just to get length... or get length better
+        System.out.println(printRules());// needed to compute length of rule at the moment
+        String encoded = encode(getFirstRule().getGuard().getRight(), "");
+        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+        System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+        System.out.println();
+//
+        System.out.println(allSymbols);
+        System.out.println(allSymbols.size());
     }
 
     public void addToDigramMap(Symbol symbol) {
@@ -137,11 +160,59 @@ public class Compress {
         return currentSymbol;
     }
 
-    public void checkApproxRepeat(Terminal symbol) {
+    public Symbol checkApproxRepeat(Symbol symbol) {
         int editCount = 0;
         Symbol editSymbol = null;
         Symbol lastEdit = null;
         Symbol currentLast = getFirstRule().getLast();
+        int newIndex = symbol.symbolIndex; // to jump over the seen symbols
+//
+        // check nonterminals for approx repeats todo need to be able to find a decent match
+        if (lastNonTerminal != null && currentLast.getRepresentation() == lastNonTerminal.getRepresentation()) {
+            if (lastNonTerminal.getRight() instanceof NonTerminal) {
+                //todo this will get edits too
+                NonTerminal nextNonterminal = ((NonTerminal) lastNonTerminal.getRight());
+                String lastSequence = nextNonterminal.getRule().getSymbolString(nextNonterminal.getRule(), nextNonterminal.isComplement);
+                String nextSequence = "";
+                //System.out.println(lastSequence);
+                if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
+//                    System.out.println("index of last thing " + symbol.symbolIndex);
+//                    System.out.println("new index should be " + (symbol.symbolIndex + lastSequence.length()));
+                    nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
+                    //System.out.println(nextSequence);
+                }
+
+                if (lastSequence.length() == nextSequence.length()) {
+                    String edits = "";
+
+                    //TODO COULD BE ISSUES WITH SUBRULES AND RULE UTILITY , MULTIPLE SYMBOLS BEING CHECKED???
+                    //todo edits not being added in certain instances, remove the edits != "" check
+                    // possibly exact matches???
+                    int editNumber = 0;
+                    for (int j = 0; j < lastSequence.length(); j++) {
+                        if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
+                            editNumber++;
+                            edits += (symbol.symbolIndex + j) + String.valueOf(nextSequence.charAt(j));
+                        }
+                    }
+
+                    if (editNumber < lastSequence.length() * 0.1 && edits != "") {
+//                        System.out.println("well");
+//                        System.out.println(edits);
+//                        System.out.println(nextNonterminal);
+//                        System.out.println(lastSequence);
+//                        System.out.println(nextSequence);
+                        //System.out.println(mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length()));
+                        // won't have edit indexes.... hmm
+                        symbol = new NonTerminal(nextNonterminal.getRule());
+                        symbol.setIsEdit(edits);
+                        newIndex += lastSequence.length();
+                        symbol.symbolIndex = newIndex;
+      //                  System.out.println(symbol);
+                    }
+                }
+            }
+        }
 
         if (lastNonTerminal != null && lastNonTerminal.getRight() instanceof Terminal
                 && currentLast instanceof Terminal) { // nonterminal has been added
@@ -173,10 +244,13 @@ public class Compress {
                 editSymbol.getRight().assignLeft(newSymbol); // the one being edited
                 editSymbol.getLeft().assignRight(newSymbol);
                 //todo this bit not relevan as always last... but the edit will be in a different place...
-                newSymbol.setIsEdit(editSymbol.symbolIndex + String.valueOf(editSymbol.toString().charAt(0)));
+                int offset = editSymbol.symbolIndex;
+                newSymbol.setIsEdit(offset + String.valueOf(editSymbol.toString().charAt(0)));
                 removeDigrams(editSymbol);
                 checkDigram(newSymbol);
         }
+
+        return symbol;
     }
     /**
      * method that checks through the main options of latest two symbols
@@ -365,7 +439,8 @@ public class Compress {
         //todo remember each one will be different or potentially an edit (shou;dn't matter)
         // and each one will be different, dont have to match to the same each time
         // if you get the checking ahead working might work ok or be able to use more efficiently
-        lastNonTerminal = rule.nonTerminalList.get(9); //unlikely to be different as first would already have been done
+
+        lastNonTerminal = rule.nonTerminalList.get(1); //unlikely to be different as first would already have been done
 
         // second might not exist
 
@@ -473,7 +548,7 @@ public class Compress {
                 r.length++; // TODO updating length of rule here.... better place to do it.
                 current = current.getRight();
             }
-            output += "\n";
+            output += " ";
         }
         return output;
     }
@@ -492,11 +567,14 @@ public class Compress {
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     output += "#";
+                    addSymbols("#");
 
                     // length is often 2 so only add if not
                     if (nt.getRule().length != 2) {
                         output += nt.getRule().length;
+                        addSymbols(String.valueOf(nt.getRule().length));
                     }
+
                     markerNum++;
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
@@ -508,6 +586,7 @@ public class Compress {
                         complementIndicator = "?"; // complement
                     }
 
+                    //todo NEED TO SPLIT UP EDIT SYMBOLS *, INDEX, SYMBOL
                     String isEdit = "";
                     if (nt.isEdited) {
                         isEdit += "*" + nt.edits;
@@ -515,6 +594,8 @@ public class Compress {
 
                     int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
                     output += complementIndicator + index + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
+                    addSymbols(complementIndicator);
+                    addSymbols(String.valueOf(index) + isEdit);
                     adjustedMarkers.remove(index);// remove when used
                 }
                 else {
@@ -524,21 +605,26 @@ public class Compress {
                         isEdit += "*" + nt.edits;
                     }
 
-                    String complementIndicator; // non complement
+                    String complementIndicator = "!"; // non complement
                     if (nt.isComplement) {
                         complementIndicator = "?"; // complement
-                        output += complementIndicator + (char) nt.rule.position + isEdit; //+ rules.size();
+                        output += complementIndicator + nt.rule.position + isEdit; //+ rules.size();
                         //this METHOD STORING DIFFERENT SYMBOLS FOR REVERSE COMPLEMENT MIGHT WORK, IF YOU CAN COUNT THE AMOUNT
                         // OF RULES IN DECODER AND SUBTRACT FROM THE COMPLEMENT CHARACTER
                         //output += (char) (nt.rule.position + rules.size());
+                        addSymbols(complementIndicator);
+                        addSymbols(String.valueOf(nt.rule.position) + isEdit);
                     }
                     else {
-                        output += (char) nt.rule.position + isEdit;
+                        output += complementIndicator + nt.rule.position + isEdit;
+                        addSymbols(complementIndicator);
+                        addSymbols(String.valueOf(nt.rule.position) + isEdit);
                     }
                 }
             }
             else {
                 output += current; // add regular symbols to it
+                addSymbols(current.toString());
             }
             current = current.getRight(); // move to next symbol
         }
@@ -553,6 +639,16 @@ public class Compress {
         return output;
     }
 
+
+    public void addSymbols(String c) {
+        if (allSymbols.containsKey(c)) {
+            Integer count = allSymbols.get(c);
+            allSymbols.put(c, count + 1);
+        }
+        else {
+            allSymbols.put(c, 1);
+        }
+    }
 
     /**
      * works through the symbols and collects all the rules in a set

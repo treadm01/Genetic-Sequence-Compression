@@ -135,11 +135,11 @@ public class Rule extends Symbol implements Comparable {
                         }
                         else {
 //                            System.out.println(index);
-                            System.out.println(String.valueOf(editString.charAt(i)));
-                            System.out.println(output.toString());
+//                            System.out.println(String.valueOf(editString.charAt(i)));
+//                            System.out.println(output.toString());
                             int intIndex = Integer.parseInt(index); //+ currentLength;
-                            System.out.println(intIndex);
-                            System.out.println(intIndex + 1);
+//                            System.out.println(intIndex);
+//                            System.out.println(intIndex + 1);
 
                             output.replace(intIndex, intIndex + 1, String.valueOf(editString.charAt(i)));
                             index = "";
@@ -160,15 +160,27 @@ public class Rule extends Symbol implements Comparable {
         return output.toString();
     }
 
+
     @Override
     public int compareTo(Object o) {
-        Rule r = (Rule) o;
-        if (r.symbolRule.length() > symbolRule.length()) {
+        Rule compareRule = (Rule) o;
+        if (count < compareRule.count) {
             return 1;
         }
-        else if (r.symbolRule.length() < symbolRule.length()) {
-            return -1;
+
+        else if (count == compareRule.count) {
+            return 0;
         }
-        return 0;
+        return -1;
     }
+//    public int compareTo(Object o) {
+//        Rule r = (Rule) o;
+//        if (r.symbolRule.length() > symbolRule.length()) {
+//            return 1;
+//        }
+//        else if (r.symbolRule.length() < symbolRule.length()) {
+//            return -1;
+//        }
+//        return 0;
+//    }
 }

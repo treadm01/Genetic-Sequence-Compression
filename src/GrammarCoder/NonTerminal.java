@@ -1,5 +1,4 @@
 package GrammarCoder;
-import java.util.ArrayList;
 
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
@@ -107,6 +106,7 @@ public class NonTerminal extends Symbol {
                     && (left.representation == (symbol.left.getRepresentation()))
                     && this.isComplement == symbol.isComplement
                     && left.isComplement == symbol.left.isComplement
+                    //&& left.edits == symbol.left.edits //
             ); // switched check to look at left symbol ra
         }
         else {

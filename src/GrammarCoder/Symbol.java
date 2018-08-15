@@ -1,7 +1,5 @@
 package GrammarCoder;
 
-import java.util.List;
-
 public class Symbol {
     Symbol left, right;
     long representation;
@@ -10,7 +8,7 @@ public class Symbol {
     Boolean isEdited = false;
     String edits = "";
     public Symbol complement;
-    Integer index;
+    int index;
     int symbolIndex; // to keep location of actual symbol for edit
    // List<Symbol> editSymbols; // todo will require a list for multiple edits?
 

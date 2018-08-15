@@ -14,7 +14,7 @@ public class Compress {
     Set<Character> alphabet = new HashSet();
     String mainInput;
     NonTerminal lastNonTerminal;
-    Map<String, Integer> allSymbols = new HashMap<>();
+    public Map<String, Integer> allSymbols = new HashMap<>();
     List<Rule> orderedRules;
 
     // go back to numbers rather than symbols - get frequency of each individual symbol again

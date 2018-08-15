@@ -5,6 +5,7 @@ public class Hnode implements Comparable{
     Integer frequency;
     Hnode left;
     Hnode right;
+    String binary;
 
     public Hnode(String symbol, Integer frequency) {
         this.symbol = symbol;

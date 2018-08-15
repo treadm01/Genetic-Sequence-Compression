@@ -1,5 +1,6 @@
     import GrammarCoder.Compress;
     import GrammarCoder.Decompress;
+    import GrammarCoder.InputOutput;
     import GrammarCoder.Rule;
     import org.junit.Test;
 

@@ -1,5 +1,6 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
+import GrammarCoder.InputOutput;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

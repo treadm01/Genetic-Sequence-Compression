@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class Encoder {
     List<Hnode> fullNodes;
+    List<Hnode> keepNodes;
     int fullAmount = 0;
     Hnode headNode;
 
@@ -21,6 +22,7 @@ public class Encoder {
         }
 
         fullNodes = orderNodes(nodes);
+        keepNodes = fullNodes;
         return fullNodes;
     }
 
@@ -73,10 +75,19 @@ public class Encoder {
                 currentNode = currentNode.left;
             }
             else if (currentNode.left == null && currentNode.right == null) {
-                System.out.println(currentNode.symbol + " = " + currentNode.binary);
+                //System.out.println(currentNode.symbol + " = " + currentNode.binary);
                 currentNode = stack.pop();
             }
         }
+    }
+
+    public void workOutLength() {
+        System.out.println(keepNodes);
+        int sum = 0;
+        for (Hnode node : keepNodes) {
+            sum += node.binary.length() * node.frequency;
+        }
+        System.out.println(sum);
     }
 
 

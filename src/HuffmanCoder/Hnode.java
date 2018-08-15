@@ -15,7 +15,7 @@ public class Hnode implements Comparable{
 
     @Override
     public String toString() {
-        return this.symbol + " = " + this.frequency;
+        return this.symbol + " = " + this.frequency + " B: " + binary;
     }
 
     public void addNodes(Hnode left, Hnode right) {

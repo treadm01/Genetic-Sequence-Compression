@@ -1,4 +1,5 @@
 import GrammarCoder.Compress;
+import GrammarCoder.InputOutput;
 import GrammarCoder.Terminal;
 import org.junit.Test;
 

@@ -1,4 +1,5 @@
 import GrammarCoder.Compress;
+import GrammarCoder.InputOutput;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,7 +9,7 @@ import static org.junit.Assert.*;
 //        @Test
 //        public void compressBook() {
 //            Compress c = new Compress();
-//            InputOutput io = new InputOutput();
+//            GrammarCoder.InputOutput io = new GrammarCoder.InputOutput();
 //            String originalFile = io.readFile("30000");
 //            c.processInput(originalFile.toLowerCase());
 //            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");
@@ -23,7 +24,7 @@ import static org.junit.Assert.*;
 //        @Test
 //        public void writeFile() {
 //            Compress c = new Compress();
-//            InputOutput io = new InputOutput();
+//            GrammarCoder.InputOutput io = new GrammarCoder.InputOutput();
 //            String originalFile = io.readFile("testLong");
 //            c.processInput(originalFile);
 //            String compare = c.encode(c.getFirstRule().getGuard().getRight(), "");

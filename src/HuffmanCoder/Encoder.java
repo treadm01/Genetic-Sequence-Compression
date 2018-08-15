@@ -35,18 +35,25 @@ public class Encoder {
         Hnode lowestNode;
         Hnode secondLowestNode;
         int frequency = 0;
+        System.out.println(fullNodes);
         while (frequency != fullAmount) {
-            lowestNode = fullNodes.remove(0);
-            secondLowestNode = fullNodes.remove(0);
+            lowestNode = fullNodes.remove(fullNodes.size() - 1);
+            secondLowestNode = fullNodes.remove(fullNodes.size() - 1);
+    //        System.out.println("after removal " + fullNodes);
             frequency = lowestNode.frequency + secondLowestNode.frequency;
             Hnode newNode = new Hnode("", frequency);
             newNode.addNodes(secondLowestNode, lowestNode); //todo think this ordering is correct, lower on the right
+            lowestNode.head = newNode;
+            secondLowestNode.head = newNode;
             fullNodes.add(newNode);
-            orderNodes(fullNodes);
+  //          System.out.println("adding new node " + fullNodes);
+            fullNodes = orderNodes(fullNodes);
+//            System.out.println("ordered " + fullNodes);
         }
 
         headNode = fullNodes.get(fullNodes.size()-1);
-        System.out.println(fullNodes.get(fullNodes.size()-1));
+        System.out.println(headNode);
+        System.out.println(headNode.right.left);
     }
 
     // next one to build a record of binary for each symbol, right?
@@ -55,20 +62,21 @@ public class Encoder {
     public void traverseTree() {
         Stack<Hnode> stack = new Stack<>();
         stack.push(headNode);
-        StringBuilder binaryCode = new StringBuilder();
+        String binaryCode = "";
         Hnode currentNode = headNode;
+        currentNode.binary = binaryCode;
         while (!stack.isEmpty()) {
-            if (currentNode.left != null) {
-                binaryCode.append("0");
-                stack.push(currentNode.left);
+            if (currentNode.right != null && currentNode.left != null) {
+                currentNode.right.binary = currentNode.binary + "1";
+                currentNode.left.binary = currentNode.binary + "0";
+                stack.push(currentNode.right);
                 currentNode = currentNode.left;
-                System.out.println(currentNode.frequency);
             }
-            else {
+            else if (currentNode.left == null && currentNode.right == null) {
+                System.out.println(currentNode.symbol + " = " + currentNode.binary);
                 currentNode = stack.pop();
             }
         }
-        System.out.println(binaryCode);
     }
 
 

@@ -5,6 +5,7 @@ public class Hnode implements Comparable{
     Integer frequency;
     Hnode left;
     Hnode right;
+    Hnode head;
     String binary;
 
     public Hnode(String symbol, Integer frequency) {
@@ -26,10 +27,10 @@ public class Hnode implements Comparable{
     public int compareTo(Object o) {
         Hnode node = (Hnode) o;
         if (node.frequency < this.frequency) {
-            return 1;
+            return -1;
         }
         else if (node.frequency > this.frequency) {
-            return -1;
+            return 1;
         }
         else {
             return 0;

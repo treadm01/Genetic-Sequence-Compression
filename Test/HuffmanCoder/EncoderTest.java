@@ -11,11 +11,11 @@ public class EncoderTest {
     public void smallerTest() {
         Compress c = new Compress();
         Encoder e = new Encoder();
-        String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
+        String compress = "acacggcacgaa";
         c.processInput(compress);
         e.getOrderedNodes(c.allSymbols);
         e.buildTree();
-        //e.traverseTree();
+        e.traverseTree();
     }
 
     @Test
@@ -26,7 +26,7 @@ public class EncoderTest {
         c.processInput(compress);
         e.getOrderedNodes(c.allSymbols);
         e.buildTree();
-        //e.traverseTree();
+        e.traverseTree();
     }
 
 }

@@ -14,6 +14,7 @@ public class EncoderTest {
         String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
         c.processInput(compress);
         e.getOrderedNodes(c.allSymbols);
+        e.buildTree();
     }
 
 }

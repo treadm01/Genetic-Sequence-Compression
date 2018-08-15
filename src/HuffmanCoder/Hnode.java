@@ -3,6 +3,8 @@ package HuffmanCoder;
 public class Hnode implements Comparable{
     String symbol;
     Integer frequency;
+    Hnode left;
+    Hnode right;
 
     public Hnode(String symbol, Integer frequency) {
         this.symbol = symbol;
@@ -12,6 +14,11 @@ public class Hnode implements Comparable{
     @Override
     public String toString() {
         return this.symbol + " = " + this.frequency;
+    }
+
+    public void addNodes(Hnode left, Hnode right) {
+        this.left = left;
+        this.right = right;
     }
 
     @Override

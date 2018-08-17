@@ -39,7 +39,20 @@ public class AdaptiveArithmeticDecompress {
 	//todo still have to encode the table size
 	// To allow unit testing, this method is package-private instead of private.
 	static void decompress(BitInputStream in, OutputStream out) throws IOException {
-		FlatFrequencyTable initFreqs = new FlatFrequencyTable(2450 + 128);
+	    int count = 0;
+	    while (in.read() != 0) {
+	        count++;
+        }
+
+        String binaryRule = "";
+        for (int i = 0; i < count; i++) {
+            //todo theres probably a better way, length known multiply just add up the numbers
+            binaryRule += String.valueOf(in.read());
+        }
+
+        int ruleSize = Integer.parseInt(binaryRule, 2);
+
+        FlatFrequencyTable initFreqs = new FlatFrequencyTable(ruleSize);
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
 		ArithmeticDecoder dec = new ArithmeticDecoder(32, in);
         Boolean isEdit = false; //todo don't forget
@@ -50,7 +63,7 @@ public class AdaptiveArithmeticDecompress {
 			// Decode and write one byte
             int symbol = dec.read(freqs);
 
-            if (symbol == (2450 + 128) - 1) {  // EOF symbol
+            if (symbol == ruleSize - 1) {  // EOF symbol
                 break;
             }
 
@@ -59,7 +72,9 @@ public class AdaptiveArithmeticDecompress {
             //also could be positioned anywhere including over symbols
             if (symbol > 32 && symbol < 128) {
                 if (Character.isDigit((char)symbol)) {
-                    if (lastSymbol != '*') { // todo it is very possible that a marker length could be more than one digit long
+                    // todo it is very possible that a marker length could be more than one digit long
+                    // yeah issue when 12
+                    if (lastSymbol != '*') {
                         output += "!";
                         out.write(33);
                     }

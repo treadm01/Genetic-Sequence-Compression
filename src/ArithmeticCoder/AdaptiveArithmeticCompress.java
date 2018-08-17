@@ -46,9 +46,9 @@ public class AdaptiveArithmeticCompress {
 
 		Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("humdyst");
+        String originalFile = io.readFile("humhbb");
         c.processInput(originalFile);
-        tableSize = c.highestRule + 1;
+        tableSize = c.highestRule + 129; // 128 offset for symbols, + 1 for eof symbol
 
 		//File inputFile  = new File("/home/tread/files/aetest/src/compress");
 		File outputFile = new File("/home/tread/files/aetest/src/compressed.bin");
@@ -62,44 +62,27 @@ public class AdaptiveArithmeticCompress {
 	
 	// To allow unit testing, this method is package-private instead of private.
 	static void compress(List<String> symbols, BitOutputStream out) throws IOException {
+		FlatFrequencyTable initFreqs = new FlatFrequencyTable(tableSize);
+		String ruleNumber = Integer.toBinaryString(tableSize);
+        System.out.println(ruleNumber.length());
+        System.out.println(tableSize);
+        String gammaCode = "";
 
-        Map<String, Integer> symbolInts = new HashMap<>();
-        List<String> orderedListOfSymbols = new ArrayList<>();
-        for (String s : symbols) {
-            if (!symbolInts.containsKey(s)) {
-                symbolInts.put(s, symbolInts.size());
-                orderedListOfSymbols.add(s);
-            }
+        for (int i = 0; i < ruleNumber.length(); i++) {
+            gammaCode += "1";
         }
-
-        //todo need to specify the necessary number of symbols, the more accurate and lower the better
-        // basically the highest number symbol....
-        System.out.println(orderedListOfSymbols);
-        System.out.println(orderedListOfSymbols.size());
-
-		// get number of unique symbols from encoding and send that through
-		FlatFrequencyTable initFreqs = new FlatFrequencyTable(2450 + 128);
-        // store in array of special objects? with string for symbol, if not seen add to next
-        // if seen use it
+        gammaCode += "0"; // last stop bit
+        gammaCode += ruleNumber;
+        System.out.println(ruleNumber);
+		for (int i = 0; i < gammaCode.length(); i++) {
+            out.write(Integer.parseInt(gammaCode.substring(i, i + 1)));
+        }
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
 		ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
 		for (String s : symbols) {
 			// Read and encode one byte
-
-            // then rather than symbol stream send through list of symbols... no wait
-            // must be the source, so create a list of strings from the encoding,
-            // store in a hashset for int values, then when symbol seen get hash value and
-            // encode that
-
-            // if not a number send as char int, else symbol equals parse int
-
             int symbol;
-            // if a normal symbol just encode as such, and set complement to false
 
-            //todo issue could be that some weird symbols register as a digit, need to use specific values
-            // yeah but, they would be registered in the same way the other end right?
-            //but bein assesed different, string ??? vs int... not sure, without changes, it works...
-            // and may be able to use frequency again
             // this includes single digit numbers
             if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
                 symbol = s.charAt(0);
@@ -123,14 +106,25 @@ public class AdaptiveArithmeticCompress {
 			if (symbol == -1)
 				break;
 
-
 			enc.write(freqs, symbol);
+            freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best
 			freqs.increment(symbol);
-            freqs.set(symbol, freqs.get(symbol) + 10); // todo putting this before enc.write gives good compression, but hard to decompress...
 		}
-		enc.write(freqs, (2450+ 128)-1 );  // EOF
+		enc.write(freqs, tableSize - 1 );  // EOF
 		enc.finish();  // Flush remaining code bits
 //        System.out.println(freqs);
 	}
+
+	// todo probably can be more detailed as to the frequencies, but makes compression worse
+	//if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
+    //                freqs.set(symbol, freqs.get(symbol) + 10); // todo putting this before enc.write gives good compression, but hard to decompress...
+    //            }
+    //            else {
+    //                if (symbol % 2 == 0) { // if even then not a complemeent... not sure this is working for markers, the lower numbers
+    //                    freqs.set(symbol, freqs.get(symbol) + 8);
+    //                } else {
+    //                    freqs.set(symbol, freqs.get(symbol) + 2);
+    //                }
+    //            }
 	
 }

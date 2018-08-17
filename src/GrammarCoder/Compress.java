@@ -587,8 +587,9 @@ public class Compress {
                     encodingSymbols.add("#");
                     // length is often 2 so only add if not
                     if (nt.getRule().length != 2) {
-                        output += nt.getRule().length;
+                        output += "*" + nt.getRule().length;
                         addSymbols(String.valueOf(nt.getRule().length));
+                        encodingSymbols.add("*");
                         encodingSymbols.add(nt.getRule().length + "");
                     }
 

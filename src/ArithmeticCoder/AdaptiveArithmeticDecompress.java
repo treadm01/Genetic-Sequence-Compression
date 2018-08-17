@@ -6,13 +6,9 @@ package ArithmeticCoder;/*
  * https://github.com/nayuki/Reference-arithmetic-coding
  */
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -31,7 +27,7 @@ public class AdaptiveArithmeticDecompress {
 //		}
 
 		File inputFile  = new File("/home/tread/files/aetest/src/compressed.bin");
-		File outputFile = new File("/home/tread/files/aetest/src/compressTwo");
+		File outputFile = new File("/home/tread/files/aetest/src/compressTwo.txt");
 		
 		// Perform file decompression
 		try (BitInputStream in = new BitInputStream(new BufferedInputStream(new FileInputStream(inputFile)));
@@ -40,44 +36,63 @@ public class AdaptiveArithmeticDecompress {
 		}
 	}
 	
-	
+	//todo still have to encode the table size
 	// To allow unit testing, this method is package-private instead of private.
 	static void decompress(BitInputStream in, OutputStream out) throws IOException {
-		FlatFrequencyTable initFreqs = new FlatFrequencyTable(2450);
+		FlatFrequencyTable initFreqs = new FlatFrequencyTable(2450 + 128);
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
 		ArithmeticDecoder dec = new ArithmeticDecoder(32, in);
-        Boolean isEdit = false;
+        Boolean isEdit = false; //todo don't forget
+        //! = 33
+        int lastSymbol = -1;
+        String output = "";
 		while (true) {
 			// Decode and write one byte
-			int symbol = dec.read(freqs);
+            int symbol = dec.read(freqs);
 
-			// checking digit here is no good as could be encoded to anything
-            //also could be positioned anywhere including over symbols
-            if (symbol > 32 && symbol < 128) {
-                System.out.println((char) symbol + " " + freqs.get(symbol));
-                //freqs.set(symbol, 5);
-                out.write(symbol);
-            }
-            else {
-                out.write('!');
-            }
-
-
-                //
-           //     System.out.println(Character.getNumericValue(symbol));
-                //String s = String.valueOf(symbol);
-//                for (int i = 0; i < s.length(); i++) {
-//                    out.write(s.charAt(i));
-//                }
-
-
-            if (symbol == 2450-1) {  // EOF symbol
-                out.write(symbol);
+            if (symbol == (2450 + 128) - 1) {  // EOF symbol
                 break;
             }
 
+//  TODO TRYING TO GET THE FREQUENCY WORKING
+			// checking digit here is no good as could be encoded to anything
+            //also could be positioned anywhere including over symbols
+            if (symbol > 32 && symbol < 128) {
+                if (Character.isDigit((char)symbol)) {
+                    if (lastSymbol != '*') { // todo it is very possible that a marker length could be more than one digit long
+                        output += "!";
+                        out.write(33);
+                    }
+                }
+                output += String.valueOf((char) symbol);
+                out.write(symbol);
+            }
+            else {
+                out.write(33); // remember have to deal with edits too....
+                output += "!";
+                String s = String.valueOf(symbol - 128); //todo issue with frequency the offset?
+                output += s;
+                for (int i = 0; i < s.length(); i++) {
+                    out.write((int)s.charAt(i));
+                }
+            }
+
+            lastSymbol = symbol;
+
             freqs.increment(symbol);
+            freqs.set(symbol, freqs.get(symbol) + 10);
 		}
+
+        System.out.println();
+        System.out.println(output);
+        //
+        //todo probably wont ever use just return string to decompress, unless wanted compressed at this level?
+        // appears to wipe out when set specifically to text....
+        try (PrintWriter outFile = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest.txt")) {
+            outFile.println(output);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 	}
 	
 }

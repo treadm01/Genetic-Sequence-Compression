@@ -78,7 +78,7 @@ public class AdaptiveArithmeticCompress {
         System.out.println(orderedListOfSymbols.size());
 
 		// get number of unique symbols from encoding and send that through
-		FlatFrequencyTable initFreqs = new FlatFrequencyTable(2450);
+		FlatFrequencyTable initFreqs = new FlatFrequencyTable(2450 + 128);
         // store in array of special objects? with string for symbol, if not seen add to next
         // if seen use it
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
@@ -100,17 +100,18 @@ public class AdaptiveArithmeticCompress {
             // yeah but, they would be registered in the same way the other end right?
             //but bein assesed different, string ??? vs int... not sure, without changes, it works...
             // and may be able to use frequency again
-            if (s.length() == 1 && s.charAt(0) > 32 && s.charAt(0) < 128) {
+            // this includes single digit numbers
+            if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
                 symbol = s.charAt(0);
                 System.out.println((char) symbol + " " + freqs.get(symbol) + symbol);
-//                freqs.set(symbol, freqs.get(symbol) + 10);
+              //  freqs.set(symbol, freqs.get(symbol) + 10);
             }
             else {
                 //todo make sure that the actual correct symbols are all being dealt with here
 
                 //System.out.println((char)Integer.parseInt(s));
-                symbol = Integer.parseInt(s);
-                System.out.println(s + " " + freqs.get(symbol) + " " + (char)symbol);
+                symbol = Integer.parseInt(s) + 128;
+            //    System.out.println(s + " " + freqs.get(symbol) + " " + (char)symbol);
 //                if (symbol % 2 == 0) { // if even then not a complemeent... not sure this is working for markers, the lower numbers
 //                    freqs.set(symbol, freqs.get(symbol) + 8);
 //                } else {
@@ -122,12 +123,14 @@ public class AdaptiveArithmeticCompress {
 			if (symbol == -1)
 				break;
 
+
 			enc.write(freqs, symbol);
 			freqs.increment(symbol);
+            freqs.set(symbol, freqs.get(symbol) + 10); // todo putting this before enc.write gives good compression, but hard to decompress...
 		}
-		enc.write(freqs, 2450-1);  // EOF
+		enc.write(freqs, (2450+ 128)-1 );  // EOF
 		enc.finish();  // Flush remaining code bits
-        System.out.println(freqs);
+//        System.out.println(freqs);
 	}
 	
 }

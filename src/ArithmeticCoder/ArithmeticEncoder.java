@@ -1,240 +1,106 @@
-package ArithmeticCoder;
+package ArithmeticCoder;/*
+ * Reference arithmetic coding
+ * Copyright (c) Project Nayuki
+ * 
+ * https://www.nayuki.io/page/reference-arithmetic-coding
+ * https://github.com/nayuki/Reference-arithmetic-coding
+ */
 
-import java.math.BigInteger;
-import java.util.BitSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.Objects;
 
-public class ArithmeticEncoder {
 
-    static final long PRECISION = 32; // use long could get closer to 64?
-    static final long WHOLE = (long) Math.pow(2, PRECISION); // bigint?
-    static final long HALF = WHOLE / 2;
-    static final long QUARTER = WHOLE / 4;
-    static final char END_OF_FILE_SYMBOL = '0';//will be'!';
-    Integer denominator; // this is the value of all probabilities given and used to compute ratio
-    // todo will need to be able to represent integers from 0 up to denominator * whole, consider number of symbols
-    String input = "210"; // having to put this here for now as the order alphabter is generated depends on string
-    BitSet binaryEncoding = new BitSet();
-
-    Map<Character, ArithmeticSymbol> sourceAlphabet = new LinkedHashMap<>();
-
-    public void processInput(String input) {
-
-    }
-
-    public String getBinaryString() {
-        String s = "";
-        return s;
-    }
-
-    //not entirely sure how useful this will be, but to get dynamic alphabet from input
-    // depends on how rigid the alphabet will be and how long this method takes
-    public void setSourceAlphabet(String input) {
-        Character c;
-        for (int i = 0; i < input.length(); i++) {
-            c = input.charAt(i);
-            if (!sourceAlphabet.containsKey(input.charAt(i))) {
-                ArithmeticSymbol as = new ArithmeticSymbol(c);
-                as.setProbability(getProbability(c));
-                sourceAlphabet.put(c, as);
-            }
-        }
-    }
-
-    // hard coding for now just to get initial values
-    // must be values that all add up to one, kept as ratios
-    public Integer getProbability(char c) {
-//            if (c == '0') {
-//                return 2;
-//            }
-//            else {return 4;}
-        if (c == '0') {
-            return 1;
-        }
-        else if (c == '1'){
-            return 1;
-        }
-        else if (c == '2'){
-            return 10;
-        }
-        else if (c == '3'){
-            return 8;
-        }
-        else return 0;
-    }
-
-    public Integer calculateRationalDenominator() {
-        Integer sumOfProbabilities = 0;
-        for (ArithmeticSymbol as : sourceAlphabet.values()) {
-            sumOfProbabilities += as.getProbability();
-        }
-        return sumOfProbabilities;
-    }
-
-    //todo will probably need rounding, needs to always equal 1
-    public void calculateSymbolProbabilityRatio() {
-        denominator = calculateRationalDenominator(); // use getter and setter for global variable
-        for (ArithmeticSymbol as : sourceAlphabet.values()) {
-            as.setProbabiltiyRatio((double) (as.getProbability() / denominator));
-        }
-    }
-
-    // calculating the start integers of segments, which correspond to the offset of the next
-    // first is 0, second would be 2 in this instance, then 6, storing as the integer values for now
-    //used to compute segments
-    public void setSymbolSegment() {
-        int sumOfSegmentStarts = 0;
-        ArithmeticSymbol as;
-        for (Map.Entry<Character, ArithmeticSymbol> entry : sourceAlphabet.entrySet()) {
-            as = entry.getValue();
-            as.setSegmentStart(sumOfSegmentStarts);
-            as.setSegmentEnd(sumOfSegmentStarts + as.getProbability());
-            sumOfSegmentStarts += as.getProbability();
-        }
-    }
-
-    public String encode(String input) {
-        long lowerBound = 0;
-        long upperBound = WHOLE;
-        Integer numberOfMiddleRepeats = 0;
-        long widthBetweenBounds;
-        String output = "";
-
-        for (int i = 0; i < input.length(); i++) { // loop over the input
-            ArithmeticSymbol as = sourceAlphabet.get(input.charAt(i));
-            widthBetweenBounds = upperBound - lowerBound;
-
-            upperBound = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
-            lowerBound = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
-
-            while (upperBound < HALF || lowerBound > HALF) {
-                if (upperBound < HALF) {
-                    output += "0";
-                    for (int j = 0; j < numberOfMiddleRepeats; j++) {
-                        output += "1";
-                    }
-                    numberOfMiddleRepeats = 0;
-                    lowerBound = 2 * lowerBound;
-                    upperBound = 2 * upperBound;
-                }
-                else if (lowerBound > HALF) {
-                    output += "1";
-                    for (int j = 0; j < numberOfMiddleRepeats; j++) {
-                        output += "0";
-                    }
-                    numberOfMiddleRepeats = 0;
-                    lowerBound = 2 * (lowerBound - HALF);
-                    upperBound = 2 * (upperBound - HALF);
-                }
-            }
-            while (lowerBound > QUARTER && upperBound < 3 * QUARTER) {
-                numberOfMiddleRepeats += 1;
-                lowerBound = 2 * (lowerBound - QUARTER);
-                upperBound = 2 * (upperBound - QUARTER);
-            }
-        }
-
-        numberOfMiddleRepeats += 1; // this extra number of repeates seems to throw it off
-        if (lowerBound <= QUARTER) {
-            output += "0";
-            for (int j = 0; j < numberOfMiddleRepeats; j++) {
-                output += "1";
-            }
-        }
-        else {
-            output += "1";
-            for (int j = 0; j < numberOfMiddleRepeats; j++) {
-                output += "0";
-            }
-        }
-        //System.out.println("output " + output);
-        return output;
-    }
-
-    public String decode(String input) {
-        long lowerBound = 0;
-        long upperBound = WHOLE;
-        long inputValue = 0;
-        long widthBetweenBounds;// = upperBound - lowerBound;
-        long valueToAdd = WHOLE;
-        Integer inputIndex = 0; // set to 1?
-        Integer limitOfInput = input.length();
-        Character endLoop = '!';
-        String output = "";
-
-        //todo don't use precision but the limit then use entire input up front?
-        // get the segment from the binary by adding up corresponding values of segent widths
-        while (inputIndex <= PRECISION && inputIndex < limitOfInput) { // approximate the float corresponding value
-            valueToAdd /= 2 ;
-            if (input.charAt(inputIndex) == '1') {
-                inputValue += valueToAdd;
-                System.out.println(inputValue);
-            }
-            inputIndex++;
-        }
-
-        // loop through until output is indicated as end of file symbol
-        while (endLoop != END_OF_FILE_SYMBOL) { //find a proper condition, check for end of file symbol
-
-            // check through possible symbols in alphabet and create segments from their probabilities
-            for (ArithmeticSymbol as : sourceAlphabet.values()) {
-                widthBetweenBounds = upperBound - lowerBound;
-
-                // variables for segments in current scale, if found within them they are assigned to the new actual bounds actual
-                long upperBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentEnd()) / denominator);
-                long lowerBoundCheck = lowerBound + ((widthBetweenBounds * as.getSegmentStart()) / denominator);
-
-                // check whether the segment is within the bounds for this scale, if so it is that symbol
-                if (lowerBoundCheck <= inputValue && inputValue < upperBoundCheck) {
-
-                    output += as.representation;
-                    endLoop = as.representation; // check for the main loop
-                    lowerBound = lowerBoundCheck; // update bounds
-                    upperBound = upperBoundCheck;
-                    break; // if found don't need to check other symbols
-                }
-            }
-
-            //SCALING
-            // if the upper bound is entirely in lower half of space or lower entirely above:
-            while (upperBound < HALF || lowerBound > HALF) { // rescaling
-                if (upperBound < HALF) { //todo less than or equal??
-                    lowerBound = 2 * lowerBound;
-                    upperBound = 2 * upperBound;
-                    inputValue = 2 * inputValue;
-                }
-                else if (lowerBound > HALF) {
-                    lowerBound = 2 * (lowerBound - HALF);
-                    upperBound = 2 * (upperBound - HALF);
-                    inputValue = 2 * (inputValue - HALF);
-                }
-
-                //todo PRETTY SURE THESE ARE THE ISSUE, BINARY CODE LONGER THAN 32 not RETURNING, could be rescaling on longer binary
-                // onse over 32 with only 0s seem to have no issue
-
-                if (inputIndex < limitOfInput) {
-                    if (input.charAt(inputIndex) == '1') {
-                        inputValue += Math.pow(2, PRECISION - inputIndex);
-                    }
-                    inputIndex++;
-                }
-            }
-
-            while (lowerBound > QUARTER && upperBound < 3 * QUARTER) {
-                lowerBound = 2 * (lowerBound - QUARTER);
-                upperBound = 2 * (upperBound - QUARTER);
-                inputValue = 2 * (inputValue - QUARTER);
-
-                if (inputIndex < limitOfInput) {
-                    if (input.charAt(inputIndex) == '1') {
-                        inputValue += Math.pow(2, PRECISION - inputIndex);
-                    }
-                    inputIndex++;
-                }
-
-            }
-        }
-        return output;
-    }
+/**
+ * Encodes symbols and writes to an arithmetic-coded bit stream. Not thread-safe.
+ * @see ArithmeticDecoder
+ */
+public final class ArithmeticEncoder extends ArithmeticCoderBase {
+	
+	/*---- Fields ----*/
+	
+	// The underlying bit output stream (not null).
+	private BitOutputStream output;
+	
+	// Number of saved underflow bits. This value can grow without bound,
+	// so a truly correct implementation would use a BigInteger.
+	private int numUnderflow;
+	
+	
+	
+	/*---- Constructor ----*/
+	
+	/**
+	 * Constructs an arithmetic coding encoder based on the specified bit output stream.
+	 * @param stateSize the number of bits for the arithmetic coding range
+	 * @param out the bit output stream to write to
+	 * @throws NullPointerException if the output stream is {@code null}
+	 * @throws IllegalArgumentException if stateSize is outside the range [1, 62]
+	 */
+	public ArithmeticEncoder(int stateSize, BitOutputStream out) {
+		super(stateSize);
+		output = Objects.requireNonNull(out);
+		numUnderflow = 0;
+	}
+	
+	
+	
+	/*---- Methods ----*/
+	
+	/**
+	 * Encodes the specified symbol based on the specified frequency table.
+	 * This updates this arithmetic coder's state and may write out some bits.
+	 * @param freqs the frequency table to use
+	 * @param symbol the symbol to encode
+	 * @throws NullPointerException if the frequency table is {@code null}
+	 * @throws IllegalArgumentException if the symbol has zero frequency
+	 * or the frequency table's total is too large
+	 * @throws IOException if an I/O exception occurred
+	 */
+	public void write(FrequencyTable freqs, int symbol) throws IOException {
+		write(new CheckedFrequencyTable(freqs), symbol);
+	}
+	
+	
+	/**
+	 * Encodes the specified symbol based on the specified frequency table.
+	 * Also updates this arithmetic coder's state and may write out some bits.
+	 * @param freqs the frequency table to use
+	 * @param symbol the symbol to encode
+	 * @throws NullPointerException if the frequency table is {@code null}
+	 * @throws IllegalArgumentException if the symbol has zero frequency
+	 * or the frequency table's total is too large
+	 * @throws IOException if an I/O exception occurred
+	 */
+	public void write(CheckedFrequencyTable freqs, int symbol) throws IOException {
+		update(freqs, symbol);
+	}
+	
+	
+	/**
+	 * Terminates the arithmetic coding by flushing any buffered bits, so that the output can be decoded properly.
+	 * It is important that this method must be called at the end of the each encoding process.
+	 * <p>Note that this method merely writes data to the underlying output stream but does not close it.</p>
+	 * @throws IOException if an I/O exception occurred
+	 */
+	public void finish() throws IOException {
+		output.write(1);
+	}
+	
+	
+	protected void shift() throws IOException {
+		int bit = (int)(low >>> (STATE_SIZE - 1));
+		output.write(bit);
+		
+		// Write out the saved underflow bits
+		for (; numUnderflow > 0; numUnderflow--)
+			output.write(bit ^ 1);
+	}
+	
+	
+	protected void underflow() {
+		if (numUnderflow == Integer.MAX_VALUE)
+			throw new ArithmeticException("Maximum underflow reached");
+		numUnderflow++;
+	}
+	
 }

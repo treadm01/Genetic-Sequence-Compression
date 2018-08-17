@@ -30,6 +30,7 @@ public class EncoderTest {
         e.getOrderedNodes(c.allSymbols);
         e.buildTree();
         e.traverseTree();
+        e.workOutLength();
     }
 
     @Test
@@ -38,7 +39,7 @@ public class EncoderTest {
         InputOutput io = new InputOutput();
         Encoder e = new Encoder();
         //GrammarCoder.InputOutput io  = new GrammarCoder.InputOutput();
-        String originalFile = io.readFile("vaccg");
+        String originalFile = io.readFile("humghcs");
         c.processInput(originalFile);
         e.getOrderedNodes(c.allSymbols);
         e.buildTree();

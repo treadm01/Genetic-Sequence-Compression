@@ -16,7 +16,19 @@ public class Compress {
     NonTerminal lastNonTerminal;
     public Map<String, Integer> allSymbols = new HashMap<>();
     List<Rule> orderedRules;
+    public List<String> encodingSymbols = new ArrayList<>();
+    public int highestRule = 0;
 
+
+    //ALL ENCODINGS LONGER AGAIN NOW BECAUSE OF USE OF ODD AND EVEN DISTINCTION, IS IT BETTER TO GO BACK TO PREVIOUS COMPLEMENT DISTINCTION?
+    //todo not sure that the odd even indexes for position markers is accurate in encoding
+    //todo edits will have to be relative to start of rule somehow, as they are too large for frequency table
+    //adaptive is better but still would have to encode table of symbols..., be able to retrieve
+    // then could try splitting streams, still a better encoding with straight up adaptive
+    //todo edits as distinct symbols like reverse complements? - and then always check bck to the original?
+    //todo implement specific arithmetic coding with symbol table
+    //todo arithmetic coding again?, implement the splitting? improve edits
+    // split edit symbols
     // go back to numbers rather than symbols - get frequency of each individual symbol again
     //TODO EDIT INDEXES FROM BEGINNING OF RULE, RATHER THAN BEGINNGIN OF STRING, THEN DIFFERENCE BETWEEN?
     //todo how to set lastnonterminal
@@ -75,7 +87,7 @@ public class Compress {
             //System.out.println(i + " of " + input.length());
             Symbol nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is a[pprox match add a nonterminal next
+            //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is a[pprox match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
 
 //            rules.add(getFirstRule());
@@ -121,8 +133,11 @@ public class Compress {
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println();
 //
-        System.out.println(allSymbols);
-        System.out.println(allSymbols.size());
+//        System.out.println(allSymbols);
+//        System.out.println(allSymbols.size());
+
+        System.out.println(encodingSymbols);
+        System.out.println("highest Rule : " + highestRule);
     }
 
     public void addToDigramMap(Symbol symbol) {
@@ -192,7 +207,7 @@ public class Compress {
                     for (int j = 0; j < lastSequence.length(); j++) {
                         if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
                             editNumber++;
-                            edits += (symbol.symbolIndex + j) + String.valueOf(nextSequence.charAt(j));
+                            edits += ("*" + symbol.symbolIndex + j) + String.valueOf(nextSequence.charAt(j));
                         }
                     }
 
@@ -245,7 +260,7 @@ public class Compress {
                 editSymbol.getLeft().assignRight(newSymbol);
                 //todo this bit not relevan as always last... but the edit will be in a different place...
                 int offset = editSymbol.symbolIndex;
-                newSymbol.setIsEdit(offset + String.valueOf(editSymbol.toString().charAt(0)));
+                newSymbol.setIsEdit("*" + offset + String.valueOf(editSymbol.toString().charAt(0)));
                 removeDigrams(editSymbol);
                 checkDigram(newSymbol);
         }
@@ -557,6 +572,7 @@ public class Compress {
 
     //TODO clean up
     //TODO decide how to store rules, just numbered as they are seen or try to keep 2,4,6 etc
+
     public String encode(Symbol symbol, String output) {
         Symbol current = symbol;
         while (!current.isGuard()) {
@@ -568,22 +584,27 @@ public class Compress {
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     output += "#";
                     addSymbols("#");
-
+                    encodingSymbols.add("#");
                     // length is often 2 so only add if not
                     if (nt.getRule().length != 2) {
                         output += nt.getRule().length;
                         addSymbols(String.valueOf(nt.getRule().length));
+                        encodingSymbols.add(nt.getRule().length + "");
                     }
 
-                    markerNum++;
+                    markerNum += 2;
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
                 else if (nt.rule.timeSeen == 1) {
                     //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
+                    int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
+                    int indexComplement = 0;
                     String complementIndicator = "!"; // non complement //todo why two? if not there then noncomplement??
+                    addSymbols(complementIndicator);
                     if (nt.isComplement) {
-                        complementIndicator = "?"; // complement
+                        indexComplement = 1;
+                        //complementIndicator = " "; // complement
                     }
 
                     //todo NEED TO SPLIT UP EDIT SYMBOLS *, INDEX, SYMBOL
@@ -592,10 +613,25 @@ public class Compress {
                         isEdit += "*" + nt.edits;
                     }
 
-                    int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
-                    output += complementIndicator + index + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
-                    addSymbols(complementIndicator);
-                    addSymbols(String.valueOf(index) + isEdit);
+                    output += complementIndicator + (index + indexComplement) + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
+                    addSymbols((index + indexComplement) + isEdit);
+                    encodingSymbols.add((index + indexComplement) + "");
+
+                    String sym = "";
+                    for (int i = 0; i < isEdit.length(); i++) {
+                        if (isEdit.charAt(i) == '*') {
+                            encodingSymbols.add("*");
+                        }
+                        else if (Character.isDigit(isEdit.charAt(i))) {
+                            sym += isEdit.charAt(i);
+                        }
+                        else {
+                            encodingSymbols.add(sym);
+                            sym = "";
+                            encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
+                        }
+                    }
+
                     adjustedMarkers.remove(index);// remove when used
                 }
                 else {
@@ -605,26 +641,60 @@ public class Compress {
                         isEdit += "*" + nt.edits;
                     }
 
+                    int index = nt.rule.position; // get index of current list that is used by both
+
+                    if (index > highestRule) {
+                        highestRule = index;
+                    }
                     String complementIndicator = "!"; // non complement
                     if (nt.isComplement) {
-                        complementIndicator = "?"; // complement
-                        output += complementIndicator + nt.rule.position + isEdit; //+ rules.size();
-                        //this METHOD STORING DIFFERENT SYMBOLS FOR REVERSE COMPLEMENT MIGHT WORK, IF YOU CAN COUNT THE AMOUNT
-                        // OF RULES IN DECODER AND SUBTRACT FROM THE COMPLEMENT CHARACTER
-                        //output += (char) (nt.rule.position + rules.size());
-                        addSymbols(complementIndicator);
-                        addSymbols(String.valueOf(nt.rule.position) + isEdit);
+                        index--;
+                        //complementIndicator = " "; // complement
+                        output += complementIndicator + index + isEdit; //+ rules.size();
+                        addSymbols( String.valueOf(index) + isEdit);
+                        encodingSymbols.add(String.valueOf(index));
+                        String sym = "";
+                        for (int i = 0; i < isEdit.length(); i++) {
+                            if (isEdit.charAt(i) == '*') {
+                                encodingSymbols.add("*");
+                            }
+                            else if (Character.isDigit(isEdit.charAt(i))) {
+                                sym += isEdit.charAt(i);
+                            }
+                            else {
+                                encodingSymbols.add(sym);
+                                sym = "";
+                                encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
+                            }
+                        }
+
                     }
                     else {
-                        output += complementIndicator + nt.rule.position + isEdit;
-                        addSymbols(complementIndicator);
-                        addSymbols(String.valueOf(nt.rule.position) + isEdit);
+                        output += complementIndicator + index + isEdit;
+                        addSymbols(String.valueOf(index) + isEdit);
+                        encodingSymbols.add(String.valueOf(index));
+                        String sym = "";
+                        for (int i = 0; i < isEdit.length(); i++) {
+                            if (isEdit.charAt(i) == '*') {
+                                encodingSymbols.add("*");
+                            }
+                            else if (Character.isDigit(isEdit.charAt(i))) {
+                                sym += isEdit.charAt(i);
+                            }
+                            else {
+                                encodingSymbols.add(sym);
+                                sym = "";
+                                encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
+                            }
+                        }
+
                     }
                 }
             }
             else {
                 output += current; // add regular symbols to it
                 addSymbols(current.toString());
+                encodingSymbols.add(current.toString());
             }
             current = current.getRight(); // move to next symbol
         }

@@ -84,10 +84,13 @@ public class Encoder {
     public void workOutLength() {
         System.out.println(keepNodes);
         int sum = 0;
+        String s = "";
         for (Hnode node : keepNodes) {
             sum += node.binary.length() * node.frequency;
+            s += node.binary;
         }
         System.out.println(sum);
+        System.out.println(s);
     }
 
 

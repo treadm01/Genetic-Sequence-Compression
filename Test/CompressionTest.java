@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
     public class CompressionTest {
+        //todo replace old values with values using integers for rules
 
 //        @Test
 //        public void compressBook() {
@@ -38,7 +39,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void chmpxx() {
-            int old = 38656;
+            int old = 91642;
             String fileName = "chmpxx";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -57,7 +58,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void chntxx() {
-            int old = 50165;
+            int old = 123125;
             String fileName = "chntxx";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -77,7 +78,7 @@ import static org.junit.Assert.*;
         @Test
         public void hehcmv() {
 
-            int old = 74259;
+            int old = 181765;
             String fileName = "hehcmv";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -96,7 +97,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void humdyst() {
-            int old = 14918;
+            int old = 31795;
             String fileName = "humdyst";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -115,7 +116,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void humghcs() {
-            int old = 21787;
+            int old = 32800;
             String fileName = "humghcs";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -134,7 +135,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void humhbb() {
-            int old = 26797;
+            int old = 55925;
             String fileName = "humhbb";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -153,7 +154,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void vaccg() {
-            int old = 57154;
+            int old = 143942;
             String fileName = "vaccg";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -173,7 +174,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void mtpacga() {
-            int old = 33785;
+            int old = 76925;
             String fileName = "mtpacga";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -192,7 +193,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void mpomtcg() {
-            int old = 58697;
+            int old = 145702;
             String fileName = "mpomtcg";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -211,7 +212,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void humprtb() {
-            int old = 20670;
+            int old = 45159;
             String fileName = "humprtb";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
@@ -230,7 +231,7 @@ import static org.junit.Assert.*;
 
         @Test
         public void humhdab() {
-            int old = 21497;
+            int old = 46018;
             String fileName = "humhdab";
             Compress c = new Compress();
             InputOutput io = new InputOutput();

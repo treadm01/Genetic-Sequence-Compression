@@ -43,7 +43,7 @@ public class NonTerminal extends Symbol {
 //                editIndexes += getEditIndex(getRule(), isComplement, symbol, 0);
 //                editIndexes += String.valueOf(edits.charAt(count));
 //            }
-            s += "*" + edits;
+            s += edits;
         }
         return s;
     }
@@ -106,7 +106,8 @@ public class NonTerminal extends Symbol {
                     && (left.representation == (symbol.left.getRepresentation()))
                     && this.isComplement == symbol.isComplement
                     && left.isComplement == symbol.left.isComplement
-                    //&& left.edits == symbol.left.edits //
+                    //&& left.edits == symbol.left.edits
+                    //&& this.edits == symbol.edits
             ); // switched check to look at left symbol ra
         }
         else {

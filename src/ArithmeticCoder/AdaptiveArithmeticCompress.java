@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class AdaptiveArithmeticCompress {
     static int tableSize;
-	
+
 	public static void main(String[] args) throws IOException {
 		// Handle command line arguments
 //		if (args.length != 2) {
@@ -46,7 +46,7 @@ public class AdaptiveArithmeticCompress {
 
 		Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("humhbb");
+        String originalFile = io.readFile("chntxx");
         c.processInput(originalFile);
         tableSize = c.highestRule + 129; // 128 offset for symbols, + 1 for eof symbol
 
@@ -90,16 +90,7 @@ public class AdaptiveArithmeticCompress {
               //  freqs.set(symbol, freqs.get(symbol) + 10);
             }
             else {
-                //todo make sure that the actual correct symbols are all being dealt with here
-
-                //System.out.println((char)Integer.parseInt(s));
                 symbol = Integer.parseInt(s) + 128;
-            //    System.out.println(s + " " + freqs.get(symbol) + " " + (char)symbol);
-//                if (symbol % 2 == 0) { // if even then not a complemeent... not sure this is working for markers, the lower numbers
-//                    freqs.set(symbol, freqs.get(symbol) + 8);
-//                } else {
-//                    freqs.set(symbol, freqs.get(symbol) + 2);
-//                }
             }
 
 //			symbol = symbolInts.get(s);

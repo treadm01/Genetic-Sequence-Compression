@@ -39,7 +39,7 @@ public class EncoderTest {
         InputOutput io = new InputOutput();
         Encoder e = new Encoder();
         //GrammarCoder.InputOutput io  = new GrammarCoder.InputOutput();
-        String originalFile = io.readFile("humghcs");
+        String originalFile = io.readFile("chntxx");
         c.processInput(originalFile);
         e.getOrderedNodes(c.allSymbols);
         e.buildTree();

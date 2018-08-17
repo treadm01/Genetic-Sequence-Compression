@@ -37,6 +37,7 @@ public class AdaptiveArithmeticDecompress {
 	}
 	
 	//todo still have to encode the table size
+    //todo WILL DIFFERENT MACHINES DECODE THESE IN THE SAME WAY ENCODE IN THE SAME WAY?
 	// To allow unit testing, this method is package-private instead of private.
 	static void decompress(BitInputStream in, OutputStream out) throws IOException {
 	    int count = 0;
@@ -83,8 +84,10 @@ public class AdaptiveArithmeticDecompress {
                 out.write(symbol);
             }
             else {
-                out.write(33); // remember have to deal with edits too....
-                output += "!";
+                if (lastSymbol != '*') {
+                    out.write(33); // remember have to deal with edits too....
+                    output += "!";
+                }
                 String s = String.valueOf(symbol - 128); //todo issue with frequency the offset?
                 output += s;
                 for (int i = 0; i < s.length(); i++) {
@@ -93,7 +96,6 @@ public class AdaptiveArithmeticDecompress {
             }
 
             lastSymbol = symbol;
-
             freqs.increment(symbol);
             freqs.set(symbol, freqs.get(symbol) + 10);
 		}

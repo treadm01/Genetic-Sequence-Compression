@@ -72,7 +72,7 @@ public class Rule extends Symbol implements Comparable {
 
 
     /**
-     * for debugging can get string output of an entire rule
+     * get string of the rule at nonterminal and terminal level, used in printing rules
      * @return
      */
     public String getRuleString() {
@@ -85,6 +85,23 @@ public class Rule extends Symbol implements Comparable {
         return symbols;
     }
 
+    // retrieves rule length at nonterminal level, used in implicit encoding for length of implicit rule
+    public int getRuleLength() {
+        int ruleLength = 0;
+        Symbol current = this.getGuard().getRight();
+        while (!current.isGuard()) {
+            ruleLength++;
+            current = current.getRight();
+        }
+        return ruleLength;
+    }
+
+    /**
+     * returns a string of the symbols at the terminal level
+     * @param rule
+     * @param complement
+     * @return
+     */
     //todo clean up, used by decompress... better position for pieces if split up
     public String getSymbolString(Rule rule, Boolean complement) {
         Symbol s;

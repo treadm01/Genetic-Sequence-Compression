@@ -508,26 +508,15 @@ public class Compress {
     }
 
     /**
+     *
      * prints out the symbols corresponding to the generated rules
      * @return
      */
+    //todo this can use get symbol string from rule right?
     public String printRules() {
         String output = "";
         for (Rule r : rules) {
-            r.length = 0; //TODO really need to separate getting length from printing
-            output += r + " > ";
-            Symbol current = r.getGuard().getRight();
-            while (!current.isGuard()) {
-                if (current instanceof NonTerminal) {
-                    output +=  current.toString() + " ";
-                }
-                else {
-                    output += current + " ";
-                }
-                r.length++; // TODO updating length of rule here.... better place to do it.
-                current = current.getRight();
-            }
-            output += " ";
+            output += r + " >" + r.getRuleString() + "\n";
         }
         return output;
     }
@@ -547,10 +536,11 @@ public class Compress {
                     output += "#";
                     encodingSymbols.add("#");
                     // length is often 2 so only add if not
-                    if (nt.getRule().length != 2) {
-                        output += "*" + nt.getRule().length;
+                    int length = nt.getRule().getRuleLength();
+                    if (length != 2) {
+                        output += "*" + length;
                         encodingSymbols.add("*");
-                        encodingSymbols.add(nt.getRule().length + "");
+                        encodingSymbols.add(length + "");
                     }
 
                     markerNum += 2;

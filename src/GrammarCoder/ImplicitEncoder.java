@@ -18,46 +18,19 @@ public class ImplicitEncoder {
         encodingSymbols = new ArrayList<>();
         adjustedMarkers = new ArrayList<>();
 
+        getEncodingSymbols(grammar.getFirst());
+
         //todo having to send empty string...
-        encodedOutput = encode(grammar.getFirst(), "");
+        encodedOutput = encode();
 
         System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
     }
 
     //TODO clean up
-    public String encode(Symbol symbol, String output) {
-        Symbol current = symbol;
-        while (!current.isGuard()) {
-            if (current instanceof NonTerminal) {
-                NonTerminal nt = (NonTerminal) current;
-                if (nt.rule.timeSeen == 0) {
-                    nt.rule.timeSeen++; // count for number of times rule has been seen
-                    nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
-                    adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
-                    int length = nt.getRule().getRuleLength();
-                    output += "#" + length;
-                    encodingSymbols.add("#");
-                    encodingSymbols.add(length + "");
-                    // length is often 2 so only add if not - REMOVED....
-                    //todo just going to encode the length, will need to change arithmetic coder
-                    markerNum += 2;
-                    output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
-                }
-                else if (nt.rule.timeSeen == 1) {
-                    nt.rule.timeSeen++;
-                    int index = adjustedMarkers.indexOf(nt.rule.position);
-                    output += getNonTerminalString(index, nt);
-                    adjustedMarkers.remove(index);// remove when used
-                }
-                else {
-                    output += getNonTerminalString(nt.rule.position, nt);
-                }
-            }
-            else {
-                output += current; // add regular symbols to it
-                encodingSymbols.add(current.toString());
-            }
-            current = current.getRight(); // move to next symbol
+    public String encode() {
+        String output = "";
+        for (String s : encodingSymbols) {
+            output += s;
         }
         return output;
     }
@@ -70,8 +43,9 @@ public class ImplicitEncoder {
         }
     }
 
-    public String getNonTerminalString(int index, NonTerminal nt) {
-        String ntString = "";
+    // todo not getting a string anymore just applying the ... well strings to the list
+    public void getNonTerminalString(int index, NonTerminal nt) {
+        // this here, but only really needs to be in the second seen nonterminal
         if (index > highestRule) {
             highestRule = index;
         }
@@ -79,11 +53,47 @@ public class ImplicitEncoder {
         if (nt.isComplement) {
             index++; // is there a reason why this is down and the other is up?
         }
-        ntString += "!" + index + nt.getEdits();
+        encodingSymbols.add("!");
         encodingSymbols.add(String.valueOf(index));
         addEdits(nt.editList);
+    }
 
-        return ntString;
+
+    // length is often 2 so only add if not - REMOVED....
+    //todo just going to encode the length, will need to change arithmetic coder
+    //because youre not encoding the !... but using odd and even numbers...
+    public void getEncodingSymbols(Symbol symbol) {
+        Symbol current = symbol;
+        while (!current.isGuard()) {
+            if (current instanceof NonTerminal) {
+                NonTerminal nt = (NonTerminal) current;
+                nt.rule.timeSeen++; // count for number of times rule has been seen
+                if (nt.rule.timeSeen == 0) {
+                    //separate method?
+                    nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
+                    adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
+                    markerNum += 2;
+
+                    int length = nt.getRule().getRuleLength();
+                    encodingSymbols.add("#");
+                    encodingSymbols.add(String.valueOf(length));
+
+                    getEncodingSymbols(nt.getRule().getGuard().getRight()); // if nonterminal need to recurse back
+                }
+                else if (nt.rule.timeSeen == 1) {
+                    int index = adjustedMarkers.indexOf(nt.rule.position);
+                    getNonTerminalString(index, nt);
+                    adjustedMarkers.remove(index);// remove when used
+                }
+                else {
+                    getNonTerminalString(nt.rule.position, nt);
+                }
+            }
+            else {
+                encodingSymbols.add(current.toString());
+            }
+            current = current.getRight(); // move to next symbol
+        }
     }
 
     public String getEncodedOutput() {

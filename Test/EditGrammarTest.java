@@ -40,7 +40,7 @@ public class EditGrammarTest {
         String compress = "gtgttcc";
         c.processInput(compress);
         System.out.println(c.printRules());
-        String s = c.encode(c.getFirstRule().getGuard().getRight(), "");
+        String s = "";//c.encode(c.getFirstRule().getGuard().getRight(), "");
         System.out.println("Encoded: " + s);
         System.out.println("Length: " + s.length());
     }

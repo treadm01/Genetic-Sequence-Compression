@@ -348,6 +348,6 @@ public class CompressTest {
         c = new Compress();
         c.processInput("abcdbcabcd");
         System.out.println(c.printRules());
-        System.out.println(c.getNextTerminal(c.getFirstRule().getGuard().getRight().getRight().getRight(), false));
+        //System.out.println(c.getNextTerminal(c.getFirstRule().getGuard().getRight().getRight().getRight(), false));
     }
 }

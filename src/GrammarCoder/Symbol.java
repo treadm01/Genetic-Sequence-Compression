@@ -1,5 +1,8 @@
 package GrammarCoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Symbol {
     Symbol left, right;
     long representation;
@@ -10,7 +13,7 @@ public class Symbol {
     public Symbol complement;
     int index;
     int symbolIndex; // to keep location of actual symbol for edit
-   // List<Symbol> editSymbols; // todo will require a list for multiple edits?
+    List<Edit> editList = new ArrayList<>(); // todo this shouldn't be needed for each, at symbol level
 
     public void setIsEdit(String edits) {
         this.edits += edits;
@@ -66,5 +69,38 @@ public class Symbol {
 
     public long getRepresentation() {
         return representation;
+    }
+
+    // todo this is only used once for finding approx matches, must be a better way
+    // the way in which it is called as object method, but still requires the next right symbol is not good
+    public Symbol getNextTerminal(Symbol currentSymbol, Boolean isComplement) {
+        //todo is guard an ok check, does this really always get the next terminal
+        while (!(currentSymbol instanceof Terminal) && !currentSymbol.isGuard()) {
+            if (currentSymbol instanceof Terminal) {
+                if (isComplement) {
+                    currentSymbol = currentSymbol.getLeft();
+                }
+                else {
+                    currentSymbol = currentSymbol.getRight();
+                }
+            }
+            else {
+                if (isComplement) {
+                    currentSymbol = getNextTerminal(((NonTerminal) currentSymbol).getRule().getLast(),
+                            currentSymbol.isComplement);
+                } else {
+                    currentSymbol = getNextTerminal(((NonTerminal) currentSymbol).getRule().getGuard().getRight(),
+                            currentSymbol.isComplement);
+                }
+            }
+        }
+        if (currentSymbol instanceof Terminal && isComplement) {
+            Symbol complementSymbol = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0)));
+            //todo ordering of links ok here for complement?
+            complementSymbol.assignRight(currentSymbol.getRight());
+            complementSymbol.assignLeft(currentSymbol.getLeft());
+            currentSymbol = complementSymbol;
+        }
+        return currentSymbol;
     }
 }

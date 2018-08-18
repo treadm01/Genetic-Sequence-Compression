@@ -62,6 +62,8 @@ public class Rule extends Symbol implements Comparable {
         return guard.left;
     }
 
+    public Symbol getFirst() {return getGuard().getRight();}
+
     public Guard getGuard() { return guard; }
 
     public int getCount() { return count; }

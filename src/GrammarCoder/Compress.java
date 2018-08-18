@@ -1,7 +1,5 @@
 package GrammarCoder;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.*;
 
 public class Compress {
@@ -9,53 +7,8 @@ public class Compress {
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
     Set<Rule> rules; // rules used for output and encoding
-    int markerNum = 128; // todo set to 0 check if issue later...
-    List<Integer> adjustedMarkers = new ArrayList<>(); // for encoding index of rule created used rather than symbol
     String mainInput; // string of the input, used for edit rule indexes
     NonTerminal lastNonTerminal; // used as indicator for edit rules
-    //todo need a separate method for these, not in encode
-    public List<String> encodingSymbols = new ArrayList<>(); // list of symbols required to be encoded by arithmetic
-    public int highestRule = 0; // used for arithmetic coding highest rule will be the number of symbols needed
-
-
-//TODO NEEDS SUPER CLEANING
-    //todo different levels of compression? just rules, use ordered etc, implicit encoding smallest possible
-    // could potentially split the streams, would require doing the same encoding, then could compare results
-    //FREQUENCY IF POSSIBLE - EDITS HAVE TO BE IN RELATION TO RULE, OR ELSE REDUCES SOMEWAY
-    //FIND OUTPUT RESULTS OF PREVIOUS METHODS, PROBABLY SOME OTHER BITS
-    //ALL ENCODINGS LONGER AGAIN NOW BECAUSE OF USE OF ODD AND EVEN DISTINCTION, IS IT BETTER TO GO BACK TO PREVIOUS COMPLEMENT DISTINCTION?
-    //todo not sure that the odd even indexes for position markers is accurate in encoding
-    //todo edits will have to be relative to start of rule somehow, as they are too large for frequency table
-    //adaptive is better but still would have to encode table of symbols..., be able to retrieve
-    // then could try splitting streams, still a better encoding with straight up adaptive
-    //todo edits as distinct symbols like reverse complements? - and then always check bck to the original?
-    //todo implement specific arithmetic coding with symbol table
-    //todo arithmetic coding again?, implement the splitting? improve edits
-    // split edit symbols
-    // go back to numbers rather than symbols - get frequency of each individual symbol again
-    //TODO EDIT INDEXES FROM BEGINNING OF RULE, RATHER THAN BEGINNGIN OF STRING, THEN DIFFERENCE BETWEEN?
-    //todo how to set lastnonterminal
-    //todo would it be better to register edited rules as distinct?
-    //todo existing rules, which ones to check to?
-    //todo edit digrams, then try existing rules, or nonterminal checks
-    // TODO CHECK WHICH PREVIOUS NONTERMINAL TO MATCH TO - JUST THE FIRST THAT MATCHES? might not work if checking whole nonterminals
-    // TRY IF NEXT SYMBOL IS A NONTERMINAL START LOOPING THROUGH THE SAME NUMBER OF NEXT SYMBOLS
-    // WITH EDITS, A PERCENTAGE OF THE LENGTH.... YEH MIGHT WORK, SUB RULES SHOULD MATCH... WOULD HAVE TO EDIT
-    // TO MATCH THE ENTIRE LENGTH
-    // TODO BUG 1 either generate rules overflow or missing subrule/guard conversion
-    //TODO //order of calls in replacerule... in relation to removing rules used only once, noncomplement
-    // todo BUG 2disappearing subrule under wrong match test
-
-    //TODO INDEXES NOW RELATIVE OT THE ENTIRE INPUT, SUBTRACT THE OFFSET SOMEHOW
-    // TODO ENSURE DECODING FROM ENCODED STREAM works
-
-    //TODO WHAT HAPPENS WHEN A EDIT RULE IS REMOVED?
-    // work with 'second' symbol of a digram
-    // try insert or delete, reverser matches, symbols before a rule... length of the nonterminal
-
-    //todo maybe go back to a huffman type code assignment for all individual ints and symbols
-    //todo a gammar code for each based on frequency of the symbols, use differences again
-    //todo consider trying single complement changes, so when tc is seen tg is stored also
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -87,58 +40,20 @@ public class Compress {
             checkDigram(getFirstRule().getLast());
         }
 
-        // own method?
         rules.add(getFirstRule()); //todo get with getter and setter
-        generateRules(getFirstRule().getGuard().getRight());
+        generateRules(getFirstRule().getFirst());
 
-        System.out.println(printRules());// needed to compute length of rule at the moment
-        String encoded = encode(getFirstRule().getGuard().getRight(), "");
-        System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
+        // debugging output
+        System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println();
-//
-//        System.out.println(allSymbols);
-//        System.out.println(allSymbols.size());
-
-        System.out.println(encodingSymbols);
-        System.out.println("highest Rule : " + highestRule);
     }
 
     public void addToDigramMap(Symbol symbol) {
         digramMap.putIfAbsent(symbol, symbol);
     }
 
-    public Symbol getNextTerminal(Symbol currentSymbol, Boolean isComplement) {
-        //todo is guard an ok check, does this really always get the next terminal
-        while (!(currentSymbol instanceof Terminal) && !currentSymbol.isGuard()) {
-            if (currentSymbol instanceof Terminal) {
-                if (isComplement) {
-                    currentSymbol = currentSymbol.getLeft();
-                }
-                else {
-                    currentSymbol = currentSymbol.getRight();
-                }
-            }
-            else {
-                if (isComplement) {
-                    currentSymbol = getNextTerminal(((NonTerminal) currentSymbol).getRule().getLast(),
-                            currentSymbol.isComplement);
-                } else {
-                    currentSymbol = getNextTerminal(((NonTerminal) currentSymbol).getRule().getGuard().getRight(),
-                            currentSymbol.isComplement);
-                }
-            }
-        }
-        if (currentSymbol instanceof Terminal && isComplement) {
-            Symbol complementSymbol = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0)));
-            //todo ordering of links ok here for complement?
-            complementSymbol.assignRight(currentSymbol.getRight());
-            complementSymbol.assignLeft(currentSymbol.getLeft());
-            currentSymbol = complementSymbol;
-        }
-        return currentSymbol;
-    }
-
+    //todo this is all one method?????
     public Symbol checkApproxRepeat(Symbol symbol) {
         int editCount = 0;
         Symbol editSymbol = null;
@@ -176,12 +91,6 @@ public class Compress {
                     }
 
                     if (editNumber < lastSequence.length() * 0.1 && edits != "") {
-//                        System.out.println("well");
-//                        System.out.println(edits);
-//                        System.out.println(nextNonterminal);
-//                        System.out.println(lastSequence);
-//                        System.out.println(nextSequence);
-                        //System.out.println(mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length()));
                         // won't have edit indexes.... hmm
                         symbol = new NonTerminal(nextNonterminal.getRule());
                         symbol.setIsEdit(edits);
@@ -197,7 +106,7 @@ public class Compress {
                 && currentLast instanceof Terminal) { // nonterminal has been added
             Symbol nextLeft = lastNonTerminal.getRight();
             //todo need to account for reverse complement again
-            Symbol nextRight = getNextTerminal(nextLeft.getRight(), false);
+            Symbol nextRight = nextLeft.getNextTerminal(nextLeft.getRight(), false);
             // if the last nonterminal is actually the last one (might not be needed later with existing rule incorporated)
             if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()
                     && currentLast.getLeft().isComplement == lastNonTerminal.isComplement
@@ -277,40 +186,34 @@ public class Compress {
 
     //todo for terminal and nonterminal
     public Symbol getReverseComplement(Symbol digram) {
-        Symbol left = new Symbol();
-        Symbol right = new Symbol(); // left and right symbols of reverse digram as it will be entered into the map
-
-        if (digram instanceof Terminal) { // right hand side of digram
-            left = new Terminal(Terminal.reverseSymbol(digram.toString().charAt(0))); //todo a better way to get char
-        }
-        else if (digram instanceof NonTerminal) {
-            left = new NonTerminal(((NonTerminal) digram).getRule());
-            ((NonTerminal) digram).getRule().decrementCount();
-        }
-
-        if (digram.getLeft() instanceof Terminal) { // get left hand side of reverse digram
-            right = new Terminal(Terminal.reverseSymbol(digram.getLeft().toString().charAt(0))); //todo a better way to get char
-        }
-        else if (digram.getLeft() instanceof NonTerminal) {
-            right = new NonTerminal(((NonTerminal) digram.getLeft()).getRule());
-            ((NonTerminal) digram.getLeft()).getRule().decrementCount();
-        }
-
-        // if nonterminal is complement, it's complement wont be, same for terminals,
-        // shouldn't be an issue as all are unique and values aren't altered elsewhere
-        left.isComplement = !digram.isComplement;
-        left.complement = digram;
-        //digram.complement = left;
-
-        right.isComplement = !digram.getLeft().isComplement;
-        right.complement = digram.getLeft();
-        //digram.getLeft().complement = right;
+        Symbol left = createReverseComplement(digram);
+        Symbol right = createReverseComplement(digram.getLeft()); // left and right symbols of reverse digram as it will be entered into the map
 
         right.assignLeft(left);
         left.assignRight(right);
         left.assignLeft(new Terminal('!')); //todo for comparisons in hashmap, complement requires a left.left
 
         return right;
+    }
+
+    //todo should be in symbol?
+    public Symbol createReverseComplement(Symbol currentSymbol) {
+        Symbol reverse = new Symbol(); // could it ever be guard? todo yes seems to be, setting guards needlessly
+        if (currentSymbol instanceof Terminal) { // right hand side of digram
+            reverse = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0))); //todo a better way to get char
+        }
+        else if (currentSymbol instanceof NonTerminal) {
+            reverse = new NonTerminal(((NonTerminal) currentSymbol).getRule());
+            ((NonTerminal) currentSymbol).getRule().decrementCount();
+        }
+
+        // if nonterminal is complement, it's complement wont be, same for terminals,
+        // shouldn't be an issue as all are unique and values aren't altered elsewhere
+        //currentSymbol.complement = left;
+        reverse.isComplement = !currentSymbol.isComplement;
+        reverse.complement = currentSymbol;
+
+        return reverse;
     }
 
     public void removeDigrams(Symbol digram) {
@@ -387,6 +290,7 @@ public class Compress {
      */
     private void existingRule(Symbol symbol, Symbol oldSymbol) {
         //TODO could this be done more directly? - digram to nonterminal???
+        //todo can this use get first?
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule);
@@ -521,140 +425,6 @@ public class Compress {
         return output;
     }
 
-
-
-    //TODO clean up
-    public String encode(Symbol symbol, String output) {
-        Symbol current = symbol;
-        while (!current.isGuard()) {
-            if (current instanceof NonTerminal) {
-                NonTerminal nt = (NonTerminal) current;
-                if (nt.rule.timeSeen == 0) {
-                    nt.rule.timeSeen++; // count for number of times rule has been seen
-                    nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
-                    adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
-                    output += "#";
-                    encodingSymbols.add("#");
-                    // length is often 2 so only add if not
-                    int length = nt.getRule().getRuleLength();
-                    if (length != 2) {
-                        output += "*" + length;
-                        encodingSymbols.add("*");
-                        encodingSymbols.add(length + "");
-                    }
-
-                    markerNum += 2;
-                    output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
-                }
-                else if (nt.rule.timeSeen == 1) {
-                    //TODO use even odd distinction of rules??
-                    nt.rule.timeSeen++;
-                    int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
-                    int indexComplement = 0;
-                    String complementIndicator = "!"; // non complement //todo why two? if not there then noncomplement??
-                    if (nt.isComplement) {
-                        indexComplement = 1;
-                        //complementIndicator = " "; // complement
-                    }
-
-                    //todo NEED TO SPLIT UP EDIT SYMBOLS *, INDEX, SYMBOL
-                    String isEdit = "";
-                    if (nt.isEdited) {
-                        isEdit += "*" + nt.edits;
-                    }
-
-                    output += complementIndicator + (index + indexComplement) + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
-                    encodingSymbols.add((index + indexComplement) + "");
-
-                    String sym = "";
-                    for (int i = 0; i < isEdit.length(); i++) {
-                        if (isEdit.charAt(i) == '*') {
-                            encodingSymbols.add("*");
-                        }
-                        else if (Character.isDigit(isEdit.charAt(i))) {
-                            sym += isEdit.charAt(i);
-                        }
-                        else {
-                            encodingSymbols.add(sym);
-                            sym = "";
-                            encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
-                        }
-                    }
-
-                    adjustedMarkers.remove(index);// remove when used
-                }
-                else {
-
-                    String isEdit = "";
-                    if (nt.isEdited) {
-                        isEdit += "*" + nt.edits;
-                    }
-
-                    int index = nt.rule.position; // get index of current list that is used by both
-
-                    if (index > highestRule) {
-                        highestRule = index;
-                    }
-                    String complementIndicator = "!"; // non complement
-                    if (nt.isComplement) {
-                        index--;
-                        //complementIndicator = " "; // complement
-                        output += complementIndicator + index + isEdit; //+ rules.size();
-                        encodingSymbols.add(String.valueOf(index));
-                        String sym = "";
-                        for (int i = 0; i < isEdit.length(); i++) {
-                            if (isEdit.charAt(i) == '*') {
-                                encodingSymbols.add("*");
-                            }
-                            else if (Character.isDigit(isEdit.charAt(i))) {
-                                sym += isEdit.charAt(i);
-                            }
-                            else {
-                                encodingSymbols.add(sym);
-                                sym = "";
-                                encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
-                            }
-                        }
-
-                    }
-                    else {
-                        output += complementIndicator + index + isEdit;
-                        encodingSymbols.add(String.valueOf(index));
-                        String sym = "";
-                        for (int i = 0; i < isEdit.length(); i++) {
-                            if (isEdit.charAt(i) == '*') {
-                                encodingSymbols.add("*");
-                            }
-                            else if (Character.isDigit(isEdit.charAt(i))) {
-                                sym += isEdit.charAt(i);
-                            }
-                            else {
-                                encodingSymbols.add(sym);
-                                sym = "";
-                                encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
-                            }
-                        }
-
-                    }
-                }
-            }
-            else {
-                output += current; // add regular symbols to it
-                encodingSymbols.add(current.toString());
-            }
-            current = current.getRight(); // move to next symbol
-        }
-
-
-        //todo implement properly
-        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest")) {
-            out.println(output);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return output;
-    }
-
     /**
      * works through the symbols and collects all the rules in a set
      * @param current
@@ -664,12 +434,13 @@ public class Compress {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
                 rules.add(rule);
-                generateRules(rule.getGuard().getRight());
+                generateRules(rule.getFirst());
             }
             current = current.getRight();
         }
     }
 
+    //for debugging only
     /**
      * prints out all the digrams added to the digram map
      */
@@ -680,7 +451,6 @@ public class Compress {
         }
         return output;
     }
-
 
     /**
      * getter for the main rule nonterminal

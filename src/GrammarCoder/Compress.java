@@ -32,7 +32,7 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             Symbol nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-            //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
+          //  nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
@@ -169,7 +169,6 @@ public class Compress {
             }
     }
 
-
     /**
      * when a digram has occured but was first entered as a reverse complement, ie never seen
      * the original digram it was created from needs to be used for the correct links and location
@@ -185,6 +184,7 @@ public class Compress {
     }
 
     //todo for terminal and nonterminal
+    //get new symbols and assign them together... could be in the class? its creating a digram but could return, just the right
     public Symbol getReverseComplement(Symbol digram) {
         Symbol left = createReverseComplement(digram);
         Symbol right = createReverseComplement(digram.getLeft()); // left and right symbols of reverse digram as it will be entered into the map
@@ -196,7 +196,7 @@ public class Compress {
         return right;
     }
 
-    //todo should be in symbol?
+    //todo should be in symbol? - used by getreverse, creates the actual instance
     public Symbol createReverseComplement(Symbol currentSymbol) {
         Symbol reverse = new Symbol(); // could it ever be guard? todo yes seems to be, setting guards needlessly
         if (currentSymbol instanceof Terminal) { // right hand side of digram
@@ -217,10 +217,8 @@ public class Compress {
     }
 
     public void removeDigrams(Symbol digram) {
-        // the digrams complements left is being reassigned
-        //System.out.println("removing " + digram.getLeft() + " " + digram);
         digramMap.remove(digram);
-        // creating to remove, if created with the objects could add that way too
+        //todo creating via getReveseComplement to remove, if created with the objects could add that way too
         digramMap.remove(getReverseComplement(digram));
     }
 
@@ -232,53 +230,30 @@ public class Compress {
      */
     private void createRule(Symbol symbol, Symbol oldSymbol) {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
-
         NonTerminal oldTerminal = new NonTerminal(newRule);
         NonTerminal newTerminal = new NonTerminal(newRule);
-
-        // add nonterminals to list, when using exsting rule check each instance for possible repeat
-        newRule.nonTerminalList.add(oldTerminal);
-        newRule.nonTerminalList.add(newTerminal);
-
         // if the symbols are not equal then one is a noncomplement and the rule is set for this
-        if (!symbol.equals(oldSymbol)) {
-            newTerminal.isComplement = true;
-        }
+        // todo given current location of complement set, dupelicate code here for new and old terminals
+        // can be refactored, replace digram needs the correct complements
+        newTerminal.isComplement = !symbol.equals(oldSymbol);
 
-//        System.out.println("symbol " + symbol.getLeft() + symbol.getLeft().isEdited);
-//        System.out.println("symbol " + symbol + symbol.isEdited);
-
-        //todo needs to be for old terminals too, when relevant
-        if (symbol.isEdited) {
-            newTerminal.setIsEdit(symbol.edits);
-        }
-        if (symbol.getLeft().isEdited) {
-            newTerminal.setIsEdit(symbol.getLeft().edits);
-        }
-        if (oldSymbol.isEdited) {
-            oldTerminal.setIsEdit(oldSymbol.edits);
-        }
-        if (oldSymbol.getLeft().isEdited) {
-            oldTerminal.setIsEdit(oldSymbol.getLeft().edits);
-        }
-
+        // pass on edits to nonterminals from symbols
+        newTerminal.updateEdits(symbol);
+        oldTerminal.updateEdits(oldSymbol);
 
         replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
         replaceDigram(newTerminal, symbol);// update rule for last instance of digram
 
-        // add the repeating digram to the new rule
+        // add the repeating digram to the new rule, which in turn is linked to the nonterminal
         newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
         //check the symbols removed and deal with if they are rules
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
+
         // set the last terminal to check next symbols for approx repeat to
         lastNonTerminal = oldTerminal;
-        // done by digram so only really need to check two
-        // if only one edit required? if two? could end up changing everything?
-        // if you get two symbols after a nonterminal and no direct match, check for edit first
-        // rather than taking a digram
     }
 
     /**
@@ -295,37 +270,13 @@ public class Compress {
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule);
         rule.nonTerminalList.add(nonTerminal); //TODO ADDING EXSITING RULE NONTERMINALS - WHAT ABOUT REMOVING THEM???????
+        nonTerminal.isComplement = !symbol.equals(oldSymbol); //true or alternate value, would have to alternate the nonterminal???
 
-        //todo is it possible for a value... no, if complement is looked for the noncomplement is returned
-        if (!symbol.equals(oldSymbol)) {
-            nonTerminal.isComplement = true; //true or alternate value, would have to alternate the nonterminal???
-        }
-
-
-        //todo make sep method - OLD SYMBOL NEED PULLING UP?
-        if (symbol.isEdited) {
-            nonTerminal.setIsEdit(symbol.edits);
-        }
-        if (symbol.getLeft().isEdited) {
-            nonTerminal.setIsEdit(symbol.getLeft().edits);
-        }
-
-        // problem is when you have an existing rule that is a complete rule
-        // there is nothing to check it to... nonterminal here is the new nonterminal
-        // you need to be able to set from one of the instances...
-        //send a list through and rather than one nonterminal, then check all in the list
-
-        // will be difficult to pick a better instance, without knowing what is coming
-        // can only be done once on current, todo possible to add edits to previous nonterminals?
-        //check lengths of following
-
-        //todo remember each one will be different or potentially an edit (shou;dn't matter)
-        // and each one will be different, dont have to match to the same each time
-        // if you get the checking ahead working might work ok or be able to use more efficiently
-
-        lastNonTerminal = rule.nonTerminalList.get(1); //unlikely to be different as first would already have been done
+        //todo OLD SYMBOL NEED PULLING UP?
+        nonTerminal.updateEdits(symbol);
 
         // second might not exist
+        lastNonTerminal = rule.nonTerminalList.get(1); //unlikely to be different as first would already have been don
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage

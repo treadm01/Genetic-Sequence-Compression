@@ -107,7 +107,8 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
-        assertEquals(" 20 20*7a", c.getFirstRule().getRuleString());
+        assertEquals(" 20 20*20a", c.getFirstRule().getRuleString());
+        System.out.println(c.getFirstRule().getRuleString());
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 

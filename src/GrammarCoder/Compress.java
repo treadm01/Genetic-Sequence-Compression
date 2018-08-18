@@ -8,18 +8,21 @@ public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
-    Set<Rule> rules;
-    int markerNum = 128; // todo set to 0 check if issue later
-    List<Integer> adjustedMarkers = new ArrayList<>();
-    Set<Character> alphabet = new HashSet();
-    String mainInput;
-    NonTerminal lastNonTerminal;
-    public Map<String, Integer> allSymbols = new HashMap<>();
-    List<Rule> orderedRules;
-    public List<String> encodingSymbols = new ArrayList<>();
-    public int highestRule = 0;
+    Set<Rule> rules; // rules used for output and encoding
+    int markerNum = 128; // todo set to 0 check if issue later...
+    List<Integer> adjustedMarkers = new ArrayList<>(); // for encoding index of rule created used rather than symbol
+    String mainInput; // string of the input, used for edit rule indexes
+    NonTerminal lastNonTerminal; // used as indicator for edit rules
+    //todo need a separate method for these, not in encode
+    public List<String> encodingSymbols = new ArrayList<>(); // list of symbols required to be encoded by arithmetic
+    public int highestRule = 0; // used for arithmetic coding highest rule will be the number of symbols needed
 
 
+//TODO NEEDS SUPER CLEANING
+    //todo different levels of compression? just rules, use ordered etc, implicit encoding smallest possible
+    // could potentially split the streams, would require doing the same encoding, then could compare results
+    //FREQUENCY IF POSSIBLE - EDITS HAVE TO BE IN RELATION TO RULE, OR ELSE REDUCES SOMEWAY
+    //FIND OUTPUT RESULTS OF PREVIOUS METHODS, PROBABLY SOME OTHER BITS
     //ALL ENCODINGS LONGER AGAIN NOW BECAUSE OF USE OF ODD AND EVEN DISTINCTION, IS IT BETTER TO GO BACK TO PREVIOUS COMPLEMENT DISTINCTION?
     //todo not sure that the odd even indexes for position markers is accurate in encoding
     //todo edits will have to be relative to start of rule somehow, as they are too large for frequency table
@@ -62,15 +65,6 @@ public class Compress {
         digramMap = new HashMap<>();
         rules = new HashSet<>();
         firstRule = new Rule(); // create first rule;
-        //lastNonTerminal = new NonTerminal(firstRule);
-
-        alphabet.add('a');
-        alphabet.add('c');
-        alphabet.add('g');
-        alphabet.add('t');
-        alphabet.add('#');
-        alphabet.add('(');
-        alphabet.add(')');
     }
 
     /**
@@ -80,53 +74,23 @@ public class Compress {
      * @param input
      */
     public void processInput(String input) {
-        mainInput = input; //todo assign and set properly
+        mainInput = input; //todo assign and set properly, getter and setter
         getFirstRule().addNextSymbol(new Terminal(input.charAt(0)));
-        // would need to set first symbols index
         for (int i = 1; i < input.length(); i++) {
-            //System.out.println(i + " of " + input.length());
             Symbol nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-            //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is a[pprox match add a nonterminal next
+            //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
-
-//            rules.add(getFirstRule());
-//            generateRules(getFirstRule().getGuard().getRight());
-//            System.out.println(printRules());// needed to compute length of rule at the moment
-
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
-////
-//            rules.add(getFirstRule());
-//            generateRules(getFirstRule().getGuard().getRight());
-//            System.out.println(printRules());// needed to compute length of rule at the moment
-//
 
             checkDigram(getFirstRule().getLast());
         }
 
-        rules.add(getFirstRule());
+        // own method?
+        rules.add(getFirstRule()); //todo get with getter and setter
         generateRules(getFirstRule().getGuard().getRight());
-//
-//        firstRule.count = rules.size()+2; // just to make sure 0 is first...
-//        orderedRules = rules.stream() // order rules by use so more common has a lower representation
-//                .sorted(Rule::compareTo)
-//                .collect(Collectors.toList());
 
-//
-////        // TODO shuffle the actual values round?? depends on what will eventually be saved
-////        // TODO odd or even can be checked in binary by last digit
-////
-////        // readding index
-//        for (Rule r : orderedRules) {
-//            r.index = orderedRules.indexOf(r) * 2;
-//        }
-//
-//        System.out.println(printRules());
-
-//
-//        printRules();
-////       //TODO make a method just to get length... or get length better
         System.out.println(printRules());// needed to compute length of rule at the moment
         String encoded = encode(getFirstRule().getGuard().getRight(), "");
         System.out.println("ENCODED: " + encoded + "\nLENGTH: " + encoded.length());
@@ -571,8 +535,6 @@ public class Compress {
 
 
     //TODO clean up
-    //TODO decide how to store rules, just numbered as they are seen or try to keep 2,4,6 etc
-
     public String encode(Symbol symbol, String output) {
         Symbol current = symbol;
         while (!current.isGuard()) {
@@ -583,12 +545,10 @@ public class Compress {
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     output += "#";
-                    addSymbols("#");
                     encodingSymbols.add("#");
                     // length is often 2 so only add if not
                     if (nt.getRule().length != 2) {
                         output += "*" + nt.getRule().length;
-                        addSymbols(String.valueOf(nt.getRule().length));
                         encodingSymbols.add("*");
                         encodingSymbols.add(nt.getRule().length + "");
                     }
@@ -602,7 +562,6 @@ public class Compress {
                     int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
                     int indexComplement = 0;
                     String complementIndicator = "!"; // non complement //todo why two? if not there then noncomplement??
-                    addSymbols(complementIndicator);
                     if (nt.isComplement) {
                         indexComplement = 1;
                         //complementIndicator = " "; // complement
@@ -615,7 +574,6 @@ public class Compress {
                     }
 
                     output += complementIndicator + (index + indexComplement) + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
-                    addSymbols((index + indexComplement) + isEdit);
                     encodingSymbols.add((index + indexComplement) + "");
 
                     String sym = "";
@@ -652,7 +610,6 @@ public class Compress {
                         index--;
                         //complementIndicator = " "; // complement
                         output += complementIndicator + index + isEdit; //+ rules.size();
-                        addSymbols( String.valueOf(index) + isEdit);
                         encodingSymbols.add(String.valueOf(index));
                         String sym = "";
                         for (int i = 0; i < isEdit.length(); i++) {
@@ -672,7 +629,6 @@ public class Compress {
                     }
                     else {
                         output += complementIndicator + index + isEdit;
-                        addSymbols(String.valueOf(index) + isEdit);
                         encodingSymbols.add(String.valueOf(index));
                         String sym = "";
                         for (int i = 0; i < isEdit.length(); i++) {
@@ -694,7 +650,6 @@ public class Compress {
             }
             else {
                 output += current; // add regular symbols to it
-                addSymbols(current.toString());
                 encodingSymbols.add(current.toString());
             }
             current = current.getRight(); // move to next symbol
@@ -708,17 +663,6 @@ public class Compress {
             e.printStackTrace();
         }
         return output;
-    }
-
-
-    public void addSymbols(String c) {
-        if (allSymbols.containsKey(c)) {
-            Integer count = allSymbols.get(c);
-            allSymbols.put(c, count + 1);
-        }
-        else {
-            allSymbols.put(c, 1);
-        }
     }
 
     /**

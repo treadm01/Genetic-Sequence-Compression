@@ -38,16 +38,7 @@ public class NonTerminal extends Symbol {
         if (isComplement) {
             s += "'";
         }
-        if (isEdited) {
-//            editIndexes = "";
-//            int count = 0;
-//            for (Symbol symbol : editSymbols) {
-//                indexFound = false;
-//                editIndexes += getEditIndex(getRule(), isComplement, symbol, 0);
-//                editIndexes += String.valueOf(edits.charAt(count));
-//            }
-            s += edits;
-        }
+        s += getEdits();
         return s;
     }
 
@@ -123,10 +114,20 @@ public class NonTerminal extends Symbol {
 
     public void updateEdits(Symbol digramRight) {
         if (digramRight.isEdited) {
-            this.setIsEdit(digramRight.edits);
+            this.setIsEdit(digramRight.editList);
         }
         if (digramRight.getLeft().isEdited) {
-            this.setIsEdit(digramRight.getLeft().edits);
+            this.setIsEdit(digramRight.getLeft().editList);
         }
+    }
+
+    public String getEdits() {
+        String s = "";
+        if (isEdited) {
+            for (Edit e : editList) {
+                s += "*" + e.index + e.symbol;
+            }
+        }
+        return s;
     }
 }

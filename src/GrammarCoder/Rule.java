@@ -140,30 +140,11 @@ public class Rule extends Symbol implements Comparable {
                     output.append(getSymbolString(((NonTerminal) s).getRule(), s.isComplement));
                 }
 
-                //TODO THIS IS ASSUMING THAT ALL INDEXES ARE ONE DIGIT POSITIONS
-                //TODO add the edited one to the list and get that way rather than string indexes?
                 if (s.isEdited) {
 //                    System.out.println(currentLength);
 //                    System.out.println(output);
-                    String editString = ((NonTerminal) s).edits;
-                    int i = 0;
-                    String index = "";
-                    while (i < editString.length()) {
-                        if (Character.isDigit(editString.charAt(i))) {
-                             index += String.valueOf(editString.charAt(i));
-                        }
-                        else {
-//                            System.out.println(index);
-//                            System.out.println(String.valueOf(editString.charAt(i)));
-//                            System.out.println(output.toString());
-                            int intIndex = Integer.parseInt(index); //+ currentLength;
-//                            System.out.println(intIndex);
-//                            System.out.println(intIndex + 1);
-
-                            output.replace(intIndex, intIndex + 1, String.valueOf(editString.charAt(i)));
-                            index = "";
-                        }
-                        i++;
+                    for (Edit e : (((NonTerminal)s).editList)) {
+                        output.replace(e.index, e.index + 1, e.symbol);
                     }
                 }
 

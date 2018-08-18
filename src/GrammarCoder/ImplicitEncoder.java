@@ -61,7 +61,7 @@ public class ImplicitEncoder {
                     //todo NEED TO SPLIT UP EDIT SYMBOLS *, INDEX, SYMBOL
                     String isEdit = "";
                     if (nt.isEdited) {
-                        isEdit += "*" + nt.edits;
+                        isEdit += nt.getEdits(); //todo seems extra to keep c reating??
                     }
 
                     output += complementIndicator + (index + indexComplement) + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
@@ -88,7 +88,7 @@ public class ImplicitEncoder {
 
                     String isEdit = "";
                     if (nt.isEdited) {
-                        isEdit += "*" + nt.edits;
+                        isEdit += nt.getEdits();
                     }
 
                     int index = nt.rule.position; // get index of current list that is used by both

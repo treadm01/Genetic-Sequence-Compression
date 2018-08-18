@@ -32,7 +32,7 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             Symbol nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-          //  nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
+            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
@@ -68,16 +68,14 @@ public class Compress {
                 NonTerminal nextNonterminal = ((NonTerminal) lastNonTerminal.getRight());
                 String lastSequence = nextNonterminal.getRule().getSymbolString(nextNonterminal.getRule(), nextNonterminal.isComplement);
                 String nextSequence = "";
-                //System.out.println(lastSequence);
+
                 if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
-//                    System.out.println("index of last thing " + symbol.symbolIndex);
-//                    System.out.println("new index should be " + (symbol.symbolIndex + lastSequence.length()));
                     nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
-                    //System.out.println(nextSequence);
                 }
 
                 if (lastSequence.length() == nextSequence.length()) {
-                    String edits = "";
+                    //String edits = "";
+                    List<Edit> edits = new ArrayList<>();
 
                     //TODO COULD BE ISSUES WITH SUBRULES AND RULE UTILITY , MULTIPLE SYMBOLS BEING CHECKED???
                     //todo edits not being added in certain instances, remove the edits != "" check
@@ -86,17 +84,17 @@ public class Compress {
                     for (int j = 0; j < lastSequence.length(); j++) {
                         if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
                             editNumber++;
-                            edits += ("*" + symbol.symbolIndex + j) + String.valueOf(nextSequence.charAt(j));
+                            edits.add(new Edit(symbol.symbolIndex + j, String.valueOf(nextSequence.charAt(j))));
                         }
                     }
 
-                    if (editNumber < lastSequence.length() * 0.1 && edits != "") {
-                        // won't have edit indexes.... hmm
+                    if (editNumber < lastSequence.length() * 0.1 && !edits.isEmpty()) {
                         symbol = new NonTerminal(nextNonterminal.getRule());
+                        // add each edit this way? or send through list??
                         symbol.setIsEdit(edits);
+
                         newIndex += lastSequence.length();
                         symbol.symbolIndex = newIndex;
-      //                  System.out.println(symbol);
                     }
                 }
             }
@@ -133,7 +131,9 @@ public class Compress {
                 editSymbol.getLeft().assignRight(newSymbol);
                 //todo this bit not relevan as always last... but the edit will be in a different place...
                 int offset = editSymbol.symbolIndex;
-                newSymbol.setIsEdit("*" + offset + String.valueOf(editSymbol.toString().charAt(0)));
+                List<Edit> edits = new ArrayList<>();
+                edits.add(new Edit(offset, String.valueOf(editSymbol.toString().charAt(0))));
+                newSymbol.setIsEdit(edits);
                 removeDigrams(editSymbol);
                 checkDigram(newSymbol);
         }

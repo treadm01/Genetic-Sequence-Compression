@@ -9,14 +9,14 @@ public class Symbol {
     private static final long PRIME = 2265539; // from sequitur
     public Boolean isComplement = false;
     Boolean isEdited = false;
-    String edits = "";
+    //String edits = "";
     public Symbol complement;
     int index;
     int symbolIndex; // to keep location of actual symbol for edit
     List<Edit> editList = new ArrayList<>(); // todo this shouldn't be needed for each, at symbol level
 
-    public void setIsEdit(String edits) {
-        this.edits += edits;
+    public void setIsEdit(List<Edit> edits) {
+        this.editList.addAll(edits);
         isEdited = true;
     }
 

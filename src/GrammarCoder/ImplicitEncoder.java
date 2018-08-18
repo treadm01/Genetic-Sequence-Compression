@@ -34,109 +34,23 @@ public class ImplicitEncoder {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
-                    output += "#";
-                    encodingSymbols.add("#");
-                    // length is often 2 so only add if not
                     int length = nt.getRule().getRuleLength();
-                    if (length != 2) {
-                        output += "*" + length;
-                        encodingSymbols.add("*");
-                        encodingSymbols.add(length + "");
-                    }
-
+                    output += "#" + length;
+                    encodingSymbols.add("#");
+                    encodingSymbols.add(length + "");
+                    // length is often 2 so only add if not - REMOVED....
+                    //todo just going to encode the length, will need to change arithmetic coder
                     markerNum += 2;
                     output = encode(nt.getRule().getGuard().getRight(), output); // if nonterminal need to recurse back
                 }
                 else if (nt.rule.timeSeen == 1) {
-                    //TODO use even odd distinction of rules??
                     nt.rule.timeSeen++;
-                    int index = adjustedMarkers.indexOf(nt.rule.position); // get index of current list that is used by both
-                    int indexComplement = 0;
-                    String complementIndicator = "!"; // non complement //todo why two? if not there then noncomplement??
-                    if (nt.isComplement) {
-                        indexComplement = 1;
-                        //complementIndicator = " "; // complement
-                    }
-
-                    //todo NEED TO SPLIT UP EDIT SYMBOLS *, INDEX, SYMBOL
-                    String isEdit = "";
-                    if (nt.isEdited) {
-                        isEdit += nt.getEdits(); //todo seems extra to keep c reating??
-                    }
-
-                    output += complementIndicator + (index + indexComplement) + isEdit; // the index of the rule position can be used instead but corresponds to the correct value
-                    encodingSymbols.add((index + indexComplement) + "");
-
-                    String sym = "";
-                    for (int i = 0; i < isEdit.length(); i++) {
-                        if (isEdit.charAt(i) == '*') {
-                            encodingSymbols.add("*");
-                        }
-                        else if (Character.isDigit(isEdit.charAt(i))) {
-                            sym += isEdit.charAt(i);
-                        }
-                        else {
-                            encodingSymbols.add(sym);
-                            sym = "";
-                            encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
-                        }
-                    }
-
+                    int index = adjustedMarkers.indexOf(nt.rule.position);
+                    output += getNonTerminalString(index, nt);
                     adjustedMarkers.remove(index);// remove when used
                 }
                 else {
-
-                    String isEdit = "";
-                    if (nt.isEdited) {
-                        isEdit += nt.getEdits();
-                    }
-
-                    int index = nt.rule.position; // get index of current list that is used by both
-
-                    if (index > highestRule) {
-                        highestRule = index;
-                    }
-                    String complementIndicator = "!"; // non complement
-                    if (nt.isComplement) {
-                        index--;
-                        //complementIndicator = " "; // complement
-                        output += complementIndicator + index + isEdit; //+ rules.size();
-                        encodingSymbols.add(String.valueOf(index));
-                        String sym = "";
-                        for (int i = 0; i < isEdit.length(); i++) {
-                            if (isEdit.charAt(i) == '*') {
-                                encodingSymbols.add("*");
-                            }
-                            else if (Character.isDigit(isEdit.charAt(i))) {
-                                sym += isEdit.charAt(i);
-                            }
-                            else {
-                                encodingSymbols.add(sym);
-                                sym = "";
-                                encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
-                            }
-                        }
-
-                    }
-                    else {
-                        output += complementIndicator + index + isEdit;
-                        encodingSymbols.add(String.valueOf(index));
-                        String sym = "";
-                        for (int i = 0; i < isEdit.length(); i++) {
-                            if (isEdit.charAt(i) == '*') {
-                                encodingSymbols.add("*");
-                            }
-                            else if (Character.isDigit(isEdit.charAt(i))) {
-                                sym += isEdit.charAt(i);
-                            }
-                            else {
-                                encodingSymbols.add(sym);
-                                sym = "";
-                                encodingSymbols.add(String.valueOf(isEdit.charAt(i)));
-                            }
-                        }
-
-                    }
+                    output += getNonTerminalString(nt.rule.position, nt);
                 }
             }
             else {
@@ -145,19 +59,44 @@ public class ImplicitEncoder {
             }
             current = current.getRight(); // move to next symbol
         }
-
-
-        //todo implement properly
-        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest")) {
-            out.println(output);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         return output;
+    }
+
+    public void addEdits(List<Edit> editList) {
+        for (Edit e : editList) {
+            encodingSymbols.add("*"); // has to be added each time for arithmetic coding
+            encodingSymbols.add(String.valueOf(e.index));
+            encodingSymbols.add(e.symbol);
+        }
+    }
+
+    public String getNonTerminalString(int index, NonTerminal nt) {
+        String ntString = "";
+        if (index > highestRule) {
+            highestRule = index;
+        }
+
+        if (nt.isComplement) {
+            index++; // is there a reason why this is down and the other is up?
+        }
+        ntString += "!" + index + nt.getEdits();
+        encodingSymbols.add(String.valueOf(index));
+        addEdits(nt.editList);
+
+        return ntString;
     }
 
     public String getEncodedOutput() {
         return encodedOutput;
+    }
+
+    public void writeToFile() {
+        //todo implement properly
+        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest")) {
+            out.println(getEncodedOutput());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

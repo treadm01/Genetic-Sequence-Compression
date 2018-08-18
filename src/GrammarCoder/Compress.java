@@ -36,7 +36,6 @@ public class Compress {
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
-
             checkDigram(getFirstRule().getLast());
         }
 

@@ -175,7 +175,6 @@ import static org.junit.Assert.*;
             System.out.println("Difference " + (originalFile.length() - compare.length()));
             System.out.println("length of rules " + c.printRules().length());
             System.out.println("BPC " + (float)(compare.length() * 8) / originalFile.length());
-            System.out.println(compare);
             assertTrue(compare.length() < originalFile.length());
          //   assertTrue(compare.length() <= old);
         }

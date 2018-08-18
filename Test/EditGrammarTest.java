@@ -1,5 +1,6 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
+import GrammarCoder.ImplicitEncoder;
 import GrammarCoder.InputOutput;
 import org.junit.Assert;
 import org.junit.Before;
@@ -107,6 +108,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals(" 20 20*20a", c.getFirstRule().getRuleString());
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }

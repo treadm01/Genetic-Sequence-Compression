@@ -10,60 +10,46 @@ public class Decompress {
     String input;
     Compress c;
     List<Integer> adjustedMarkers = new ArrayList<>();
-    int previousMarker = 0;
 
-    //TODO CLEAN UP!!!
-    //TODO A LOT DEPENDS ON NEXT STEP OF ENCODING
-    //TODO remember most rules are two....
+    //todo rather than times 2 could start at 128, would still need * 2, but wouldn't have to sutract 128
     public Rule buildGrammar(String ruleString) {
         input = ruleString; //todo use by getter and setter
         c = new Compress();// todo split out the methods used by both
         while (position < input.length()) {
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
-                int length = 2; // most often the length will be 2
-                if (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) { // if the next position is a length not 2
-                    length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
-                }
                 Rule r = new Rule();
-                r.length = length; // rule length known from next symbol
+                r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
                 addNonTerminal(r, false); // add nonterminal to rule
-                adjustedMarkers.add(marker.size()); // add position of rule created to list which can then be used in place of the rule number iteself
-                marker.put(marker.size(), (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
+                adjustedMarkers.add(marker.size() * 2); // add position of rule created to list which can then be used in place of the rule number iteself
+                marker.put(marker.size() * 2, (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
-            else if (input.charAt(position) == '!' || input.charAt(position) == '?') { // if a pointer deal with it and its rule
-                Boolean isComplement = false;
-                if (input.charAt(position) == '?' ){
-                    isComplement = true;
-                }
+            else if (input.charAt(position) == '$' || input.charAt(position) == '?') { // if a pointer deal with it and its rule
+                Boolean isComplement = input.charAt(position) == '?';
                 // if next symbol is a number, its a pointer so deal with that...
-                if (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) {
-                    int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
-                    //todo would think after this section would check for * and add edit string to nonterminal
-                    //todo maybe, plus below if necessary (will third time seen ever be edit?). need to go through again
-                   // System.out.println(position);
-                    NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
-                    adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
-                    evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
-                    addNonTerminal(nonTerminal.getRule(), isComplement);
+                int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+                NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
+                adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
+                evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
+                addNonTerminal(nonTerminal.getRule(), isComplement);
+            }
+            else if (input.charAt(position) == '!') {
+                int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+                Boolean isComplement = pos % 2 != 0;
+                // if not even then reverse complement, and referring to the rule below
+                if (isComplement) {
+                    pos--;
                 }
-                else { // if it isn't then its a reverse complement rule
-                    position++; //move to get the symbol
-                    int pos = input.charAt(position) - 128; //added as seems so have to remove 128 initial marker number
-                    addNonTerminal(marker.get(pos).getRule(), isComplement);
-                }
+                pos -= 128;
+                addNonTerminal(marker.get(pos).getRule(), isComplement);
             }
             else {
                 if (input.charAt(position) < 128) { // if terminal add it to first rule
                     c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));
                 }
-                else { //if a rule that is not a reverse complement
-                    int pos = input.charAt(position) - 128;//retrieveStringSegment();
-                    addNonTerminal(marker.get(pos).getRule(), false);
-                }
             }
             position++; // increase position in string
         }
-        return c.getFirstRule();
+        return c.getFirstRule(); // todo can't me using compress.....
     }
 
     /**

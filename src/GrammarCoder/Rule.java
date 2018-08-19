@@ -112,7 +112,7 @@ public class Rule extends Symbol implements Comparable {
             s = rule.getLast();
         }
         else {
-            s = rule.getGuard().getRight();
+            s = rule.getFirst();
         }
 
         do {

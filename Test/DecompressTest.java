@@ -4,7 +4,6 @@
 import static org.junit.Assert.*;
 
 public class DecompressTest {
-
     //TODO SLOWDOWN WITH MOVING DECOMPRESS METHOD TO RULE CLASS???
 
     @Test
@@ -237,7 +236,7 @@ public class DecompressTest {
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
         String input = io.readFile("compressTest");
-        System.out.println(input);
+
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }

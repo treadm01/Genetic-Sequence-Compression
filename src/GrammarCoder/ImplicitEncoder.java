@@ -22,6 +22,7 @@ public class ImplicitEncoder {
 
         //todo having to send empty string...
         encodedOutput = encode();
+        writeToFile();
 
         System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
     }
@@ -50,10 +51,20 @@ public class ImplicitEncoder {
             highestRule = index;
         }
 
-        if (nt.isComplement) {
-            index++; // is there a reason why this is down and the other is up?
+        String complementIndicator = "!";
+        if (nt.rule.timeSeen == 1) {
+            if (nt.isComplement) {
+                complementIndicator = "?";
+            }
+            else {
+                complementIndicator = "$";
+            }
         }
-        encodingSymbols.add("!");
+        else if (nt.isComplement) {
+            index++;
+        }
+
+        encodingSymbols.add(complementIndicator);
         encodingSymbols.add(String.valueOf(index));
         addEdits(nt.editList);
     }
@@ -67,13 +78,12 @@ public class ImplicitEncoder {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 NonTerminal nt = (NonTerminal) current;
-                nt.rule.timeSeen++; // count for number of times rule has been seen
                 if (nt.rule.timeSeen == 0) {
+                    nt.rule.timeSeen++; // count for number of times rule has been seen
                     //separate method?
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     markerNum += 2;
-
                     int length = nt.getRule().getRuleLength();
                     encodingSymbols.add("#");
                     encodingSymbols.add(String.valueOf(length));
@@ -84,6 +94,7 @@ public class ImplicitEncoder {
                     int index = adjustedMarkers.indexOf(nt.rule.position);
                     getNonTerminalString(index, nt);
                     adjustedMarkers.remove(index);// remove when used
+                    nt.rule.timeSeen++; // count for number of times rule has been seen
                 }
                 else {
                     getNonTerminalString(nt.rule.position, nt);

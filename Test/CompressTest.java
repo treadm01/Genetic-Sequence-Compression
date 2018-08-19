@@ -256,6 +256,7 @@ public class CompressTest {
         c.processInput(originalFile);
     }
 
+    //todo check speeds of this from previous versions
     @Test
     public void hehcmv() {
         Compress c = new Compress();

@@ -48,6 +48,29 @@ public class InputOutput {
         return everything;
     }
 
+    public String readFile(File file) {
+        //TODO improve implementation
+        String everything = ""; ///home/tread/IdeaProjects/projectGC/compressTest
+        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                //sb.append(System.lineSeparator()); //REMOVED AS NEW LINED SYMBOL ADDED WAS MESSING UP.... OK FOR THIS BUT NOT OTHERS
+                line = br.readLine();
+            }
+            everything = sb.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("File Read");
+        return everything;
+    }
+
 /*
     public String writeFile(List<GrammarCoder.NonTerminal> finalRules) {
         //TODO break this up into process binary and separate write file methods

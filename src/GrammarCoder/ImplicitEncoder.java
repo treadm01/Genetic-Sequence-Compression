@@ -20,7 +20,6 @@ public class ImplicitEncoder {
 
         getEncodingSymbols(grammar.getFirst());
 
-        //todo having to send empty string...
         encodedOutput = encode();
         writeToFile();
 
@@ -38,6 +37,7 @@ public class ImplicitEncoder {
 
     public void addEdits(List<Edit> editList) {
         for (Edit e : editList) {
+            System.out.println(e.index);
             encodingSymbols.add("*"); // has to be added each time for arithmetic coding
             encodingSymbols.add(String.valueOf(e.index));
             encodingSymbols.add(e.symbol);
@@ -66,7 +66,9 @@ public class ImplicitEncoder {
 
         encodingSymbols.add(complementIndicator);
         encodingSymbols.add(String.valueOf(index));
-        addEdits(nt.editList);
+        if (nt.isEdited) {
+            addEdits(nt.editList);
+        }
     }
 
 
@@ -87,6 +89,11 @@ public class ImplicitEncoder {
                     int length = nt.getRule().getRuleLength();
                     encodingSymbols.add("#");
                     encodingSymbols.add(String.valueOf(length));
+
+                    // have to add edits for rules that are first time see with edits
+                    if (nt.isEdited) {
+                        addEdits(nt.editList);
+                    }
 
                     getEncodingSymbols(nt.getRule().getGuard().getRight()); // if nonterminal need to recurse back
                 }
@@ -113,11 +120,15 @@ public class ImplicitEncoder {
 
     public void writeToFile() {
         //todo implement properly
-        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest")) {
+        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGCG/compressedFiles/compressTest")) {
             out.println(getEncodedOutput());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<String> getSymbolList() {
+        return encodingSymbols;
     }
 
 }

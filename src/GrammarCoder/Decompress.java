@@ -32,7 +32,7 @@ public class Decompress {
                 evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
                 addNonTerminal(nonTerminal.getRule(), isComplement);
             }
-            else if (input.charAt(position) == '!') {
+            else if (input.charAt(position) == '!') { // nonterminal symbol
                 int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
                 Boolean isComplement = pos % 2 != 0;
                 // if not even then reverse complement, and referring to the rule below
@@ -41,6 +41,17 @@ public class Decompress {
                 }
                 pos -= 128;
                 addNonTerminal(marker.get(pos).getRule(), isComplement);
+            }
+            else if (input.charAt(position) == '*') {
+                //todo needs to handle markernumber edits... no, should already be doing that
+                // get the symbols and then add to the nonterimal edits
+                List<Edit> edits = new ArrayList<>();
+                int index = retrieveStringSegment();
+                Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)));
+                edits.add(e);
+                // if part of a sub rule need to add to head rule
+                c.getFirstRule().getLast().setIsEdit(edits);
+                position++; // have to move past the symbol being edited
             }
             else {
                 if (input.charAt(position) < 128) { // if terminal add it to first rule
@@ -109,7 +120,7 @@ public class Decompress {
 
     //TODO NOT USED!!! RULE HAS ITS OWN DECOMPRESS... NEEDS LOOKING INTO
     /**
-     * for debugging, creates the string back from the cfg generated,
+     * for debugging, creates the string back from the cfg generated, but does not work for reverse comp
      * @param rule
      * @return
      */

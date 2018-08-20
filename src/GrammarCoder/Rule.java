@@ -34,6 +34,7 @@ public class Rule extends Symbol implements Comparable {
      * @param symbol
      */
     public void addNextSymbol(Symbol symbol) {
+        //symbol.isEdited = false; // todo remove edit from subrule, but how to pass on
         symbol.assignLeft(guard.left); // left of symbol is current last, actualguard.left
         symbol.assignRight(guard); // symbol right should be actual guard
         guard.left.assignRight(symbol); // assign current last right to this symbol

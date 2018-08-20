@@ -8,4 +8,9 @@ public class Edit {
         this.index = index;
         this.symbol = symbol;
     }
+
+    @Override
+    public String toString() {
+        return index + " " + symbol;
+    }
 }

@@ -1,7 +1,4 @@
-import GrammarCoder.Compress;
-import GrammarCoder.Decompress;
-import GrammarCoder.ImplicitEncoder;
-import GrammarCoder.InputOutput;
+import GrammarCoder.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -306,11 +303,16 @@ public class EditGrammarTest {
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
-            String input = genRand(rand.nextInt((15 - 1) + 1) + 1);
+            String input = genRand(rand.nextInt((50 - 1) + 1) + 1);
             System.out.println("INPUT: " + input);
             Compress c = new Compress();
+            Decompress d = new Decompress();
             c.processInput(input);
-            Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+            ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+            String impEncode = ie.getEncodedOutput();
+            Rule r = d.buildGrammar(impEncode);
+            Assert.assertEquals(input, r.getSymbolString(r, r.isComplement));
+            //Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
         }
     }
 

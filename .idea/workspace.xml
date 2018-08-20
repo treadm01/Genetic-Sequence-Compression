@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="recovered some progression including trying to implement gui after a crash trying to use button twice in a row">
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticCoderBase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticDecoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/BitInputStream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/BitOutputStream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/CheckedFrequencyTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/FlatFrequencyTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/FrequencyTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ArithmeticCoder/SimpleFrequencyTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/sample.fxml" afterDir="false" />
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="trying to implement gui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -100,14 +88,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="256" />
-          <entry key="txt" value="129" />
+          <entry key="java" value="604" />
+          <entry key="txt" value="152" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="256" />
-          <entry key="PLAIN_TEXT" value="129" />
+          <entry key="JAVA" value="604" />
+          <entry key="PLAIN_TEXT" value="152" />
         </counts>
       </usages-collector>
     </session>
@@ -212,8 +200,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="59" column="41" selection-start-line="59" selection-start-column="41" selection-end-line="59" selection-end-column="41" />
+            <state relative-caret-position="292">
+              <caret line="90" column="42" selection-start-line="90" selection-start-column="42" selection-end-line="90" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -752,14 +740,7 @@
       <workItem from="1534433205206" duration="68159000" />
       <workItem from="1534622159570" duration="12964000" />
       <workItem from="1534775749454" duration="52000" />
-      <workItem from="1534775811332" duration="6163000" />
-    </task>
-    <task id="LOCAL-00220" summary="trying to figure out a way to find approximate repeats">
-      <created>1533239315078</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1533239315078</updated>
+      <workItem from="1534775811332" duration="8680000" />
     </task>
     <task id="LOCAL-00221" summary="can get rule symbols including reverse complements">
       <created>1533297866583</created>
@@ -1097,7 +1078,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534776418707</updated>
     </task>
-    <option name="localTasksCounter" value="269" />
+    <task id="LOCAL-00269" summary="trying to implement gui">
+      <created>1534794914767</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1534794914767</updated>
+    </task>
+    <option name="localTasksCounter" value="270" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1133,7 +1121,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1634993000" />
+    <option name="totallyTimeSpent" value="1637510000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1181,7 +1169,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="should have been assigning oldsymbols as links" />
     <MESSAGE value="using first terminals of a nonterminal to check for approx repeats as well" />
     <MESSAGE value="sorted index position again, probably still need to check double digit indexes" />
     <MESSAGE value="trying to implement approx repeats" />
@@ -1206,7 +1193,8 @@
     <MESSAGE value="edits stored as objects in list" />
     <MESSAGE value="cleaning up encode" />
     <MESSAGE value="recovered some progression including trying to implement gui after a crash trying to use button twice in a row" />
-    <option name="LAST_COMMIT_MESSAGE" value="recovered some progression including trying to implement gui after a crash trying to use button twice in a row" />
+    <MESSAGE value="trying to implement gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying to implement gui" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/book" />
@@ -1467,8 +1455,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="59" column="41" selection-start-line="59" selection-start-column="41" selection-end-line="59" selection-end-column="41" />
+        <state relative-caret-position="292">
+          <caret line="90" column="42" selection-start-line="90" selection-start-column="42" selection-end-line="90" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

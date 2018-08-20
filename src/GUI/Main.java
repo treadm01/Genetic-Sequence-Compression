@@ -5,10 +5,9 @@ import GrammarCoder.Compress;
 import GrammarCoder.ImplicitEncoder;
 import GrammarCoder.InputOutput;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -61,11 +60,35 @@ public class Main extends Application {
             System.out.println("nope");
         });
 
-
         HBox hBox = new HBox(menuButton, compressButton, decompressButton);
+        hBox.setPadding(new Insets(15, 12, 15, 12));
+        hBox.setSpacing(10);
         border.setTop(hBox);
-        Scene scene = new Scene(border, 960, 600);
 
+
+        // search bar
+        TextField searchField = new TextField();
+        searchField.setText("Search...");
+
+        // display compressed files
+        ListView listView = new ListView();
+        listView.getItems().add("Item 1");
+        listView.getItems().add("Item 2");
+        listView.getItems().add("Item 3");
+
+        // next to it is output for search
+        TextArea textOutput = new TextArea();
+
+        HBox fileAndOutput = new HBox(listView, textOutput);
+        fileAndOutput.setSpacing(10);
+
+        VBox vBox = new VBox(searchField, fileAndOutput);
+        vBox.setPadding(new Insets(0, 12, 15, 12));
+        vBox.setSpacing(10);
+
+        border.setCenter(vBox);
+
+        Scene scene = new Scene(border, 900, 600);
 
         primaryStage.setScene(scene);
         primaryStage.show();

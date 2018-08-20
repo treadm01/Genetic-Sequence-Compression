@@ -20,10 +20,9 @@ public class ImplicitEncoder {
 
         getEncodingSymbols(grammar.getFirst());
 
-        encodedOutput = encode();
-        writeToFile();
-
-        System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
+//        encodedOutput = encode();
+//        writeToFile();
+//        System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
     }
 
     //TODO clean up

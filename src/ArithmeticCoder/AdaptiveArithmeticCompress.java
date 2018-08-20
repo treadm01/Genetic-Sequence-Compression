@@ -6,10 +6,6 @@ package ArithmeticCoder;/*
  * https://github.com/nayuki/Reference-arithmetic-coding
  */
 
-import GrammarCoder.Compress;
-import GrammarCoder.ImplicitEncoder;
-import GrammarCoder.InputOutput;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -62,22 +58,22 @@ public class AdaptiveArithmeticCompress {
 	// To allow unit testing, this method is package-private instead of private.
 	public void compress(List<String> symbols, BitOutputStream out) throws IOException {
 		FlatFrequencyTable initFreqs = new FlatFrequencyTable(tableSize);
-		String ruleNumber = Integer.toBinaryString(tableSize);
-        System.out.println(ruleNumber.length());
-        System.out.println(tableSize);
-        String gammaCode = "";
 
+		// encode number of rules
+		String ruleNumber = Integer.toBinaryString(tableSize);
+        String gammaCode = "";
         for (int i = 0; i < ruleNumber.length(); i++) {
             gammaCode += "1";
         }
         gammaCode += "0"; // last stop bit
         gammaCode += ruleNumber;
-        System.out.println(ruleNumber);
 		for (int i = 0; i < gammaCode.length(); i++) {
             out.write(Integer.parseInt(gammaCode.substring(i, i + 1)));
         }
-		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
+
+        FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
 		ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
+
 		for (String s : symbols) {
 			// Read and encode one byte
             int symbol;

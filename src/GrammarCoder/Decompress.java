@@ -18,6 +18,8 @@ public class Decompress {
         while (position < input.length()) {
             if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
                 Rule r = new Rule();
+                // have to specify that if its a 2, then that is an encoded symbol, not indicator of length
+                // as twos are so freqeunt they are not encoded for markers
                 r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
                 addNonTerminal(r, false); // add nonterminal to rule
                 adjustedMarkers.add(marker.size() * 2); // add position of rule created to list which can then be used in place of the rule number iteself
@@ -70,7 +72,6 @@ public class Decompress {
      */
     public int retrieveStringSegment() {
         String symbol = "";
-        //System.out.println(input.charAt(position+1));
         while (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) {
             symbol += input.charAt(position + 1);
             position++;

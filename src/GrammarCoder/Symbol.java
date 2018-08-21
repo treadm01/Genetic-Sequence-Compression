@@ -12,7 +12,7 @@ public class Symbol {
     //String edits = "";
     public Symbol complement;
     int index;
-    int symbolIndex; // to keep location of actual symbol for edit
+    int symbolIndex = 0; // to keep location of actual symbol for edit
     List<Edit> editList = new ArrayList<>(); // todo this shouldn't be needed for each, at symbol level
 
     public void setIsEdit(List<Edit> edits) {

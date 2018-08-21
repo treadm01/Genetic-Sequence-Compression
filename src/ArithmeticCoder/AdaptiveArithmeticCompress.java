@@ -6,13 +6,10 @@ package ArithmeticCoder;/*
  * https://github.com/nayuki/Reference-arithmetic-coding
  */
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,82 +29,68 @@ public class AdaptiveArithmeticCompress {
     int tableSize;
     String PATH = System.getProperty("user.dir") + "/compressedFiles";
 
-	public AdaptiveArithmeticCompress(int numberOfSymbols, List<String> encodingSymbols) throws IOException {
-		// Handle command line arguments
-//		if (args.length != 2) {
-//			System.err.println("Usage: java AdaptiveArithmeticCompress InputFile OutputFile");
-//			System.exit(1);
-//			return;
-//		}
-//		File inputFile  = new File(args[0]);
-//		File outputFile = new File(args[1]);
+    public AdaptiveArithmeticCompress(int numberOfSymbols, List<String> encodingSymbols) throws IOException {
+        tableSize = numberOfSymbols + 130; // 128 offset for symbols, + 1 for eof symbol
+        File outputFile = new File(PATH + "/compressed.bin"); //todo use previous filename?
 
-        tableSize = numberOfSymbols + 129; // 128 offset for symbols, + 1 for eof symbol
+        // Perform file compression
+        try (BitOutputStream out = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(outputFile)))) {
+            compress(encodingSymbols, out);
+        }
+    }
 
-		//File inputFile  = new File("/home/tread/files/aetest/src/compress");
-        System.out.println(PATH);
-		File outputFile = new File(PATH + "/compressed.bin"); //todo use previous filename?
-
-		// Perform file compression
-		try (BitOutputStream out = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(outputFile)))) {
-			compress(encodingSymbols, out);
-		}
-	}
-
-
-	// To allow unit testing, this method is package-private instead of private.
-	public void compress(List<String> symbols, BitOutputStream out) throws IOException {
-		FlatFrequencyTable initFreqs = new FlatFrequencyTable(tableSize);
-
-		// encode number of rules
-		String ruleNumber = Integer.toBinaryString(tableSize);
+    // supect its ok initially but have to worry about byte completion when adding in middle of stream
+    public void gammaCode(int number, BitOutputStream out) throws IOException {
+        // encode number of rules
+        String ruleNumber = Integer.toBinaryString(number);
         String gammaCode = "";
         for (int i = 0; i < ruleNumber.length(); i++) {
             gammaCode += "1";
         }
         gammaCode += "0"; // last stop bit
         gammaCode += ruleNumber;
-		for (int i = 0; i < gammaCode.length(); i++) {
+        System.out.println(gammaCode);
+        for (int i = 0; i < gammaCode.length(); i++) {
             out.write(Integer.parseInt(gammaCode.substring(i, i + 1)));
         }
+    }
 
+    // To allow unit testing, this method is package-private instead of private.
+    public void compress(List<String> symbols, BitOutputStream out) throws IOException {
+        FlatFrequencyTable initFreqs = new FlatFrequencyTable(tableSize);
+        gammaCode(tableSize, out);
         FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
-		ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
+        ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
+        String lastSymbol = "";
 
-		for (String s : symbols) {
-			// Read and encode one byte
+        for (String s : symbols) {
+            // Read and encode one byte
             int symbol;
 
-            // this includes single digit numbers
             if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
                 symbol = s.charAt(0);
-                //System.out.println((char) symbol + " " + freqs.get(symbol) + symbol);
-              //  freqs.set(symbol, freqs.get(symbol) + 10);
             }
             else {
                 symbol = Integer.parseInt(s) + 128;
             }
 
-//			symbol = symbolInts.get(s);
-			if (symbol == -1)
-				break;
+            if (symbol == -1)
+                break;
 
-			// one of the benefits was to not send any symbols indicating complements, cant actually be done
-            // with second time seen rules....
             // todo also have to send the ! symbol for the string although not used here
-			if (symbol != '!') {
+            if (symbol != '!') {
                 enc.write(freqs, symbol);
                 freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best
                 freqs.increment(symbol);
             }
-		}
-		enc.write(freqs, tableSize - 1 );  // EOF
-		enc.finish();  // Flush remaining code bits
+        }
+        enc.write(freqs, tableSize - 1);  // EOF
+        enc.finish();  // Flush remaining code bits
 //        System.out.println(freqs);
-	}
+    }
 
-	// todo probably can be more detailed as to the frequencies, but makes compression worse
-	//if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
+    // todo probably can be more detailed as to the frequencies, but makes compression worse
+    //if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
     //                freqs.set(symbol, freqs.get(symbol) + 10); // todo putting this before enc.write gives good compression, but hard to decompress...
     //            }
     //            else {

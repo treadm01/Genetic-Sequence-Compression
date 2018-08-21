@@ -66,7 +66,6 @@ public final class BitOutputStream implements AutoCloseable {
 		}
 	}
 	
-	
 	/**
 	 * Closes this stream and the underlying output stream. If called when this
 	 * bit stream is not at a byte boundary, then the minimum number of "0" bits

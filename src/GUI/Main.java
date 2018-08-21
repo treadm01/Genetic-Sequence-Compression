@@ -16,9 +16,12 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Main extends Application {
-    String PATH = System.getProperty("user.dir") + "/sourceFiles";
+    String PATH = System.getProperty("user.dir");
+    String SOURCE_PATH = PATH + "/sourceFiles";
+    String COMPRESSED_PATH = PATH + "/compressedFiles";
 
     public static void main(String[] args) {
         launch(args);
@@ -31,26 +34,30 @@ public class Main extends Application {
         Compress c = new Compress();
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(PATH));
+        fileChooser.setInitialDirectory(new File(SOURCE_PATH));
 
         BorderPane border = new BorderPane();
 
-        MenuItem grammarOption = new MenuItem("Grammar");
-        MenuItem ImpOption = new MenuItem("Implicit Encoding");
-        MenuItem BinOption = new MenuItem("Binary");
+        ChoiceBox choiceBox = new ChoiceBox();
 
-        MenuButton menuButton = new MenuButton("Compression Options", null, grammarOption, ImpOption, BinOption);
+        choiceBox.getItems().add("Grammar");
+        choiceBox.getItems().add("Implicit");
+        choiceBox.getItems().add("Binary");
+
+        choiceBox.setValue("Binary");
 
         Button compressButton = new Button("File to compress");
         compressButton.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile != null) {
-                c.processInput(io.readFile(selectedFile));
-                ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-                try {
-                    AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                if (choiceBox.getValue().equals("Binary")) {
+                    c.processInput(io.readFile(selectedFile));
+                    ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+                    try {
+                        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
@@ -60,7 +67,7 @@ public class Main extends Application {
             System.out.println("nope");
         });
 
-        HBox hBox = new HBox(menuButton, compressButton, decompressButton);
+        HBox hBox = new HBox(choiceBox, compressButton, decompressButton);
         hBox.setPadding(new Insets(15, 12, 15, 12));
         hBox.setSpacing(10);
         border.setTop(hBox);
@@ -72,9 +79,12 @@ public class Main extends Application {
 
         // display compressed files
         ListView listView = new ListView();
-        listView.getItems().add("Item 1");
-        listView.getItems().add("Item 2");
-        listView.getItems().add("Item 3");
+
+        File compressedFolder = new File(COMPRESSED_PATH);
+        File[] compressedFiles = compressedFolder.listFiles();
+        for (File f : compressedFiles) {
+            listView.getItems().add(f);
+        }
 
         // next to it is output for search
         TextArea textOutput = new TextArea();

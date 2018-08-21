@@ -9,6 +9,7 @@ public class Compress {
     Set<Rule> rules; // rules used for output and encoding
     String mainInput; // string of the input, used for edit rule indexes
     NonTerminal lastNonTerminal; // used as indicator for edit rules
+    int streamIndex = 0;
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -32,7 +33,7 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             Symbol nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-       //     nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
+            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
@@ -236,6 +237,8 @@ public class Compress {
         // can be refactored, replace digram needs the correct complements
         newTerminal.isComplement = !symbol.equals(oldSymbol);
 
+//        newTerminal.symbolIndex = symbol.getLeft().symbolIndex;
+//        oldTerminal.symbolIndex = oldSymbol.getLeft().symbolIndex;
         // pass on edits to nonterminals from symbols
         newTerminal.updateEdits(symbol);
         oldTerminal.updateEdits(oldSymbol);
@@ -271,6 +274,7 @@ public class Compress {
         rule.nonTerminalList.add(nonTerminal); //TODO ADDING EXSITING RULE NONTERMINALS - WHAT ABOUT REMOVING THEM???????
         nonTerminal.isComplement = !symbol.equals(oldSymbol); //true or alternate value, would have to alternate the nonterminal???
 
+//        nonTerminal.symbolIndex = symbol.getLeft().symbolIndex;
         //todo OLD SYMBOL NEED PULLING UP?
         nonTerminal.updateEdits(symbol);
 
@@ -384,9 +388,18 @@ public class Compress {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
                 rules.add(rule);
+                if (current.isEdited) {
+                    for (Edit e : current.editList) {
+                        e.index -= streamIndex;
+                    }
+                }
                 generateRules(rule.getFirst());
             }
+            else {
+                streamIndex++;
+            }
             current = current.getRight();
+
         }
     }
 

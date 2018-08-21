@@ -48,6 +48,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "cagagattttgagcgtgatattattccaatggctaggcattttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         c.processInput(compress);
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
     }
 
     @Test
@@ -106,7 +107,7 @@ public class EditGrammarTest {
         String compress = "ttctctgcctcacttctctgactcac";
         c.processInput(compress);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        assertEquals(" 20 20*20a", c.getFirstRule().getRuleString());
+        assertEquals(" 20 20*7a", c.getFirstRule().getRuleString());
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -125,6 +126,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgcctcacttctctgcctcacttctctgactcac";
         c.processInput(compress);
+        assertEquals(" 54 54*20a", c.getFirstRule().getRuleString());
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 

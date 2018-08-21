@@ -34,7 +34,6 @@ public class Rule extends Symbol implements Comparable {
      * @param symbol
      */
     public void addNextSymbol(Symbol symbol) {
-        //symbol.isEdited = false; // todo remove edit from subrule, but how to pass on
         symbol.assignLeft(guard.left); // left of symbol is current last, actualguard.left
         symbol.assignRight(guard); // symbol right should be actual guard
         guard.left.assignRight(symbol); // assign current last right to this symbol
@@ -133,7 +132,7 @@ public class Rule extends Symbol implements Comparable {
                 }
             }
             else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
-                int currentLength = output.length();
+                int currentLength = output.length(); // length before start of edited rule
                 if (complement) {
                     output.append(getSymbolString(((NonTerminal) s).getRule(), !s.isComplement));
                 }
@@ -145,7 +144,7 @@ public class Rule extends Symbol implements Comparable {
 //                    System.out.println(currentLength);
 //                    System.out.println(output);
                     for (Edit e : (((NonTerminal)s).editList)) {
-                        output.replace(e.index, e.index + 1, e.symbol);
+                        output.replace(currentLength + e.index, currentLength + e.index + 1, e.symbol);
                     }
                 }
 

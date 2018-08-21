@@ -20,15 +20,15 @@ public class ImplicitEncoder {
 
         getEncodingSymbols(grammar.getFirst());
 
-//        encodedOutput = encode();
+        encodedOutput = encode();
 //        writeToFile();
-//        System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
+        System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
     }
 
     //TODO clean up
     public String encode() {
         String output = "";
-        for (String s : encodingSymbols) {
+        for (String s : getSymbolList()) {
             output += s;
         }
         return output;
@@ -36,7 +36,6 @@ public class ImplicitEncoder {
 
     public void addEdits(List<Edit> editList) {
         for (Edit e : editList) {
-            System.out.println(e.index);
             encodingSymbols.add("*"); // has to be added each time for arithmetic coding
             encodingSymbols.add(String.valueOf(e.index));
             encodingSymbols.add(e.symbol);
@@ -88,6 +87,7 @@ public class ImplicitEncoder {
                     int length = nt.getRule().getRuleLength();
                     encodingSymbols.add("#");
                     encodingSymbols.add(String.valueOf(length));
+
 
                     // have to add edits for rules that are first time see with edits
                     if (nt.isEdited) {

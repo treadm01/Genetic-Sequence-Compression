@@ -8,7 +8,6 @@ public class Compress {
     private Rule firstRule; // main rule
     Set<Rule> rules; // rules used for output and encoding
     String mainInput; // string of the input, used for edit rule indexes
-    NonTerminal lastNonTerminal; // used as indicator for edit rules
     int streamIndex = 0;
 
     /**
@@ -33,8 +32,12 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             Symbol nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
-            i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
+
+            if (getFirstRule().getLast().getLeft() instanceof NonTerminal
+                    && getFirstRule().getLast() instanceof Terminal) {
+                nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
+                i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
+            }
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
@@ -59,61 +62,65 @@ public class Compress {
         Symbol editSymbol = null;
         Symbol lastEdit = null;
         Symbol currentLast = getFirstRule().getLast();
-        int newIndex = symbol.symbolIndex; // to jump over the seen symbols
+        NonTerminal matchingNonTerminal = (NonTerminal) currentLast.getLeft();
+        Rule rule =  matchingNonTerminal.getRule();
+//        NonTerminal previousNonterminal;// = rule.nonTerminalList.get(0);
+//        int newIndex = symbol.symbolIndex; // to jump over the seen symbols
 //
-//        // check nonterminals for approx repeats todo need to be able to find a decent match
-//        if (lastNonTerminal != null && currentLast.getRepresentation() == lastNonTerminal.getRepresentation()) {
-//            if (lastNonTerminal.getRight() instanceof NonTerminal) {
+//        for (NonTerminal nt : rule.nonTerminalList) {
+//
+//            previousNonterminal = nt;
+//            // check nonterminals for approx repeats todo need to be able to find a decent match
+//            if (previousNonterminal.getRight() instanceof NonTerminal
+//                    && !previousNonterminal.getRight().equals(matchingNonTerminal)) {
+//
+//                System.out.println(previousNonterminal + " " + previousNonterminal.getRight());
+//                System.out.println(getFirstRule().getRuleString());
 //                //todo this will get edits too
-//                NonTerminal nextNonterminal = ((NonTerminal) lastNonTerminal.getRight());
-//                String lastSequence = nextNonterminal.getRule().getSymbolString(nextNonterminal.getRule(), nextNonterminal.isComplement);
-//                String nextSequence = "";
-//
-//                if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
-//                    nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
-//                }
-//
-//                if (lastSequence.length() == nextSequence.length()) {
-//                    //String edits = "";
-//                    List<Edit> edits = new ArrayList<>();
-//
-//                    //TODO COULD BE ISSUES WITH SUBRULES AND RULE UTILITY , MULTIPLE SYMBOLS BEING CHECKED???
-//                    //todo edits not being added in certain instances, remove the edits != "" check
-//                    // possibly exact matches???
-//                    int editNumber = 0;
-//                    for (int j = 0; j < lastSequence.length(); j++) {
-//                        if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
-//                            editNumber++;
-//                            edits.add(new Edit(symbol.symbolIndex + j, String.valueOf(nextSequence.charAt(j))));
-//                        }
-//                    }
-//
-//                    if (editNumber < lastSequence.length() * 0.1 && !edits.isEmpty()) {
-//                        symbol = new NonTerminal(nextNonterminal.getRule());
-//                        // add each edit this way? or send through list??
-//                        symbol.setIsEdit(edits);
-//
-//                        newIndex += lastSequence.length();
-//                        symbol.symbolIndex = newIndex;
-//                    }
-//                }
+////            NonTerminal nextNonterminal = ((NonTerminal) previousNonterminal.getRight());
+////            String lastSequence = nextNonterminal.getRule().getSymbolString(nextNonterminal.getRule(), nextNonterminal.isComplement);
+////            String nextSequence = "";
+////
+////                if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
+////                    nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
+////                }
+////
+////                if (lastSequence.length() == nextSequence.length()) {
+////                    //String edits = "";
+////                    List<Edit> edits = new ArrayList<>();
+////
+////                    //TODO COULD BE ISSUES WITH SUBRULES AND RULE UTILITY , MULTIPLE SYMBOLS BEING CHECKED???
+////                    //todo edits not being added in certain instances, remove the edits != "" check
+////                    // possibly exact matches???
+////                    int editNumber = 0;
+////                    for (int j = 0; j < lastSequence.length(); j++) {
+////                        if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
+////                            editNumber++;
+////                            edits.add(new Edit(symbol.symbolIndex + j, String.valueOf(nextSequence.charAt(j))));
+////                        }
+////                    }
+////
+////                    if (editNumber < lastSequence.length() * 0.1 && !edits.isEmpty()) {
+////                        symbol = new NonTerminal(nextNonterminal.getRule());
+////                        // add each edit this way? or send through list??
+////                        symbol.setIsEdit(edits);
+////
+////                        newIndex += lastSequence.length();
+////                        symbol.symbolIndex = newIndex;
+////                    }
+////                }
 //            }
 //        }
+        //todo need to account for reverse complement again??
+        NonTerminal previousNonterminal = rule.nonTerminalList.get(0);
 
-        if (lastNonTerminal != null && lastNonTerminal.getRight() instanceof Terminal
-                && currentLast instanceof Terminal) { // nonterminal has been added
-            Symbol nextLeft = lastNonTerminal.getRight();
-            //todo need to account for reverse complement again
+        if (previousNonterminal.getRight() instanceof Terminal) { // nonterminal has been added
+            Symbol nextLeft = previousNonterminal.getRight();
             Symbol nextRight = nextLeft.getNextTerminal(nextLeft.getRight(), false);
             // if the last nonterminal is actually the last one (might not be needed later with existing rule incorporated)
-            if (currentLast.getLeft().getRepresentation() == lastNonTerminal.getRepresentation()
-                    && currentLast.getLeft().isComplement == lastNonTerminal.isComplement
-                    && !currentLast.getLeft().equals(lastNonTerminal.getRight().getRight())
-            //        && !currentLast.getLeft().equals(lastNonTerminal)
-            ) {
-                //get the following terminal digram
-                //if next right matches then that SHOULD be it...
-                // as if the last terminal had matched it would have been added
+            if (currentLast.getLeft().isComplement == previousNonterminal.isComplement //checking complement on a one symbol level
+                    && !currentLast.getLeft().equals(previousNonterminal.getRight().getRight())) {
+
                 if (nextRight.getRepresentation() == symbol.getRepresentation()
                         && currentLast.getRepresentation() != nextLeft.getRepresentation()) {
                     editCount++;
@@ -232,6 +239,8 @@ public class Compress {
         Rule newRule = new Rule(); // create new rule to hold new Nonterminal
         NonTerminal oldTerminal = new NonTerminal(newRule);
         NonTerminal newTerminal = new NonTerminal(newRule);
+        newRule.nonTerminalList.add(oldTerminal);
+        newRule.nonTerminalList.add(newTerminal);
         // if the symbols are not equal then one is a noncomplement and the rule is set for this
         // todo given current location of complement set, dupelicate code here for new and old terminals
         // can be refactored, replace digram needs the correct complements
@@ -253,9 +262,6 @@ public class Compress {
         // reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
-
-        // set the last terminal to check next symbols for approx repeat to
-        lastNonTerminal = oldTerminal;
     }
 
     /**
@@ -277,9 +283,6 @@ public class Compress {
 //        nonTerminal.symbolIndex = symbol.getLeft().symbolIndex;
         //todo OLD SYMBOL NEED PULLING UP?
         nonTerminal.updateEdits(symbol);
-
-        // second might not exist
-        lastNonTerminal = rule.nonTerminalList.get(1); //unlikely to be different as first would already have been don
 
         replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
@@ -396,6 +399,9 @@ public class Compress {
                 generateRules(rule.getFirst());
             }
             else {
+                // keep an index of symbols seen which can then be subtracted from the edit index
+                // to give one relative to the symbols..... relative position also used when getting
+                // symbol rule string...
                 streamIndex++;
             }
             current = current.getRight();

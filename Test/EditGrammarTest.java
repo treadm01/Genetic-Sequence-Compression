@@ -274,7 +274,7 @@ public class EditGrammarTest {
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
-        String originalFile = io.readFile("vaccg");
+        String originalFile = io.readFile("hehcmv");
         c.processInput(originalFile);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }

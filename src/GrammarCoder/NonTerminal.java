@@ -11,7 +11,7 @@ public class NonTerminal extends Symbol {
         // add nonterminals to rule list, when using exsting rule check each instance for possible repeat
         // used for edit grammars, checking to old nonterminals
         //todo are you handling removal??
-        this.rule.nonTerminalList.add(this);
+        //this.rule.nonTerminalList.add(this);
         representation = rule.representation; // rule has the same symbol rep as it's nonterminal...
     }
 

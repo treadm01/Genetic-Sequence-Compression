@@ -141,8 +141,6 @@ public class Rule extends Symbol implements Comparable {
                 }
 
                 if (s.isEdited) {
-//                    System.out.println(currentLength);
-//                    System.out.println(output);
                     for (Edit e : (((NonTerminal)s).editList)) {
                         output.replace(currentLength + e.index, currentLength + e.index + 1, e.symbol);
                     }

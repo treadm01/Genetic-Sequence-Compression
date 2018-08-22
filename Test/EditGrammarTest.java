@@ -21,14 +21,22 @@ public class EditGrammarTest {
 
     @Test
     public void checkIndexes() { // check which digram is replaced
-        c.processInput("aaagcagaaagc");
-        System.out.println(c.printRules());
+        c.processInput("aaabcabaaac");
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        assertEquals("aaabcabaaac", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
-    public void processMaDi() { // check which digram is replaced
-        c.processInput("tgtc");
-        System.out.println(c.printRules());
+    public void checkIndexesTwo() { // check which digram is replaced
+        c.processInput("aaabcabaaacaaabcabaaac");
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        assertEquals("aaabcabaaacaaabcabaaac", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
+    }
+
+    @Test
+    public void processMaDi() { // not an edit problem
+        c.processInput("tttcagatgggcttcaggcaacatt");
+        assertEquals("tttcagatgggcttcaggcaacatt", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
 
@@ -37,18 +45,15 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "gtgttcc";
         c.processInput(compress);
-        System.out.println(c.printRules());
-        String s = "";//c.encode(c.getFirstRule().getGuard().getRight(), "");
-        System.out.println("Encoded: " + s);
-        System.out.println("Length: " + s.length());
     }
 
     @Test
     public void decompressX4() {
         Compress c = new Compress();
-        String compress = "cagagattttgagcgtgatattattccaatggctaggcattttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        String compress = "agagattttgagcgtgatattattccaatggctaggcattttcggtatggcc";
         c.processInput(compress);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
@@ -56,6 +61,7 @@ public class EditGrammarTest {
         Compress c = new Compress();
         String compress = "cgattctgttctctgcctcacttctctgactcac";
         c.processInput(compress);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
@@ -305,7 +311,7 @@ public class EditGrammarTest {
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
-            String input = genRand(rand.nextInt((50 - 1) + 1) + 1);
+            String input = genRand(rand.nextInt((60 - 1) + 1) + 1);
             System.out.println("INPUT: " + input);
             Compress c = new Compress();
             Decompress d = new Decompress();

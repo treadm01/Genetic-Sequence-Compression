@@ -100,8 +100,8 @@ public class NonTerminal extends Symbol {
                     && (left.representation == (symbol.left.getRepresentation()))
                     && this.isComplement == symbol.isComplement
                     && left.isComplement == symbol.left.isComplement
-                    //&& left.edits == symbol.left.edits
-                    //&& this.edits == symbol.edits
+//                    && left.edits == symbol.left.edits
+//                    && this.edits == symbol.edits
             ); // switched check to look at left symbol ra
         }
         else {

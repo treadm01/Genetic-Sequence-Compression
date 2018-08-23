@@ -10,6 +10,8 @@ public class Compress {
     Set<Rule> rules; // rules used for output and encoding
     String mainInput; // string of the input, used for edit rule indexes
     int streamIndex = 0;
+    Map<Character, Set<NonTerminal>> rulesByStartSymbols = new HashMap<>();
+    Map<Character, Set<NonTerminal>> rulesByEndSymbols = new HashMap<>();
 
     /**
      * main constructor for compress, just initialises, maps and first rules etc
@@ -29,9 +31,14 @@ public class Compress {
      */
     public void processInput(String input) {
         mainInput = input; //todo assign and set properly, getter and setter
-        getFirstRule().addNextSymbol(new Terminal(input.charAt(0)));
+        Symbol nextSymbol = new Terminal(input.charAt(0));
+        getFirstRule().addNextSymbol(nextSymbol);
         for (int i = 1; i < input.length(); i++) {
-            Symbol nextSymbol = new Terminal(input.charAt(i));
+            if (!rulesByStartSymbols.containsKey(input.charAt(i))) {
+                rulesByStartSymbols.putIfAbsent(input.charAt(i), new HashSet());
+                rulesByEndSymbols.putIfAbsent(input.charAt(i), new HashSet());
+            }
+            nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
             nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
@@ -40,8 +47,32 @@ public class Compress {
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
         }
+
+
         rules.add(getFirstRule()); //todo get with getter and setter
         generateRules(getFirstRule().getFirst());
+
+        for (Rule r : rules) {
+            if (r.representation != 0) {
+                // regular
+                String s = r.getSymbolString(r, r.isComplement);
+
+                NonTerminal regular = new NonTerminal(r); // todo what about rule count etc?
+                regular.assignLeft(new Terminal('!'));
+                rulesByStartSymbols.get(s.charAt(0)).add(regular);
+                rulesByEndSymbols.get(s.charAt(s.length() - 1)).add(regular);
+
+
+                NonTerminal isComplement = new NonTerminal(r);
+                isComplement.assignLeft(new Terminal('!'));
+                isComplement.isComplement = true;
+                rulesByEndSymbols.get(Terminal.reverseSymbol(s.charAt(0))).add(isComplement);
+                rulesByStartSymbols.get(Terminal.reverseSymbol(s.charAt(s.length() - 1))).add(isComplement);
+            }
+        }
+
+        System.out.println(rulesByStartSymbols);
+        System.out.println(rulesByEndSymbols);
 
         // debugging output
         System.out.println(printRules());
@@ -417,14 +448,43 @@ public class Compress {
         // first check digrams as easiest route, but then there may be splits
         //ca wont be indicated by digrams, will there be instances where ca occurs somwhere
         // and a rule c 2 where 2 starts with a still occurs?? probably
-        if (searchString.length() > 1) {
-            left = new Terminal(searchString.charAt(0));
-            right = new Terminal(searchString.charAt(1));
-            left.assignRight(right);
-            right.assignLeft(left);
+        List<Terminal> digramList  = new ArrayList<>();
+        // create digrams from seacrh
+//        if (searchString.length() > 1) {
+//            for (int i = 0; i < searchString.length() - 1; i++) {
+//                left = new Terminal(searchString.charAt(i));
+//                right = new Terminal(searchString.charAt(i + 1));
+//                left.assignRight(right);
+//                right.assignLeft(left);
+//                digramList.add(right);
+//
+//            }
+//        }
+
+        // check first by digram,
+        //have to get a collection of symbols that match, search digram and terminal
+        // that would be every c in main rule and in any subrules... followed by the next symbol....
+        int digramsChecked = 0;
+        Terminal currentTerminal;
+        while (digramsChecked != digramList.size()) {
+            currentTerminal = digramList.get(digramsChecked);
+            // if found move on to next digram (although want to check for split digrams too)
+            // split digrams will increase seach by a lot,
+            // if this search was for ga have to find g 6, 4 a
+            // well not so bad as they have to follow the first digram at least, so limited by
+            // the amount of that initial search, if initial seach is a nonterminal, have to check each follow up...
+            if (digramMap.containsKey(currentTerminal)) {
+                digramsChecked++;
+            }
+            else {
+                // check for right hand side of all instances????
+            }
         }
 
-        System.out.println(digramMap.containsKey(right));
+
+        // then check by symbol and next terminal - have to both to find all instances, probably,
+
+
 
         return found;
     }

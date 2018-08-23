@@ -133,7 +133,7 @@ public class DecompressTest {
     public void decompressX3() {
         Decompress d = new Decompress();
         Compress c = new Compress();
-        String compress = "acgt";//"cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
+        String compress = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         c.processInput(compress);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();

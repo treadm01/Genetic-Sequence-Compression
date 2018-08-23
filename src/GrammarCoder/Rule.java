@@ -160,17 +160,6 @@ public class Rule extends Symbol implements Comparable {
 
 
     @Override
-//    public int compareTo(Object o) {
-//        Rule compareRule = (Rule) o;
-//        if (count < compareRule.count) {
-//            return 1;
-//        }
-//
-//        else if (count == compareRule.count) {
-//            return 0;
-//        }
-//        return -1;
-//    }
     public int compareTo(Object o) {
         Rule r = (Rule) o;
         if (r.symbolRule.length() > symbolRule.length()) {
@@ -181,4 +170,5 @@ public class Rule extends Symbol implements Comparable {
         }
         return 0;
     }
+
 }

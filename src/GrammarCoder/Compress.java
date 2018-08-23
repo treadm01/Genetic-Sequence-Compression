@@ -174,7 +174,6 @@ public class Compress {
                 // if the matching digram is an overlap do nothing
                 if (existingDigram.getRight() != symbol) { // todo find a better way to place this
                     // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
-                    //todo this can't be working for longer rules??? not chekcing longer rules just digrams
                     if (existingDigram.getLeft().getLeft().isGuard()
                             && existingDigram.getRight().isGuard()) {
                         existingRule(symbol, existingDigram);
@@ -443,50 +442,66 @@ public class Compress {
 
     public Boolean search(String searchString) {
         Boolean found = false;
-        Terminal left;
-        Terminal right = null;
-        // first check digrams as easiest route, but then there may be splits
-        //ca wont be indicated by digrams, will there be instances where ca occurs somwhere
-        // and a rule c 2 where 2 starts with a still occurs?? probably
-        List<Terminal> digramList  = new ArrayList<>();
-        // create digrams from seacrh
-//        if (searchString.length() > 1) {
-//            for (int i = 0; i < searchString.length() - 1; i++) {
-//                left = new Terminal(searchString.charAt(i));
-//                right = new Terminal(searchString.charAt(i + 1));
-//                left.assignRight(right);
-//                right.assignLeft(left);
-//                digramList.add(right);
-//
-//            }
-//        }
-
-        // check first by digram,
-        //have to get a collection of symbols that match, search digram and terminal
-        // that would be every c in main rule and in any subrules... followed by the next symbol....
-        int digramsChecked = 0;
-        Terminal currentTerminal;
-        while (digramsChecked != digramList.size()) {
-            currentTerminal = digramList.get(digramsChecked);
-            // if found move on to next digram (although want to check for split digrams too)
-            // split digrams will increase seach by a lot,
-            // if this search was for ga have to find g 6, 4 a
-            // well not so bad as they have to follow the first digram at least, so limited by
-            // the amount of that initial search, if initial seach is a nonterminal, have to check each follow up...
-            if (digramMap.containsKey(currentTerminal)) {
-                digramsChecked++;
+        // so build a rule from digram map and rules then check those digrams?
+        Rule searchRule = new Rule(); // todo would this mess with data??? rule numbers etc
+        if (searchString.length() > 1) {
+            searchRule.addNextSymbol(new Terminal(searchString.charAt(0)));
+            for (int i = 1; i < searchString.length(); i++) {
+                Terminal lastTerminal = new Terminal(searchString.charAt(i));
+                searchRule.addNextSymbol(lastTerminal);
+                searchCheckDigrams(lastTerminal);
             }
-            else {
-                // check for right hand side of all instances????
+
+            System.out.println(searchRule.getRuleString());
+
+            if (digramMap.containsKey(searchRule.getFirst().getRight())) {
+                found = true;
+                Symbol s = digramMap.get(searchRule.getFirst().getRight());
+                Symbol searchSymbol = searchRule.getFirst().getRight();
+                System.out.println(searchSymbol);
+                while (!searchSymbol.getRight().isGuard()) {
+                    searchSymbol = searchSymbol.getRight();
+                    s = s.getRight();
+
+                    System.out.println(searchSymbol);
+                    if (!searchSymbol.equals(s)) {
+                        found = false;
+                        break;
+                    }
+                }
             }
         }
 
-
-        // then check by symbol and next terminal - have to both to find all instances, probably,
+        // find first digram of searchrule, then loop through symbols?
+        // wont work for instances in subrules??? wont be able to find??? will require other method
 
 
 
         return found;
+    }
+
+    public void searchCheckDigrams(Symbol symbol) {
+        if (digramMap.containsKey(symbol)) {
+            // retrieve existing digram, if complement return original
+
+            Symbol existingDigram = getOriginalDigram(symbol); // todo mess with reversecomplement
+
+            if (existingDigram.getLeft().getLeft().isGuard()
+                    && existingDigram.getRight().isGuard()) {
+                Guard g = (Guard) existingDigram.getRight(); // have to get guard and then rule from there
+                Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
+                NonTerminal nonTerminal = new NonTerminal(rule);
+                nonTerminal.isComplement = !symbol.equals(existingDigram); //true or alternate value, would have to alternate the nonterminal???
+
+                nonTerminal.assignRight(symbol.getRight());
+                nonTerminal.assignLeft(symbol.getLeft().getLeft());
+
+                symbol.getLeft().getLeft().assignRight(nonTerminal);
+                symbol.getRight().assignLeft(nonTerminal);
+
+                searchCheckDigrams(nonTerminal);
+            }
+        }
     }
 }
 

@@ -17,4 +17,20 @@ public class SearchTest {
         c.processInput(compress);
         assertTrue(c.search("cgca"));
     }
+
+    @Test
+    public void searchSimple() {
+        Compress c = new Compress();
+        String compress = "agtcgcaatttagacaacagccaa";
+        c.processInput(compress);
+        assertTrue(c.search("cgcaa"));
+    }
+
+    @Test
+    public void searchTest() {
+        Compress c = new Compress();
+        String compress = "agtcgcaatttagacaacagccaa";
+        c.processInput(compress);
+        assertTrue(c.search("agtcgc"));
+    }
 }

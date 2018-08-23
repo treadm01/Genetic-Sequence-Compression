@@ -31,6 +31,15 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("agtcgc"));
+        assertTrue(c.search("agtcg"));
+    }
+
+    @Test
+    public void humdyst() {
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("humdyst");
+        c.processInput(originalFile);
+        assertTrue(c.search("acgttg"));
     }
 }

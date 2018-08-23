@@ -442,66 +442,39 @@ public class Compress {
 
     public Boolean search(String searchString) {
         Boolean found = false;
-        // so build a rule from digram map and rules then check those digrams?
         Rule searchRule = new Rule(); // todo would this mess with data??? rule numbers etc
-        if (searchString.length() > 1) {
-            searchRule.addNextSymbol(new Terminal(searchString.charAt(0)));
-            for (int i = 1; i < searchString.length(); i++) {
-                Terminal lastTerminal = new Terminal(searchString.charAt(i));
-                searchRule.addNextSymbol(lastTerminal);
-                searchCheckDigrams(lastTerminal);
+        List<Symbol> digramList;
+
+        digramList = createSeachDigram(searchString.charAt(0), new Terminal('!'));
+        for (int i = 1; i < searchString.length(); i++) {
+            List<Symbol> moreList = new ArrayList<>();
+            for (Symbol s : digramList) {
+                moreList = createSeachDigram(searchString.charAt(i), s);
             }
-
-            System.out.println(searchRule.getRuleString());
-
-            if (digramMap.containsKey(searchRule.getFirst().getRight())) {
-                found = true;
-                Symbol s = digramMap.get(searchRule.getFirst().getRight());
-                Symbol searchSymbol = searchRule.getFirst().getRight();
-                System.out.println(searchSymbol);
-                while (!searchSymbol.getRight().isGuard()) {
-                    searchSymbol = searchSymbol.getRight();
-                    s = s.getRight();
-
-                    System.out.println(searchSymbol);
-                    if (!searchSymbol.equals(s)) {
-                        found = false;
-                        break;
-                    }
-                }
-            }
+            digramList = moreList;
         }
 
-        // find first digram of searchrule, then loop through symbols?
-        // wont work for instances in subrules??? wont be able to find??? will require other method
-
-
-
-        return found;
+        for (Symbol s : digramList) {
+            System.out.println(s.getLeft() + " " + s);
+        }
+        return digramList.size() != 0;
     }
 
-    public void searchCheckDigrams(Symbol symbol) {
-        if (digramMap.containsKey(symbol)) {
-            // retrieve existing digram, if complement return original
+    public List<Symbol> createSeachDigram(Character terminal, Symbol leftHand) {
+        List<Symbol> digrams = new ArrayList<>();
+        // get two terminal digram
+        Terminal left = new Terminal(terminal);
+        left.assignLeft(leftHand);
+        digrams.add(left);
 
-            Symbol existingDigram = getOriginalDigram(symbol); // todo mess with reversecomplement
-
-            if (existingDigram.getLeft().getLeft().isGuard()
-                    && existingDigram.getRight().isGuard()) {
-                Guard g = (Guard) existingDigram.getRight(); // have to get guard and then rule from there
-                Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
-                NonTerminal nonTerminal = new NonTerminal(rule);
-                nonTerminal.isComplement = !symbol.equals(existingDigram); //true or alternate value, would have to alternate the nonterminal???
-
-                nonTerminal.assignRight(symbol.getRight());
-                nonTerminal.assignLeft(symbol.getLeft().getLeft());
-
-                symbol.getLeft().getLeft().assignRight(nonTerminal);
-                symbol.getRight().assignLeft(nonTerminal);
-
-                searchCheckDigrams(nonTerminal);
-            }
+        // where left is nonterminal
+        for (NonTerminal s : rulesByEndSymbols.get(terminal)) {
+            NonTerminal nt = new NonTerminal(s.getRule());
+            nt.isComplement = s.isComplement;
+            nt.assignLeft(leftHand);
         }
+
+        return digrams;
     }
 }
 

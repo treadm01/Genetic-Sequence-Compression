@@ -1,6 +1,7 @@
 package GrammarCoder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
@@ -52,7 +53,7 @@ public class Compress {
         digramMap.putIfAbsent(symbol, symbol);
     }
 
-    //todo this is all one method?????
+    //todo existing rules can't take advantage of?
     public Symbol checkApproxRepeat(Symbol symbol) {
         // will either be the same symbol sent, an edited one (maybe) or one at the end of a nonterminal sequence
         Symbol nextSymbol = symbol;
@@ -64,16 +65,32 @@ public class Compress {
         // get the last nonterminal, if it wasn't one then not checking
         if (getFirstRule().getLast() instanceof NonTerminal) {
             matchingNonTerminal = (NonTerminal) getFirstRule().getLast();
-            previousNonTerminal = matchingNonTerminal.getRule().nonTerminalList.get(0);
 
-            // have to check that the matching nonterminals are the same complement
-            //todo work with noncomplements as well... alter the edit position
+            //todo find the best nonterminal to use, or a selection
+            List<NonTerminal> orderedList = matchingNonTerminal.getRule().nonTerminalList.stream()
+                    .filter(x -> x.getRight() instanceof NonTerminal)
+                    .collect(Collectors.toList());
+
+            NonTerminal longestNext = matchingNonTerminal.getRule().nonTerminalList.get(0);
+
+            // need to try and find the best match to try and edit
+            // greatest match for the fewest amount of edits
+            //int count = 0;
+//            for (NonTerminal nt : orderedList) {
+//                if (((NonTerminal)nt.getRight()).getRule().getRuleLength() > count) {
+//                    longestNext = nt;
+//                    count = ((NonTerminal)nt.getRight()).getRule().getRuleLength();
+//                }
+//            }
+
+            // longest length for the fewest amounts of edits only works across two terminals
+            // when there may be a small next terminal with a small edit that encodes a lot more
+            // is there anyway to tell?
+            previousNonTerminal = longestNext;
+            // need to compare the next things length... but what about edits.... would have to compare to underlying rule
+
             // two nonterminals are the ones worth checking
-            // these nonterminal checks aren't solving the issue...
-            //todo if the getright nextnonterminal is reversecomplement
-            //todo need to check it as such, reverse complement symbols
-            //should be doing that as using the complement... but then need to indicate the complemetn of new symbol
-            if ( previousNonTerminal.getRight() instanceof NonTerminal
+            if (previousNonTerminal.getRight() instanceof NonTerminal
                     && !previousNonTerminal.getRight().equals(matchingNonTerminal)) { // check no overlap
                 NonTerminal nextNonTerminal = (NonTerminal) previousNonTerminal.getRight();
                 String lastSequence = nextNonTerminal.getRule().getSymbolString(nextNonTerminal.getRule(), nextNonTerminal.isComplement);
@@ -93,8 +110,6 @@ public class Compress {
                         }
                     }
 
-                    // think you're not adding those nonedits???
-                    //editNumber < lastSequence.length() * 0.1 && !edits.isEmpty()
                     if (editNumber > 0 && editNumber <= lastSequence.length() * 0.1) {
                         nextSymbol = new NonTerminal(nextNonTerminal.getRule());
                         nextSymbol.setIsEdit(edits);
@@ -393,6 +408,25 @@ public class Compress {
      */
     public Rule getFirstRule() {
         return this.firstRule;
+    }
+
+    public Boolean search(String searchString) {
+        Boolean found = false;
+        Terminal left;
+        Terminal right = null;
+        // first check digrams as easiest route, but then there may be splits
+        //ca wont be indicated by digrams, will there be instances where ca occurs somwhere
+        // and a rule c 2 where 2 starts with a still occurs?? probably
+        if (searchString.length() > 1) {
+            left = new Terminal(searchString.charAt(0));
+            right = new Terminal(searchString.charAt(1));
+            left.assignRight(right);
+            right.assignLeft(left);
+        }
+
+        System.out.println(digramMap.containsKey(right));
+
+        return found;
     }
 }
 

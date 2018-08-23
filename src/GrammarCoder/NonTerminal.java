@@ -42,54 +42,6 @@ public class NonTerminal extends Symbol {
         return s;
     }
 
-    // might not be able to do direct link to symbol, when a rule contains two instances of same rule,
-    // which one will you find???? - todo will have to add on the offset of rules, keep the exact index
-//    public int getEditIndex(Rule rule, Boolean complement, Symbol editSymbol, int editIndex) {
-//        Symbol s;
-//
-//        if (complement) {
-//            s = rule.getLast();
-//        } else {
-//            s = rule.getGuard().getRight();
-//        }
-//
-//        if (s.equals(editSymbol)) {
-//            indexFound = true;
-//            return editIndex;
-//        }
-//
-//        while (!s.isGuard() && !indexFound) {
-//            if (s instanceof Terminal) {
-//
-//                if (s.equals(editSymbol)) {
-//                    indexFound = true;
-//                } else {
-//                    editIndex++;
-//                }
-//                if (complement) {
-//                    s = s.getLeft();
-//                } else {
-//                    s = s.getRight();
-//                }
-//
-//            }
-//            else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
-//                if (complement) {
-//                    editIndex = getEditIndex(((NonTerminal) s).getRule(), !s.isComplement, editSymbol, editIndex);
-//                } else {
-//                    editIndex = getEditIndex(((NonTerminal) s).getRule(), s.isComplement, editSymbol, editIndex);
-//                }
-//
-//                    if (complement) {
-//                        s = s.getLeft();
-//                    } else {
-//                        s = s.getRight();
-//                    }
-//            }
-//        }
-//        return editIndex;
-//    }
-
     @Override
     public boolean equals(Object obj) {
         //TODO add all checks
@@ -130,4 +82,6 @@ public class NonTerminal extends Symbol {
         }
         return s;
     }
+
+
 }

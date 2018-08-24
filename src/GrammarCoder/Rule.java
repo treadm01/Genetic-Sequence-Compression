@@ -41,6 +41,25 @@ public class Rule extends Symbol implements Comparable {
 
     }
 
+    // like a clone
+    public void addAllSymbols(Symbol left) {
+        if (left == null) {
+            left = left.getRight();
+        }
+        while (left != null && !left.isGuard()) {
+            if (left instanceof Terminal) {
+                Terminal t = new Terminal(left.toString().charAt(0));
+                addNextSymbol(t);
+            }
+            else if (left instanceof NonTerminal) {
+                NonTerminal nt = new NonTerminal(((NonTerminal) left).getRule());
+                nt.isComplement = left.isComplement;
+                addNextSymbol(nt);
+            }
+            left = left.getRight();
+        }
+    }
+
     /**
      * add the two symbols from a digram to a nonTerminal
      * @param left

@@ -40,6 +40,6 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        assertTrue(c.search("acgttg"));
+        assertTrue(c.search("tgggagaaagcgaggatc"));
     }
 }

@@ -27,11 +27,27 @@ public class SearchTest {
     }
 
     @Test
+    public void searchSubRule() {
+        Compress c = new Compress();
+        String compress = "agtcgcaatttagacaacagccaa";
+        c.processInput(compress);
+        assertTrue(c.search("aa"));
+    }
+
+    @Test
     public void searchTest() {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("agtcg"));
+        assertTrue(c.search("caac"));
+    }
+
+    @Test
+    public void searchTestTwo() {
+        Compress c = new Compress();
+        String compress = "agtcgcaatttagacaacagccaa";
+        c.processInput(compress);
+        assertTrue(c.search("agtc"));
     }
 
     @Test
@@ -40,6 +56,6 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        assertTrue(c.search("tgggagaaagcgaggatc"));
+        assertTrue(c.search("tg"));
     }
 }

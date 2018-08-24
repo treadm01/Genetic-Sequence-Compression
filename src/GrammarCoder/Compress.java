@@ -440,22 +440,33 @@ public class Compress {
         return this.firstRule;
     }
 
+    //get every instance of first digram
     public Boolean search(String searchString) {
         Boolean found = false;
-        List<Rule> foundRules = new ArrayList<>();
-        List<List<Rule>> allRule = new ArrayList<>();
+        List<Rule> foundRule;
+        Set<String> digramStrings = new LinkedHashSet<>();
+        // only need to search for a digram once, make set of digram characters and search that rather than string
         for (int i = 0; i < searchString.length() - 1; i++) {
-            allRule.add(createSeachDigram(searchString.charAt(i), searchString.charAt(i + 1)));
-            System.out.println("LOOKING FOR " + searchString.charAt(i) + " " + searchString.charAt(i + 1));
-                for (Rule r : allRule.get(allRule.size() - 1)) {
-                    System.out.println(r.getRuleString());
-                    System.out.println(r.getSymbolString(r, r.isComplement));
-                    System.out.println();
-                }
+            String s = searchString.substring(i, i + 2);
+            digramStrings.add(s);
         }
 
-
-
+        // think you will have to go up the tree for subrules... might sort itself out when going through rules
+        // if a subrule then returns the nonterminal for it
+        // another digram map???
+        // must start from ... nope wait, yeah
+        // must start from a rule found from first digram
+        // if digram is the middle of two nonterminals, might be easier to check and discard
+        for (String s : digramStrings) {
+            foundRule = createSeachDigram(s.charAt(0), s.charAt(1));
+            System.out.println("LOOKING FOR " + s.charAt(0) + " " + s.charAt(1));
+            for (Rule r : foundRule) {
+                System.out.println(r.isComplement);
+                System.out.println(r.getRuleString());
+                System.out.println(r.getSymbolString(r, r.isComplement));
+            }
+            System.out.println();
+        }
         return found;
     }
 
@@ -463,7 +474,6 @@ public class Compress {
     // you want to have multiple instances of the same links, but be able to check to unique digrams
     public List<Rule> createSeachDigram(Character leftSymbol, Character rightSymbol) {
         List<Rule> newRules = new ArrayList<>();
-
         // joint standard terminals
         //todo reverse complements??
         Terminal left = new Terminal(leftSymbol);
@@ -472,23 +482,7 @@ public class Compress {
         left.assignRight(right);
 
         //todo need the exisiting rule check
-        if (digramMap.containsKey(right)) {
-            Symbol real = digramMap.get(right);
-            Rule nRule = new Rule();
-            if (real.getLeft().getLeft().isGuard()
-                    && real.getRight().isGuard()) {
-                Guard g = (Guard) real.getRight();
-                Rule subRule = g.getGuardRule();
-                NonTerminal nonTerminal = new NonTerminal(subRule);
-                nonTerminal.isComplement = !right.equals(real); //true or alternate value, would have to alternate the nonterminal???
-                nRule.addNextSymbol(nonTerminal);
-                newRules.add(nRule);
-            }
-            else {
-                nRule.addAllSymbols(left);
-                newRules.add(nRule);
-            }
-        }
+        newRules.addAll(checkIfExisting(left, right));
 
         // join nonterminals ending in left with terminal next
         for (NonTerminal nt : rulesByEndSymbols.get(leftSymbol)) {
@@ -497,12 +491,7 @@ public class Compress {
             Terminal ntright = new Terminal(rightSymbol);
             ntright.assignLeft(n);
             n.assignRight(ntright);
-
-            if (digramMap.containsKey(ntright)) {
-                Rule nRule = new Rule();
-                nRule.addAllSymbols(n);
-                newRules.add(nRule);
-            }
+            newRules.addAll(checkIfExisting(n, ntright));
         }
 
         //join nonterminal right with standard terminal left
@@ -512,31 +501,45 @@ public class Compress {
             Terminal ntleft = new Terminal(leftSymbol);
             n.assignLeft(ntleft);
             ntleft.assignRight(n);
-
-            if (digramMap.containsKey(n)) {
-                Rule nRule = new Rule();
-                nRule.addAllSymbols(ntleft);
-                newRules.add(nRule);
-            }
+            newRules.addAll(checkIfExisting(ntleft, n));
         }
-
-        for (NonTerminal ntl : rulesByStartSymbols.get(leftSymbol)) {
-            for (NonTerminal ntr : rulesByEndSymbols.get(rightSymbol)) {
+//
+        for (NonTerminal ntl : rulesByEndSymbols.get(leftSymbol)) {
+            for (NonTerminal ntr : rulesByStartSymbols.get(rightSymbol)) {
                 NonTerminal nl = new NonTerminal(ntl.getRule());
                 nl.isComplement = ntl.isComplement;
-                NonTerminal nr = new NonTerminal(ntl.getRule());
+                NonTerminal nr = new NonTerminal(ntr.getRule());
                 nr.isComplement = ntr.isComplement;
                 nr.assignLeft(nl);
                 nl.assignRight(nr);
-                if (digramMap.containsKey(nr)) {
-                    Rule nRule = new Rule();
-                    nRule.addAllSymbols(nl);
-                    newRules.add(nRule);
-                }
+                newRules.addAll(checkIfExisting(nl, nr));
             }
         }
         // join two nonterminals
         return newRules;
+    }
+
+    public List<Rule> checkIfExisting(Symbol left, Symbol right) {
+        //todo need the exisiting rule check
+        List<Rule> ruleList  = new ArrayList<>();
+        if (digramMap.containsKey(right)) {
+            Rule nRule = new Rule();
+            Symbol real = digramMap.get(right);
+            nRule.isComplement = real.getRight() == null; // indicated whether the existing is a complement
+            if (real.getLeft().getLeft().isGuard()
+                    && real.getRight().isGuard()) {
+                Guard g = (Guard) real.getRight();
+                Rule subRule = g.getGuardRule();
+                NonTerminal nonTerminal = new NonTerminal(subRule);
+                nonTerminal.isComplement = !right.equals(real); //true or alternate value, would have to alternate the nonterminal???
+                nRule.addNextSymbol(nonTerminal);
+            }
+            else {
+                nRule.addAllSymbols(left);
+            }
+            ruleList.add(nRule);
+        }
+        return ruleList;
     }
 }
 

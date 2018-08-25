@@ -8,7 +8,7 @@ public class Rule extends Symbol implements Comparable {
     Guard guard;
     static Integer ruleNumber = 0;
     List<NonTerminal> nonTerminalList = new ArrayList<>();
-
+    private static final long PRIME = 2265539; // from sequitur
     // for decompressing
     Boolean compressed = false;
 
@@ -190,4 +190,18 @@ public class Rule extends Symbol implements Comparable {
         return 0;
     }
 
+    @Override
+    public int hashCode() {
+        long code;
+        long a = this.representation;
+        code = (21599 * a) ;
+        code = code % PRIME;
+        return (int)code;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Rule rule = (Rule) obj;
+        return this.getRuleString().equals(rule.getRuleString());
+    }
 }

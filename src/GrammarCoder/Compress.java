@@ -447,49 +447,63 @@ public class Compress {
         Set<String> digramStrings = new LinkedHashSet<>();
         Map<Integer, List<Rule>> searchRules = new LinkedHashMap<>();
         Map<String, List<Rule>> stringRules = new LinkedHashMap<>();
-        // only need to search for a digram once, make set of digram characters and search that rather than string
+
+        // get all unique digrams of the search string
         for (int i = 0; i < searchString.length() - 1; i++) {
             String s = searchString.substring(i, i + 2);
             digramStrings.add(s);
         }
 
-        // think you will have to go up the tree for subrules... might sort itself out when going through rules
-        // if a subrule then returns the nonterminal for it
-        // another digram map???
-        // must start from ... nope wait, yeah
-        // must start from a rule found from first digram
-        // if digram is the middle of two nonterminals, might be easier to check and discard
-        // check strings of each, as some found fo rfirst digram may not contain it
-        // have to check from initial wherever it might be... left if terminal
-        // last of left if nonterminal,
+        // find the digrams in the grammar that correspond to those in the search string
         for (String s : digramStrings) {
             foundRule = createSeachDigram(s.charAt(0), s.charAt(1));
             stringRules.put(s, foundRule);
-            System.out.println("LOOKING FOR " + s.charAt(0) + " " + s.charAt(1));
-            for (Rule r : foundRule) {
-                System.out.println(r.isComplement);
-                System.out.println(r.getRuleString());
-                System.out.println(r.getSymbolString(r, r.isComplement));
-            }
-            System.out.println();
+//            System.out.println("LOOKING FOR " + s.charAt(0) + " " + s.charAt(1));
+//            for (Rule r : foundRule) {
+//                System.out.println(r.isComplement);
+//                System.out.println(r.getRuleString());
+//                System.out.println(r.getSymbolString(r, r.isComplement));
+//            }
+//            System.out.println();
         }
 
+        // adding possible options for each digram in search string
+        List<String> digramS = new ArrayList<>();
         for (int i = 0; i < searchString.length() - 1; i++) {
             String s = searchString.substring(i, i + 2);
+            digramS.add(s);
             List<Rule> ruleList = new ArrayList<>();
             ruleList.addAll(stringRules.get(s));
             searchRules.put(i, ruleList);
         }
 
-        System.out.println(searchRules);
+        // need to check first digram right to remove unnecessary ones
 
-        // need to add the lists to the map -
+        List<Rule> removeRules = new ArrayList<>();
+        String s = searchString.substring(1);
+        for (Rule r : searchRules.get(0)) {
+            if (r.getLast() instanceof NonTerminal) {
+                //todo need to account for reverse complement too
+                Rule ntRule = ((NonTerminal) r.getLast()).getRule();
+                String ruleString = ntRule.getSymbolString(ntRule, ntRule.isComplement);
+                // removing everything????
+                for (int j = 0; j < ruleString.length(); j++) {
+                    if (ruleString.charAt(j) != s.charAt(j)) { // might be getting to end of searchstring length???
+                        removeRules.add(r);
+                        break;
+                    }
+                }
+            }
+        }
 
-        // no, search through the found ones separately, then can use those symbols found
-        // if left of last match right of next, possible
-        // but still remove those shown not to contain possible string
-        // REMEMBER THAT HAS TO BE DONE FOR EACH DIGRAM OF THE STRING NOW
-        // will need a map with multiple lists, one digram that doesn't appear for one part might appear else where
+        //searchRules.get(0).removeAll(removeRules);
+
+        // print out rules of first digram
+        for (Rule r : searchRules.get(0)) {
+            System.out.println(r.getRuleString());
+            System.out.println(r.getSymbolString(r, r.isComplement));
+            System.out.println(searchString);
+        }
 
         return found;
     }

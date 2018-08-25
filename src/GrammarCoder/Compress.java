@@ -445,6 +445,8 @@ public class Compress {
         Boolean found = false;
         List<Rule> foundRule;
         Set<String> digramStrings = new LinkedHashSet<>();
+        Map<Integer, List<Rule>> searchRules = new LinkedHashMap<>();
+        Map<String, List<Rule>> stringRules = new LinkedHashMap<>();
         // only need to search for a digram once, make set of digram characters and search that rather than string
         for (int i = 0; i < searchString.length() - 1; i++) {
             String s = searchString.substring(i, i + 2);
@@ -457,8 +459,12 @@ public class Compress {
         // must start from ... nope wait, yeah
         // must start from a rule found from first digram
         // if digram is the middle of two nonterminals, might be easier to check and discard
+        // check strings of each, as some found fo rfirst digram may not contain it
+        // have to check from initial wherever it might be... left if terminal
+        // last of left if nonterminal,
         for (String s : digramStrings) {
             foundRule = createSeachDigram(s.charAt(0), s.charAt(1));
+            stringRules.put(s, foundRule);
             System.out.println("LOOKING FOR " + s.charAt(0) + " " + s.charAt(1));
             for (Rule r : foundRule) {
                 System.out.println(r.isComplement);
@@ -467,6 +473,24 @@ public class Compress {
             }
             System.out.println();
         }
+
+        for (int i = 0; i < searchString.length() - 1; i++) {
+            String s = searchString.substring(i, i + 2);
+            List<Rule> ruleList = new ArrayList<>();
+            ruleList.addAll(stringRules.get(s));
+            searchRules.put(i, ruleList);
+        }
+
+        System.out.println(searchRules);
+
+        // need to add the lists to the map -
+
+        // no, search through the found ones separately, then can use those symbols found
+        // if left of last match right of next, possible
+        // but still remove those shown not to contain possible string
+        // REMEMBER THAT HAS TO BE DONE FOR EACH DIGRAM OF THE STRING NOW
+        // will need a map with multiple lists, one digram that doesn't appear for one part might appear else where
+
         return found;
     }
 

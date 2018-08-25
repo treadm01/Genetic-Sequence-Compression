@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="just need a way to store possible searches">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="getting digrams more accurately, and can check reverse complements, how to efficiently build string..">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/SearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/SearchTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/TreeNode.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,25 +96,25 @@
         <counts>
           <entry key="abc" value="15" />
           <entry key="comp" value="292" />
-          <entry key="java" value="26598" />
-          <entry key="txt" value="776" />
+          <entry key="java" value="27596" />
+          <entry key="txt" value="885" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="26598" />
-          <entry key="PLAIN_TEXT" value="1083" />
+          <entry key="JAVA" value="27596" />
+          <entry key="PLAIN_TEXT" value="1192" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="527" column="107" selection-start-line="527" selection-start-column="107" selection-end-line="527" selection-end-column="107" />
+            <state relative-caret-position="303">
+              <caret line="483" column="38" selection-start-line="483" selection-start-column="38" selection-end-line="483" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3488#3489#0" expanded="true" />
@@ -150,11 +149,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="15" column="40" lean-forward="true" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+            <state relative-caret-position="198">
+              <caret line="15" column="44" lean-forward="true" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -533,8 +532,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.SearchTest.searchSmallString" />
-        <item itemvalue="JUnit.SearchTest.searchSubRule" />
         <item itemvalue="JUnit.SearchTest.humdyst" />
+        <item itemvalue="JUnit.SearchTest.searchSubRule" />
         <item itemvalue="JUnit.SearchTest.searchTest" />
         <item itemvalue="JUnit.SearchTest.searchTestTwo" />
       </list>
@@ -760,14 +759,7 @@
       <workItem from="1534622159570" duration="12964000" />
       <workItem from="1534775749454" duration="52000" />
       <workItem from="1534775811332" duration="24143000" />
-      <workItem from="1534847839501" duration="113633000" />
-    </task>
-    <task id="LOCAL-00230" summary="getting strings by the nonterminal, cleaner code">
-      <created>1533753426372</created>
-      <option name="number" value="00230" />
-      <option name="presentableId" value="LOCAL-00230" />
-      <option name="project" value="LOCAL" />
-      <updated>1533753426375</updated>
+      <workItem from="1534847839501" duration="117011000" />
     </task>
     <task id="LOCAL-00231" summary="right complement sent">
       <created>1533755994745</created>
@@ -1105,16 +1097,17 @@
       <option name="project" value="LOCAL" />
       <updated>1535124734982</updated>
     </task>
-    <option name="localTasksCounter" value="279" />
+    <task id="LOCAL-00279" summary="getting digrams more accurately, and can check reverse complements, how to efficiently build string..">
+      <created>1535139165197</created>
+      <option name="number" value="00279" />
+      <option name="presentableId" value="LOCAL-00279" />
+      <option name="project" value="LOCAL" />
+      <updated>1535139165197</updated>
+    </task>
+    <option name="localTasksCounter" value="280" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="SearchTest_searchSmallString - 2018.08.24 at 20h 03m 33s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSubRule - 2018.08.24 at 20h 14m 11s.xml">
-      <configuration name="SearchTest.searchSubRule" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="SearchTest_searchSmallString - 2018.08.24 at 20h 16m 33s.xml">
       <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
     </history-entry>
@@ -1139,9 +1132,15 @@
     <history-entry file="SearchTest_searchSmallString - 2018.08.24 at 20h 25m 58s.xml">
       <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.25 at 11h 18m 52s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.25 at 11h 19m 06s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1766606000" />
+    <option name="totallyTimeSpent" value="1769984000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1154,6 +1153,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22348484" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24963397" />
@@ -1188,7 +1188,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying a huffman style encoding" />
     <MESSAGE value="getting nodes by frequency" />
     <MESSAGE value="quick implementation" />
     <MESSAGE value="trying to traverse the tree" />
@@ -1213,7 +1212,8 @@
     <MESSAGE value="method for search strings that match encoding exactly" />
     <MESSAGE value="search something like this, would need to find indexes to and multiple occurrences, maybe use rules" />
     <MESSAGE value="just need a way to store possible searches" />
-    <option name="LAST_COMMIT_MESSAGE" value="just need a way to store possible searches" />
+    <MESSAGE value="getting digrams more accurately, and can check reverse complements, how to efficiently build string.." />
+    <option name="LAST_COMMIT_MESSAGE" value="getting digrams more accurately, and can check reverse complements, how to efficiently build string.." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/checkSize" />
@@ -1483,26 +1483,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="40" lean-forward="true" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="527" column="107" selection-start-line="527" selection-start-column="107" selection-end-line="527" selection-end-column="107" />
+        <state relative-caret-position="303">
+          <caret line="483" column="38" selection-start-line="483" selection-start-column="38" selection-end-line="483" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3488#3489#0" expanded="true" />
             <element signature="e#3541#3542#0" expanded="true" />
             <element signature="e#20010#20011#0" expanded="true" />
             <element signature="e#20047#20048#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="15" column="44" lean-forward="true" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

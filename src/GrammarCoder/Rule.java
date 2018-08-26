@@ -133,7 +133,6 @@ public class Rule extends Symbol implements Comparable {
         else {
             s = rule.getFirst();
         }
-
         do {
             if (s instanceof Terminal) {
                 if (complement) {

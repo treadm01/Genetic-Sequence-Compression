@@ -46,17 +46,19 @@ public class Rule extends Symbol implements Comparable {
         if (left == null) {
             left = left.getRight();
         }
+
         while (left != null && !left.isGuard()) {
             if (left instanceof Terminal) {
                 Terminal t = new Terminal(left.toString().charAt(0));
                 addNextSymbol(t);
+                left = left.getRight();
             }
             else if (left instanceof NonTerminal) {
                 NonTerminal nt = new NonTerminal(((NonTerminal) left).getRule());
                 nt.isComplement = left.isComplement;
                 addNextSymbol(nt);
+                left = left.getRight();
             }
-            left = left.getRight();
         }
     }
 

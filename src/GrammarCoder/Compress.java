@@ -475,9 +475,6 @@ public class Compress {
             searchRules.put(i, ruleList);
         }
 
-        // what initial values found
-        //  complement can be maintain and useful, but actually gettin the string should always be false
-        System.out.println("FOUND DIGRAMS");
         for (List<Rule> ruleList : searchRules.values()) {
             for (Rule r : ruleList) {
                 System.out.print(r.getRuleString());
@@ -492,17 +489,51 @@ public class Compress {
         for (int i = 0; i < searchRules.size(); i++) {
             String s = searchString.substring(i + 1);
             searchRules.get(i).removeAll(checkPossibility(searchRules.get(i), searchString, s));
+            List<Rule> removeRules = new ArrayList<>();
             // then if search string found in entireity of digram then found
             for (Rule r : searchRules.get(i)) {
                 if (r.getSymbolString(r, false).contains(searchString)) {
                     found = r.getSymbolString(r, false).contains(searchString);
                     break;
                 }
+                else {
+                    Symbol g = digramMap.get(r.getLast()).getRight();
+                    if (g == null || g.isGuard()) {
+                        removeRules.add(r);
+                    }
+                }
+                // else check where it occurs if not in main rule remove
             }
+            searchRules.get(i).removeAll(removeRules);
+        }
+
+        // check first and last, if digram has no further links either side then remove
+
+        Set<String> leftHand = new HashSet<>();
+        Set<String> rightHand = new HashSet<>();
+        for (List<Rule> ruleList : searchRules.values()) {
+            for (Rule r : ruleList) {
+                leftHand.add(r.getFirst().toString());
+                rightHand.add(r.getLast().toString());
+            }
+        }
+
+        List<Rule> removeRule = new ArrayList<>();
+        List<Rule> possibleRule = new ArrayList<>();
+        for (List<Rule> ruleList : searchRules.values()) {
+            for (Rule r : ruleList) {
+                if (!leftHand.contains(r.getLast().toString())
+                        && !rightHand.contains(r.getFirst().toString())) {
+                    removeRule.add(r);
+                }
+            }
+            ruleList.removeAll(removeRule);
+            possibleRule.addAll(ruleList);
         }
 
         System.out.println("REMOVED DIGRAMS");
         for (List<Rule> ruleList : searchRules.values()) {
+            System.out.println("different digram");
             for (Rule r : ruleList) {
                 System.out.print(r.getRuleString());
                 System.out.print( " " + r.getSymbolString(r, false));
@@ -510,98 +541,63 @@ public class Compress {
             System.out.println();
         }
 
+        System.out.println("before");
 
-        //for remaining digram options, check they match previous last, and then check following ends
-//        Set<String> rightHandSide = new HashSet<>();
-//        for (int i = 1; i < digramS.size(); i++) {
-//            // reduce by links not sure how useful
-//            // compare to previous
-//            //todo put in method - better to reduce this way first or second???
-//
-//
-////            List<Rule> removeRules = new ArrayList<>();
-////
-////            // not removing right hand side each time, so basically checking back to all previous
-////            // right hand sides.... stops issue with late subrule not noticing  a nonterminal...
-////            // but wont work for most things and is probably removing a lot of actual matches
-////            // well no, removals should be reduced as possible pool to check to increases....
-////            for (Rule r : searchRules.get(i - 1)) {
-////                rightHandSide.add(r.getLast().toString());
-////            }
-////
-////            for (Rule r : searchRules.get(i)) {
-////                if (!rightHandSide.contains(r.getFirst().toString())) {
-////                    removeRules.add(r);
-////                }
-////            }
-////            searchRules.get(i).removeAll(removeRules);
-//
-//            // remove based on next terminal not being valid, todo do the same for left hand terminal
-//
-//            // reduce by right side as well
-//            //todo though to be honest, the reducing by rule needs improving
-//            s = searchString.substring(i + 1);
-//            //todo method not working, removing first instances of rules in humdyst....
-//            searchRules.get(i).removeAll(checkPossibility(searchRules.get(i), digramS.get(i), s));
-//        }
+        for (int i = 0; i < possibleRule.size(); i++) {
+            Rule r = possibleRule.get(i);
+            Rule newRule = new Rule();
+            newRule.addAllSymbols(r.getFirst());
 
-        //todo using method from previous attempt.... must be a better way
-//        List<Rule> possibleRules = searchRules.get(0);
-//        for (int i = 1; i < searchRules.size(); i++) {
-//            // get last symbols of all possible rules
-//            rightHandSide = new HashSet<>();
-//            for (Rule r : possibleRules) {
-//                rightHandSide.add(r.getLast().toString());
-//            }
-//            //System.out.println(rightHandSide);
-//            List<Rule> removeRules = new ArrayList<>();
-//            List<Rule> addRules = new ArrayList<>();
-//            List<Rule> checkRules = new ArrayList<>();
-//
-//            // for all possible digrams at this stage, check if they connect with last possible
-//            for (Rule r : searchRules.get(i)) {
-//                if (rightHandSide.contains(r.getFirst().toString())) {
-//                    checkRules.add(r);
-//                }
-//            }
-//
-//            for (Rule r : checkRules) {
-//                for (Rule rhs : possibleRules) {
-//                    if (r.getFirst().getRepresentation() == rhs.getLast().getRepresentation()) {
-//                        Rule newRule = new Rule();
-//                        newRule.addAllSymbols(rhs.getFirst());
-//                        newRule.addAllSymbols(r.getFirst().getRight());
-//                        addRules.add(newRule);
-//                        removeRules.add(rhs);
-//                    }
-//                }
-//            }
-//            possibleRules.removeAll(removeRules);
-//            possibleRules.addAll(addRules);
-//        }
+            for (int j = i + 1; j < possibleRule.size(); j++) {
+                Rule ir = possibleRule.get(j);
+                if (newRule.getLast().getRepresentation() == ir.getFirst().getRepresentation()) {
+                    newRule.addAllSymbols(ir.getFirst().getRight());
+                }
 
-        //todo ... i guess there may be multipole ways to create the rule
-//        // and the approach being used does not necessarily match to the grammar
-//        for (Rule r : possibleRules) {
-//            System.out.println(r.getRuleString());
-//            System.out.println(r.getSymbolString(r, r.isComplement));
-//            if (r.getSymbolString(r, r.isComplement).contains(searchString)) {
-//                // here to check up the tree of nonterminals??
-//                Symbol first = r.getFirst().getRight();
-//                Symbol checkFirst = digramMap.get(r.getFirst().getRight());
+                if (newRule.getSymbolString(newRule, false).contains(searchString)) {
+                    found = true;
+                    break;
+                }
+            }
+            System.out.print(r.getRuleString());
+            System.out.print( " " + r.getSymbolString(r, false));
+        }
+
+
 //
-//                while (!first.isGuard() && first != null && checkFirst != null) {
-//                    if (first.equals(checkFirst)) {
-//                        first = first.getRight();
-//                        checkFirst = checkFirst.getRight();
-//                    }
-//                    else {
-//                        break;
-//                    }
-//                }
-//                found = first.isGuard();
+//        Set<String> leftHandSides = new HashSet<>();
+//        for (List<Rule> ruleList : searchRules.values()) {
+//            for (Rule r : ruleList) {
+//                leftHandSides.add(r.getFirst().toString());
+//                // needs a nother loop here
 //            }
 //        }
+//
+//        System.out.println(leftHandSides);
+//
+//        for (List<Rule> ruleList : searchRules.values()) {
+//            List<Rule> removeRule = new ArrayList<>();
+//            for (Rule r : ruleList) {
+//                if (!leftHandSides.contains(r.getLast().toString())) {
+//                    removeRule.add(r);
+//                }
+//            }
+//            ruleList.removeAll(removeRule);
+//        }
+
+
+
+
+
+        // if whole sub rule and that subrule doesn't occur in mainrule safe to remove?
+
+        // if digram not contained, get parent rules??? check if they occur??? or either side again.....
+        // but then the above would have been covered somewhere???
+        //  complement can be maintain and useful, but actually gettin the string should always be false
+        // next step check that it occurs in main rule and that they link together, not really
+        // more that they link
+        // if it doesn't occur in one digram, then the next thing will have found it anyway???
+        // not quite , oh maybe...4 5 gt in sub rule, 5 gt may be foundbut 4 5 removed...
 
         return found;
     }
@@ -657,7 +653,7 @@ public class Compress {
 
     public List<Rule> checkIfExisting(Symbol left, Symbol right) {
         //todo need the exisiting rule check
-        List<Rule> ruleList  = new ArrayList<>();
+        List<Rule> ruleList = new ArrayList<>();
         if (digramMap.containsKey(right)) {
             Rule nRule = new Rule();
             Symbol real = digramMap.get(right);
@@ -668,10 +664,12 @@ public class Compress {
         return ruleList;
     }
 
-    //might not be that you get it in hte first digram so don't create existing rule
+    // might not be that you get it in hte first digram so don't create existing rule
     // get digrams and checl if they contain the digram and following oncontain the rule
     public List<Rule> checkPossibility(List<Rule> rules, String searchString, String remainingString) {
         List<Rule> removeRules = new ArrayList<>();
+        int cut = searchString.length() - remainingString.length();
+        String firstHalf = searchString.substring(0, cut);
         // todo what about if both are nonterminal...
         for (Rule r : rules) {
             if (r.getRuleLength() == 1) {
@@ -692,28 +690,33 @@ public class Compress {
                 }
 
             }
-            if (r.getFirst() instanceof NonTerminal) {
+            if (r.getFirst() instanceof NonTerminal && firstHalf.length() > 1) {
+                // same code as below again
                 Rule ntRule = ((NonTerminal) r.getFirst()).getRule();
                 String ruleString = ntRule.getSymbolString(ntRule, r.getFirst().isComplement);
-
-                int cut = searchString.length() - remainingString.length();
-                String firstHalf = searchString.substring(0, cut);
 
                 int lowest = firstHalf.length();
                 if (ruleString.length() < lowest) {
                     lowest = ruleString.length();
                 }
 
-                for (int j = lowest - 1; j >= 0; j--) { //lowest - 1 for string length... why not for last?
-                    // might be getting to end of searchstring length???
-                    if (ruleString.charAt(j) != firstHalf.charAt(j)) {
+                //todo clean, reverse strings to more accurately check
+                StringBuilder sb = new StringBuilder();
+                sb.append(ruleString);
+                sb.reverse();
+                StringBuilder sbf = new StringBuilder();
+                sbf.append(firstHalf);
+                sbf.reverse();
+                // need to check from the end of string backwards
+                for (int j = 0; j < lowest; j++) { //lowest - 1 for string length... why not for last?
+                    if (sb.charAt(j) != sbf.charAt(j)) {
                         removeRules.add(r);
                         break;
                     }
                 }
 
             }
-            if (r.getLast() instanceof NonTerminal) {
+            if (r.getLast() instanceof NonTerminal && remainingString.length() > 1) {
                 //todo need to account for reverse complement too
                 Rule ntRule = ((NonTerminal) r.getLast()).getRule();
                 String ruleString = ntRule.getSymbolString(ntRule, r.getLast().isComplement);

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="reducing possible rules">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="searching through all possibles first">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/DecompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/DecompressTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/SearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/SearchTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" afterDir="false" />
     </list>
@@ -99,34 +97,32 @@
           <entry key="abc" value="15" />
           <entry key="comp" value="292" />
           <entry key="humdyst" value="1" />
-          <entry key="java" value="39218" />
-          <entry key="txt" value="924" />
+          <entry key="java" value="41793" />
+          <entry key="txt" value="971" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="39218" />
-          <entry key="PLAIN_TEXT" value="1232" />
+          <entry key="JAVA" value="41793" />
+          <entry key="PLAIN_TEXT" value="1279" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="722" column="12" selection-start-line="722" selection-start-column="12" selection-end-line="722" selection-end-column="12" />
+            <state relative-caret-position="72">
+              <caret line="533" selection-start-line="533" selection-end-line="543" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3488#3489#0" expanded="true" />
                 <element signature="e#3541#3542#0" expanded="true" />
                 <element signature="e#20010#20011#0" expanded="true" />
                 <element signature="e#20047#20048#0" expanded="true" />
-                <element signature="e#22854#22947#0" />
-                <element signature="e#23644#23710#0" />
-                <element signature="e#25169#25234#0" />
+                <element signature="e#22963#22965#0" />
               </folding>
             </state>
           </provider>
@@ -167,11 +163,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="92" column="42" lean-forward="true" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
+            <state relative-caret-position="77">
+              <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -218,8 +214,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="53" column="51" selection-start-line="53" selection-start-column="51" selection-end-line="53" selection-end-column="51" />
+            <state relative-caret-position="285">
+              <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -240,13 +236,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>66</find>
-      <find>66 &gt;</find>
-      <find>158 348</find>
-      <find>acaatggcacc</find>
-      <find>104' 20'</find>
-      <find>new R</find>
-      <find>Rule.ruleNumber += 2;</find>
       <find>940 170</find>
       <find>new Rule(</find>
       <find>creater</find>
@@ -267,9 +256,16 @@
       <find>4 4</find>
       <find>4</find>
       <find>position</find>
-      <find>getsy</find>
       <find>4 4</find>
       <find>4 4'</find>
+      <find>84' 14</find>
+      <find>2040 846</find>
+      <find>188 12</find>
+      <find>76 76'</find>
+      <find>158 76</find>
+      <find>getsy</find>
+      <find>getst</find>
+      <find>4</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -449,7 +445,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SearchTest.humdyst">
+  <component name="RunManager" selected="JUnit.SearchTest">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -458,6 +454,15 @@
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SearchTest" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -473,44 +478,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SearchTest.searchActualRIghtdigram" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SearchTest.searchAgain" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="searchActualRIghtdigram" />
+      <option name="METHOD_NAME" value="searchAgain" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SearchTest.searchActualSimple" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SearchTest.searchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="searchActualSimple" />
+      <option name="METHOD_NAME" value="searchTest" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SearchTest.searchActualleftDigram" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SearchTest.searchTestTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="searchActualleftDigram" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SearchTest.searchSmallString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="searchSmallString" />
+      <option name="METHOD_NAME" value="searchTestTwo" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -532,19 +526,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.SearchTest.searchActualSimple" />
-      <item itemvalue="JUnit.SearchTest.searchActualleftDigram" />
-      <item itemvalue="JUnit.SearchTest.searchActualRIghtdigram" />
-      <item itemvalue="JUnit.SearchTest.searchSmallString" />
+      <item itemvalue="JUnit.SearchTest.searchAgain" />
+      <item itemvalue="JUnit.SearchTest.searchTest" />
+      <item itemvalue="JUnit.SearchTest.searchTestTwo" />
       <item itemvalue="JUnit.SearchTest.humdyst" />
+      <item itemvalue="JUnit.SearchTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SearchTest" />
+        <item itemvalue="JUnit.SearchTest.searchAgain" />
         <item itemvalue="JUnit.SearchTest.humdyst" />
-        <item itemvalue="JUnit.SearchTest.searchSmallString" />
-        <item itemvalue="JUnit.SearchTest.searchActualSimple" />
-        <item itemvalue="JUnit.SearchTest.searchActualleftDigram" />
-        <item itemvalue="JUnit.SearchTest.searchActualRIghtdigram" />
+        <item itemvalue="JUnit.SearchTest.searchTestTwo" />
+        <item itemvalue="JUnit.SearchTest.searchTest" />
       </list>
     </recent_temporary>
   </component>
@@ -768,14 +762,7 @@
       <workItem from="1534622159570" duration="12964000" />
       <workItem from="1534775749454" duration="52000" />
       <workItem from="1534775811332" duration="24143000" />
-      <workItem from="1534847839501" duration="163202000" />
-    </task>
-    <task id="LOCAL-00234" summary="..">
-      <created>1533854263325</created>
-      <option name="number" value="00234" />
-      <option name="presentableId" value="LOCAL-00234" />
-      <option name="project" value="LOCAL" />
-      <updated>1533854263325</updated>
+      <workItem from="1534847839501" duration="178717000" />
     </task>
     <task id="LOCAL-00235" summary="lengths to encode the edits and methods of finding the repeats don't appear to give good compression">
       <created>1533919935539</created>
@@ -1113,43 +1100,50 @@
       <option name="project" value="LOCAL" />
       <updated>1535224729219</updated>
     </task>
-    <option name="localTasksCounter" value="283" />
+    <task id="LOCAL-00283" summary="searching through all possibles first">
+      <created>1535277834230</created>
+      <option name="number" value="00283" />
+      <option name="presentableId" value="LOCAL-00283" />
+      <option name="project" value="LOCAL" />
+      <updated>1535277834230</updated>
+    </task>
+    <option name="localTasksCounter" value="284" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 48m 03s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 48m 36s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 55m 12s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 55m 38s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 56m 11s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 56m 30s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 57m 12s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_searchSmallString - 2018.08.26 at 10h 58m 41s.xml">
-      <configuration name="SearchTest.searchSmallString" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_humdyst - 2018.08.26 at 10h 59m 26s.xml">
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 14h 42m 48s.xml">
       <configuration name="SearchTest.humdyst" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SearchTest_humdyst - 2018.08.26 at 11h 01m 20s.xml">
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 14h 44m 05s.xml">
       <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 14h 44m 53s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 14h 46m 21s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 15h 06m 48s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 15h 18m 04s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 15h 18m 59s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 15h 20m 40s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest_humdyst - 2018.08.26 at 15h 21m 09s.xml">
+      <configuration name="SearchTest.humdyst" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="SearchTest - 2018.08.26 at 15h 21m 29s.xml">
+      <configuration name="SearchTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1816175000" />
+    <option name="totallyTimeSpent" value="1831690000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1197,7 +1191,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="trying to traverse the tree" />
     <MESSAGE value="traversing tree and getting binary" />
     <MESSAGE value="would still need to encode tree... appears to be some improvement" />
     <MESSAGE value="trying to implement outside arithmetic coding in efficient way..." />
@@ -1222,7 +1215,8 @@
     <MESSAGE value="getting digrams more accurately, and can check reverse complements, how to efficiently build string.." />
     <MESSAGE value="using maps" />
     <MESSAGE value="reducing possible rules" />
-    <option name="LAST_COMMIT_MESSAGE" value="reducing possible rules" />
+    <MESSAGE value="searching through all possibles first" />
+    <option name="LAST_COMMIT_MESSAGE" value="searching through all possibles first" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/textFiles/checkSize" />
@@ -1482,10 +1476,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="533" selection-start-line="533" selection-end-line="543" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3488#3489#0" expanded="true" />
+            <element signature="e#3541#3542#0" expanded="true" />
+            <element signature="e#20010#20011#0" expanded="true" />
+            <element signature="e#20047#20048#0" expanded="true" />
+            <element signature="e#22963#22965#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="53" column="51" selection-start-line="53" selection-start-column="51" selection-end-line="53" selection-end-column="51" />
+        <state relative-caret-position="285">
+          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1494,27 +1503,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="92" column="42" lean-forward="true" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
+        <state relative-caret-position="77">
+          <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="722" column="12" selection-start-line="722" selection-start-column="12" selection-end-line="722" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3488#3489#0" expanded="true" />
-            <element signature="e#3541#3542#0" expanded="true" />
-            <element signature="e#20010#20011#0" expanded="true" />
-            <element signature="e#20047#20048#0" expanded="true" />
-            <element signature="e#22854#22947#0" />
-            <element signature="e#23644#23710#0" />
-            <element signature="e#25169#25234#0" />
           </folding>
         </state>
       </provider>

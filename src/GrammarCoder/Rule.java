@@ -102,6 +102,7 @@ public class Rule extends Symbol implements Comparable {
         String symbols = "";
         Symbol first = guard.getRight();
         while (!first.isGuard()) {
+            //System.out.print(first.toString() + " ");
             symbols += " " + first.toString();
             first = first.getRight();
         }
@@ -175,6 +176,7 @@ public class Rule extends Symbol implements Comparable {
             }
 
         } while (!s.isGuard());
+        //System.out.println(output);
         return output.toString();
     }
 

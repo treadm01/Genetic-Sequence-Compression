@@ -222,10 +222,9 @@ public class SearchTest {
         return sb.toString();
     }
 
-    // heap space...
-//    count 204
-//    INPUT: tagagcgagatgggaagttcccccgctcgcctcacacgctcttataatacacagacaatggctctttcctcagccattgttatgcggtcgtcgtagcgt
-//    SEARCH: cttataatacacagacaatggctctttcctcagccattgttatgcggt
+    // not equal search
+//    INPUT: gtccttaagcttataagaatggacttcatatgagatc
+//    SEARCH: agcttataagaatggacttcatat
 
     //ataagtaagttat
     //ttgtgataaaag
@@ -235,7 +234,7 @@ public class SearchTest {
     public void searchRandom() {
         Random rand = new Random();
         for (int i = 0; i < 1000; i++) {
-            String input = genRand(rand.nextInt((50 - 2) + 1) + 2);
+            String input = genRand(rand.nextInt((500 - 2) + 1) + 2);
             System.out.println("INPUT: " + input);
             int start = rand.nextInt(input.length());
             assertTrue(start <= input.length());

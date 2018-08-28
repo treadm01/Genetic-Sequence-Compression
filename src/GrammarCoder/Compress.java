@@ -3,6 +3,8 @@ package GrammarCoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//todo check digram map adding and removing is accurate, could be losing a lot there
+
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
@@ -32,11 +34,13 @@ public class Compress {
         getFirstRule().addNextSymbol(nextSymbol);
         // have to do this to ensure first symbol added... todo improve
         for (int i = 1; i < input.length(); i++) {
+            //System.out.println(getFirstRule().getRuleString());
             nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
             nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
 
+            //System.out.println(getFirstRule().getRuleString());
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
@@ -46,6 +50,10 @@ public class Compress {
 //            System.out.println("MAP");
 //            System.out.println(printDigrams());
 //            System.out.println();
+//
+//            rules.add(getFirstRule()); //todo get with getter and setter
+//            generateRules(getFirstRule().getFirst());
+//            System.out.println(printRules());
         }
 
 
@@ -102,8 +110,10 @@ public class Compress {
             if (previousNonTerminal.getRight() instanceof NonTerminal
                     && !previousNonTerminal.getRight().equals(matchingNonTerminal)) { // check no overlap
                 NonTerminal nextNonTerminal = (NonTerminal) previousNonTerminal.getRight();
+//                System.out.println("RULE " + nextNonTerminal.getRule());
+//                System.out.println(nextNonTerminal.getRule().getRuleString());
                 String lastSequence = nextNonTerminal.getRule().getSymbolString(nextNonTerminal.getRule(), nextNonTerminal.isComplement);
-                String nextSequence = "";
+                String nextSequence;
 
                 // check that comparing the string wont go over length
                 if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
@@ -149,8 +159,9 @@ public class Compress {
             if (digramMap.containsKey(symbol)) {
                 // retrieve existing digram, if complement return original
                 Symbol existingDigram = getOriginalDigram(symbol);
-                // if the matching digram is an overlap do nothing
-                if (existingDigram.getRight() != symbol) { // todo find a better way to place this
+                // if the matching digram is an overlap either side (see bug tests) do nothing
+                if (existingDigram.getRight() != symbol
+                        && existingDigram.getLeft() != symbol) { // todo find a better way to place this
                     // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
                     if (existingDigram.getLeft().getLeft().isGuard()
                             && existingDigram.getRight().isGuard()) {
@@ -182,14 +193,12 @@ public class Compress {
     public void removeDigrams(Symbol digram) {
 //        System.out.println("REMOVING");
 //        System.out.println(digram.getLeft() + " " + digram);
-//        System.out.println(printDigrams());
         digramMap.remove(digram);
         //System.out.println(printDigrams());
         //todo creating via getReveseComplement to remove, if created with the objects could add that way too
         //todo removing complement, even if reverse still exists....
         // if tt is there will it have been given the next right
         digramMap.remove(digram.getReverseComplement());
-
     }
 
     /**
@@ -264,14 +273,18 @@ public class Compress {
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
+              //  System.out.println("before " + printDigrams());
                 removeDigramsFromMap(symbol);
                 removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
 
-                //todo this order seems less guaranteed to crash, other more consistent error
+               // System.out.println("after " + printDigrams());
+                //todo this order seems less guaranteed to crash, other more consistent error... hard to solve though
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 //order of these two... in relation to removing rules used only once, noncomplement
+                //System.out.println("checking new digrams : ");
+                //System.out.println(nonTerminal.getLeft().getRight().getLeft() + " " + nonTerminal.getLeft().getRight());
+                //System.out.println(nonTerminal.getRight().getLeft() + " " +  nonTerminal.getRight());
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
-
             }
         }
     }
@@ -370,8 +383,13 @@ public class Compress {
      * works through the symbols and collects all the rules in a set
      * @param current
      */
+
+    //noncomplement followed by complement, get first of rule which is nonterminal
+    // add rule of that, which is already there... no wait
+    // you get the rule of the nonterminal not the containing rule
     public void generateRules(Symbol current) {
         while (!current.isGuard()) {
+            //System.out.print(current + " ?");
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
                 rules.add(rule);
@@ -389,7 +407,6 @@ public class Compress {
                 streamIndex++;
             }
             current = current.getRight();
-
         }
     }
 

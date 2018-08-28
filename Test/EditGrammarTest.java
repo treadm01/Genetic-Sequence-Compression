@@ -174,15 +174,6 @@ public class EditGrammarTest {
     }
 
 
-    // doesn't work with new order but encoding before was not correct??? oh wait
-    @Test
-    public void guardCantBeNonTerminal() {
-        Compress c = new Compress();
-        String compress = "aaggaagctt";
-        c.processInput(compress);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
-    }
-
     @Test
     public void wrondDecoding() {
         Compress c = new Compress();
@@ -293,7 +284,7 @@ public class EditGrammarTest {
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 10000; i++) {
-            String input = genRand(rand.nextInt((60 - 1) + 1) + 1);
+            String input = genRand(rand.nextInt((500 - 1) + 1) + 1);
             System.out.println("INPUT: " + input);
             Compress c = new Compress();
             Decompress d = new Decompress();

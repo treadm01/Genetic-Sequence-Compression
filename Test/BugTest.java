@@ -4,6 +4,7 @@ import org.junit.Test;
 
 public class BugTest {
 
+    //tagagcgagatgggaagttcccccgctcgcctcacacgctcttataatacacagacaatggctctttcctcagccattgttatgcggtcgtcgtagcgt
     @Test
     public void HeapLeak() {
         Compress c = new Compress();
@@ -17,7 +18,7 @@ public class BugTest {
     @Test
     public void StackOverflow() {
         Compress c = new Compress();
-        String compress = "ccctcagggc";
+        String compress = "ccctaggg"; // might be ordering of digram checking and overlapping
         c.processInput(compress);
     }
 
@@ -34,5 +35,16 @@ public class BugTest {
         String compress = "gcggagga";
         c.processInput(compress);
     }
+
+    //INPUT: atttctgacgcccgcgatcgtcgtctccgcgctctggatggcggtagttcta
+    // can't be cast to terminal guard
+    @Test
+    public void guardCantBeNonTerminal() {
+        Compress c = new Compress();
+        String compress = "aaggaagctt";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
+
 
 }

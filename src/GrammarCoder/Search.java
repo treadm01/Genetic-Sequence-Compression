@@ -99,12 +99,12 @@ public class Search {
 
     // sending searchRule as argument means wont be updated....
     // removes all digrams that cannot contain the rule
-    public void checkEachDigramForPossibleString(String searchString, Map<Integer, List<Rule>> searchRules) {
-        for (int i = 0; i < searchRules.size(); i++) {
-            String s = searchString.substring(i + 1);
-            searchRules.get(i).removeAll(checkPossibility(searchRules.get(i), searchString, s));
-        }
-    }
+//    public void checkEachDigramForPossibleString(String searchString, Map<Integer, List<Rule>> searchRules) {
+//        for (int i = 0; i < searchRules.size(); i++) {
+//            String s = searchString.substring(i + 1);
+//            searchRules.get(i).removeAll(checkPossibility(searchRules.get(i), searchString, s));
+//        }
+//    }
 
     //get every instance of first digram
     public Boolean search(String searchString) {
@@ -123,7 +123,27 @@ public class Search {
             return rulesByStartSymbols.containsKey(searchString.charAt(0));
         }
 
-        checkEachDigramForPossibleString(searchString, searchRules);
+//        //reomve non linking ones here?
+//        Set<String> leftHand = new HashSet<>();
+//        Set<String> rightHand = new HashSet<>();
+//        for (List<Rule> ruleList : searchRules.values()) {
+//            for (Rule r : ruleList) {
+//                leftHand.add(r.getFirst().toString());
+//                rightHand.add(r.getLast().toString());
+//            }
+//        }
+//
+//        List<Rule> remove = new ArrayList<>();
+//        for (List<Rule> ruleList : searchRules.values()) {
+//            for (Rule r : ruleList) {
+//                if (!leftHand.contains(r.getLast().toString()) && !rightHand.contains(r.getFirst().toString())) {
+//                    remove.add(r);
+//                }
+//            }
+//            ruleList.removeAll(remove);
+//        }
+
+//        checkEachDigramForPossibleString(searchString, searchRules);
 
         //todo edit grammars...... might not get returned... no, edits, should be dealt with in certain instances...
 
@@ -247,100 +267,70 @@ public class Search {
 
     // might not be that you get it in hte first digram so don't create existing rule
     // get digrams and checl if they contain the digram and following oncontain the rule
-    public List<Rule> checkPossibility(List<Rule> rules, String searchString, String remainingString) {
-        List<Rule> removeRules = new ArrayList<>();
-        // keep a cache of rules??
-        int cut = searchString.length() - remainingString.length();
-        String firstHalf = searchString.substring(0, cut);
-        // todo what about if both are nonterminal...
-        int count = 0;
-        int seen = 0;
-        for (Rule r : rules) {
-            if (r.getFirst().equals(r.getLast())) { // has to cound entire rule to get 1....
-                // this code is same as that used in nonterminal check needs refactoring
-
-                String ruleString = r.getSymbolString(r, r.isComplement);
-                ruleString = ruleString.substring(2);
-                int lowest = ruleString.length();
-                if (remainingString.length() < lowest) {
-                    lowest = remainingString.length();
-                }
-
-                for (int j = 0; j < lowest; j++) {
-                    // might be getting to end of searchstring length???
-                    if (ruleString.charAt(j) != remainingString.charAt(j)) {
-                        removeRules.add(r);
-                        break;
-                    }
-                }
-
-            } else {
-                if (r.getFirst() instanceof NonTerminal && firstHalf.length() > 1) {
-                    Rule ntRule = ((NonTerminal) r.getFirst()).getRule();
-                    String ruleString;
-                    if (ruleStringMap.containsKey(r.getFirst().toString())) {
-                        ruleString = ruleStringMap.get(r.getFirst().toString());
-                        seen++;
-                    }
-                    else {
-                        count++;
-                        ruleString = ntRule.getSymbolString(ntRule, r.getFirst().isComplement);
-                        ruleStringMap.putIfAbsent(r.getFirst().toString(), ruleString);
-                    }
-
-                    int lowest = firstHalf.length();
-                    if (ruleString.length() < lowest) {
-                        lowest = ruleString.length();
-                    }
-
-                    //todo clean, reverse strings to more accurately check
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(ruleString);
-                    sb.reverse();
-                    StringBuilder sbf = new StringBuilder();
-                    sbf.append(firstHalf);
-                    sbf.reverse();
-                    // need to check from the end of string backwards
-                    for (int j = 0; j < lowest; j++) { //lowest - 1 for string length... why not for last?
-                        if (sb.charAt(j) != sbf.charAt(j)) {
-                            removeRules.add(r);
-                            break;
-                        }
-                    }
-
-                }
-                if (r.getLast() instanceof NonTerminal && remainingString.length() > 1) {
-                    //todo need to account for reverse complement too
-                    Rule ntRule = ((NonTerminal) r.getLast()).getRule();
-                    //System.out.println(ntRule);
-                    String ruleString;
-                    if (ruleStringMap.containsKey(r.getLast().toString())) {
-                        ruleString = ruleStringMap.get(r.getLast().toString());
-                        seen++;
-                    }
-                    else {
-                        count++;
-                        ruleString = ntRule.getSymbolString(ntRule, r.getLast().isComplement);
-                        ruleStringMap.putIfAbsent(r.getLast().toString(), ruleString);
-                    }
-                    int lowest = ruleString.length();
-                    if (remainingString.length() < lowest) {
-                        lowest = remainingString.length();
-                    }
-                    // best to check rule string length? when checking the last digram wont be
-                    for (int j = 0; j < lowest; j++) {
-                        // might be getting to end of searchstring length???
-                        if (ruleString.charAt(j) != remainingString.charAt(j)) {
-                            removeRules.add(r);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-//        System.out.println("seen " + seen);
-//        System.out.println("count " + count);
-        return removeRules;
-    }
-
+//    public List<Rule> checkPossibility(List<Rule> rules, String searchString, String remainingString) {
+//        List<Rule> removeRules = new ArrayList<>();
+//        int cut = searchString.length() - remainingString.length();
+//        String firstHalf = searchString.substring(0, cut);
+//        // todo what about if both are nonterminal...
+//        for (Rule r : rules) {
+//            if (r.getFirst() instanceof NonTerminal && firstHalf.length() > 1) {
+//                Rule ntRule = ((NonTerminal) r.getFirst()).getRule();
+//                String ruleString;
+//                if (ruleStringMap.containsKey(r.getFirst().toString())) {
+//                    ruleString = ruleStringMap.get(r.getFirst().toString());
+//                } else {
+//                    ruleString = ntRule.getSymbolString(ntRule, r.getFirst().isComplement);
+//                    ruleStringMap.putIfAbsent(r.getFirst().toString(), ruleString);
+//                }
+//                int lowest = firstHalf.length();
+//                if (ruleString.length() < lowest) {
+//                    lowest = ruleString.length();
+//                }
+//                //todo clean, reverse strings to more accurately check
+//                StringBuilder sb = new StringBuilder();
+//                sb.append(ruleString);
+//                sb.reverse();
+//                StringBuilder sbf = new StringBuilder();
+//                sbf.append(firstHalf);
+//                sbf.reverse();
+//                // need to check from the end of string backwards
+//                for (int j = 0; j < lowest; j++) { //lowest - 1 for string length... why not for last?
+//                    if (sb.charAt(j) != sbf.charAt(j)) {
+//                        removeRules.add(r);
+//                        break;
+//                    }
+//                }
+//            }
+//            if (r.getLast() instanceof NonTerminal && remainingString.length() > 1
+//                    && !removeRules.contains(r)) {
+//                //todo need to account for reverse complement too
+//                Rule ntRule = ((NonTerminal) r.getLast()).getRule();
+//                String ruleString;
+//                if (ruleStringMap.containsKey(r.getLast().toString())) {
+//                    ruleString = ruleStringMap.get(r.getLast().toString());
+//                }
+//                else {
+//                    ruleString = ntRule.getSymbolString(ntRule, r.getLast().isComplement);
+//                    ruleStringMap.putIfAbsent(r.getLast().toString(), ruleString);
+//                }
+//                int lowest = ruleString.length();
+//                if (remainingString.length() < lowest) {
+//                    lowest = remainingString.length();
+//                }
+//                // best to check rule string length? when checking the last digram wont be
+//                for (int j = 0; j < lowest; j++) {
+//                    // might be getting to end of searchstring length???
+//                    if (ruleString.charAt(j) != remainingString.charAt(j)) {
+//                        removeRules.add(r);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+////        System.out.println("seen " + seen);
+////        System.out.println("count " + count);
+////        System.out.println("rules given " + rules);
+////        System.out.println("remove rules " + removeRules.toString());
+//     return removeRules;
+//    }
 }

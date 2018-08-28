@@ -7,10 +7,14 @@ import static org.junit.Assert.*;
 
 public class SearchTest {
 
-    //atcgtgataaatccagt reverse complement not found - search gat
-    // doesn't account for rules that start in left hand and in it completely
-    // well not for reverse complement
-    // for start symbols reverse complements not being checked to the last, left etc
+    //todo fix heap and generate rule bugs....
+    //tcaggaag - string found but not in file humdyst
+
+    // heap issue - not search
+    // INPUT: tttcggctgaaacggcaggcta
+    // SEARCH: t
+
+    //atcgtgataaatccagt reverse complement not found - search gat - passing
     @Test
     public void searchEncodedinReverseComplement() {
         Compress c = new Compress();
@@ -27,12 +31,22 @@ public class SearchTest {
 //    SEARCH: aagatt
 
     @Test
-    public void searchComplement() {
+    public void searchComplement() { // not a complement issue - no tt digram, split by 4 a
+        // if removing original, have to reset reverser complement?? to be the stanard? can't change
         Compress c = new Compress();
         String compress = "gaaagattatgcggaag";
         c.processInput(compress);
         Search s = new Search(c.digramMap, c.rules);
         assertTrue(s.search("aagatt"));
+    }
+
+    @Test
+    public void searchMultiple() { // finding extra really 2 a occurs as part of 4... just need instances of 4
+        Compress c = new Compress();
+        String compress = "gaaagattatgcggaag";
+        c.processInput(compress);
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("gaa"));
     }
 
     //todo you won't have access to the start symbol things.... will you???
@@ -208,6 +222,11 @@ public class SearchTest {
         return sb.toString();
     }
 
+    // heap space...
+//    count 204
+//    INPUT: tagagcgagatgggaagttcccccgctcgcctcacacgctcttataatacacagacaatggctctttcctcagccattgttatgcggtcgtcgtagcgt
+//    SEARCH: cttataatacacagacaatggctctttcctcagccattgttatgcggt
+
     //ataagtaagttat
     //ttgtgataaaag
     // l 77
@@ -216,7 +235,7 @@ public class SearchTest {
     public void searchRandom() {
         Random rand = new Random();
         for (int i = 0; i < 1000; i++) {
-            String input = genRand(rand.nextInt((20 - 2) + 1) + 2);
+            String input = genRand(rand.nextInt((50 - 2) + 1) + 2);
             System.out.println("INPUT: " + input);
             int start = rand.nextInt(input.length());
             assertTrue(start <= input.length());
@@ -232,11 +251,31 @@ public class SearchTest {
             c.processInput(input);
             Search s = new Search(c.digramMap, c.rules);
             if (search.length() != 0) {
-                assertTrue(s.search(search));
+                assertEquals(input.contains(search), s.search(search));
             }
             System.out.println();
             System.out.println("count " + i);
-//            //Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+            //Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        }
+    }
+
+
+    @Test
+    public void searchRandomFromFile() {
+        Random rand = new Random();
+        Compress c = new Compress();
+        InputOutput io = new InputOutput();
+        String input = io.readFile("humdyst");
+        c.processInput(input);
+        Search s = new Search(c.digramMap, c.rules);
+        for (int i = 0; i < 1000; i++) {
+            String search = genRand(rand.nextInt((10 - 1) + 1) + 1);
+            System.out.println("SEARCH: " + search);
+            if (search.length() != 0) {
+                assertEquals(input.contains(search), s.search(search));
+            }
+            System.out.println();
+            System.out.println("count " + i);
         }
     }
 

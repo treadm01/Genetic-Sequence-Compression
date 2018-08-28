@@ -106,6 +106,15 @@ public class Search {
 //        }
 //    }
 
+    // dupe from compress needs to be in a generic place
+    public Symbol getOriginalDigram(Symbol digram) {
+        Symbol symbol = digramMap.get(digram);
+        if (symbol.getRight() == null) {
+            symbol = digramMap.get(symbol.getLeft().complement);
+        }
+        return symbol;
+    }
+
     //get every instance of first digram
     public Boolean search(String searchString) {
         Boolean found = false;
@@ -123,7 +132,7 @@ public class Search {
             return rulesByStartSymbols.containsKey(searchString.charAt(0));
         }
 
-//        //reomve non linking ones here?
+//        //remove non linking ones here?
 //        Set<String> leftHand = new HashSet<>();
 //        Set<String> rightHand = new HashSet<>();
 //        for (List<Rule> ruleList : searchRules.values()) {
@@ -153,34 +162,54 @@ public class Search {
         for (List<Rule> ruleList : searchRules.values()) {
             for (Rule r : ruleList) {
                 searchDigramMap.put(r.getLast(), r.getLast());
-//            searchDigramMap.putIfAbsent(getReverseComplement(r.getLast()), getReverseComplement(r.getLast()));
+                searchDigramMap.putIfAbsent(r.getLast().getReverseComplement(), r.getLast().getReverseComplement());
             }
         }
 
+//        for (Symbol s : digramMap.values()) {
+//            System.out.print(s.getLeft() + " " + s + " / ");
+//        }
+//
+//        System.out.println();
+//        for (Symbol s : searchDigramMap.values()) {
+//            System.out.print(s.getLeft() + " " + s + " / ");
+//        }
+
+        // hav to link trhgouh and maintain both, if next does not match the thing looking for then complement
+        // if it does revert to normal
         List<Rule> morePossible = new ArrayList<>();
         for (List<Rule> ruleList : searchRules.values()) {
             for (Rule r : ruleList) {
-                Symbol currentSymbol = digramMap.get(r.getLast()); //todo - make a more accessible methodgetOriginalDigram(r.getLast());
+                Symbol currentSymbol = getOriginalDigram(r.getLast()); //todo - make a more accessible methodgetOriginalDigram(r.getLast());
                 Boolean complement = currentSymbol.getRepresentation() != r.getLast().getRepresentation();
-                //System.out.println(complement);
-                currentSymbol = currentSymbol.getRight();
-                //todo - reverse complement issues other issues... needs cleaning and making sure it works with just a grammar
-//            if (!complement) {
-//                currentSymbol = currentSymbol.getRight();
-//            }
-//            else {
-//                currentSymbol = currentSymbol.getLeft();
-//                currentSymbol = getReverseComplement(currentSymbol); // use an actual get method, rather than create new each time
-//            }
-//
-//            System.out.println("actual digram " + r.getFirst() + " " + r.getLast());
-//            System.out.println("from map " + currentSymbol.getLeft() + " " + currentSymbol);
                 Rule newRule = new Rule();
-                newRule.addAllSymbols(r.getFirst());
-                while (searchDigramMap.containsKey(currentSymbol)) {
-                    Symbol getNonModifiable = searchDigramMap.get(currentSymbol);
-                    newRule.addAllSymbols(getNonModifiable);
+                newRule.addAllSymbols(r.getFirst()); // but what to add??? add whatever and set complement???
+
+                if (!complement) {
                     currentSymbol = currentSymbol.getRight();
+                }
+                else {
+                    currentSymbol = currentSymbol.getLeft();
+                }
+
+//                System.out.println(r.getFirst() + " " + r.getLast());
+//                System.out.println(complement);
+//                System.out.println(currentSymbol);
+//                System.out.println();
+
+                while (searchDigramMap.containsKey(currentSymbol)) {
+                    Symbol getNonModifiable = searchDigramMap.get(currentSymbol); // would need to flip complement back??
+                    // if complement need a way to add just the left symbol, no just add last of reverse
+                    if (!complement) { // just this for standard noncomplement
+                        newRule.addAllSymbols(getNonModifiable);
+            //            System.out.println(newRule.getRuleString());
+                        currentSymbol = currentSymbol.getRight();
+                    }
+                    else { // trying to get reverse complement checks..... todo seems to work mostly.... but not sure for the right reasons
+                        newRule.addAllSymbols(getNonModifiable.getReverseComplement()); // wont work as add all will add all
+                        currentSymbol = currentSymbol.getLeft();
+                        //complement = currentSymbol.getRepresentation() != newRule.getLast().getRepresentation();
+                    }
                 }
                 morePossible.add(newRule); // same problem this will only check one route
             }

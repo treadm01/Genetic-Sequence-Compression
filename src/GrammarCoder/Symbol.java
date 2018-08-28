@@ -71,6 +71,40 @@ public class Symbol {
         return representation;
     }
 
+
+    //todo for terminal and nonterminal
+    //get new symbols and assign them together... could be in the class? its creating a digram but could return, just the right
+    public Symbol getReverseComplement() {
+        Symbol left = createReverseComplement(this);
+        Symbol right = createReverseComplement(this.getLeft()); // left and right symbols of reverse digram as it will be entered into the map
+
+        right.assignLeft(left);
+        left.assignRight(right);
+        left.assignLeft(new Terminal('!')); //todo for comparisons in hashmap, complement requires a left.left
+
+        return right;
+    }
+
+    //todo should be in symbol? - used by getreverse, creates the actual instance
+    public Symbol createReverseComplement(Symbol currentSymbol) {
+        Symbol reverse = new Symbol(); // could it ever be guard? todo yes seems to be, setting guards needlessly
+        if (currentSymbol instanceof Terminal) { // right hand side of digram
+            reverse = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0))); //todo a better way to get char
+        }
+        else if (currentSymbol instanceof NonTerminal) {
+            reverse = new NonTerminal(((NonTerminal) currentSymbol).getRule());
+            ((NonTerminal) currentSymbol).getRule().decrementCount();
+        }
+
+        // if nonterminal is complement, it's complement wont be, same for terminals,
+        // shouldn't be an issue as all are unique and values aren't altered elsewhere
+        //currentSymbol.complement = left;
+        reverse.isComplement = !currentSymbol.isComplement;
+        reverse.complement = currentSymbol;
+
+        return reverse;
+    }
+
 //    // todo this is only used once for finding approx matches, must be a better way
 //    // the way in which it is called as object method, but still requires the next right symbol is not good
 //    public Symbol getNextTerminal(Symbol currentSymbol, Boolean isComplement) {

@@ -41,12 +41,10 @@ public class Compress {
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
 
+//            System.out.println();
 //            System.out.println(getFirstRule().getRuleString());
 //            System.out.println("MAP");
 //            System.out.println(printDigrams());
-//            for (Symbol s : digramMap.values()) {
-//                System.out.print(s.getLeft() + " " + s + " / ");
-//            }
 //            System.out.println();
         }
 
@@ -163,7 +161,7 @@ public class Compress {
                 }
             } else { // digram not been seen before, add to digram map
                 addToDigramMap(symbol);
-                addToDigramMap(getReverseComplement(symbol));
+                addToDigramMap(symbol.getReverseComplement());
             }
     }
 
@@ -181,43 +179,17 @@ public class Compress {
         return symbol;
     }
 
-    //todo for terminal and nonterminal
-    //get new symbols and assign them together... could be in the class? its creating a digram but could return, just the right
-    public Symbol getReverseComplement(Symbol digram) {
-        Symbol left = createReverseComplement(digram);
-        Symbol right = createReverseComplement(digram.getLeft()); // left and right symbols of reverse digram as it will be entered into the map
-
-        right.assignLeft(left);
-        left.assignRight(right);
-        left.assignLeft(new Terminal('!')); //todo for comparisons in hashmap, complement requires a left.left
-
-        return right;
-    }
-
-    //todo should be in symbol? - used by getreverse, creates the actual instance
-    public Symbol createReverseComplement(Symbol currentSymbol) {
-        Symbol reverse = new Symbol(); // could it ever be guard? todo yes seems to be, setting guards needlessly
-        if (currentSymbol instanceof Terminal) { // right hand side of digram
-            reverse = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0))); //todo a better way to get char
-        }
-        else if (currentSymbol instanceof NonTerminal) {
-            reverse = new NonTerminal(((NonTerminal) currentSymbol).getRule());
-            ((NonTerminal) currentSymbol).getRule().decrementCount();
-        }
-
-        // if nonterminal is complement, it's complement wont be, same for terminals,
-        // shouldn't be an issue as all are unique and values aren't altered elsewhere
-        //currentSymbol.complement = left;
-        reverse.isComplement = !currentSymbol.isComplement;
-        reverse.complement = currentSymbol;
-
-        return reverse;
-    }
-
     public void removeDigrams(Symbol digram) {
+//        System.out.println("REMOVING");
+//        System.out.println(digram.getLeft() + " " + digram);
+//        System.out.println(printDigrams());
         digramMap.remove(digram);
+        //System.out.println(printDigrams());
         //todo creating via getReveseComplement to remove, if created with the objects could add that way too
-        digramMap.remove(getReverseComplement(digram));
+        //todo removing complement, even if reverse still exists....
+        // if tt is there will it have been given the next right
+        digramMap.remove(digram.getReverseComplement());
+
     }
 
     /**
@@ -344,7 +316,6 @@ public class Compress {
         }
 
         // not so much that its removing the wrong one, but it is editing that which remains
-        //&& !
         if (!symbol.getRight().equals(symbol)) { // should this be getright.getrigh? both
             //System.out.println("right " + symbol + " " + symbol.getRight());
             // as if symbol get right would not equal symbol, because if preceded by a, checking one side for overlap
@@ -354,7 +325,10 @@ public class Compress {
 
             // if removed a digram that was overlapping with itself, need to re-add//todo this needs to be done properly and for both directions
             if (symbol.getRight().equals(symbol.getRight().getRight())) {
-                digramMap.putIfAbsent(symbol.getRight().getRight(), symbol.getRight().getRight());
+                addToDigramMap(symbol.getRight().getRight());
+                // whenever adding, add reverse complement
+                Symbol reverse = symbol.getRight().getRight().getReverseComplement();
+                addToDigramMap(reverse);
             }
 
         }

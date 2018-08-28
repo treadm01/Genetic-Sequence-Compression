@@ -20,7 +20,7 @@ public class ReverseComplementTest {
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
-        assertEquals("t", c.getReverseComplement(tr).toString());
+        assertEquals("t", tr.getReverseComplement().toString());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ReverseComplementTest {
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
-        assertEquals("g", c.getReverseComplement(tr).getLeft().toString());
+        assertEquals("g", tr.getReverseComplement().getLeft().toString());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ReverseComplementTest {
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
-        assertEquals("a", c.getReverseComplement(tr).complement.toString()); //todo get complement with getter
+        assertEquals("a", tr.getReverseComplement().complement.toString()); //todo get complement with getter
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ReverseComplementTest {
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
-        assertEquals("c", c.getReverseComplement(tr).getLeft().complement.toString());
+        assertEquals("c", tr.getReverseComplement().getLeft().complement.toString());
     }
 
     @Test

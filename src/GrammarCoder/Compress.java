@@ -7,7 +7,7 @@ public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
     private Rule firstRule; // main rule
-    Set<Rule> rules; // rules used for output and encoding
+    public Set<Rule> rules; // rules used for output and encoding
     String mainInput; // string of the input, used for edit rule indexes
     int streamIndex = 0;
     /**

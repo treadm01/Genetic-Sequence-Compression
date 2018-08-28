@@ -16,7 +16,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "aatcctgcaggg";
         c.processInput(compress);
-        assertTrue(c.search("cag"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("cag"));
     }
 
     //INPUT: tgtcccgaaacgctttaacggacctgctttcatacagcaataggagcggatagaaa
@@ -30,7 +31,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "gaaagattatgcggaag";
         c.processInput(compress);
-        assertTrue(c.search("aagatt"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("aagatt"));
     }
 
     //todo you won't have access to the start symbol things.... will you???
@@ -45,7 +47,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "taagggagaag";
         c.processInput(compress);
-        assertTrue(c.search("aagggagaa"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("aagggagaa"));
     }
 
     @Test
@@ -53,7 +56,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "acgt";
         c.processInput(compress);
-        assertTrue(c.search("ac"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("ac"));
     }
 
     @Test
@@ -61,7 +65,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "acgt";
         c.processInput(compress);
-        assertTrue(c.search("gt"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("gt"));
     }
 
     // would need every symbol followed by a nonterminal and every symbols precedede by a nonterminal
@@ -74,7 +79,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("cgca"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("cgca"));
     }
 
     @Test
@@ -82,7 +88,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("cgcaa"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("cgcaa"));
     }
 
     // still need to check single, or not the first symbol...
@@ -91,7 +98,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("agtcgcaatttagacaacagccaa"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("agtcgcaatttagacaacagccaa"));
     }
 
     @Test
@@ -99,7 +107,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("gtcgcaatttagacaacagccaa"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("gtcgcaatttagacaacagccaa"));
     }
 
     @Test
@@ -107,7 +116,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("agccaa"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("agccaa"));
     }
 
     @Test
@@ -115,7 +125,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("a"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("a"));
     }
 
     @Test
@@ -123,7 +134,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("aa"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("aa"));
     }
 
     //todo cant search for single...
@@ -133,7 +145,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("aattt"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("aattt"));
     }
 
     @Test
@@ -141,7 +154,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("caac"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("caac"));
     }
 
     //tc is not being registered.... the way possible rules are created
@@ -150,7 +164,8 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        assertTrue(c.search("agtc"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("agtc"));
     }
 
     // gggagaaagcgaggatcag - this string is constructed but not registered as found
@@ -160,7 +175,8 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        assertTrue(c.search("gaattccgg"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("gaattccgg"));
     }
 
     @Test
@@ -169,7 +185,8 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        assertTrue(c.search("gaattccggatcac"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("gaattccggatcac"));
     }
 
     @Test
@@ -178,7 +195,8 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        assertTrue(c.search("ccatatgactttgcaaattca"));
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("ccatatgactttgcaaattca"));
     }
 
     String genRand (int length) {
@@ -212,8 +230,9 @@ public class SearchTest {
             System.out.println("SEARCH: " + search);
             Compress c = new Compress();
             c.processInput(input);
+            Search s = new Search(c.digramMap, c.rules);
             if (search.length() != 0) {
-                assertTrue(c.search(search));
+                assertTrue(s.search(search));
             }
             System.out.println();
             System.out.println("count " + i);

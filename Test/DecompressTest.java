@@ -239,8 +239,8 @@ public class DecompressTest {
         String input = ie.getEncodedOutput();//io.readFile("compressTest");
 
         Rule r = d.buildGrammar(input);
-//        System.out.println(r.getSymbolString(r, r.isComplement));
-//        System.out.println(originalFile);
+        System.out.println(r.getSymbolString(r, r.isComplement));
+        System.out.println(originalFile);
         assertEquals(originalFile, r.getSymbolString(r, r.isComplement));
     }
 

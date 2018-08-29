@@ -46,5 +46,23 @@ public class BugTest {
         Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
+    @Test
+    public void singleSymbolRuleWrongDecompression() {
+        Compress c = new Compress();
+        String compress = "aaagtcatcctttctcccgagccacattcgactgtagagttccagaaagcgtgttaatgggttcataacgattcgcacggggaacgatggagccaacggttacagagctgaatagtcagggcggggcgggtttgacgtcgcggcgcgtcattagatggcacttagcgacccgtctgggtctcctaaaccagatggggaatatctatgtgtacgacgcattgagttggatctaaaaaactcttagctttctgcataaggtatacttgcagagtgacatgaaactccagataagtcaagacacaaacggagtgcaattccgcttgaaaggactgatagcctgcgccaggttaaacaaaggtgatgttcgtagtttcgcaaccctggggccacggcggggactttaagcggataaaacaggtggagtattcaatatgtgagacagcacggattaccttcgcgtggtgccgaactttttaggttgcgtcgcgacctgtcatcgccggggcggtaacacaaggtctaacgggtttaggtatcatcagaaatctcagctaggagacgcctcctatcaa";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
 
+
+    //gcgtcgctctgggatcccagatctcattgcaatttcccagattatgctaacaa
+    //aaaccgtttgagatacggcggatcaaactt
+    //gaaaggtatacctttccctcgtacccccttcatt
+    @Test
+    public void guardCantBeCastTerminal() { // might be same issue as above rule 6 > a
+        Compress c = new Compress();
+        String compress = "aaaccgtttgagatacggcggatcaaactt";
+        c.processInput(compress);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+    }
 }

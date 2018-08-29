@@ -1,9 +1,12 @@
 package GrammarCoder;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 //todo check digram map adding and removing is accurate, could be losing a lot there
+//todo edit grammar... can use search?
+//todo multiple files
+//todo palindrome
+// decode nonterminals and recode??
 
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
@@ -44,7 +47,7 @@ public class Compress {
             // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
-
+            //System.out.println(getFirstRule().getRuleString());
 //            System.out.println();
 //            System.out.println(getFirstRule().getRuleString());
 //            System.out.println("MAP");
@@ -55,7 +58,6 @@ public class Compress {
 //            generateRules(getFirstRule().getFirst());
 //            System.out.println(printRules());
         }
-
 
         rules.add(getFirstRule()); //todo get with getter and setter
         generateRules(getFirstRule().getFirst());
@@ -83,11 +85,6 @@ public class Compress {
         if (getFirstRule().getLast() instanceof NonTerminal) {
             matchingNonTerminal = (NonTerminal) getFirstRule().getLast();
 
-            //todo find the best nonterminal to use, or a selection
-            List<NonTerminal> orderedList = matchingNonTerminal.getRule().nonTerminalList.stream()
-                    .filter(x -> x.getRight() instanceof NonTerminal)
-                    .collect(Collectors.toList());
-
             NonTerminal longestNext = matchingNonTerminal.getRule().nonTerminalList.get(0);
 
             // need to try and find the best match to try and edit
@@ -106,41 +103,59 @@ public class Compress {
             previousNonTerminal = longestNext;
             // need to compare the next things length... but what about edits.... would have to compare to underlying rule
 
-            // two nonterminals are the ones worth checking
-            if (previousNonTerminal.getRight() instanceof NonTerminal
-                    && !previousNonTerminal.getRight().equals(matchingNonTerminal)) { // check no overlap
-                NonTerminal nextNonTerminal = (NonTerminal) previousNonTerminal.getRight();
-//                System.out.println("RULE " + nextNonTerminal.getRule());
-//                System.out.println(nextNonTerminal.getRule().getRuleString());
-                String lastSequence = nextNonTerminal.getRule().getSymbolString(nextNonTerminal.getRule(), nextNonTerminal.isComplement);
-                String nextSequence;
+            List<Symbol> next = new ArrayList<>();
+            Symbol nt = previousNonTerminal.getRight();
+            String lastSequence = "";
+            while (nt instanceof NonTerminal && nt != matchingNonTerminal && lastSequence.length() < 15) {
+                lastSequence += ((NonTerminal) nt).getRule().getSymbolString(((NonTerminal) nt).getRule(), nt.isComplement);
+                next.add(nt);
+                nt = nt.getRight();
+            }
 
-                // check that comparing the string wont go over length
-                if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
-                    nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
+//            for (Symbol n : next) {
+//                //System.out.print(" " + n + " ");
+//            }
 
-                    List<Edit> edits = new ArrayList<>();
-
-                    int editNumber = 0;
-                    for (int j = 0; j < lastSequence.length(); j++) {
-                        if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
-                            editNumber++;
-                            edits.add(new Edit(symbol.symbolIndex + j, String.valueOf(nextSequence.charAt(j))));
-                        }
+            String nextSequence = "";
+            if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
+                nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
+                int editNumber = 0;
+                List<Edit> edits = new ArrayList<>();
+                for (int j = 0; j < lastSequence.length(); j++) {
+                    if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
+                        editNumber++;
+                        edits.add(new Edit(symbol.symbolIndex + j, String.valueOf(nextSequence.charAt(j))));
                     }
+                }
+                if (editNumber > 0 && editNumber <= lastSequence.length() * 0.3) {
+                    System.out.print("MATCH -");
+                    for (Symbol s : next) {
+                        System.out.print(" " + s + " ");
+                    }
+                    System.out.println();
+                    System.out.println(lastSequence);
+                    System.out.println(nextSequence);
+                    System.out.println();
 
-                    if (editNumber > 0 && editNumber <= lastSequence.length() * 0.1) {
+                    if (next.size() == 1) {
+                        NonTerminal nextNonTerminal = (NonTerminal) next.get(0);
                         nextSymbol = new NonTerminal(nextNonTerminal.getRule());
                         nextSymbol.setIsEdit(edits);
                         //todo will have to add to nonterminal rule list
-                        newIndex += lastSequence.length()-1;
+                        newIndex += lastSequence.length() - 1;
                         nextSymbol.symbolIndex = newIndex;
                         nextSymbol.isComplement = nextNonTerminal.isComplement;
                     }
+
                 }
-                // if a complete match update nonterminal here
-                // else edit and update here
+
+
             }
+
+            // will be difficult to maintain digrams....
+            // when adding new one might alter next enough to not make sense anymore
+            // which edits refer to which digrams and how to add????
+            // do it one nonterminal at a time
         }
 
         //System.out.println(getFirstRule().getRuleString());

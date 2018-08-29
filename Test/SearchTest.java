@@ -10,10 +10,6 @@ public class SearchTest {
     //todo fix heap and generate rule bugs....
     //tcaggaag - string found but not in file humdyst
 
-    // heap issue - not search
-    // INPUT: tttcggctgaaacggcaggcta
-    // SEARCH: t
-
     //atcgtgataaatccagt reverse complement not found - search gat - passing
     @Test
     public void searchEncodedinReverseComplement() {
@@ -182,6 +178,15 @@ public class SearchTest {
         assertTrue(s.search("agtc"));
     }
 
+    @Test
+    public void NotFound() {
+        Compress c = new Compress();
+        String compress = "gtccttaagcttataagaatggacttcatatgagatc";
+        c.processInput(compress);
+        Search s = new Search(c.digramMap, c.rules);
+        assertTrue(s.search("agcttataagaatggacttcatat"));
+    }
+
     // gggagaaagcgaggatcag - this string is constructed but not registered as found
     @Test
     public void humdyst() {
@@ -213,6 +218,8 @@ public class SearchTest {
         assertTrue(s.search("ccatatgactttgcaaattca"));
     }
 
+
+
     String genRand (int length) {
         Random rand = new Random();
         String possibleLetters = "acgt";
@@ -223,18 +230,17 @@ public class SearchTest {
     }
 
     // not equal search
-//    INPUT: gtccttaagcttataagaatggacttcatatgagatc
-//    SEARCH: agcttataagaatggacttcatat
+    //    INPUT: cg
+//    SEARCH: a
+//    INPUT: ccttcggatcaaacaca
+//    SEARCH: gtg
 
-    //ataagtaagttat
-    //ttgtgataaaag
-    // l 77
-    // problem with small input gc
+//might be finding reverse complements....
     @Test
     public void searchRandom() {
         Random rand = new Random();
         for (int i = 0; i < 1000; i++) {
-            String input = genRand(rand.nextInt((500 - 2) + 1) + 2);
+            String input = genRand(rand.nextInt((100 - 2) + 1) + 2);
             System.out.println("INPUT: " + input);
             int start = rand.nextInt(input.length());
             assertTrue(start <= input.length());
@@ -244,7 +250,8 @@ public class SearchTest {
 //            System.out.println("end " + end);
             assertTrue(end <= input.length());
             assertTrue(end >= start);
-            String search = input.substring(start, end);
+            //genRand(rand.nextInt((10 - 1) + 1) + 1);
+            String search = genRand(start);
             System.out.println("SEARCH: " + search);
             Compress c = new Compress();
             c.processInput(input);

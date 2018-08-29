@@ -16,7 +16,6 @@ public class Rule extends Symbol implements Comparable {
     int timeSeen = 0;
     int position;
     int length; // length of compressed rule
-    String symbolRule; // length of uncompressed rule
 
     public Rule() {
         index = 0; // todo not sure this is used anymore
@@ -180,17 +179,23 @@ public class Rule extends Symbol implements Comparable {
         return output.toString();
     }
 
-
     @Override
     public int compareTo(Object o) {
         Rule r = (Rule) o;
-        if (r.symbolRule.length() > symbolRule.length()) {
-            return 1;
-        }
-        else if (r.symbolRule.length() < symbolRule.length()) {
+        if (r.representation > representation) {
             return -1;
         }
-        return 0;
+        else if (r.representation < representation) {
+            return 1;
+        }
+        else {return 0; }
+//        if (r.symbolRule.length() > symbolRule.length()) {
+//            return 1;
+//        }
+//        else if (r.symbolRule.length() < symbolRule.length()) {
+//            return -1;
+//        }
+//        return 0;
     }
 
     @Override

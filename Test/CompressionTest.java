@@ -80,7 +80,6 @@ import static org.junit.Assert.*;
 
         @Test
         public void hehcmv() {
-
             int old = 181765;
             String fileName = "hehcmv";
             Compress c = new Compress();

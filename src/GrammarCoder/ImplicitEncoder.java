@@ -62,7 +62,7 @@ public class ImplicitEncoder {
     public void addEdits(List<Edit> editList) {
         for (Edit e : editList) {
             encodingSymbols.add("*"); // has to be added each time for arithmetic coding
-            encodingSymbols.add(String.valueOf(e.index));
+            encodingSymbols.add(String.valueOf((char)e.index));
             encodingSymbols.add(e.symbol);
         }
     }

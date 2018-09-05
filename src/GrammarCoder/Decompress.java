@@ -74,17 +74,17 @@ public class Decompress {
                 //pos -= 128;
                 addNonTerminal(marker.get(pos).getRule(), isComplement, isReverse);
             }
-//            else if (input.charAt(position) == '*') {
-//                //todo needs to handle markernumber edits... no, should already be doing that
-//                // get the symbols and then add to the nonterimal edits
-//                List<Edit> edits = new ArrayList<>();
-//                int index = retrieveStringSegment();
-//                Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)));
-//                edits.add(e);
-//                // if part of a sub rule need to add to head rule
-//                c.getFirstRule().getLast().setIsEdit(edits);
-//                position++; // have to move past the symbol being edited
-//            }
+            else if (input.charAt(position) == '*') {
+                //todo needs to handle markernumber edits... no, should already be doing that
+                // get the symbols and then add to the nonterimal edits
+                List<Edit> edits = new ArrayList<>();
+                int index = retrieveStringSegment();
+                Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)));
+                edits.add(e);
+                // if part of a sub rule need to add to head rule
+                c.getFirstRule().getLast().setIsEdit(edits);
+                position++; // have to move past the symbol being edited
+            }
             else {
                 if (input.charAt(position) < 128) { // if terminal add it to first rule
                     c.getFirstRule().addNextSymbol(new Terminal(input.charAt(position)));

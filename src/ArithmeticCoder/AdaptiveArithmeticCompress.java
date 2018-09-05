@@ -85,9 +85,14 @@ public class AdaptiveArithmeticCompress {
                 symbol = s.charAt(0);
             }
 
-            if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
+//todo may be able to do the split streams with 0 for 2 -2 for all else
+//            if (lastSymbol == '#') {
+//                gammaCode(s.charAt(0), out);
+//            }
+//            else
+                if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
                 enc.write(freqs, symbol);
-                freqs.set(symbol, freqs.get(symbol) + changeFreq); // having this above enc.write would be best
+                freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best
                 freqs.increment(symbol);
             }
             if (symbolMarker.contains((char)lastSymbol)) {

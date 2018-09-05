@@ -58,7 +58,7 @@ public class AdaptiveArithmeticDecompress {
             }
 
 //            out.write(symbol);
-            System.out.println((char) lastSymbol);
+
             if (!symbolMarker.contains((char)lastSymbol) && symbol >= 128) {
                 if (symbol % 2 == 0) {
                     output += "!";
@@ -74,7 +74,9 @@ public class AdaptiveArithmeticDecompress {
             else {
                 output += (char) symbol;
             }
-            freqs.set(symbol, freqs.get(symbol) + changeFreq);
+
+            freqs.set(symbol, freqs.get(symbol) + 10);
+
             if (symbolMarker.contains((char)lastSymbol)) {
                 lastSymbol = -1;
             }
@@ -84,11 +86,9 @@ public class AdaptiveArithmeticDecompress {
             freqs.increment(symbol);
         }
 
-
         //System.out.println(output);
         Decompress d = new Decompress();
 		d.buildGrammar(output);
-
     }
 
 	static int readGammaCode(BitInputStream in) throws IOException {
@@ -104,6 +104,7 @@ public class AdaptiveArithmeticDecompress {
         }
 
         int ruleSize = Integer.parseInt(binaryRule, 2);
+
         return ruleSize;
     }
 }

@@ -10,10 +10,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -61,44 +58,46 @@ public class AdaptiveArithmeticCompress {
         gammaCode(tableSize, out);
         FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
         ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
-        String lastSymbol = "";
-
+        int lastSymbol = -1;
+        Set<Character> symbolMarker = new HashSet<>();
+        symbolMarker.add('{');
+        symbolMarker.add('?');
+        symbolMarker.add('\'');
+        symbolMarker.add('!');
+        symbolMarker.add('#');
+        int changeFreq = 0;
         for (String s : symbols) {
             // Read and encode one byte
             int symbol;
+            changeFreq = 10;
 
-            if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
-                symbol = s.charAt(0);
+            if (lastSymbol == '\'' || lastSymbol == '!') { // checking for hash symbol here breaks different, you need a proper solution
+                if (lastSymbol == '\'') {
+                    symbol = s.charAt(0) + 129;
+                    changeFreq = 2;
+                }
+                else {
+                    symbol = s.charAt(0) + 128;
+                    changeFreq = 8;
+                }
             }
             else {
-                symbol = Integer.parseInt(s) + 128;
+                symbol = s.charAt(0);
             }
 
-            if (symbol == -1)
-                break;
-
-            // todo also have to send the ! symbol for the string although not used here
-            if (symbol != '!') {
+            if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
                 enc.write(freqs, symbol);
-                freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best
+                freqs.set(symbol, freqs.get(symbol) + changeFreq); // having this above enc.write would be best
                 freqs.increment(symbol);
+            }
+            if (symbolMarker.contains((char)lastSymbol)) {
+                lastSymbol = -1;
+            }
+            else {
+                lastSymbol = s.charAt(0);
             }
         }
         enc.write(freqs, tableSize - 1);  // EOF
         enc.finish();  // Flush remaining code bits
-//        System.out.println(freqs);
     }
-
-    // todo probably can be more detailed as to the frequencies, but makes compression worse
-    //if (s.length() == 1 && (s.charAt(0) > 32 && s.charAt(0) < 128)) {
-    //                freqs.set(symbol, freqs.get(symbol) + 10); // todo putting this before enc.write gives good compression, but hard to decompress...
-    //            }
-    //            else {
-    //                if (symbol % 2 == 0) { // if even then not a complemeent... not sure this is working for markers, the lower numbers
-    //                    freqs.set(symbol, freqs.get(symbol) + 8);
-    //                } else {
-    //                    freqs.set(symbol, freqs.get(symbol) + 2);
-    //                }
-    //            }
-
 }

@@ -5,12 +5,50 @@ import java.util.*;
 public class Search {
     Map<Character, Set<NonTerminal>> rulesByStartSymbols = new HashMap<>();
     Map<Character, Set<NonTerminal>> rulesByEndSymbols = new HashMap<>();
-    Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
+    Map<Symbol, Symbol> digramMap = new HashMap<>(); // - digram points to digram via right hand symbol
     Set<Rule> rules;
+    Set<Rule> rulesFromGrammar = new HashSet<>();
 
-    public Search(Map<Symbol, Symbol> digramMap, Set<Rule> rules) {
-        this.digramMap = digramMap;
-        this.rules = rules;
+    public void generateRules(Symbol current) {
+        while (!current.isGuard()) {
+            ////////System.out.print(current + " ?");
+            if (current instanceof NonTerminal) {
+                Rule rule = ((NonTerminal) current).getRule();
+                rulesFromGrammar.add(rule);
+                generateRules(rule.getFirst());
+            }
+            current = current.getRight();
+        }
+    }
+
+    public void addToDigramMap(Symbol symbol) {
+        System.out.println(symbol.getLeft() + " " + symbol);
+        digramMap.putIfAbsent(symbol, symbol);
+    }
+
+    public void addAllDigrams(Symbol symbol) {
+        addToDigramMap(symbol);
+        addToDigramMap(symbol.getReverseComplement());
+    }
+
+    public Map<Symbol, Symbol> createDigramMap(Rule firstRule) {
+        generateRules(firstRule.getFirst());
+        for (Rule r : rulesFromGrammar) {
+            Symbol firstRight = r.getFirst().getRight();
+            System.out.println(firstRight);
+            while (!firstRight.isGuard()) {
+                addAllDigrams(firstRight);
+                firstRight = firstRight.getRight();
+            }
+        }
+        return digramMap; //ehh
+    }
+
+    public Search(Rule firstRule, Set<Rule> rules) {
+        rulesFromGrammar.add(firstRule);
+        generateRules(firstRule.getFirst());
+        this.rules = rulesFromGrammar;
+        this.digramMap = createDigramMap(firstRule);
     }
 
     public void initRuleBySymbols(String searchString) {

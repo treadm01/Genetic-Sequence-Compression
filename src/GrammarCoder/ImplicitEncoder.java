@@ -3,15 +3,21 @@ package GrammarCoder;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ImplicitEncoder {
-    int markerNum = 128; // todo set to 0 check if issue later...
+    String PATH = System.getProperty("user.dir");
+    String SOURCE_PATH = PATH + "/sourceFiles";
+    String COMPRESSED_PATH = PATH + "/compressedFiles";
+    int markerNum = 0; // todo set to 0 check if issue later...
     public List<String> encodingSymbols; // list of symbols required to be encoded by arithmetic
     List<Integer> adjustedMarkers; // for encoding index of rule created used rather than symbol
     public int highestRule; // used for arithmetic coding highest rule will be the number of symbols needed
     Rule grammar;
     String encodedOutput;
+    public Map<String, Integer> allSymbols = new HashMap<>();
 
     public ImplicitEncoder(Rule grammar) {
         this.grammar = grammar;
@@ -21,8 +27,27 @@ public class ImplicitEncoder {
         getEncodingSymbols(grammar.getFirst());
 
         encodedOutput = encode();
-//        writeToFile();
-        System.out.println("ENCODED: " + encodedOutput + "\nLENGTH: " + getEncodedOutput().length());
+        writeToFile();
+
+        for (String c : encodingSymbols) {
+            if (c.charAt(0) > highestRule) {
+                highestRule = c.charAt(0);
+            }
+            if (allSymbols.containsKey(c)) {
+                Integer count = allSymbols.get(c);
+                allSymbols.put(c, count + 1);
+            }
+            else {
+                allSymbols.put(c, 1);
+            }
+
+        }
+
+
+        System.out.println("ENCODED: " + encodedOutput +
+                "\nLENGTH: "
+                        + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
+
     }
 
     //TODO clean up
@@ -49,21 +74,28 @@ public class ImplicitEncoder {
             highestRule = index;
         }
 
-        String complementIndicator = "!";
-        if (nt.rule.timeSeen == 1) {
+        String complementIndicator = "";
+        if (nt.rule.timeSeen == 1) { // from the stack of rules rather than the symbol needs separate indicator
             if (nt.isComplement) {
+                complementIndicator = "{";
+            }
+
+            else { // if standard still needs an indicator
                 complementIndicator = "?";
             }
-            else {
-                complementIndicator = "$";
-            }
         }
-        else if (nt.isComplement) {
-            index++;
+        else{
+            if (nt.isComplement) {
+                complementIndicator = "'";
+            }
+
+            else { // if standard still needs an indicator
+                complementIndicator = "!";
+            }
         }
 
         encodingSymbols.add(complementIndicator);
-        encodingSymbols.add(String.valueOf(index));
+        encodingSymbols.add(String.valueOf((char)index));
         if (nt.isEdited) {
             addEdits(nt.editList);
         }
@@ -83,11 +115,10 @@ public class ImplicitEncoder {
                     //separate method?
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
-                    markerNum += 2;
+                    markerNum+=2;
                     int length = nt.getRule().getRuleLength();
                     encodingSymbols.add("#");
-                    encodingSymbols.add(String.valueOf(length));
-
+                    encodingSymbols.add(String.valueOf((char)length));
 
                     // have to add edits for rules that are first time see with edits
                     if (nt.isEdited) {
@@ -119,7 +150,7 @@ public class ImplicitEncoder {
 
     public void writeToFile() {
         //todo implement properly
-        try (PrintWriter out = new PrintWriter("/home/tread/IdeaProjects/projectGCG/compressedFiles/compressTest")) {
+        try (PrintWriter out = new PrintWriter(COMPRESSED_PATH + "/compressTest.txt")) {
             out.println(getEncodedOutput());
         } catch (FileNotFoundException e) {
             e.printStackTrace();

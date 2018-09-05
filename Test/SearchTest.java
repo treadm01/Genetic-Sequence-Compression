@@ -16,7 +16,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "aatcctgcaggg";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("cag"));
     }
 
@@ -32,7 +32,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "gaaagattatgcggaag";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("aagatt"));
     }
 
@@ -41,7 +41,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "gaaagattatgcggaag";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("gaa"));
     }
 
@@ -57,7 +57,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "taagggagaag";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("aagggagaa"));
     }
 
@@ -66,7 +66,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "acgt";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("ac"));
     }
 
@@ -75,7 +75,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "acgt";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("gt"));
     }
 
@@ -89,7 +89,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("cgca"));
     }
 
@@ -98,7 +98,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("cgcaa"));
     }
 
@@ -108,7 +108,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("agtcgcaatttagacaacagccaa"));
     }
 
@@ -117,7 +117,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("gtcgcaatttagacaacagccaa"));
     }
 
@@ -126,7 +126,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("agccaa"));
     }
 
@@ -135,7 +135,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("a"));
     }
 
@@ -144,7 +144,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("aa"));
     }
 
@@ -155,7 +155,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("aattt"));
     }
 
@@ -164,7 +164,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("caac"));
     }
 
@@ -174,7 +174,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("agtc"));
     }
 
@@ -183,7 +183,7 @@ public class SearchTest {
         Compress c = new Compress();
         String compress = "gtccttaagcttataagaatggacttcatatgagatc";
         c.processInput(compress);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("agcttataagaatggacttcatat"));
     }
 
@@ -194,7 +194,7 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("gaattccgg"));
     }
 
@@ -204,7 +204,7 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("gaattccggatcac"));
     }
 
@@ -214,7 +214,7 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         assertTrue(s.search("ccatatgactttgcaaattca"));
     }
 
@@ -255,7 +255,7 @@ public class SearchTest {
             System.out.println("SEARCH: " + search);
             Compress c = new Compress();
             c.processInput(input);
-            Search s = new Search(c.digramMap, c.rules);
+            Search s = new Search(c.getFirstRule(), c.rules);
             if (search.length() != 0) {
                 assertEquals(input.contains(search), s.search(search));
             }
@@ -273,7 +273,7 @@ public class SearchTest {
         InputOutput io = new InputOutput();
         String input = io.readFile("humdyst");
         c.processInput(input);
-        Search s = new Search(c.digramMap, c.rules);
+        Search s = new Search(c.getFirstRule(), c.rules);
         for (int i = 0; i < 1000; i++) {
             String search = genRand(rand.nextInt((10 - 1) + 1) + 1);
             System.out.println("SEARCH: " + search);

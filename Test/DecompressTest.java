@@ -236,7 +236,8 @@ public class DecompressTest {
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
-        String input = ie.getEncodedOutput();//io.readFile("compressTest");
+        //
+        String input = ie.getEncodedOutput();;//io.readFile("compressedFiles/compressTest.txt");
 
         Rule r = d.buildGrammar(input);
         System.out.println(r.getSymbolString(r, r.isComplement));

@@ -6,6 +6,8 @@ package ArithmeticCoder;/*
  * https://github.com/nayuki/Reference-arithmetic-coding
  */
 
+import GrammarCoder.Decompress;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,68 +37,59 @@ public class AdaptiveArithmeticDecompress {
     //todo WILL DIFFERENT MACHINES DECODE THESE IN THE SAME WAY ENCODE IN THE SAME WAY?
 	// To allow unit testing, this method is package-private instead of private.
 	static void decompress(BitInputStream in, OutputStream out) throws IOException {
+        Set<Character> symbolMarker = new HashSet<>();
+        symbolMarker.add('{');
+        symbolMarker.add('?');
+        symbolMarker.add('#');
 	    int ruleSize = readGammaCode(in);
         FlatFrequencyTable initFreqs = new FlatFrequencyTable(ruleSize);
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
 		ArithmeticDecoder dec = new ArithmeticDecoder(32, in);
-        Boolean isEdit = false; //todo don't forget
-        //! = 33
         int lastSymbol = -1;
         String output = "";
+        int changeFreq = 0;
 		while (true) {
-			// Decode and write one byte
+            // Decode and write one byte
             int symbol = dec.read(freqs);
+            changeFreq = 10;
 
             if (symbol == ruleSize - 1) {  // EOF symbol
                 break;
             }
 
-            //TODO IS IT POSSIBLE FOR SYMBOLS TO OVERLAP MARKER ENCODING, OR SYMBOL TO OVERLAP EOF SYMBOL?
-//  TODO TRYING TO GET THE FREQUENCY WORKING
-			// checking digit here is no good as could be encoded to anything
-            //also could be positioned anywhere including over symbols
-
-            if (symbol > 32 && symbol < 128) {
-                if (Character.isDigit((char)symbol)) {
-                    // todo it is very possible that a marker length could be more than one digit long
-                    // yeah issue when 12
-                    if (lastSymbol != '*' && lastSymbol != '?' && lastSymbol != '$' && lastSymbol != '#') {
-                        output += "!";
-                        out.write(33);
-                    }
-                }
-                System.out.println((char) symbol + " " + symbol);
-                output += String.valueOf((char) symbol);
-                out.write(symbol);
-            }
-            else { // checking for hash symbol here breaks different, you need a proper solution
-                if (lastSymbol != '*' && lastSymbol != '?' && lastSymbol != '$' && lastSymbol != '#') {
-                    out.write(33); // remember have to deal with edits too....
+//            out.write(symbol);
+            System.out.println((char) lastSymbol);
+            if (!symbolMarker.contains((char)lastSymbol) && symbol >= 128) {
+                if (symbol % 2 == 0) {
                     output += "!";
+                    output += (char) (symbol - 128);
+                    changeFreq = 8;
                 }
-                String s = String.valueOf(symbol - 128); //todo issue with frequency the offset?
-                output += s;
-                for (int i = 0; i < s.length(); i++) {
-                    out.write((int)s.charAt(i));
+                else {
+                    output += "\'";
+                    output += (char) (symbol - 129);
+                    changeFreq = 2;
                 }
             }
-
+            else {
+                output += (char) symbol;
+            }
+            freqs.set(symbol, freqs.get(symbol) + changeFreq);
+            if (symbolMarker.contains((char)lastSymbol)) {
+                lastSymbol = -1;
+            }
+            else {
+                lastSymbol = symbol;
+            }
             freqs.increment(symbol);
-            freqs.set(symbol, freqs.get(symbol) + 10);
-            lastSymbol = symbol;
-		}
-
-        System.out.println();
-        System.out.println(output);
-        //
-        //todo probably wont ever use just return string to decompress, unless wanted compressed at this level?
-        // appears to wipe out when set specifically to text....
-        try (PrintWriter outFile = new PrintWriter("/home/tread/IdeaProjects/projectGC/textFiles/compressTest.txt")) {
-            outFile.println(output);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
-	}
+
+
+        //System.out.println(output);
+        Decompress d = new Decompress();
+		d.buildGrammar(output);
+
+    }
 
 	static int readGammaCode(BitInputStream in) throws IOException {
         int count = 0;

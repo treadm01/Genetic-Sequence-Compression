@@ -40,7 +40,7 @@ public class Compress {
             //System.out.println(getFirstRule().getRuleString());
             nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
+            //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
 
             //System.out.println(getFirstRule().getRuleString());
@@ -63,8 +63,29 @@ public class Compress {
         generateRules(getFirstRule().getFirst());
 
         // debugging output
-        System.out.println(printRules());
+        //System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
+        System.out.println("Rule number: " + rules.size());
+        int lengthRHS = 0;
+        int longestRule = 0;
+        int maxRepeat = 0;
+        //todo unclear if should include first rule
+        for (Rule r : rules) {
+            int ruleLength = r.getRuleLength();
+            int symbolLength = r.getSymbolString(r, false).length();
+            lengthRHS += ruleLength;
+            if (r.getRepresentation() != 0) {
+                if (symbolLength > longestRule) {
+                    longestRule = symbolLength;
+                }
+                if (r.count > maxRepeat) {
+                    maxRepeat = r.count;
+                }
+            }
+        }
+        System.out.println("length of RHS " + lengthRHS);
+        System.out.println("longest rule " + longestRule);
+        System.out.println("max repeat " + maxRepeat);
         System.out.println();
     }
 

@@ -195,7 +195,7 @@ public class SearchTest {
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
         Search s = new Search(c.getFirstRule(), c.rules);
-        assertTrue(s.search("gaattccgg"));
+        assertTrue(s.search("aattccgg"));
     }
 
     @Test
@@ -205,7 +205,7 @@ public class SearchTest {
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile);
         Search s = new Search(c.getFirstRule(), c.rules);
-        assertTrue(s.search("gaattccggatcac"));
+        assertTrue(s.search("aattccggatcac"));
     }
 
     @Test
@@ -264,7 +264,6 @@ public class SearchTest {
             //Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
         }
     }
-
 
     @Test
     public void searchRandomFromFile() {

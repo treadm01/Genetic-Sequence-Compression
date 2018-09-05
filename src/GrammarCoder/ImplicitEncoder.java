@@ -44,7 +44,7 @@ public class ImplicitEncoder {
         }
 
 
-        System.out.println("ENCODED: " + encodedOutput +
+        System.out.println(//"ENCODED: " + encodedOutput +
                 "\nLENGTH: "
                         + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
 

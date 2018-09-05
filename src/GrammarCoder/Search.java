@@ -5,13 +5,20 @@ import java.util.*;
 public class Search {
     Map<Character, Set<NonTerminal>> rulesByStartSymbols = new HashMap<>();
     Map<Character, Set<NonTerminal>> rulesByEndSymbols = new HashMap<>();
-    Map<Symbol, Symbol> digramMap = new HashMap<>(); // - digram points to digram via right hand symbol
-    Set<Rule> rules;
-    Set<Rule> rulesFromGrammar = new HashSet<>();
+    DigramMap digramMap; // - digram points to digram via right hand symbol
+    private Set<Rule> rules;
+    private Set<Rule> rulesFromGrammar = new HashSet<>();
 
+    public Search(Rule firstRule, Set<Rule> rules) {
+        rulesFromGrammar.add(firstRule);
+        generateRules(firstRule.getFirst());
+        this.rules = rulesFromGrammar;
+        this.digramMap = createDigramMap(firstRule);
+    }
+
+    //todo deduplicate
     public void generateRules(Symbol current) {
         while (!current.isGuard()) {
-            ////////System.out.print(current + " ?");
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
                 rulesFromGrammar.add(rule);
@@ -21,34 +28,17 @@ public class Search {
         }
     }
 
-    public void addToDigramMap(Symbol symbol) {
-        System.out.println(symbol.getLeft() + " " + symbol);
-        digramMap.putIfAbsent(symbol, symbol);
-    }
-
-    public void addAllDigrams(Symbol symbol) {
-        addToDigramMap(symbol);
-        addToDigramMap(symbol.getReverseComplement());
-    }
-
-    public Map<Symbol, Symbol> createDigramMap(Rule firstRule) {
-        generateRules(firstRule.getFirst());
+    public DigramMap createDigramMap(Rule firstRule) {
+        DigramMap dm = new DigramMap();
+        generateRules(firstRule.getFirst()); //todo needs unduplicating
         for (Rule r : rulesFromGrammar) {
             Symbol firstRight = r.getFirst().getRight();
-            System.out.println(firstRight);
             while (!firstRight.isGuard()) {
-                addAllDigrams(firstRight);
+                dm.addNewDigrams(firstRight);
                 firstRight = firstRight.getRight();
             }
         }
-        return digramMap; //ehh
-    }
-
-    public Search(Rule firstRule, Set<Rule> rules) {
-        rulesFromGrammar.add(firstRule);
-        generateRules(firstRule.getFirst());
-        this.rules = rulesFromGrammar;
-        this.digramMap = createDigramMap(firstRule);
+        return dm;
     }
 
     public void initRuleBySymbols(String searchString) {
@@ -133,15 +123,6 @@ public class Search {
         return searchRules;
     }
 
-    // dupe from compress needs to be in a generic place
-    public Symbol getOriginalDigram(Symbol digram) {
-        Symbol symbol = digramMap.get(digram);
-        if (symbol.getRight() == null) {
-            symbol = digramMap.get(symbol.getLeft().complement);
-        }
-        return symbol;
-    }
-
     //get every instance of first digram
     public Boolean search(String searchString) {
         Boolean found = false;
@@ -207,7 +188,7 @@ public class Search {
         List<Rule> morePossible = new ArrayList<>();
         for (List<Rule> ruleList : searchRules.values()) {
             for (Rule r : ruleList) {
-                Symbol currentSymbol = getOriginalDigram(r.getLast()); //todo - make a more accessible methodgetOriginalDigram(r.getLast());
+                Symbol currentSymbol = digramMap.getOriginalDigram(r.getLast()); //todo - make a more accessible methodgetOriginalDigram(r.getLast());
                 Boolean complement = currentSymbol.getRepresentation() != r.getLast().getRepresentation();
                 Rule newRule = new Rule();
                 newRule.addAllSymbols(r.getFirst()); // but what to add??? add whatever and set complement???
@@ -311,10 +292,10 @@ public class Search {
         List<Rule> ruleList = new ArrayList<>();
         //System.out.println("SYMBOL " + left + " " + right);
 
-        if (digramMap.containsKey(right)) {
+        if (digramMap.existingDigram(right)) {
             //  System.out.println("WELL ? " + left + " " + right);
             Rule nRule = new Rule();
-            Symbol real = digramMap.get(right);
+            Symbol real = digramMap.getExistingDigram(right);
             nRule.isComplement = real.getRight() == null; // indicated whether the existing is a complement
             nRule.addAllSymbols(left);
             ruleList.add(nRule);

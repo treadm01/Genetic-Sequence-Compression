@@ -2,25 +2,20 @@ package GrammarCoder;
 
 import java.util.*;
 
-//todo check digram map adding and removing is accurate, could be losing a lot there
-//todo edit grammar... can use search?
-//todo multiple files
-//todo palindrome
-// decode nonterminals and recode??
-
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
-    public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
+    private DigramMap digramMap;
     private Rule firstRule; // main rule
     public Set<Rule> rules; // rules used for output and encoding
-    String mainInput; // string of the input, used for edit rule indexes
-    int streamIndex = 0;
+    private String mainInput; // string of the input, used for edit rule indexes
+    private int streamIndex = 0;
+
     /**
      * main constructor for compress, just initialises, maps and first rules etc
      */
     public Compress() {
         Rule.ruleNumber = 0;
-        digramMap = new HashMap<>();
+        digramMap = new DigramMap();
         rules = new HashSet<>();
         firstRule = new Rule(); // create first rule;
     }
@@ -35,33 +30,19 @@ public class Compress {
         mainInput = input; //todo assign and set properly, getter and setter
         Symbol nextSymbol = new Terminal(input.charAt(0));
         getFirstRule().addNextSymbol(nextSymbol);
-        // have to do this to ensure first symbol added... todo improve
         for (int i = 1; i < input.length(); i++) {
-            //System.out.println(getFirstRule().getRuleString());
             nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
+//            nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
             i = nextSymbol.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
-
-            //System.out.println(getFirstRule().getRuleString());
-            // add next symbol from input to the first rule
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
-            //System.out.println(getFirstRule().getRuleString());
-//            System.out.println();
-//            System.out.println(getFirstRule().getRuleString());
-//            System.out.println("MAP");
-//            System.out.println(printDigrams());
-//            System.out.println();
-//
-//            rules.add(getFirstRule()); //todo get with getter and setter
-//            generateRules(getFirstRule().getFirst());
-//            System.out.println(printRules());
         }
-
         rules.add(getFirstRule()); //todo get with getter and setter
         generateRules(getFirstRule().getFirst());
+    }
 
+    public void deubugGrammarOutput() {
         // debugging output
         System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
@@ -87,10 +68,6 @@ public class Compress {
         System.out.println("longest rule " + longestRule);
         System.out.println("max repeat " + maxRepeat);
         System.out.println();
-    }
-
-    public void addToDigramMap(Symbol symbol) {
-        digramMap.putIfAbsent(symbol, symbol);
     }
 
     //todo existing rules can't take advantage of?
@@ -149,14 +126,14 @@ public class Compress {
                     }
                 }
                 if (editNumber > 0 && editNumber <= lastSequence.length() * 0.3) {
-                    System.out.print("MATCH -");
-                    for (Symbol s : next) {
-                        System.out.print(" " + s + " ");
-                    }
-                    System.out.println();
-                    System.out.println(lastSequence);
-                    System.out.println(nextSequence);
-                    System.out.println();
+//                    System.out.print("MATCH -");
+//                    for (Symbol s : next) {
+//                        System.out.print(" " + s + " ");
+//                    }
+//                    System.out.println();
+//                    System.out.println(lastSequence);
+//                    System.out.println(nextSequence);
+//                    System.out.println();
 
                     if (next.size() == 1) {
                         NonTerminal nextNonTerminal = (NonTerminal) next.get(0);
@@ -191,50 +168,26 @@ public class Compress {
      * each new digram with the use of a rule must be checked also
      */
     public void checkDigram(Symbol symbol) {
-            // check existing digrams for last digram, update them with new rule
-            if (digramMap.containsKey(symbol)) {
-                // retrieve existing digram, if complement return original
-                Symbol existingDigram = getOriginalDigram(symbol);
-                // if the matching digram is an overlap either side (see bug tests) do nothing
-                if (existingDigram.getRight() != symbol
-                        && existingDigram.getLeft() != symbol) { // todo find a better way to place this
-                    // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
-                    if (existingDigram.getLeft().getLeft().isGuard()
-                            && existingDigram.getRight().isGuard()) {
-                        existingRule(symbol, existingDigram);
-                    } else { // if digram has been seen but only once, no rule, then create new rule
-                        createRule(symbol, existingDigram);
-                    }
+        // check existing digrams for last digram, update them with new rule
+        if (digramMap.existingDigram(symbol)) {
+            // retrieve existing digram, if complement return original
+            Symbol existingDigram = digramMap.getOriginalDigram(symbol);
+            // if the matching digram is an overlap either side (see bug tests) do nothing
+            if (existingDigram.getRight() != symbol
+                    && existingDigram.getLeft() != symbol) { // todo find a better way to place this
+                // if the existing digram is guard either side, it must be a complete digram rule/ an existing rule
+                if (existingDigram.getLeft().getLeft().isGuard()
+                        && existingDigram.getRight().isGuard()) {
+                    existingRule(symbol, existingDigram);
                 }
-            } else { // digram not been seen before, add to digram map
-                addToDigramMap(symbol);
-                addToDigramMap(symbol.getReverseComplement());
+                else { // if digram has been seen but only once, no rule, then create new rule
+                    createRule(symbol, existingDigram);
+                }
             }
-    }
-
-    /**
-     * when a digram has occured but was first entered as a reverse complement, ie never seen
-     * the original digram it was created from needs to be used for the correct links and location
-     * @return
-     */
-    public Symbol getOriginalDigram(Symbol digram) {
-        Symbol symbol = digramMap.get(digram);
-        // if digram was created as complement, should have no right hand symbol
-        if (symbol.getRight() == null) {//symbol.isComplement) { // can't really use is complement in this way as nonterminals might be part of a complement digram, but not a complement
-            symbol = digramMap.get(symbol.getLeft().complement);
         }
-        return symbol;
-    }
-
-    public void removeDigrams(Symbol digram) {
-//        System.out.println("REMOVING");
-//        System.out.println(digram.getLeft() + " " + digram);
-        digramMap.remove(digram);
-        //System.out.println(printDigrams());
-        //todo creating via getReveseComplement to remove, if created with the objects could add that way too
-        //todo removing complement, even if reverse still exists....
-        // if tt is there will it have been given the next right
-        digramMap.remove(digram.getReverseComplement());
+        else { // digram not been seen before, add to digram map
+            digramMap.addNewDigrams(symbol);
+        }
     }
 
     /**
@@ -249,25 +202,22 @@ public class Compress {
         NonTerminal newTerminal = new NonTerminal(newRule);
         newRule.nonTerminalList.add(oldTerminal);
         newRule.nonTerminalList.add(newTerminal);
-        // if the symbols are not equal then one is a noncomplement and the rule is set for this
-        // todo given current location of complement set, dupelicate code here for new and old terminals
+
         // can be refactored, replace digram needs the correct complements
         newTerminal.isComplement = !symbol.equals(oldSymbol);
 
-//        newTerminal.symbolIndex = symbol.getLeft().symbolIndex;
-//        oldTerminal.symbolIndex = oldSymbol.getLeft().symbolIndex;
         // pass on edits to nonterminals from symbols
         newTerminal.updateEdits(symbol);
         oldTerminal.updateEdits(oldSymbol);
 
-        replaceDigram(oldTerminal, oldSymbol); // update rule for first instance of digram
-        replaceDigram(newTerminal, symbol);// update rule for last instance of digram
+        addNonTerminal(oldTerminal, oldSymbol); // update rule for first instance of digram
+        addNonTerminal(newTerminal, symbol);// update rule for last instance of digram
 
         // add the repeating digram to the new rule, which in turn is linked to the nonterminal
         newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
         //check the symbols removed and deal with if they are rules
-        // reduce rule count if being replaced or remove if 1
+        //reduce rule count if being replaced or remove if 1
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
     }
@@ -281,18 +231,15 @@ public class Compress {
      */
     private void existingRule(Symbol symbol, Symbol oldSymbol) {
         //TODO could this be done more directly? - digram to nonterminal???
-        //todo can this use get first?
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule);
         rule.nonTerminalList.add(nonTerminal); //TODO ADDING EXSITING RULE NONTERMINALS - WHAT ABOUT REMOVING THEM???????
         nonTerminal.isComplement = !symbol.equals(oldSymbol); //true or alternate value, would have to alternate the nonterminal???
 
-//        nonTerminal.symbolIndex = symbol.getLeft().symbolIndex;
-        //todo OLD SYMBOL NEED PULLING UP?
         nonTerminal.updateEdits(symbol);
 
-        replaceDigram(nonTerminal, symbol);// replace the repeated digram wtih rule
+        addNonTerminal(nonTerminal, symbol);// replace the repeated digram wtih rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
     }
@@ -309,17 +256,9 @@ public class Compress {
             NonTerminal nonTerminal = (NonTerminal) symbol;
             nonTerminal.getRule().decrementCount();
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
-              //  System.out.println("before " + printDigrams());
-                removeDigramsFromMap(symbol);
-                removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
-
-               // System.out.println("after " + printDigrams());
-                //todo this order seems less guaranteed to crash, other more consistent error... hard to solve though
+                digramMap.removeDigramsFromMap(symbol);
+                digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
-                //order of these two... in relation to removing rules used only once, noncomplement
-                //System.out.println("checking new digrams : ");
-                //System.out.println(nonTerminal.getLeft().getRight().getLeft() + " " + nonTerminal.getLeft().getRight());
-                //System.out.println(nonTerminal.getRight().getLeft() + " " +  nonTerminal.getRight());
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
             }
         }
@@ -331,8 +270,8 @@ public class Compress {
      * @param nonTerminal
      * @param symbol - the position of the digram to be replaced
      */
-    private void replaceDigram(NonTerminal nonTerminal, Symbol symbol) {
-        removeDigramsFromMap(symbol);
+    private void addNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+        digramMap.removeDigramsFromMap(symbol);
 
         nonTerminal.assignRight(symbol.getRight());
         nonTerminal.assignLeft(symbol.getLeft().getLeft());
@@ -341,48 +280,6 @@ public class Compress {
         symbol.getRight().assignLeft(nonTerminal);
 
         checkNewDigrams(nonTerminal, nonTerminal.getRight(), nonTerminal);
-    }
-
-    /**
-     * when nonterminals are added or removed the old digrams must be removed from the map
-     * currently requires some extra checks for ensuring that the digrams being removed do not
-     * correspond with the same digram that is overlapping
-     * @param symbol
-     */
-    private void removeDigramsFromMap(Symbol symbol) {
-//        System.out.println("removing");
-//        System.out.println("centre " + symbol.getLeft() + " " + symbol);
-//        System.out.println("centre " + symbol.getLeft() + " " + symbol);
-
-        // don't remove digram if of an overlapping digram
-        if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
-            Symbol existing = digramMap.get(symbol.getLeft());
-            if (existing == symbol.getLeft()) {
-              //  System.out.println("left " + symbol.getLeft().getLeft() + " " + symbol.getLeft());
-                //System.out.println("digrams from map " + symbol.getLeft() + " " + symbol);
-                removeDigrams(symbol.getLeft());
-            }
-        }
-
-        // not so much that its removing the wrong one, but it is editing that which remains
-        if (!symbol.getRight().equals(symbol)) { // should this be getright.getrigh? both
-            //System.out.println("right " + symbol + " " + symbol.getRight());
-            // as if symbol get right would not equal symbol, because if preceded by a, checking one side for overlap
-            // but not the other...
-            //System.out.println("digrams from map right " + symbol.getLeft() + " " + symbol + " " + symbol.getRight() + " " + symbol.getRight().getRight());
-            removeDigrams(symbol.getRight());
-
-            // if removed a digram that was overlapping with itself, need to re-add//todo this needs to be done properly and for both directions
-            if (symbol.getRight().equals(symbol.getRight().getRight())) {
-                addToDigramMap(symbol.getRight().getRight());
-                // whenever adding, add reverse complement
-                Symbol reverse = symbol.getRight().getRight().getReverseComplement();
-                addToDigramMap(reverse);
-            }
-
-        }
-
-        //System.out.println(digramMap);
     }
 
     /**
@@ -419,13 +316,8 @@ public class Compress {
      * works through the symbols and collects all the rules in a set
      * @param current
      */
-
-    //noncomplement followed by complement, get first of rule which is nonterminal
-    // add rule of that, which is already there... no wait
-    // you get the rule of the nonterminal not the containing rule
     public void generateRules(Symbol current) {
         while (!current.isGuard()) {
-            //System.out.print(current + " ?");
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
                 rules.add(rule);
@@ -437,25 +329,14 @@ public class Compress {
                 generateRules(rule.getFirst());
             }
             else {
-                // keep an index of symbols seen which can then be subtracted from the edit index
-                // to give one relative to the symbols..... relative position also used when getting
-                // symbol rule string...
-                streamIndex++;
+                streamIndex++; // keeps position for edit indexes
             }
             current = current.getRight();
         }
     }
 
-    //for debugging only
-    /**
-     * prints out all the digrams added to the digram map
-     */
-    public String printDigrams() {
-        String output = "";
-        for (Symbol s : digramMap.values()) {
-            output += s.getLeft() + " " + s + ", ";
-        }
-        return output;
+    public DigramMap getDigramMap() {
+        return digramMap;
     }
 
     /**

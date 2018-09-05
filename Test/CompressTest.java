@@ -22,7 +22,6 @@ public class CompressTest {
     @Test
     public void processInput() { // create rules from digrams
         c.processInput("abcdbc");
-        System.out.println(c.printDigrams());
         assertEquals("0 > a 2 d 2 | 2 > b c | ", c.printRules());
     }
 
@@ -146,7 +145,6 @@ public class CompressTest {
         System.out.println();
         c = new Compress();
         c.processInput("bdhudhbdhu");
-        System.out.println(c.printDigrams());
         System.out.println(c.printRules());
     }
 

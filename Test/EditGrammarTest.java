@@ -282,8 +282,8 @@ public class EditGrammarTest {
     @Test
     public void decompressApproxTest() {
         Random rand = new Random();
-        for (int i = 0; i < 5; i++) {
-            String input = genRand(rand.nextInt((500 - 1) + 1) + 1);
+        for (int i = 0; i < 1000; i++) {
+            String input = genRand(rand.nextInt((5000 - 1) + 1) + 1);
             System.out.println("INPUT: " + input);
             Compress c = new Compress();
             Decompress d = new Decompress();

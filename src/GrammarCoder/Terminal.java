@@ -1,9 +1,9 @@
 package GrammarCoder;
 
 public class Terminal extends Symbol {
-    long originalValue;
+    private long originalValue;
 
-    public Terminal(long representation) { //TODO make long??
+    public Terminal(long representation) {
         originalValue = representation;
         this.representation = (representation * 2) + 1;
         left = new Symbol(); //todo having to add for equality check, not needed otherwise
@@ -14,16 +14,6 @@ public class Terminal extends Symbol {
         return String.valueOf((char) originalValue);
     }
 
-    public long getOriginalValue() {
-        return originalValue;
-    }
-
-    public void editTerminal(long representation) {
-        originalValue = representation;
-        this.representation = (representation * 2) + 1;
-    }
-
-
     @Override
     public boolean equals(Object obj) {
         //TODO add all checks
@@ -33,13 +23,14 @@ public class Terminal extends Symbol {
             return ((representation == symbol.getRepresentation())
                     && (left.representation == (symbol.left.getRepresentation()))
                     && left.isComplement == symbol.left.isComplement
-            ); // switched check to look at left symbol ra
+            );
         }
         else {
             return super.equals(obj);
         }
     }
 
+    //todo for capitals too
     public static char reverseSymbol(char symbol) {
         char complement = 0;
         if (symbol == 'a') {
@@ -53,6 +44,18 @@ public class Terminal extends Symbol {
         }
         else if (symbol == 't') {
             complement = 'a';
+        }
+        else if (symbol == 'A') {
+            complement = 'T';
+        }
+        else if (symbol == 'C') {
+            complement = 'G';
+        }
+        else if (symbol == 'G') {
+            complement = 'C';
+        }
+        else if (symbol == 'T') {
+            complement = 'A';
         }
         return complement;
     }

@@ -2,16 +2,10 @@ package GrammarCoder;
 
 public class NonTerminal extends Symbol {
     Rule rule; // the nonTerminal the rule points to
-    //Integer index; // location of rule in main input string
-    //Boolean indexFound; // have to use to break out of recursive index find
 
     public NonTerminal(Rule rule) {
         this.rule = rule;
         this.rule.incrementCount(); // increase use count
-        // add nonterminals to rule list, when using exsting rule check each instance for possible repeat
-        // used for edit grammars, checking to old nonterminals
-        //todo are you handling removal??
-        //this.rule.nonTerminalList.add(this);
         representation = rule.representation; // rule has the same symbol rep as it's nonterminal...
     }
 
@@ -51,15 +45,13 @@ public class NonTerminal extends Symbol {
                     && (left.representation == (symbol.left.getRepresentation()))
                     && this.isComplement == symbol.isComplement
                     && left.isComplement == symbol.left.isComplement
-//                    && left.edits == symbol.left.edits
-//                    && this.edits == symbol.edits
-            ); // switched check to look at left symbol ra
+            );
         }
         else {
             return ((representation == symbol.getRepresentation())
                     && (left.representation == (symbol.left.getRepresentation()))
                     && this.isComplement == symbol.isComplement
-            ); // switched check to look at left symbol rather than right
+            );
         }
     }
 

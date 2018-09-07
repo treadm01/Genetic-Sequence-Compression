@@ -21,9 +21,9 @@ public class EditGrammarTest {
 
     @Test
     public void checkIndexes() { // check which digram is replaced
-        c.processInput("aaaaaaac");
+        c.processInput("gctaataaaaagccaaatcggacgcac");
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        assertEquals("aaaaaaac", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
+        assertEquals("gctaataaaaagccaaatcggacgcac", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
@@ -283,7 +283,7 @@ public class EditGrammarTest {
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 1000; i++) {
-            String input = genRand(rand.nextInt((5000 - 1) + 1) + 1);
+            String input = genRand(rand.nextInt((50 - 1) + 1) + 1);
             System.out.println("INPUT: " + input);
             Compress c = new Compress();
             Decompress d = new Decompress();

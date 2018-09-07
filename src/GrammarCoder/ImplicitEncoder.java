@@ -44,7 +44,7 @@ public class ImplicitEncoder {
         }
 
 
-        System.out.println(//"ENCODED: " + encodedOutput +
+        System.out.println("ENCODED: " + encodedOutput +
                 "\nLENGTH: "
                         + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
 
@@ -63,7 +63,9 @@ public class ImplicitEncoder {
         for (Edit e : editList) {
             encodingSymbols.add("*"); // has to be added each time for arithmetic coding
             encodingSymbols.add(String.valueOf((char)e.index));
-            encodingSymbols.add(e.symbol);
+           // if (!e.isComplement) {
+                encodingSymbols.add(e.symbol);
+            //}
         }
     }
 
@@ -83,6 +85,20 @@ public class ImplicitEncoder {
             else { // if standard still needs an indicator
                 complementIndicator = "?";
             }
+
+            if (index == 1) {
+                if (nt.isComplement) {
+                    complementIndicator = "%";
+                }
+                else {
+                    complementIndicator = "[";
+                }
+                encodingSymbols.add(complementIndicator);
+            }
+            else {
+                encodingSymbols.add(complementIndicator);
+                encodingSymbols.add(String.valueOf((char)index));
+            }
         }
         else{
             if (nt.isComplement) {
@@ -92,15 +108,15 @@ public class ImplicitEncoder {
             else { // if standard still needs an indicator
                 complementIndicator = "!";
             }
+            encodingSymbols.add(complementIndicator);
+            encodingSymbols.add(String.valueOf((char) index));
         }
 
-        encodingSymbols.add(complementIndicator);
-        encodingSymbols.add(String.valueOf((char)index));
+
         if (nt.isEdited) {
             addEdits(nt.editList);
         }
     }
-
 
     // length is often 2 so only add if not - REMOVED....
     //todo just going to encode the length, will need to change arithmetic coder
@@ -117,8 +133,13 @@ public class ImplicitEncoder {
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     markerNum+=2;
                     int length = nt.getRule().getRuleLength();
-                    encodingSymbols.add("#");
-                    encodingSymbols.add(String.valueOf((char)length));
+                    if (length == 2) {
+                        encodingSymbols.add("^");
+                    }
+                    else {
+                        encodingSymbols.add("#");
+                        encodingSymbols.add(String.valueOf((char)length));
+                    }
 
                     // have to add edits for rules that are first time see with edits
                     if (nt.isEdited) {

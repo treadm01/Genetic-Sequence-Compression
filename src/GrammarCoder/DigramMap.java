@@ -6,7 +6,6 @@ import java.util.Map;
 public class DigramMap {
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
 
-
     public DigramMap() {
         digramMap = new HashMap<>();
     }
@@ -43,14 +42,10 @@ public class DigramMap {
     }
 
     public void removeDigrams(Symbol digram) {
-//        System.out.println("REMOVING");
-//        System.out.println(digram.getLeft() + " " + digram);
         digramMap.remove(digram);
-        //System.out.println(printDigrams());
         //todo creating via getReveseComplement to remove, if created with the objects could add that way too
         //todo removing complement, even if reverse still exists....
-        // if tt is there will it have been given the next right
-        digramMap.remove(digram.getReverseComplement());
+        digramMap.remove(digram.getReverseComplement()); // can't just access the link?
     }
 
 
@@ -61,42 +56,27 @@ public class DigramMap {
      * @param symbol
      */
     public void removeDigramsFromMap(Symbol symbol) {
-//        System.out.println("removing");
-//        System.out.println("centre " + symbol.getLeft() + " " + symbol);
-//        System.out.println("centre " + symbol.getLeft() + " " + symbol);
-
         // don't remove digram if of an overlapping digram
         if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
             Symbol existing = digramMap.get(symbol.getLeft());
             if (existing == symbol.getLeft()) {
-                //  System.out.println("left " + symbol.getLeft().getLeft() + " " + symbol.getLeft());
-                //System.out.println("digrams from map " + symbol.getLeft() + " " + symbol);
                 removeDigrams(symbol.getLeft());
             }
         }
 
-        // not so much that its removing the wrong one, but it is editing that which remains
         if (!symbol.getRight().equals(symbol)) { // should this be getright.getrigh? both
-            //System.out.println("right " + symbol + " " + symbol.getRight());
-            // as if symbol get right would not equal symbol, because if preceded by a, checking one side for overlap
-            // but not the other...
-            //System.out.println("digrams from map right " + symbol.getLeft() + " " + symbol + " " + symbol.getRight() + " " + symbol.getRight().getRight());
             removeDigrams(symbol.getRight());
 
-            // if removed a digram that was overlapping with itself, need to re-add//todo this needs to be done properly and for both directions
+            // if removed a digram that was overlapping with itself //todo don't remove rather than re -add
             if (symbol.getRight().equals(symbol.getRight().getRight())) {
                 addToDigramMap(symbol.getRight().getRight());
                 // whenever adding, add reverse complement
                 Symbol reverse = symbol.getRight().getRight().getReverseComplement();
                 addToDigramMap(reverse);
             }
-
         }
-
-        //System.out.println(digramMap);
     }
 
-    //for debugging only
     /**
      * prints out all the digrams added to the digram map
      */

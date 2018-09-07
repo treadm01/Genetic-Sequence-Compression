@@ -7,8 +7,42 @@ import static org.junit.Assert.*;
 
 public class SearchTest {
 
-    //todo fix heap and generate rule bugs....
-    //tcaggaag - string found but not in file humdyst
+
+    //INPUT: gtttttggcatcttggccgggatta
+    //SEARCH: aaat
+    @Test
+    public void findingGhost() {
+        Compress c = new Compress();
+        String compress = "gtttttggcatcttggccgggatta";
+        c.processInput(compress);
+        Search s = new Search(c.getFirstRule(), c.rules);
+        assertFalse(s.search("aaat"));
+    }
+
+
+
+    @Test
+    public void findingSingleLetter() {
+        Compress c = new Compress();
+        String compress = "gcg";
+        c.processInput(compress);
+        Search s = new Search(c.getFirstRule(), c.rules);
+        assertFalse(s.search("a"));
+    }
+
+
+//    INPUT: aaccgagacgagaggtctatgactctgcaccagttagaggagttctttcgcaagggccaggcttctggcttggta
+//    SEARCH: agagt
+    @Test
+    public void reverseCompnotfound() {
+        Compress c = new Compress();
+        String compress = "aaccgagacgagaggtctatgactctgc";
+        c.processInput(compress);
+        Search s = new Search(c.getFirstRule(), c.rules);
+        assertTrue(s.search("agagt"));
+    }
+
+
 
     //atcgtgataaatccagt reverse complement not found - search gat - passing
     @Test
@@ -257,7 +291,15 @@ public class SearchTest {
             c.processInput(input);
             Search s = new Search(c.getFirstRule(), c.rules);
             if (search.length() != 0) {
-                assertEquals(input.contains(search), s.search(search));
+                StringBuilder reverseComplement = new StringBuilder();
+                for (int j = 0; j < search.length(); j++) {
+                    reverseComplement.append(Terminal.reverseSymbol(search.charAt(j)));
+                }
+                reverseComplement.reverse();
+                System.out.println(input.contains(search));
+                System.out.println("reverse found " + (input.contains(reverseComplement)) );
+                System.out.println(s.search(search));
+                assertEquals(input.contains(search)|| (input.contains(reverseComplement)) , s.search(search)); //
             }
             System.out.println();
             System.out.println("count " + i);

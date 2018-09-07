@@ -86,7 +86,7 @@ public class AdaptiveArithmeticDecompress {
             freqs.increment(symbol);
         }
 
-        //System.out.println(output);
+        System.out.println(output);
         Decompress d = new Decompress();
 		d.buildGrammar(output);
     }

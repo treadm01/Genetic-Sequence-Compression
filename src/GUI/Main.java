@@ -31,7 +31,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("ProjectGC");
         InputOutput io = new InputOutput();
-        Compress c = new Compress();
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(SOURCE_PATH));
@@ -51,6 +50,7 @@ public class Main extends Application {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile != null) {
                 if (choiceBox.getValue().equals("Binary")) {
+                    Compress c = new Compress();
                     c.processInput(io.readFile(selectedFile));
                     ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
                     try {

@@ -87,9 +87,19 @@ public class AdaptiveArithmeticCompress {
 
 //todo may be able to do the split streams with 0 for 2 -2 for all else
 //            if (lastSymbol == '#') {
-//                gammaCode(s.charAt(0), out);
+//                int length = s.charAt(0) - 2;
+//                gammaCode(length, out);
 //            }
-//            else
+//            else if (lastSymbol == '?' || lastSymbol ==  '{') {
+//                if (s.charAt(0) == '1') {
+//                    out.write(0);
+//                    System.out.println("0");
+//                }
+//                else {
+//                    gammaCode(s.charAt(0) - 1, out);
+//                }
+//            }
+            //else
                 if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
                 enc.write(freqs, symbol);
                 freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best

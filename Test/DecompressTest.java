@@ -78,7 +78,7 @@ public class DecompressTest {
     public void buildGrammar7() {
         Decompress d = new Decompress();
         Compress c = new Compress();
-        String compress = "abcdbcabcdabcdbcabcdabc";
+        String compress = "aaaaaaagaaaa";
         c.processInput(compress);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
@@ -226,6 +226,7 @@ public class DecompressTest {
         //20475
     }
 
+    //todo more terminals? can increase the length all you like but if only one...
     @Test
     public void humdystDE() {
         Compress c = new Compress();
@@ -236,12 +237,9 @@ public class DecompressTest {
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
-        //
         String input = ie.getEncodedOutput();;//io.readFile("compressedFiles/compressTest.txt");
 
         Rule r = d.buildGrammar(input);
-        System.out.println(r.getSymbolString(r, r.isComplement));
-        System.out.println(originalFile);
         assertEquals(originalFile, r.getSymbolString(r, r.isComplement));
     }
 

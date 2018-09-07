@@ -1,13 +1,15 @@
 package GrammarCoder;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Rule extends Symbol implements Comparable {
     int count;
-    Guard guard;
+    private Guard guard;
     static Integer ruleNumber = 0;
-    List<NonTerminal> nonTerminalList = new ArrayList<>();
+    Set<NonTerminal> nonTerminalList = new LinkedHashSet<>();
     private static final long PRIME = 2265539; // from sequitur
     // for decompressing
     Boolean compressed = false;
@@ -18,12 +20,12 @@ public class Rule extends Symbol implements Comparable {
     int length; // length of compressed rule
 
     public Rule() {
-        index = 0; // todo not sure this is used anymore
+//        index = 0; // todo not sure this is used anymore
         this.representation = ruleNumber;
         ruleNumber += 2;
         guard = new Guard(this);
         assignRight(guard);
-        assignLeft(guard); // seems necessary for hashcode check, to check left symbol, use to point to guard
+        assignLeft(guard);
         guard.assignRight(guard);
         guard.assignLeft(guard);
     }
@@ -40,12 +42,11 @@ public class Rule extends Symbol implements Comparable {
 
     }
 
-    // like a clone
+    // like a clone used in search
     public void addAllSymbols(Symbol left) {
         if (left == null) {
             left = left.getRight();
         }
-
         while (left != null && !left.isGuard()) {
             if (left instanceof Terminal) {
                 Terminal t = new Terminal(left.toString().charAt(0));
@@ -101,7 +102,6 @@ public class Rule extends Symbol implements Comparable {
         String symbols = "";
         Symbol first = guard.getRight();
         while (!first.isGuard()) {
-            //System.out.print(first.toString() + " ");
             symbols += " " + first.toString();
             first = first.getRight();
         }
@@ -175,7 +175,6 @@ public class Rule extends Symbol implements Comparable {
             }
 
         } while (!s.isGuard());
-        //System.out.println(output);
         return output.toString();
     }
 
@@ -189,13 +188,6 @@ public class Rule extends Symbol implements Comparable {
             return 1;
         }
         else {return 0; }
-//        if (r.symbolRule.length() > symbolRule.length()) {
-//            return 1;
-//        }
-//        else if (r.symbolRule.length() < symbolRule.length()) {
-//            return -1;
-//        }
-//        return 0;
     }
 
     @Override

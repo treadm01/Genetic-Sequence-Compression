@@ -3,20 +3,23 @@ package GrammarCoder;
 import java.util.*;
 
 public class Search {
-    Map<Character, Set<NonTerminal>> rulesByStartSymbols = new HashMap<>();
-    Map<Character, Set<NonTerminal>> rulesByEndSymbols = new HashMap<>();
-    DigramMap digramMap; // - digram points to digram via right hand symbol
+    private Map<Character, Set<NonTerminal>> rulesByStartSymbols = new HashMap<>();
+    private Map<Character, Set<NonTerminal>> rulesByEndSymbols = new HashMap<>();
+    private DigramMap digramMap; // - digram points to digram via right hand symbol
     private Set<Rule> rules;
     private Set<Rule> rulesFromGrammar = new HashSet<>();
+    Set<String> uniqueSymbols;
 
     public Search(Rule firstRule, Set<Rule> rules) {
+        uniqueSymbols = new HashSet<>();
         rulesFromGrammar.add(firstRule);
         generateRules(firstRule.getFirst());
         this.rules = rulesFromGrammar;
         this.digramMap = createDigramMap(firstRule);
     }
 
-    //todo deduplicate
+    //todo deduplicate - slightly different to compress as doesn't have edits - give edits, in a sense will be finding approximate repeats
+    // are edits retrieved?? should be if string is decompressedd in the same way in final check
     public void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
@@ -35,6 +38,8 @@ public class Search {
             Symbol firstRight = r.getFirst().getRight();
             while (!firstRight.isGuard()) {
                 dm.addNewDigrams(firstRight);
+                uniqueSymbols.add(firstRight.getLeft().toString());
+                uniqueSymbols.add(String.valueOf(Terminal.reverseSymbol(firstRight.getLeft().toString().charAt(0))));
                 firstRight = firstRight.getRight();
             }
         }
@@ -47,6 +52,8 @@ public class Search {
             uniqueSymbols.add(searchString.charAt(i));
         }
 
+        System.out.println(uniqueSymbols);
+
         for (Character c : uniqueSymbols) {
             rulesByStartSymbols.putIfAbsent(c, new HashSet());
             rulesByEndSymbols.putIfAbsent(c, new HashSet());
@@ -57,7 +64,7 @@ public class Search {
 
     public void createRuleBySymbols() {
         for (Rule r : rules) {
-            if (r.representation != 0) {
+            //if (r.representation != 0) {
                 // regular
                 String s = r.getSymbolString(r, r.isComplement);
                 Character start = s.charAt(0);
@@ -86,7 +93,6 @@ public class Search {
                     rulesByStartSymbols.get(end).add(isComplement);
                 }
             }
-        }
     }
 
     public Set<String> createSearchStringDigrams(String searchString) {
@@ -136,8 +142,11 @@ public class Search {
 
         // search for one symbol .... can be checked after createrulebysymbols
         if (searchString.length() == 1) {
-            System.out.println(rulesByStartSymbols.keySet());
-            return rulesByStartSymbols.containsKey(searchString.charAt(0));
+            System.out.println(rulesByStartSymbols);
+            System.out.println(rulesByEndSymbols);
+            return !rulesByStartSymbols.get(searchString.charAt(0)).isEmpty()
+                    || !rulesByEndSymbols.get(searchString.charAt(0)).isEmpty()
+                    || uniqueSymbols.contains(searchString);
         }
 
 //        //remove non linking ones here?

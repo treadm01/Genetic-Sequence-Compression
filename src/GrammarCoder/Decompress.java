@@ -16,41 +16,38 @@ public class Decompress {
     public Rule buildGrammar(String ruleString) {
         pointerMarker.add('{');
         pointerMarker.add('?');
+        pointerMarker.add('%');
+        pointerMarker.add('[');
         symbolMarker.add('\'');
         symbolMarker.add('!');
         input = ruleString; //todo use by getter and setter
         c = new Compress();// todo split out the methods used by both
         while (position < input.length()) {
-            if (input.charAt(position) == '#') { // if a marker create rule for it and position it there
+            if (input.charAt(position) == '#' || input.charAt(position) == '^') { // if a marker create rule for it and position it there
                 Rule r = new Rule();
-                r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
-                addNonTerminal(r, false, false); // add nonterminal to rule
+                if (input.charAt(position) == '#') {
+                    r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
+                }
+                else {r.length = 2;}
+                addNonTerminal(r, false); // add nonterminal to rule
                 adjustedMarkers.add(marker.size() * 2); // add position of rule created to list which can then be used in place of the rule number iteself
                 marker.put(marker.size() * 2, (NonTerminal) c.getFirstRule().getLast()); // add rule to hashmap
             }
             else if (pointerMarker.contains(input.charAt(position))) { // if a pointer deal with it and its rule
                 Boolean isComplement = false;
-                Boolean isReverse = false;
 
-                if (input.charAt(position) == '{') {
-
-                    isComplement = true;
-                    isReverse = true;
-                }
-                else if (input.charAt(position) == '}') {
-
-                    isReverse = true;
-                }
-                else if (input.charAt(position) == '~') {
-
+                if (input.charAt(position) == '{' || input.charAt(position) == '%') {
                     isComplement = true;
                 }
+                int pos = 1;
                 // if next symbol is a number, its a pointer so deal with that...
-                int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+                if (input.charAt(position) == '{' || input.charAt(position) == '?') {
+                    pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+                }
                 NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
                 adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
                 evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
-                addNonTerminal(nonTerminal.getRule(), isComplement, isReverse);
+                addNonTerminal(nonTerminal.getRule(), isComplement);
             }
             else if (symbolMarker.contains(input.charAt(position))) { // nonterminal symbol
 
@@ -72,14 +69,14 @@ public class Decompress {
                 }
                 int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
                 //pos -= 128;
-                addNonTerminal(marker.get(pos).getRule(), isComplement, isReverse);
+                addNonTerminal(marker.get(pos).getRule(), isComplement);
             }
             else if (input.charAt(position) == '*') {
                 //todo needs to handle markernumber edits... no, should already be doing that
                 // get the symbols and then add to the nonterimal edits
                 List<Edit> edits = new ArrayList<>();
-                int index = retrieveStringSegment();
-                Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)));
+                int index = retrieveStringSegment(); // todo would have to be if next is not symbol then complement
+                Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)), false);
                 edits.add(e);
                 // if part of a sub rule need to add to head rule
                 c.getFirstRule().getLast().setIsEdit(edits);
@@ -120,9 +117,9 @@ public class Decompress {
     }
 
     //todo or here to add if an edit...
-    public void addNonTerminal(Rule rule, Boolean isComplement, Boolean isReverse) {
+    public void addNonTerminal(Rule rule, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
-        nonTerminal.isComplement = isComplement && isReverse;
+        nonTerminal.isComplement = isComplement;
         c.getFirstRule().addNextSymbol(nonTerminal); // add to main rule
     }
 

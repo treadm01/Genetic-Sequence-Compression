@@ -1,7 +1,10 @@
+import ArithmeticCoder.AdaptiveArithmeticCompress;
 import GrammarCoder.Compress;
 import GrammarCoder.ImplicitEncoder;
 import GrammarCoder.InputOutput;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 

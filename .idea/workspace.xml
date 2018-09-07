@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="edits added back in and able to decode">
-      <change afterPath="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" afterDir="false" />
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="cleaning up code slightly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/CompressionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/DecompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/DecompressTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/EditGrammarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/EditGrammarTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test/ReverseComplementTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/ReverseComplementTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test/SearchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/SearchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Decompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Decompress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Edit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Edit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/TreeNode.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -77,58 +87,56 @@
     <session id="-634010523">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="31" />
-          <entry key="project.open.time.1" value="28" />
+          <entry key="project.closed" value="35" />
+          <entry key="project.open.time.1" value="32" />
           <entry key="project.open.time.2" value="3" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="32" />
+          <entry key="project.opened" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="abc" value="2" />
+          <entry key="abc" value="4" />
           <entry key="book" value="1" />
           <entry key="comp" value="1" />
-          <entry key="humdyst" value="3" />
-          <entry key="java" value="81" />
+          <entry key="humdyst" value="5" />
+          <entry key="java" value="109" />
+          <entry key="mito" value="1" />
           <entry key="txt" value="1" />
           <entry key="vaccg" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="81" />
-          <entry key="PLAIN_TEXT" value="9" />
+          <entry key="JAVA" value="109" />
+          <entry key="PLAIN_TEXT" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="abc" value="574" />
+          <entry key="abc" value="575" />
           <entry key="comp" value="292" />
-          <entry key="humdyst" value="9" />
-          <entry key="java" value="58221" />
-          <entry key="txt" value="1277" />
+          <entry key="humdyst" value="10" />
+          <entry key="java" value="64768" />
+          <entry key="txt" value="1302" />
           <entry key="vaccg" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="58221" />
-          <entry key="PLAIN_TEXT" value="2153" />
+          <entry key="JAVA" value="64768" />
+          <entry key="PLAIN_TEXT" value="2180" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/ReverseComplementTest.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="242" column="30" lean-forward="true" selection-start-line="242" selection-start-column="30" selection-end-line="242" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="234">
+              <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -136,68 +144,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="31" column="49" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
-              <folding>
-                <element signature="method#deubugGrammarOutput#0;class#Compress#0" />
-                <element signature="method#checkApproxRepeat#0;class#Compress#0" />
-                <element signature="e#15208#15209#0" expanded="true" />
-                <element signature="e#15239#15240#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="146" column="37" selection-start-line="146" selection-start-column="37" selection-end-line="146" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="294" column="12" selection-start-line="294" selection-start-column="12" selection-end-line="294" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="206" column="55" lean-forward="true" selection-start-line="206" selection-start-column="55" selection-end-line="206" selection-end-column="55" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/DigramMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#223#224#0" expanded="true" />
-                <element signature="e#265#266#0" expanded="true" />
-                <element signature="e#424#425#0" expanded="true" />
-                <element signature="e#475#476#0" expanded="true" />
-                <element signature="e#667#668#0" expanded="true" />
-                <element signature="e#711#712#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="54">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -205,17 +153,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Search.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="32" column="10" lean-forward="true" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+            <state relative-caret-position="216">
+              <caret line="41" column="114" selection-start-line="41" selection-start-column="114" selection-end-line="41" selection-end-column="114" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Decompress.java">
+        <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
+            <state relative-caret-position="115">
+              <caret line="160" column="30" selection-start-line="160" selection-start-column="30" selection-end-line="160" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="268">
+              <caret line="68" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="106">
+              <caret line="238" selection-start-line="238" selection-end-line="238" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sourceFiles/humdyst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="38769" selection-start-column="38769" selection-end-column="38769" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="45" column="77" selection-start-line="45" selection-start-column="77" selection-end-line="45" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -223,8 +207,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
+            <state relative-caret-position="180">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="792">
+              <caret line="46" column="68" selection-start-line="46" selection-start-column="68" selection-end-line="46" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -242,36 +235,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mip</find>
-      <find>bpc</find>
-      <find>(char</find>
-      <find>humgh</find>
-      <find>humdy</find>
-      <find>read</find>
-      <find>vaccg</find>
-      <find>hu</find>
-      <find>++</find>
-      <find>index</find>
-      <find>length</find>
-      <find>£</find>
-      <find>ª</find>
-      <find>?</find>
-      <find>inde</find>
-      <find>!?</find>
       <find>humdyst</find>
+      <find>not use</find>
+      <find>vacc</find>
+      <find>deb</find>
+      <find>not</find>
+      <find>notuse</find>
+      <find>gets</find>
+      <find>generat</find>
+      <find>hum</find>
+      <find>newinde</find>
+      <find>gener</find>
+      <find>*1</find>
+      <find>debu</find>
       <find>*</find>
-      <find>humg</find>
-      <find>edit</find>
-      <find>printr</find>
-      <find>appro</find>
-      <find>(char)</find>
-      <find>32</find>
-      <find>3</find>
+      <find>sent in</find>
       <find>humdys</find>
-      <find>getnonter</find>
-      <find>addal</find>
-      <find>addalldi</find>
-      <find>remove</find>
+      <find>humdy</find>
+      <find>(char)</find>
+      <find>humd</find>
+      <find>print</find>
+      <find>generater</find>
+      <find>vaccg</find>
+      <find>edit</find>
+      <find>actct</find>
+      <find>rulesbystarts</find>
+      <find>rules</find>
+      <find>rulebys</find>
+      <find>printr</find>
+      <find>size</find>
+      <find>digram</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -308,7 +301,6 @@
         <option value="$PROJECT_DIR$/src/InputOutput.java" />
         <option value="$PROJECT_DIR$/Test/PalindromeTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/ApproxRepeat.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Edit.java" />
         <option value="$PROJECT_DIR$/src/HuffmanCoder/Bnode.java" />
         <option value="$PROJECT_DIR$/src/HuffmanCoder/Hnode.java" />
         <option value="$PROJECT_DIR$/src/HuffmanCoder/Encoder.java" />
@@ -318,34 +310,35 @@
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticDecoder.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticCoderBase.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/CheckedFrequencyTable.java" />
-        <option value="$PROJECT_DIR$/src/GUI/Main.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/BitOutputStream.java" />
         <option value="$PROJECT_DIR$/sourceFiles/comp" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/TreeNode.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" />
         <option value="$PROJECT_DIR$/Test/BugTest.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Rule.java" />
-        <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
         <option value="$PROJECT_DIR$/Test/ReverseTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/InputOutput.java" />
         <option value="$PROJECT_DIR$/Test/HuffmanCoder/EncoderTest.java" />
         <option value="$PROJECT_DIR$/sourceFiles/vaccg" />
-        <option value="$PROJECT_DIR$/sourceFiles/abc" />
-        <option value="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Decompress.java" />
-        <option value="$PROJECT_DIR$/sourceFiles/humdyst" />
-        <option value="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" />
-        <option value="$PROJECT_DIR$/Test/DecompressTest.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" />
         <option value="$PROJECT_DIR$/Test/CompressTest.java" />
         <option value="$PROJECT_DIR$/Test/ReverseComplementTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" />
+        <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Rule.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Edit.java" />
+        <option value="$PROJECT_DIR$/sourceFiles/abc" />
+        <option value="$PROJECT_DIR$/src/GUI/Main.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Decompress.java" />
+        <option value="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java" />
         <option value="$PROJECT_DIR$/Test/EditGrammarTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" />
+        <option value="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" />
+        <option value="$PROJECT_DIR$/sourceFiles/humdyst" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" />
+        <option value="$PROJECT_DIR$/Test/DecompressTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
         <option value="$PROJECT_DIR$/Test/SearchTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Search.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
       </list>
     </option>
   </component>
@@ -462,7 +455,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SearchTest">
+  <component name="RunManager" selected="JUnit.SearchTest.findingGhost">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -475,51 +468,55 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DecompressTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.humdystDE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DecompressTest" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EditGrammarTest.decompressApproxTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EditGrammarTest" />
-      <option name="METHOD_NAME" value="decompressApproxTest" />
+      <option name="METHOD_NAME" value="humdystDE" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SearchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SearchTest.findingGhost" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SearchTest.humdyst" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="humdyst" />
+      <option name="METHOD_NAME" value="findingGhost" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SearchTest.humdystTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SearchTest.findingSingleLetter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="humdystTwo" />
+      <option name="METHOD_NAME" value="findingSingleLetter" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchTest.reverseCompnotfound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SearchTest" />
+      <option name="METHOD_NAME" value="reverseCompnotfound" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SearchTest.searchRandom" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SearchTest" />
+      <option name="METHOD_NAME" value="searchRandom" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -541,19 +538,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.DecompressTest" />
-      <item itemvalue="JUnit.EditGrammarTest.decompressApproxTest" />
-      <item itemvalue="JUnit.SearchTest" />
-      <item itemvalue="JUnit.SearchTest.humdystTwo" />
-      <item itemvalue="JUnit.SearchTest.humdyst" />
+      <item itemvalue="JUnit.DecompressTest.humdystDE" />
+      <item itemvalue="JUnit.SearchTest.reverseCompnotfound" />
+      <item itemvalue="JUnit.SearchTest.searchRandom" />
+      <item itemvalue="JUnit.SearchTest.findingSingleLetter" />
+      <item itemvalue="JUnit.SearchTest.findingGhost" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SearchTest" />
-        <item itemvalue="JUnit.SearchTest.humdyst" />
-        <item itemvalue="JUnit.SearchTest.humdystTwo" />
-        <item itemvalue="JUnit.DecompressTest" />
-        <item itemvalue="JUnit.EditGrammarTest.decompressApproxTest" />
+        <item itemvalue="JUnit.SearchTest.findingGhost" />
+        <item itemvalue="JUnit.SearchTest.reverseCompnotfound" />
+        <item itemvalue="JUnit.SearchTest.findingSingleLetter" />
+        <item itemvalue="JUnit.SearchTest.searchRandom" />
+        <item itemvalue="JUnit.DecompressTest.humdystDE" />
       </list>
     </recent_temporary>
   </component>
@@ -806,14 +803,11 @@
       <workItem from="1536093278707" duration="5490000" />
       <workItem from="1536101465690" duration="19565000" />
       <workItem from="1536161992459" duration="124000" />
-      <workItem from="1536164592897" duration="6376000" />
-    </task>
-    <task id="LOCAL-00243" summary="trying to implement approx repeats">
-      <created>1534093737628</created>
-      <option name="number" value="00243" />
-      <option name="presentableId" value="LOCAL-00243" />
-      <option name="project" value="LOCAL" />
-      <updated>1534093737628</updated>
+      <workItem from="1536164592897" duration="40245000" />
+      <workItem from="1536314429899" duration="2041000" />
+      <workItem from="1536316535823" duration="3913000" />
+      <workItem from="1536320828000" duration="13965000" />
+      <workItem from="1536348982273" duration="3689000" />
     </task>
     <task id="LOCAL-00244" summary="indexes now set by entire input">
       <created>1534101107397</created>
@@ -1151,43 +1145,50 @@
       <option name="project" value="LOCAL" />
       <updated>1536152801918</updated>
     </task>
-    <option name="localTasksCounter" value="292" />
+    <task id="LOCAL-00292" summary="cleaning up code slightly">
+      <created>1536182072793</created>
+      <option name="number" value="00292" />
+      <option name="presentableId" value="LOCAL-00292" />
+      <option name="project" value="LOCAL" />
+      <updated>1536182072793</updated>
+    </task>
+    <option name="localTasksCounter" value="293" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DecompressTest_chntxxDE - 2018.09.05 at 17h 58m 20s.xml">
-      <configuration name="DecompressTest.chntxxDE" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 10m 43s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ReverseComplementTest_decompress5 - 2018.09.05 at 21h 45m 40s.xml">
-      <configuration name="ReverseComplementTest.decompress5" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 25m 35s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest_chntxxDE - 2018.09.05 at 21h 46m 01s.xml">
-      <configuration name="DecompressTest.chntxxDE" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 26m 30s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest - 2018.09.05 at 21h 46m 22s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 32m 53s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_decompressApproxTest - 2018.09.05 at 21h 50m 23s.xml">
-      <configuration name="EditGrammarTest.decompressApproxTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 33m 44s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest_decompressApproxTest - 2018.09.05 at 21h 50m 37s.xml">
-      <configuration name="EditGrammarTest.decompressApproxTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 33m 52s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest - 2018.09.05 at 21h 52m 43s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 33m 58s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SearchTest - 2018.09.05 at 22h 03m 53s.xml">
-      <configuration name="SearchTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 36m 16s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SearchTest - 2018.09.05 at 22h 04m 31s.xml">
-      <configuration name="SearchTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 36m 22s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SearchTest - 2018.09.05 at 22h 07m 49s.xml">
-      <configuration name="SearchTest" configurationId="JUnit" />
+    <history-entry file="SearchTest_searchRandom - 2018.09.07 at 21h 36m 26s.xml">
+      <configuration name="SearchTest.searchRandom" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1971199000" />
+    <option name="totallyTimeSpent" value="2028676000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1202,7 +1203,7 @@
     <frame x="-1" y="-4" width="1368" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24318182" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25833333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24963397" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -1235,7 +1236,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="edits stored as objects in list" />
     <MESSAGE value="cleaning up encode" />
     <MESSAGE value="recovered some progression including trying to implement gui after a crash trying to use button twice in a row" />
     <MESSAGE value="trying to implement gui" />
@@ -1260,10 +1260,10 @@
     <MESSAGE value="bug tracked down" />
     <MESSAGE value="trying to finalise implementation of arithmetic coding" />
     <MESSAGE value="edits added back in and able to decode" />
-    <option name="LAST_COMMIT_MESSAGE" value="edits added back in and able to decode" />
+    <MESSAGE value="cleaning up code slightly" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaning up code slightly" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/HuffmanCoder/Hnode.java" />
     <entry file="file://$PROJECT_DIR$/src/HuffmanCoder/Encoder.java" />
     <entry file="file://$PROJECT_DIR$/Test/ArithmeticEncoderTest.java" />
     <entry file="file://$PROJECT_DIR$/textFiles/humdyst" />
@@ -1276,13 +1276,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Edit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1354,27 +1347,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Terminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="34" column="14" lean-forward="true" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="80" column="5" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test/ReverseTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1620">
@@ -1386,13 +1358,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/TreeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="23" column="76" selection-start-line="23" selection-start-column="76" selection-end-line="23" selection-end-column="76" />
         </state>
       </provider>
     </entry>
@@ -1410,32 +1375,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2520">
-          <caret line="142" column="22" selection-start-line="142" selection-start-column="22" selection-end-line="142" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Test/HuffmanCoder/EncoderTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="43" column="48" selection-start-line="43" selection-start-column="48" selection-end-line="43" selection-end-column="48" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sourceFiles/abc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/sourceFiles/vaccg">
       <provider selected="true" editor-type-id="text-editor">
@@ -1444,124 +1389,156 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sourceFiles/humdyst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="38684" selection-start-column="38684" selection-end-column="38684" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/BitInputStream.java">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="127" column="16" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="16" />
-          <folding>
-            <element signature="e#5434#5435#0" expanded="true" />
-            <element signature="e#5470#5471#0" expanded="true" />
-            <element signature="e#5807#5808#0" expanded="true" />
-            <element signature="e#5845#5846#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="73" column="71" lean-forward="true" selection-start-line="73" selection-start-column="71" selection-end-line="73" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Decompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/ReverseComplementTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="111">
           <caret line="242" column="30" lean-forward="true" selection-start-line="242" selection-start-column="30" selection-end-line="242" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/DigramMap.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/TreeNode.java" />
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Terminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="46" column="9" lean-forward="true" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourceFiles/mito">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="323">
+          <caret line="12358" selection-start-line="1" selection-end-line="12358" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="146" column="37" selection-start-line="146" selection-start-column="37" selection-end-line="146" selection-end-column="37" />
+        <state relative-caret-position="18">
+          <caret line="333" column="18" lean-forward="true" selection-start-line="333" selection-start-column="18" selection-end-line="333" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Edit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourceFiles/abc">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Decompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="164" column="24" selection-start-line="164" selection-start-column="24" selection-end-line="164" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="294" column="12" selection-start-line="294" selection-start-column="12" selection-end-line="294" selection-end-column="12" />
+        <state relative-caret-position="262">
+          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1638">
+          <caret line="95" column="24" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1584">
+          <caret line="92" selection-start-line="88" selection-end-line="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourceFiles/humdyst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="38769" selection-start-column="38769" selection-end-column="38769" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="45" column="77" selection-start-line="45" selection-start-column="77" selection-end-line="45" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="46" column="68" selection-start-line="46" selection-start-column="68" selection-end-line="46" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="160" column="30" selection-start-line="160" selection-start-column="30" selection-end-line="160" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="68" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="11" column="21" lean-forward="true" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/DigramMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#223#224#0" expanded="true" />
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#424#425#0" expanded="true" />
-            <element signature="e#475#476#0" expanded="true" />
-            <element signature="e#667#668#0" expanded="true" />
-            <element signature="e#711#712#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="106">
+          <caret line="238" selection-start-line="238" selection-end-line="238" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="31" column="49" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
-          <folding>
-            <element signature="method#deubugGrammarOutput#0;class#Compress#0" />
-            <element signature="method#checkApproxRepeat#0;class#Compress#0" />
-            <element signature="e#15208#15209#0" expanded="true" />
-            <element signature="e#15239#15240#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="54">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Search.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="32" column="10" lean-forward="true" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+        <state relative-caret-position="216">
+          <caret line="41" column="114" selection-start-line="41" selection-start-column="114" selection-end-line="41" selection-end-column="114" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="206" column="55" lean-forward="true" selection-start-line="206" selection-start-column="55" selection-end-line="206" selection-end-column="55" />
+        <state relative-caret-position="234">
+          <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
         </state>
       </provider>
     </entry>

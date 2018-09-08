@@ -58,7 +58,7 @@ public class Compress {
 
     public void deubugGrammarOutput() {
         // debugging output
-        System.out.println(printRules());
+      //  System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println("Rule number: " + rules.size());
         System.out.println("Number of edits " + numberOfEdits);
@@ -96,7 +96,7 @@ public class Compress {
 
         List<Symbol> symbols = new ArrayList<>();
         symbols.add(nextSymbol);
-
+//
         // get the last nonterminal, if it wasn't one then not checking
         if (getFirstRule().getLast() instanceof NonTerminal) {
             matchingNonTerminal = (NonTerminal) getFirstRule().getLast();
@@ -138,7 +138,7 @@ public class Compress {
 
                         int combinedLength = (lastSequence.length() + matchingNonTerminalLength);
 
-                        if (editNumber > 0 && editNumber <= combinedLength * 0.1 && next.size() >= 3) {
+                        if (editNumber > 0 && editNumber < 3 && editNumber <= combinedLength * 0.1 && next.size() >= 3) {
                             //if (next.size() > 2) {
                             if (combinedLength - editNumber > bestEdit) {
 //                                System.out.println(lastSequence);
@@ -191,15 +191,15 @@ public class Compress {
                 }
             }
         }
-
-        // might have to be done to terminal level just so any changes to digram map are maintained
-        // i mean theoretically they should match, you add the digrams and it creates new rule
-        // then as new ones are added the new rules should be matching anyway
-        // might be better terminal level to match indexes, although more likely to mess up digrams
-
-        if (!symbols.get(0).equals(symbol)) {
-            System.out.println(symbols);
-        }
+//
+//        // might have to be done to terminal level just so any changes to digram map are maintained
+//        // i mean theoretically they should match, you add the digrams and it creates new rule
+//        // then as new ones are added the new rules should be matching anyway
+//        // might be better terminal level to match indexes, although more likely to mess up digrams
+//
+//        if (!symbols.get(0).equals(symbol)) {
+//            System.out.println(symbols);
+//        }
         return symbols;
     }
     /**

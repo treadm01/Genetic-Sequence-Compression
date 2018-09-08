@@ -50,7 +50,7 @@ public class DigramMap {
 
 
     /**
-     * when nonterminals are added or removed the old digrams must be removed from the map
+     * when nonterminals are added or removed the old digrams either side must be removed from the map
      * currently requires some extra checks for ensuring that the digrams being removed do not
      * correspond with the same digram that is overlapping
      * @param symbol

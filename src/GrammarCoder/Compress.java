@@ -34,11 +34,20 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
+         //   System.out.println(nextSymbol);
+          //  System.out.println("before " + i);
             for (Symbol s : checkApproxRepeat(nextSymbol)) {
                 i = s.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
                 getFirstRule().addNextSymbol(s);
                 checkDigram(getFirstRule().getLast());
+            //    System.out.println(getFirstRule().getRuleString());
+            //    System.out.println("during " + i);
+             //   System.out.println(s);
             }
+
+           // System.out.println(getFirstRule().getLast());
+           // System.out.println("after " + i);
+
             //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
         }
         // seperate method
@@ -81,7 +90,6 @@ public class Compress {
         // will either be the same symbol sent, an edited one (maybe) or one at the end of a nonterminal sequence
         Symbol nextSymbol = symbol;
         NonTerminal matchingNonTerminal;
-        NonTerminal previousNonTerminal;
         int newIndex = symbol.symbolIndex; // to jump over the seen symbols
         // at this point the next potential terminal will not have been added
         int bestEdit = 0;
@@ -92,47 +100,90 @@ public class Compress {
         // get the last nonterminal, if it wasn't one then not checking
         if (getFirstRule().getLast() instanceof NonTerminal) {
             matchingNonTerminal = (NonTerminal) getFirstRule().getLast();
+            int matchingNonTerminalLength = matchingNonTerminal.getRule().getSymbolString(matchingNonTerminal.getRule(), false).length();
             for (NonTerminal nonTerminalSet : matchingNonTerminal.getRule().nonTerminalList) {
-                NonTerminal longestNext = nonTerminalSet;//matchingNonTerminal.getRule().nonTerminalList.get(0);
-                previousNonTerminal = longestNext;
+                if (matchingNonTerminal.isComplement == nonTerminalSet.isComplement) {
+                    //todo neexs to not check itself, nonterminals lost when links change?
+                    // cache of strings?
+                    List<Symbol> next = new ArrayList<>();
+                    Symbol nt = nonTerminalSet.getRight();
+                    String lastSequence = "";
 
-                // cache of strings?
-                List<Symbol> next = new ArrayList<>();
-                Symbol nt = previousNonTerminal.getRight();
-                String lastSequence = "";
-
-                //try string only terminal method??? benefits might be quicker?
-                while (nt instanceof NonTerminal && nt != matchingNonTerminal && lastSequence.length() < 20) {
-                    lastSequence += ((NonTerminal) nt).getRule().getSymbolString(((NonTerminal) nt).getRule(), nt.isComplement);
-                    next.add(nt);
-                    nt = nt.getRight();
-                }
-
-                String nextSequence;
-                if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
-                    nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
-                    int editNumber = 0;
-                    for (int j = 0; j < lastSequence.length(); j++) {
-                        if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
-                            editNumber++;
+                    //try string only terminal method??? benefits might be quicker?
+//                System.out.println("right of match is " + nt);
+//                System.out.println("match is " + nt.getLeft());
+//                System.out.println("left of match is " + nt.getLeft().getLeft());
+                    //todo need a way to check benefit here and roll back if one too many
+                    while (!nt.isGuard() && nt != matchingNonTerminal
+                            && symbol.symbolIndex + lastSequence.length() <= mainInput.length() - 1
+                            && lastSequence.length() < 30) {
+                        next.add(nt);
+                        if (nt instanceof NonTerminal) {
+                            lastSequence += ((NonTerminal) nt).getRule().getSymbolString(((NonTerminal) nt).getRule(), nt.isComplement);
+                        } else if (nt instanceof Terminal) {
+                            lastSequence += nt;
                         }
+                        nt = nt.getRight();
                     }
 
-                    if (editNumber > 0  && editNumber <= lastSequence.length() * 0.2) {
-                        if (next.size() > 2) {
-                            if (lastSequence.length() - editNumber > bestEdit) {
+                    String nextSequence;
+                    if (symbol.symbolIndex + lastSequence.length() <= mainInput.length()) {
+                        nextSequence = mainInput.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
+                        int editNumber = 0;
+                        for (int j = 0; j < lastSequence.length(); j++) {
+                            if (lastSequence.charAt(j) != nextSequence.charAt(j)) {
+                                editNumber++;
+                            }
+                        }
+
+                        int combinedLength = (lastSequence.length() + matchingNonTerminalLength);
+
+                        if (editNumber > 0 && editNumber <= combinedLength * 0.1 && next.size() >= 3) {
+                            //if (next.size() > 2) {
+                            if (combinedLength - editNumber > bestEdit) {
+//                                System.out.println(lastSequence);
+//                                System.out.println(nextSequence);
                                 symbols.clear();
-                                bestEdit = lastSequence.length() - editNumber;
-                                for (int x = 0; x < lastSequence.length(); x++) {
-                                    List<Edit> edits = new ArrayList<>();
-                                    Symbol terminal = new Terminal(lastSequence.charAt(x));
-                                    if (lastSequence.charAt(x) != nextSequence.charAt(x)) {
-                                        Boolean isComplement = lastSequence.charAt(x) == Terminal.reverseSymbol(nextSequence.charAt(x));
-                                        edits.add(new Edit(symbol.symbolIndex + x, String.valueOf(nextSequence.charAt(x)), isComplement));
-                                        terminal.setIsEdit(edits);
+                                bestEdit = combinedLength - editNumber;
+                                int indexInString = 0;
+                                for (Symbol s : next) {
+                              //      System.out.println("matching symbol " + s);
+                                    //todo should be an edit on t, but as subrules need to go through them
+                                    if (s instanceof NonTerminal) {
+                                        NonTerminal nonTerminalClone = new NonTerminal(((NonTerminal) s).getRule()); //todo symbol sindex?
+                                        String nonterminalString = ((NonTerminal) s).getRule().getSymbolString(((NonTerminal) s).getRule(), s.isComplement);
+                                        List<Edit> edits = new ArrayList<>();
+                                //        System.out.println(nonterminalString);
+                                        for (int x = 0; x < nonterminalString.length(); x++) {
+                                //            System.out.println("well");
+                                            int pos = indexInString + x;
+                                            if (lastSequence.charAt(pos) != nextSequence.charAt(pos)) {
+                                                Boolean isComplement = lastSequence.charAt(pos) == Terminal.reverseSymbol(nextSequence.charAt(pos));
+                                                edits.add(new Edit(symbol.symbolIndex + pos, String.valueOf(nextSequence.charAt(pos)), isComplement));
+                                       //         System.out.println("edit nonterminal");
+                                            }
+                                        }
+                                        nonTerminalClone.setIsEdit(edits);
+                                        nonTerminalClone.isComplement = s.isComplement;
+                                        symbols.add(nonTerminalClone);
+                                        indexInString += nonterminalString.length();
+                                        //System.out.println(indexInString);
+                                        nonTerminalClone.symbolIndex = symbol.symbolIndex + indexInString - 1;
+                                    } else if (s instanceof Terminal) {
+                                        List<Edit> edits = new ArrayList<>();
+                                        Symbol terminal = new Terminal(lastSequence.charAt(indexInString));
+                                        if (lastSequence.charAt(indexInString) != nextSequence.charAt(indexInString)) {
+                                            Boolean isComplement = lastSequence.charAt(indexInString) == Terminal.reverseSymbol(nextSequence.charAt(indexInString));
+                                            edits.add(new Edit(symbol.symbolIndex + indexInString, String.valueOf(nextSequence.charAt(indexInString)), isComplement));
+                                            terminal.setIsEdit(edits);
+                                         //   System.out.println("edit terminal");
+                                        }
+                                        terminal.symbolIndex = symbol.symbolIndex + indexInString;
+                                        indexInString++;
+
+                                        //  System.out.println("INDEX " + terminal.symbolIndex);
+                                        symbols.add(terminal);
                                     }
-                                    terminal.symbolIndex = newIndex + x;
-                                    symbols.add(terminal);
                                 }
                             }
                         }
@@ -146,7 +197,9 @@ public class Compress {
         // then as new ones are added the new rules should be matching anyway
         // might be better terminal level to match indexes, although more likely to mess up digrams
 
-
+        if (!symbols.get(0).equals(symbol)) {
+            System.out.println(symbols);
+        }
         return symbols;
     }
     /**
@@ -202,8 +255,6 @@ public class Compress {
 
         addNonTerminal(oldTerminal, oldSymbol); // update rule for first instance of digram
         addNonTerminal(newTerminal, symbol);// update rule for last instance of digram
-        newRule.nonTerminalList.add(oldTerminal);
-        newRule.nonTerminalList.add(newTerminal);
 
         // add the repeating digram to the new rule, which in turn is linked to the nonterminal
         newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
@@ -233,7 +284,6 @@ public class Compress {
         nonTerminal.updateEdits(symbol);
 
         addNonTerminal(nonTerminal, symbol);// replace the repeated digram wtih rule
-        rule.nonTerminalList.add(nonTerminal); //TODO ADDING EXSITING RULE NONTERMINALS - WHAT ABOUT REMOVING THEM???????
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
     }
@@ -273,6 +323,17 @@ public class Compress {
 
         symbol.getLeft().getLeft().assignRight(nonTerminal);
         symbol.getRight().assignLeft(nonTerminal);
+
+        //System.out.println("checking " + nonTerminal);
+        nonTerminal.getRule().nonTerminalList.add(nonTerminal);
+//        if (symbol.getRight() instanceof NonTerminal) {
+//            System.out.println(symbol.getRight());
+//            ((NonTerminal) symbol.getRight()).getRule().nonTerminalList.add((NonTerminal) symbol.getRight());
+//        }
+//        if (symbol.getLeft().getLeft() instanceof NonTerminal) {
+//            System.out.println(symbol.getLeft().getLeft());
+//            ((NonTerminal) symbol.getLeft().getLeft()).getRule().nonTerminalList.add((NonTerminal) symbol.getLeft().getLeft());
+//        }
 
         checkNewDigrams(nonTerminal, nonTerminal.getRight(), nonTerminal);
     }

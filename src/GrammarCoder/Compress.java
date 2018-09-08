@@ -58,7 +58,7 @@ public class Compress {
 
     public void deubugGrammarOutput() {
         // debugging output
-      //  System.out.println(printRules());
+        System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println("Rule number: " + rules.size());
         System.out.println("Number of edits " + numberOfEdits);

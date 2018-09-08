@@ -19,7 +19,16 @@ public class SearchTest {
         assertFalse(s.search("aaat"));
     }
 
-
+//    INPUT: gccggg
+//    SEARCH: t
+@Test
+public void findingSingle() {
+    Compress c = new Compress();
+    String compress = "gccggg";
+    c.processInput(compress);
+    Search s = new Search(c.getFirstRule(), c.rules);
+    assertFalse(s.search("t"));
+}
 
     @Test
     public void findingSingleLetter() {
@@ -273,8 +282,8 @@ public class SearchTest {
     @Test
     public void searchRandom() {
         Random rand = new Random();
-        for (int i = 0; i < 1000; i++) {
-            String input = genRand(rand.nextInt((100 - 2) + 1) + 2);
+        for (int i = 0; i < 2000; i++) {
+            String input = genRand(rand.nextInt((200 - 2) + 1) + 2);
             System.out.println("INPUT: " + input);
             int start = rand.nextInt(input.length());
             assertTrue(start <= input.length());

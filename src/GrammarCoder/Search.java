@@ -142,34 +142,10 @@ public class Search {
 
         // search for one symbol .... can be checked after createrulebysymbols
         if (searchString.length() == 1) {
-            System.out.println(rulesByStartSymbols);
-            System.out.println(rulesByEndSymbols);
-            return !rulesByStartSymbols.get(searchString.charAt(0)).isEmpty()
-                    || !rulesByEndSymbols.get(searchString.charAt(0)).isEmpty()
-                    || uniqueSymbols.contains(searchString);
+            return uniqueSymbols.contains(searchString)
+                    || !rulesByStartSymbols.get(searchString.charAt(0)).isEmpty()
+                    || !rulesByEndSymbols.get(searchString.charAt(0)).isEmpty();
         }
-
-//        //remove non linking ones here?
-//        Set<String> leftHand = new HashSet<>();
-//        Set<String> rightHand = new HashSet<>();
-//        for (List<Rule> ruleList : searchRules.values()) {
-//            for (Rule r : ruleList) {
-//                leftHand.add(r.getFirst().toString());
-//                rightHand.add(r.getLast().toString());
-//            }
-//        }
-//
-//        List<Rule> remove = new ArrayList<>();
-//        for (List<Rule> ruleList : searchRules.values()) {
-//            for (Rule r : ruleList) {
-//                if (!leftHand.contains(r.getLast().toString()) && !rightHand.contains(r.getFirst().toString())) {
-//                    remove.add(r);
-//                }
-//            }
-//            ruleList.removeAll(remove);
-//        }
-
-//        checkEachDigramForPossibleString(searchString, searchRules);
 
         //todo edit grammars...... might not get returned... no, edits, should be dealt with in certain instances...
 
@@ -231,6 +207,23 @@ public class Search {
                 morePossible.add(newRule); // same problem this will only check one route
             }
         }
+
+        List<Rule> doubleCheck = new ArrayList<>(); // having to remove some more not in list, todo better way
+        for (Rule r : morePossible) {
+            Symbol s = r.getFirst().getRight();
+            while (!s.isGuard()) {
+                if (digramMap.existingDigram(s)) {
+                    s = s.getRight();
+                }
+                else {
+                    System.out.println("no");
+                    doubleCheck.add(r);
+                    break;
+                }
+            }
+        }
+
+        morePossible.removeAll(doubleCheck);
 
         // add to a list, set etc then keep each occurence... then would have to check all rather than break...
         // get index from digram map

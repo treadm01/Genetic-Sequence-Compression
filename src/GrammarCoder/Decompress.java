@@ -89,7 +89,6 @@ public class Decompress {
             }
             position++; // increase position in string
         }
-        System.out.println(c.getFirstRule().getSymbolString(c.getFirstRule(), false));
         return c.getFirstRule(); // todo can't me using compress.....
     }
 

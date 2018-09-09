@@ -7,6 +7,7 @@ package ArithmeticCoder;/*
  */
 
 import GrammarCoder.Decompress;
+import GrammarCoder.Rule;
 
 import java.io.*;
 import java.util.HashSet;
@@ -20,10 +21,11 @@ import java.util.Set;
  */
 public class AdaptiveArithmeticDecompress {
     static String PATH = System.getProperty("user.dir") + "/compressedFiles";
+    static Rule rule;
 	
-	public static void main(String[] args) throws IOException {
+	public AdaptiveArithmeticDecompress(File filePath) throws IOException {
 
-		File inputFile  = new File(PATH + "/compressed.bin");
+		File inputFile  = filePath;
 		File outputFile = new File(PATH + "/compressTwo.txt");
 		
 		// Perform file decompression
@@ -36,7 +38,7 @@ public class AdaptiveArithmeticDecompress {
 	//TODO HAVE TO BE ABLE TO DECODE NEW IMPLICIT ENCODINGS - now have different symbols for markers etc
     //todo WILL DIFFERENT MACHINES DECODE THESE IN THE SAME WAY ENCODE IN THE SAME WAY?
 	// To allow unit testing, this method is package-private instead of private.
-	static void decompress(BitInputStream in, OutputStream out) throws IOException {
+	public void decompress(BitInputStream in, OutputStream out) throws IOException {
         Set<Character> symbolMarker = new HashSet<>();
         symbolMarker.add('{');
         symbolMarker.add('?');
@@ -86,12 +88,22 @@ public class AdaptiveArithmeticDecompress {
             freqs.increment(symbol);
         }
 
-        System.out.println(output);
+        //System.out.println(output);
+        //todo needs to split up and dealt with properly
         Decompress d = new Decompress();
-		d.buildGrammar(output);
+        rule = d.buildGrammar(output);
+        String s = rule.getSymbolString(rule, false);
+        for (int i = 0; i < s.length(); i++) {
+            out.write(s.charAt(i));
+        }
     }
 
-	static int readGammaCode(BitInputStream in) throws IOException {
+    public Rule getRule() {
+	    return rule;
+    }
+
+
+	public int readGammaCode(BitInputStream in) throws IOException {
         int count = 0;
         while (in.read() != 0) {
             count++;

@@ -44,7 +44,7 @@ public class ImplicitEncoder {
         }
 
 
-        System.out.println(//"ENCODED: " + encodedOutput +
+        System.out.println("ENCODED: " + encodedOutput +
                 "\nLENGTH: "
                         + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
 
@@ -62,16 +62,15 @@ public class ImplicitEncoder {
     public void addEdits(List<Edit> editList) {
 //        //todo need to actually implement this method of reduced symbols
 //        if (editList.size() == 1) {
-//            encodingSymbols.add("*"); // has to be added each time for arithmetic coding
+//            encodingSymbols.add("*");
 //        }
-//        else {
-//            encodingSymbols.add("`"); // has to be added each time for arithmetic coding
-//        }
-//
 //        for (Edit e : editList) {
 //            // if edits greater than one just have * at beginning and end
 //            // different symbols, if one, just *
 //            // if more than one surround with two symbols
+//            if (editList.size() != 1) {
+//                encodingSymbols.add("`");
+//            }
 //            // but what if index is the same as logo
 //            // which is better? removing complements or *?
 //            //  encodingSymbols.add("*"); // has to be added each time for arithmetic coding

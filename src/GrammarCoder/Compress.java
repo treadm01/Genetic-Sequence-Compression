@@ -34,19 +34,19 @@ public class Compress {
         for (int i = 1; i < input.length(); i++) {
             nextSymbol = new Terminal(input.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
-         //   System.out.println(nextSymbol);
-          //  System.out.println("before " + i);
+            //   System.out.println(nextSymbol);
+            //  System.out.println("before " + i);
             for (Symbol s : checkApproxRepeat(nextSymbol)) {
                 i = s.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
                 getFirstRule().addNextSymbol(s);
                 checkDigram(getFirstRule().getLast());
-            //    System.out.println(getFirstRule().getRuleString());
-            //    System.out.println("during " + i);
-             //   System.out.println(s);
+                //    System.out.println(getFirstRule().getRuleString());
+                //    System.out.println("during " + i);
+                //   System.out.println(s);
             }
 
-           // System.out.println(getFirstRule().getLast());
-           // System.out.println("after " + i);
+            // System.out.println(getFirstRule().getLast());
+            // System.out.println("after " + i);
 
             //nextSymbol = checkApproxRepeat(nextSymbol); // if next lot of symbols is approx match add a nonterminal next
         }
@@ -147,20 +147,20 @@ public class Compress {
                                 bestEdit = combinedLength - editNumber;
                                 int indexInString = 0;
                                 for (Symbol s : next) {
-                              //      System.out.println("matching symbol " + s);
+                                    //      System.out.println("matching symbol " + s);
                                     //todo should be an edit on t, but as subrules need to go through them
                                     if (s instanceof NonTerminal) {
                                         NonTerminal nonTerminalClone = new NonTerminal(((NonTerminal) s).getRule()); //todo symbol sindex?
                                         String nonterminalString = ((NonTerminal) s).getRule().getSymbolString(((NonTerminal) s).getRule(), s.isComplement);
                                         List<Edit> edits = new ArrayList<>();
-                                //        System.out.println(nonterminalString);
+                                        //        System.out.println(nonterminalString);
                                         for (int x = 0; x < nonterminalString.length(); x++) {
-                                //            System.out.println("well");
+                                            //            System.out.println("well");
                                             int pos = indexInString + x;
                                             if (lastSequence.charAt(pos) != nextSequence.charAt(pos)) {
                                                 Boolean isComplement = lastSequence.charAt(pos) == Terminal.reverseSymbol(nextSequence.charAt(pos));
                                                 edits.add(new Edit(symbol.symbolIndex + pos, String.valueOf(nextSequence.charAt(pos)), isComplement));
-                                       //         System.out.println("edit nonterminal");
+                                                //         System.out.println("edit nonterminal");
                                             }
                                         }
                                         nonTerminalClone.setIsEdit(edits);
@@ -176,7 +176,7 @@ public class Compress {
                                             Boolean isComplement = lastSequence.charAt(indexInString) == Terminal.reverseSymbol(nextSequence.charAt(indexInString));
                                             edits.add(new Edit(symbol.symbolIndex + indexInString, String.valueOf(nextSequence.charAt(indexInString)), isComplement));
                                             terminal.setIsEdit(edits);
-                                         //   System.out.println("edit terminal");
+                                            //   System.out.println("edit terminal");
                                         }
                                         terminal.symbolIndex = symbol.symbolIndex + indexInString;
                                         indexInString++;
@@ -191,12 +191,7 @@ public class Compress {
                 }
             }
         }
-//
-//        // might have to be done to terminal level just so any changes to digram map are maintained
-//        // i mean theoretically they should match, you add the digrams and it creates new rule
-//        // then as new ones are added the new rules should be matching anyway
-//        // might be better terminal level to match indexes, although more likely to mess up digrams
-//
+
 //        if (!symbols.get(0).equals(symbol)) {
 //            System.out.println(symbols);
 //        }
@@ -404,4 +399,3 @@ public class Compress {
         return this.firstRule;
     }
 }
-

@@ -77,6 +77,10 @@ public class DigramMap {
         }
     }
 
+    public int getSize() {
+        return digramMap.size();
+    }
+
     /**
      * prints out all the digrams added to the digram map
      */

@@ -7,6 +7,9 @@ import static org.junit.Assert.*;
 
 public class SearchTest {
 
+    //tgcccagttgtacgattcg and cgcatctccactatt - stuck on this.... out of memory...
+    // because the amount of possible rules on a large grammar like humdyst is imense
+    // but then how does it work on any? yeah donn't think thats the issue
 
     //INPUT: gtttttggcatcttggccgggatta
     //SEARCH: aaat
@@ -324,11 +327,16 @@ public void findingSingle() {
         String input = io.readFile("humdyst");
         c.processInput(input);
         Search s = new Search(c.getFirstRule(), c.rules);
-        for (int i = 0; i < 1000; i++) {
-            String search = genRand(rand.nextInt((10 - 1) + 1) + 1);
+        for (int i = 0; i < 100; i++) {
+            String search = genRand(rand.nextInt((15 - 1) + 1) + 1);
             System.out.println("SEARCH: " + search);
+            StringBuilder reverseComplement = new StringBuilder();
+            for (int j = 0; j < search.length(); j++) {
+                reverseComplement.append(Terminal.reverseSymbol(search.charAt(j)));
+            }
+            reverseComplement.reverse();
             if (search.length() != 0) {
-                assertEquals(input.contains(search), s.search(search));
+                assertEquals(input.contains(search)|| (input.contains(reverseComplement)) , s.search(search)); //
             }
             System.out.println();
             System.out.println("count " + i);

@@ -18,12 +18,26 @@ public class EditGrammarTest {
         d = new Decompress();
     }
 
+    //tcggtccatgaagacccc
+    @Test
+    public void negativeIndex() {
+        c.processInput("tcggtccatgaagacccc");
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        assertEquals("tcggtccatgaagacccc", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
+    }
 
     @Test
     public void checkIndexes() { // check which digram is replaced
         c.processInput("taactccttagctcctgtagtctc");
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals("taactccttagctcctgtagtctc", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
+    }
+
+    @Test
+    public void editDistance() { // check which digram is replaced
+        c.processInput("taatctaatg");
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        assertEquals("taatctaatg", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test

@@ -30,9 +30,11 @@ public class Terminal extends Symbol {
         }
     }
 
-    //todo for capitals too
+    //returns complement of symbols  able to be complemented, else returns itself
+    //todo better to check if posisble?, nonterminal just returns complement
+    // possible that it could be used in other reverse type instances
     public static char reverseSymbol(char symbol) {
-        char complement = 0;
+        char complement = symbol;
         if (symbol == 'a') {
             complement = 't';
         }

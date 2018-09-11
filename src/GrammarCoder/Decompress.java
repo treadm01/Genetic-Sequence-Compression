@@ -76,6 +76,7 @@ public class Decompress {
                 // get the symbols and then add to the nonterimal edits
                 List<Edit> edits = new ArrayList<>();
                 int index = retrieveStringSegment(); // todo would have to be if next is not symbol then complement
+                //todo GET EDIT OP FROM ENCODING
                 Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)), false);
                 edits.add(e);
                 // if part of a sub rule need to add to head rule

@@ -1,9 +1,8 @@
 package GrammarCoder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.w3c.dom.ls.LSInput;
+
+import java.util.*;
 
 public class Rule extends Symbol implements Comparable {
     int count;
@@ -92,7 +91,6 @@ public class Rule extends Symbol implements Comparable {
     public void incrementCount() { count++;}
 
     public void decrementCount() { count--;}
-
 
     /**
      * get string of the rule at nonterminal and terminal level, used in printing rules

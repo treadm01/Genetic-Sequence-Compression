@@ -1,6 +1,7 @@
 import GrammarCoder.Compress;
 import GrammarCoder.Decompress;
 import GrammarCoder.InputOutput;
+import GrammarCoder.Rule;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,22 @@ public class CompressTest {
         c = new Compress();
         d = new Decompress();
     }
+
+//    @Test
+//    public void checkNumberOfDigrams() { // create rules from digrams
+//        c.processInput("accagtaggggat");
+//        System.out.println(c.printRules());
+//        // digram size should equal length of all rules - number of all rules * 2 for reverse complements
+//        // not always times 2 as some reverse complements are the same
+//        int numberOfDigrams = 0;
+//        for (Rule r : c.rules) {
+//            numberOfDigrams += r.getRuleLength();
+//        }
+//        numberOfDigrams -= c.rules.size();
+//        System.out.println(numberOfDigrams);
+//        System.out.println(c.getDigramMap().printDigrams());
+//        assertEquals(numberOfDigrams * 2, c.getDigramMap().getSize());
+//    }
 
     @Test
     public void processInput() { // create rules from digrams

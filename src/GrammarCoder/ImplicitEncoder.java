@@ -2,15 +2,9 @@ package GrammarCoder;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ImplicitEncoder {
-    String PATH = System.getProperty("user.dir");
-    String SOURCE_PATH = PATH + "/sourceFiles";
-    String COMPRESSED_PATH = PATH + "/compressedFiles";
     int markerNum = 0; // todo set to 0 check if issue later...
     public List<String> encodingSymbols; // list of symbols required to be encoded by arithmetic
     List<Integer> adjustedMarkers; // for encoding index of rule created used rather than symbol
@@ -18,21 +12,34 @@ public class ImplicitEncoder {
     Rule grammar;
     String encodedOutput;
     public Map<String, Integer> allSymbols = new HashMap<>();
+    static String PATH = System.getProperty("user.dir") + "/compressedFiles";
+    Set<Character> uniqueSymbols = new HashSet<>();
 
     public ImplicitEncoder(Rule grammar) {
         this.grammar = grammar;
         encodingSymbols = new ArrayList<>();
         adjustedMarkers = new ArrayList<>();
+        //hmmmm
+        uniqueSymbols.add('*');
+        uniqueSymbols.add('!');
+        uniqueSymbols.add('?');
+        uniqueSymbols.add('%');
+        uniqueSymbols.add('[');
+        uniqueSymbols.add('{');
+        uniqueSymbols.add('\'');
+        uniqueSymbols.add('^');
+        uniqueSymbols.add('#');
 
         getEncodingSymbols(grammar.getFirst());
 
         encodedOutput = encode();
-        writeToFile();
 
         for (String c : encodingSymbols) {
             if (c.charAt(0) > highestRule) {
                 highestRule = c.charAt(0);
             }
+
+            // todo remove
             if (allSymbols.containsKey(c)) {
                 Integer count = allSymbols.get(c);
                 allSymbols.put(c, count + 1);
@@ -47,7 +54,7 @@ public class ImplicitEncoder {
         System.out.println("ENCODED: " + encodedOutput +
                 "\nLENGTH: "
                         + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
-
+        writeToFile(encodedOutput);
     }
 
     //TODO clean up
@@ -85,9 +92,7 @@ public class ImplicitEncoder {
         for (Edit e : editList) {
             encodingSymbols.add("*"); // has to be added each time for arithmetic coding
             encodingSymbols.add(String.valueOf((char)e.index));
-            //if (!e.isComplement) {
-                encodingSymbols.add(e.symbol);
-            //}
+            encodingSymbols.add(e.symbol);
         }
     }
 
@@ -98,12 +103,11 @@ public class ImplicitEncoder {
             highestRule = index;
         }
 
-        String complementIndicator = "";
+        String complementIndicator;
         if (nt.rule.timeSeen == 1) { // from the stack of rules rather than the symbol needs separate indicator
             if (nt.isComplement) {
                 complementIndicator = "{";
             }
-
             else { // if standard still needs an indicator
                 complementIndicator = "?";
             }
@@ -122,11 +126,10 @@ public class ImplicitEncoder {
                 encodingSymbols.add(String.valueOf((char)index));
             }
         }
-        else{
+        else {
             if (nt.isComplement) {
                 complementIndicator = "'";
             }
-
             else { // if standard still needs an indicator
                 complementIndicator = "!";
             }
@@ -181,6 +184,10 @@ public class ImplicitEncoder {
                 }
             }
             else {
+
+                if (uniqueSymbols.contains(current.toString().charAt(0))) {
+                    encodingSymbols.add(String.valueOf((char)0));
+                }
                 encodingSymbols.add(current.toString());
             }
             current = current.getRight(); // move to next symbol
@@ -191,17 +198,17 @@ public class ImplicitEncoder {
         return encodedOutput;
     }
 
-    public void writeToFile() {
+    public List<String> getSymbolList() {
+        return encodingSymbols;
+    }
+
+    public void writeToFile(String output) {
         //todo implement properly
-        try (PrintWriter out = new PrintWriter(COMPRESSED_PATH + "/compressTest.txt")) {
-            out.println(getEncodedOutput());
+        try (PrintWriter out = new PrintWriter(PATH + "/compressTest.txt")) {
+            out.println(output);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<String> getSymbolList() {
-        return encodingSymbols;
     }
 
 }

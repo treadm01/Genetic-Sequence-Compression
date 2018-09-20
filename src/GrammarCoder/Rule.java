@@ -1,7 +1,5 @@
 package GrammarCoder;
 
-import org.w3c.dom.ls.LSInput;
-
 import java.util.*;
 
 public class Rule extends Symbol implements Comparable {
@@ -12,6 +10,7 @@ public class Rule extends Symbol implements Comparable {
     private static final long PRIME = 2265539; // from sequitur
     // for decompressing
     Boolean compressed = false;
+    Rule removed;
 
     // for encoding...
     int timeSeen = 0;
@@ -38,7 +37,6 @@ public class Rule extends Symbol implements Comparable {
         symbol.assignRight(guard); // symbol right should be actual guard
         guard.left.assignRight(symbol); // assign current last right to this symbol
         guard.assignLeft(symbol); // assign last to symbol
-
     }
 
     // like a clone used in search
@@ -59,6 +57,13 @@ public class Rule extends Symbol implements Comparable {
                 left = left.getRight();
             }
         }
+    }
+
+    public void removeLastSymbol() {
+//        guard.left.assignRight(guard.left); // link to itself
+//        guard.left.assignLeft(guard.left); // link to itself
+        guard.left.left.assignRight(guard); // reassign second ffrom last to last
+        guard.assignLeft(guard.left.left);
     }
 
     /**
@@ -202,4 +207,13 @@ public class Rule extends Symbol implements Comparable {
         Rule rule = (Rule) obj;
         return this.getRuleString().equals(rule.getRuleString());
     }
+
+//    @Override
+//    public String toString() {
+//        String s = String.valueOf(representation);
+//        if (isComplement) {
+//            s += "'";
+//        }
+//        return s;
+//    }
 }

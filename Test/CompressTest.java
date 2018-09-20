@@ -38,20 +38,20 @@ public class CompressTest {
 
     @Test
     public void processInput() { // create rules from digrams
-        c.processInput("abcdbc");
+        c.processInput("abcdbc", false);
         assertEquals("0 > a 2 d 2 | 2 > b c | ", c.printRules());
     }
 
     @Test
     public void processMatchingDigrams() { // check which digram is replaced
-        c.processInput("aaabcabaa");
+        c.processInput("aaabcabaa", false);
         c.printRules();
         assertEquals("0 > 4 2 c 2 4 | 4 > a a | 2 > a b | ", c.printRules());
     }
 
     @Test
     public void processMatchingDigrams2() { // check which digram is replaced
-        c.processInput("aaabcabaaabc");
+        c.processInput("aaabcabaaabc", false);
         c.printRules();
         assertEquals("0 > 8 2 8 | 8 > a a 2 c | 2 > a b | ", c.printRules());
     }
@@ -60,7 +60,7 @@ public class CompressTest {
         public void processInput2() { // check for and use existing rules
             System.out.println();
             c = new Compress();
-            c.processInput("abcdbcabc");
+            c.processInput("abcdbcabc", false);
             assertEquals("0 > 4 d 2 4 | 4 > a 2 | 2 > b c | ", c.printRules());
         }
 
@@ -68,7 +68,7 @@ public class CompressTest {
         public void processInput3() { // rule utility
             System.out.println();
             c = new Compress();
-            c.processInput("abcdbcabcd");
+            c.processInput("abcdbcabcd", false);
             assertEquals("0 > 6 2 6 | 6 > a 2 d | 2 > b c | ", c.printRules());
         }
 
@@ -76,7 +76,7 @@ public class CompressTest {
     public void processInput4() { // no overlap of digrams
         System.out.println();
         c = new Compress();
-        c.processInput("aaa");
+        c.processInput("aaa", false);
         assertEquals("0 > a a a | ", c.printRules());
     }
 
@@ -84,7 +84,7 @@ public class CompressTest {
     public void processInput5() {
         System.out.println();
         c = new Compress();
-        c.processInput("aaaa");
+        c.processInput("aaaa", false);
         assertEquals("0 > 2 2 | 2 > a a | ", c.printRules());
     }
 
@@ -92,7 +92,7 @@ public class CompressTest {
     public void processInput6() {
         System.out.println();
         c = new Compress();
-        c.processInput("aaaaa");
+        c.processInput("aaaaa", false);
         assertEquals("0 > 2 2 a | 2 > a a | ", c.printRules());
     }
 
@@ -100,7 +100,7 @@ public class CompressTest {
     public void processInput7() {
         System.out.println();
         c = new Compress();
-        c.processInput("aaaaaa");
+        c.processInput("aaaaaa", false);
         assertEquals("0 > 2 2 2 | 2 > a a | ", c.printRules());
     }
 
@@ -108,7 +108,7 @@ public class CompressTest {
     public void processInput8() {
         System.out.println();
         c = new Compress();
-        c.processInput("aaaaaaa");
+        c.processInput("aaaaaaa", false);
         assertEquals("0 > 2 2 2 a | 2 > a a | ", c.printRules());
     }
 
@@ -116,7 +116,7 @@ public class CompressTest {
     public void longAA() {
         System.out.println();
         c = new Compress();
-        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        c.processInput("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", false);
         assertEquals("0 > 8 8 | 8 > 6 6 | 6 > 4 4 | 4 > 2 2 | 2 > a a | ", c.printRules());
     }
 
@@ -124,7 +124,7 @@ public class CompressTest {
     public void processInputAgain() {
         c = new Compress();
         String input = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCCCATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA";
-        c.processInput(input);
+        c.processInput(input, false);
         System.out.println(c.printRules());
         Decompress d = new Decompress();
         //assertEquals(input, d.decompress(c.getFirstRule()));
@@ -135,7 +135,7 @@ public class CompressTest {
     public void processInput10() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdab"); // 4d is 3 so that should be found and updated, then, as
+        c.processInput("abcdbcabcdab", false); // 4d is 3 so that should be found and updated, then, as
         // 4 will only be in 3 it should be replaced with a1 and 4 removed
         assertEquals("0 > 6 2 6 a b | 6 > a 2 d | 2 > b c | ", c.printRules());
     }
@@ -144,7 +144,7 @@ public class CompressTest {
     public void processInput11() { // matching digram in existing rule, create new rule
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabc");
+        c.processInput("abcdbcabcdabc", false);
         assertEquals("0 > 6 2 6 8 | 8 > a 2 | 6 > 8 d | 2 > b c | ", c.printRules());
     }
 
@@ -153,7 +153,7 @@ public class CompressTest {
     public void processInput12() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabcd");
+        c.processInput("abcdbcabcdabcd", false);
         assertEquals("0 > 6 2 6 6 | 6 > a 2 d | 2 > b c | ", c.printRules());
     }
 
@@ -161,7 +161,7 @@ public class CompressTest {
     public void processInput13() {
         System.out.println();
         c = new Compress();
-        c.processInput("bdhudhbdhu");
+        c.processInput("bdhudhbdhu", false);
         System.out.println(c.printRules());
     }
 
@@ -169,7 +169,7 @@ public class CompressTest {
     public void processInput14() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdabcdbcabcdabcdbc");
+        c.processInput("abcdbcabcdabcdbcabcdabcdbc", false);
     }
 
 
@@ -178,28 +178,28 @@ public class CompressTest {
     public void implicitEncoding() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdebcdfbcdebcdfg");
+        c.processInput("abcdebcdfbcdebcdfg", false);
     }
 
     @Test
     public void implicitEncoding2() {
         System.out.println();
         c = new Compress();
-        c.processInput("abcdbcabcdbc");
+        c.processInput("abcdbcabcdbc", false);
     }
 
     @Test
     public void implicitEncoding3() {
         System.out.println();
         c = new Compress();
-        c.processInput("acaccacacc");
+        c.processInput("acaccacacc", false);
     }
 
     @Test
     public void implicitEncoding4() {
         System.out.println();
         c = new Compress();
-        c.processInput("dbcadbcabcabc");
+        c.processInput("dbcadbcabcabc", false);
     }
 
     @Test
@@ -240,7 +240,7 @@ public class CompressTest {
                 "TGGTAGTAAGTAGAGAGATGGATGGTGGTTGGGAGTGGTATGGTTGAGTGGGGCAGGGTA\n" +
                 "ACGAGTGGGGAGGTAGGGTAATGTGAGGGTAGGTTTGGAGACAGGTAAAATCAGGGTTAG\n" +
                 "AATAGGGTAGTGTTAGGGTAGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGTGTGGGTGTG\n" +
-                "GTGTGTGTGGGTGTGGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGGGTGTGGTGTGTGTG");
+                "GTGTGTGTGGGTGTGGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGGGTGTGGTGTGTGTG", false);
     }
 
 
@@ -250,7 +250,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("15000");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         System.out.println(c.printRules());
     }
 
@@ -259,7 +259,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         System.out.println(c.printRules());
     }
 
@@ -268,7 +268,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chntxx");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     //todo check speeds of this from previous versions
@@ -277,7 +277,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("hehcmv");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -285,7 +285,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -293,7 +293,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -301,7 +301,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhbb");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -309,7 +309,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("vaccg");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -317,7 +317,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mtpacga");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -325,7 +325,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mpomtcg");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -333,7 +333,7 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
     @Test
@@ -341,25 +341,14 @@ public class CompressTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
     }
 
-    @Test
-    public void getSymbols() {
-        Compress c = new Compress();
-//        c.getSymbols();
-        System.out.println((char) 22 == (char) 23);
-        final long nrChars = IntStream.rangeClosed(0, 0x10ffff)
-                .mapToObj(Character.UnicodeBlock::of)
-                .filter(Objects::nonNull)
-                .count();
-        System.out.println(nrChars);
-    }
 
     @Test
     public void getNextTerminal() {
         c = new Compress();
-        c.processInput("abcdbcabcd");
+        c.processInput("abcdbcabcd", false);
         System.out.println(c.printRules());
         //System.out.println(c.getNextTerminal(c.getFirstRule().getGuard().getRight().getRight().getRight(), false));
     }

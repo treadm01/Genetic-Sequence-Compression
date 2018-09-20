@@ -2,11 +2,11 @@ package GUI;
 
 import ArithmeticCoder.AdaptiveArithmeticCompress;
 import ArithmeticCoder.AdaptiveArithmeticDecompress;
-import GrammarCoder.Compress;
-import GrammarCoder.Decompress;
-import GrammarCoder.ImplicitEncoder;
-import GrammarCoder.InputOutput;
+import GrammarCoder.*;
 import javafx.application.Application;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,11 +31,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        final Rule[] searchFileRule = new Rule[1];
         primaryStage.setTitle("ProjectGC");
         InputOutput io = new InputOutput();
 
+        // next to it is output for search
+        TextArea textOutput = new TextArea();
+        textOutput.textProperty().addListener((observable, oldValue, newValue) -> {
+            textOutput.setText(newValue);
+        });
+
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(SOURCE_PATH));
+        fileChooser.setInitialDirectory(new File(PATH));
 
         BorderPane border = new BorderPane();
 
@@ -43,6 +50,7 @@ public class Main extends Application {
 
         choiceBox.getItems().add("Search");
         choiceBox.getItems().add("Decompress");
+        choiceBox.getItems().add("Compress (With Edits)");
         choiceBox.getItems().add("Compress");
 
         choiceBox.setValue("Compress");
@@ -51,33 +59,38 @@ public class Main extends Application {
         compressButton.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile != null) {
-                if (choiceBox.getValue() == "Compress") {
+                if (choiceBox.getValue() == "Compress" || choiceBox.getValue() == "Compress (With Edits)" ) {
                     Compress c = new Compress();
-                    c.processInput(io.readFile(selectedFile));
+                    c.processInput(io.readFile(selectedFile), choiceBox.getValue() != "Compress");
                     ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
                     try {
                         AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+                        textOutput.setText(aac.constructCompressionOutput(selectedFile.length()));
+
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 } else if (choiceBox.getValue() == "Decompress") {
-                    //todo need to return from adaptive arithmetic and write to file
-//                    Decompress d = new Decompress();
-//                    d.processInput(io.readFile(selectedFile));
-  //                  ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
                     try {
                         AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
+                        Decompress d = new Decompress();
+                        // split into local variables
+                        d.writeToFile(d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
+                        textOutput.setText("File decompressed");
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 }
                 else {
-//                    try {
-//                        // currently decompressing completely todo how to search accessed file
-//                        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
-//                    } catch (IOException e1) {
-//                        e1.printStackTrace();
-//                    }
+                    //todo keep the rule returned from decompressing, when press search button init search
+                    try {
+                        // currently decompressing completely todo how to search accessed file
+                        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
+                        Decompress d = new Decompress();
+                        searchFileRule[0] = d.buildGrammar(aad.getImplicitEncoding());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });
@@ -85,28 +98,21 @@ public class Main extends Application {
         // search bar
         TextField searchField = new TextField();
 
-        Button button = new Button("Search");
+        Button searchButton = new Button("Search");
 
-        button.setOnAction(value ->  {
-            System.out.println(searchField.getCharacters());
+        searchButton.setOnAction(value ->  {
+            if (searchFileRule[0] != null) {
+                Search s = new Search(searchFileRule[0]);
+                textOutput.setText(String.valueOf(s.search(String.valueOf(searchField.getCharacters()))));
+            }
         });
 
-        HBox hBox = new HBox(choiceBox, compressButton, searchField, button);
+        HBox hBox = new HBox(choiceBox, compressButton, searchField, searchButton);
         hBox.setPadding(new Insets(15, 12, 15, 12));
         hBox.setSpacing(10);
         border.setTop(hBox);
 
-        // display compressed files
-        ListView listView = new ListView();
-        File compressedFolder = new File(COMPRESSED_PATH);
-        File[] compressedFiles = compressedFolder.listFiles();
-        for (File f : compressedFiles) {
-            listView.getItems().add(f);
-        }
-
-        // next to it is output for search
-        TextArea textOutput = new TextArea();
-        HBox fileAndOutput = new HBox(listView, textOutput);
+        HBox fileAndOutput = new HBox(textOutput);
         fileAndOutput.setSpacing(10);
 
         VBox vBox = new VBox(fileAndOutput);
@@ -115,7 +121,7 @@ public class Main extends Application {
 
         border.setCenter(vBox);
 
-        Scene scene = new Scene(border, 900, 600);
+        Scene scene = new Scene(border, 560, 250);
 
         primaryStage.setScene(scene);
         primaryStage.show();

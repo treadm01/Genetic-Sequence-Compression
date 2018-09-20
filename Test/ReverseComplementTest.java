@@ -54,7 +54,7 @@ public class ReverseComplementTest {
     public void checkDigrams() {
         String input = "acg";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         System.out.println(c.printRules());
     }
 
@@ -63,7 +63,7 @@ public class ReverseComplementTest {
     public void checkDigrams2() {
         String input = "acga";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         System.out.println(c.printRules());
     }
 
@@ -71,7 +71,7 @@ public class ReverseComplementTest {
     public void removeDigrams() {
         String input = "acga";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl);
@@ -84,7 +84,7 @@ public class ReverseComplementTest {
     public void testUsingOriginalDigram() {
         String input = "acga";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         Terminal tl = new Terminal('t');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl); // sending in tc which was implicitly added, should return ga
@@ -96,7 +96,7 @@ public class ReverseComplementTest {
     public void testNotReverse() {
         String input = "acga";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         Terminal tl = new Terminal('a');
         Terminal tr = new Terminal('c');
         tr.assignLeft(tl); // sending in tc which was implicitly added, should return ga
@@ -108,7 +108,7 @@ public class ReverseComplementTest {
     public void firstRuleCreated() {
         String input = "acgt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         System.out.println(c.printRules());
         assertEquals("0 > 2 2' | 2 > a c | ", c.printRules());
     }
@@ -117,7 +117,7 @@ public class ReverseComplementTest {
     public void firstRuleCreatedDigramsRemoved() {
         String input = "acgt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals("g t, 2 2', a c, ", c.getDigramMap().printDigrams());
     }
 
@@ -127,7 +127,7 @@ public class ReverseComplementTest {
         //TODO need to add explicitly only because the links have changed, not even that
         // todo g2 should be here, but it is not
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals("0 > 2 2' c g a | 2 > a c | ", c.printRules());
         assertEquals("g a, t c, g t, 2' c, 2 2', a c, g 2, c g, ", c.getDigramMap().printDigrams());
 
@@ -138,7 +138,7 @@ public class ReverseComplementTest {
     public void digramUniquenessViolation() { // next c creates a nonterminal terminal rule already implicitly added
         String input = "acgtcgac";
         Compress c = new Compress();
-        c.processInput(input); // g2 is created by adding the last c, but g2 was implicitly added
+        c.processInput(input, false); // g2 is created by adding the last c, but g2 was implicitly added
         assertEquals("0 > 2 4 4' | 4 > 2' c | 2 > a c | ", c.printRules());
     }
 
@@ -146,7 +146,7 @@ public class ReverseComplementTest {
     public void digramUniquenessViolationCheckMap() { // next c creates a nonterminal terminal rule already implicitly added
         String input = "acgtcgac";
         Compress c = new Compress(); // should not have tc
-        c.processInput(input); // g2 is created by adding the last c, but g2 was implicitly added
+        c.processInput(input, false); // g2 is created by adding the last c, but g2 was implicitly added
         assertEquals("g t, 2' c, 2 4, a c, 4 4', 4' 2', g 2, ", c.getDigramMap().printDigrams());
     }
 
@@ -154,7 +154,7 @@ public class ReverseComplementTest {
     public void addAterminal() {
         String input = "acgtcgacg";
         Compress c = new Compress();
-        c.processInput(input); // is 2 4 reverse of 4' 2' really?
+        c.processInput(input, false); // is 2 4 reverse of 4' 2' really?
         assertEquals("0 > 2 4 4' g | 4 > 2' c | 2 > a c | ", c.printRules());
     }
 
@@ -163,7 +163,7 @@ public class ReverseComplementTest {
         //TODO need to remove overlapping c 4'
         String input = "acgtcgacgt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals("0 > 6 6' | 6 > 2 2' c | 2 > a c | ", c.printRules());
     }
 
@@ -171,7 +171,7 @@ public class ReverseComplementTest {
     public void anotherCorrespondingRuleCheckDigrams() {
         String input = "acgtcgacgt"; // old digrams from removed rules not removed
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals("g t, 2' c, 2 2', a c, g 2, 6 6', ", c.getDigramMap().printDigrams());
     }
 
@@ -185,7 +185,7 @@ public class ReverseComplementTest {
         // ga = tc, at = at, ta = ta, ag = ct, ga
         String input = "gataga"; // so getting to ga, which is already seen, not a complement, just straight up match
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals("g a, t c, t a, a 2', a 2, 2 t, 2' t, ", c.getDigramMap().printDigrams());
         assertEquals("0 > 2 t a 2 | 2 > g a | ", c.printRules());
     }
@@ -195,7 +195,7 @@ public class ReverseComplementTest {
         // ga = tc, at = at, ta = ta, ag = ct, ga
         String input = "gagcattacgatcagctagcta"; // so getting to ga, which is already seen, not a complement, just straight up match
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         System.out.println(c.getDigramMap().printDigrams());
         System.out.println(c.printRules());
     }
@@ -205,7 +205,7 @@ public class ReverseComplementTest {
     public void decompress() {
         String input = "acgt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -213,7 +213,7 @@ public class ReverseComplementTest {
     public void decompress2() {
         String input = "acgtcgac";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -222,7 +222,7 @@ public class ReverseComplementTest {
     public void decompress3() {
         String input = "acgtcgacgt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -231,7 +231,7 @@ public class ReverseComplementTest {
     public void decompress4() {
         String input = "gataga";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -240,7 +240,7 @@ public class ReverseComplementTest {
     public void decompress5() {
         String input = "gagcattacgatcagctagcta";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -249,7 +249,7 @@ public class ReverseComplementTest {
     public void decompress6() {
         String input = "ttaaattaatt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -257,7 +257,7 @@ public class ReverseComplementTest {
     public void decompressX() {
         String input = "ttaaatt"; // registering that 2a is the same as 2'a, or t2, because terminal equals does not check value of nonterminals
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -265,7 +265,7 @@ public class ReverseComplementTest {
     public void decompressX1() {
         String input = "cagagattttgagcgtg";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -273,7 +273,7 @@ public class ReverseComplementTest {
     public void testingRightHandComplementRemoval() {
         String input = "cgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -283,7 +283,7 @@ public class ReverseComplementTest {
         //last cc creates two instances of g 16' -> creates new rule 18' (should it be complement?) no, if it werent it would be g cc rather than ggg
         String input = "agagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -293,7 +293,7 @@ public class ReverseComplementTest {
     public void decompressX3() {
         String input = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -301,7 +301,7 @@ public class ReverseComplementTest {
     public void moreDecompressionBugTests() {
         String input = "ctacctatgt";
         Compress c = new Compress();
-        c.processInput(input);
+        c.processInput(input, false);
         assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -323,7 +323,7 @@ public class ReverseComplementTest {
             String input = genRand(rand.nextInt((10 - 1) + 1) + 1);
             System.out.println(input);
             Compress c = new Compress();
-            c.processInput(input);
+            c.processInput(input, false);
             assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
         }
     }
@@ -332,7 +332,7 @@ public class ReverseComplementTest {
     @Test
     public void decompress7() {
         Compress c = new Compress();
-        c.processInput("tttcgaaaag");
+        c.processInput("tttcgaaaag", false);
         assertEquals("tttcgaaaag", c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -341,7 +341,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("15000");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -350,7 +350,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -359,7 +359,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chntxx");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -368,7 +368,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("hehcmv");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -377,7 +377,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -386,7 +386,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -395,7 +395,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhbb");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -404,7 +404,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("vaccg");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -413,7 +413,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mtpacga");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -422,7 +422,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mpomtcg");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -431,7 +431,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 
@@ -440,7 +440,7 @@ public class ReverseComplementTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
     }
 

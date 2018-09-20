@@ -11,7 +11,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "agtcgcaatttagacaacagccaa";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
@@ -23,7 +23,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "aaabcabaa";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -34,7 +34,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "abcdbcabc";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -46,7 +46,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "abcdbcabcd";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -57,7 +57,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "aaaaaa";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -68,7 +68,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -79,7 +79,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "aaaaaaagaaaa";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -90,7 +90,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "abcdbcabcdabcdbcabcdabcdbc";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -101,7 +101,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "abcdbcabcdabcdbcabcdabcdbcabcd"; //looks like rule number is not correct...
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -112,7 +112,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "dbcadbcabcabc";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -123,7 +123,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "cdbcadbcabbcabc";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -134,7 +134,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
@@ -146,7 +146,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";
-        c.processInput(compress);
+        c.processInput(compress, false);
         InputOutput io = new InputOutput();
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
@@ -160,7 +160,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         Compress c = new Compress();
         String compress = "abc";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -172,7 +172,7 @@ public class DecompressTest {
 //        Compress c = new Compress();
 //        InputOutput io = new InputOutput();
 //        String compress = io.readFile("30000");
-//        c.processInput(compress);
+//        c.processInput(compress, false);
 //        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 //        String input = ie.getEncodedOutput();
 //        assertEquals(compress, d.decompress(d.buildGrammar(input)));
@@ -184,7 +184,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chntxx");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule()); // this has to be done to encode and write - should be done with a write to file thing
         String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
@@ -198,7 +198,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
         //todo have this called in process input
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
@@ -215,7 +215,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("hehcmv");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -233,7 +233,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -249,7 +249,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -264,7 +264,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhbb");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -279,7 +279,7 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         Decompress d = new Decompress();
         String originalFile = io.readFile("vaccg");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -295,7 +295,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mtpacga");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -310,7 +310,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mpomtcg");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -325,7 +325,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -341,7 +341,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
-        c.processInput(originalFile);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -361,7 +361,7 @@ public class DecompressTest {
 //        Compress c = new Compress();
 //        InputOutput io = new InputOutput();
 //        String compress = io.readFile(s);
-//        c.processInput(compress);
+//        c.processInput(compress, false);
 //        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 //        String input = ie.getEncodedOutput();
 //        return compress.equals(d.decompress(d.buildGrammar(input)));
@@ -372,7 +372,7 @@ public class DecompressTest {
         Compress c = new Compress();
         Decompress d = new Decompress();
         String compress = "ttctctgcctcacttctctgactcac";
-        c.processInput(compress);
+        c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         Rule r = (d.buildGrammar(input));

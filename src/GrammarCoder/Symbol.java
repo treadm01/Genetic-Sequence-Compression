@@ -79,7 +79,17 @@ public class Symbol {
         return right;
     }
 
-    public Symbol createReverseComplement(Symbol currentSymbol) {
+    public Boolean isARule() {
+        return this.getLeft().getLeft().isGuard()
+                && this.getRight().isGuard();
+    }
+
+    public Boolean isNotOverlapping(Symbol symbol) {
+        return this.getRight() != symbol
+                && this.getLeft() != symbol;
+    }
+
+    private Symbol createReverseComplement(Symbol currentSymbol) {
         Symbol reverse = new Symbol(); // could it ever be guard? todo yes seems to be, setting guards needlessly
         if (currentSymbol instanceof Terminal) { // right hand side of digram
             reverse = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0))); //todo a better way to get char

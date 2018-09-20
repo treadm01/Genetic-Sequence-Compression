@@ -1,12 +1,17 @@
 package ArithmeticCoder;/*
  * Reference arithmetic coding
- * Copyright (c) Project Nayuki
- * 
+ * Copyright © 2018 Project Nayuki. (MIT License)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+The Software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the Software or the use or other dealings in the Software.
+ *
  * https://www.nayuki.io/page/reference-arithmetic-coding
  * https://github.com/nayuki/Reference-arithmetic-coding
  */
 
-import GrammarCoder.Decompress;
 import GrammarCoder.Rule;
 
 import java.io.*;
@@ -22,6 +27,7 @@ import java.util.Set;
 public class AdaptiveArithmeticDecompress {
     static String PATH = System.getProperty("user.dir") + "/compressedFiles";
     static Rule rule;
+    String implicitEncoding;
 	
 	public AdaptiveArithmeticDecompress(File filePath) throws IOException {
 
@@ -43,6 +49,7 @@ public class AdaptiveArithmeticDecompress {
         symbolMarker.add('{');
         symbolMarker.add('?');
         symbolMarker.add('#');
+        symbolMarker.add('*');
 	    int ruleSize = readGammaCode(in);
         FlatFrequencyTable initFreqs = new FlatFrequencyTable(ruleSize);
 		FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
@@ -61,6 +68,9 @@ public class AdaptiveArithmeticDecompress {
 
 //            out.write(symbol);
 
+            // todo is this working for large pointers??? yeah should be
+
+            // if the last symbols wasn't something that indicates the next is not a nonterminal
             if (!symbolMarker.contains((char)lastSymbol) && symbol >= 128) {
                 if (symbol % 2 == 0) {
                     output += "!";
@@ -90,16 +100,17 @@ public class AdaptiveArithmeticDecompress {
 
         //System.out.println(output);
         //todo needs to split up and dealt with properly
-        Decompress d = new Decompress();
-        rule = d.buildGrammar(output);
-        String s = rule.getSymbolString(rule, false);
-        for (int i = 0; i < s.length(); i++) {
-            out.write(s.charAt(i));
-        }
+//        Decompress d = new Decompress();
+//        rule = d.buildGrammar(output);
+//        String s = rule.getSymbolString(rule, false);
+//        for (int i = 0; i < s.length(); i++) {
+//            out.write(s.charAt(i));
+//        }
+        implicitEncoding = output;
     }
 
-    public Rule getRule() {
-	    return rule;
+    public String getImplicitEncoding() {
+	    return implicitEncoding;
     }
 
 

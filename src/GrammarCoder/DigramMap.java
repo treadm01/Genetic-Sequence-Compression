@@ -3,6 +3,8 @@ package GrammarCoder;
 import java.util.HashMap;
 import java.util.Map;
 
+
+//todo ## - figure out all the digrams and then compare them… possible.
 public class DigramMap {
     public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
 
@@ -14,13 +16,19 @@ public class DigramMap {
         digramMap.putIfAbsent(symbol, symbol);
     }
 
-    public Boolean existingDigram(Symbol symbol) {
+    public Boolean containsDigram(Symbol symbol) {
         return digramMap.containsKey(symbol);
     }
 
     public void addNewDigrams(Symbol symbol) {
         addToDigramMap(symbol);
         addToDigramMap(symbol.getReverseComplement());
+    }
+
+    // should be in symbol really
+    public Boolean digramIsARule(Symbol symbol) {
+        return symbol.getLeft().getLeft().isGuard()
+                && symbol.getRight().isGuard();
     }
 
     public Symbol getExistingDigram(Symbol symbol) {
@@ -90,6 +98,14 @@ public class DigramMap {
             output += s.getLeft() + " " + s + ", ";
         }
         return output;
+    }
+
+    public long getRuleNumber(Symbol symbol) {
+        while (!symbol.isGuard()) {
+            symbol = symbol.getRight();
+        }
+        long r = ((Guard) symbol).getGuardRule().getRepresentation();
+        return r;
     }
 
 }

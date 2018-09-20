@@ -1,6 +1,12 @@
 package ArithmeticCoder;/*
  * Reference arithmetic coding
- * Copyright (c) Project Nayuki
+ * Copyright © 2018 Project Nayuki. (MIT License)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+The Software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the Software or the use or other dealings in the Software.
  *
  * https://www.nayuki.io/page/reference-arithmetic-coding
  * https://github.com/nayuki/Reference-arithmetic-coding
@@ -10,6 +16,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 
@@ -25,6 +32,8 @@ import java.util.*;
 public class AdaptiveArithmeticCompress {
     int tableSize;
     String PATH = System.getProperty("user.dir") + "/compressedFiles";
+    String compressionOutput;
+    Long finalFileSize;
 
     public AdaptiveArithmeticCompress(int numberOfSymbols, List<String> encodingSymbols) throws IOException {
         tableSize = numberOfSymbols + 130; // 128 offset for symbols, + 1 for eof symbol
@@ -34,6 +43,9 @@ public class AdaptiveArithmeticCompress {
         try (BitOutputStream out = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(outputFile)))) {
             compress(encodingSymbols, out);
         }
+
+
+        setFinalFileSize(outputFile.length());
     }
 
     // supect its ok initially but have to worry about byte completion when adding in middle of stream
@@ -65,6 +77,7 @@ public class AdaptiveArithmeticCompress {
         symbolMarker.add('\'');
         symbolMarker.add('!');
         symbolMarker.add('#');
+        symbolMarker.add('*');
         int changeFreq = 0;
         for (String s : symbols) {
             // Read and encode one byte
@@ -112,7 +125,23 @@ public class AdaptiveArithmeticCompress {
                 lastSymbol = s.charAt(0);
             }
         }
+
         enc.write(freqs, tableSize - 1);  // EOF
         enc.finish();  // Flush remaining code bits
+    }
+
+    public void setFinalFileSize(Long size) {
+        this.finalFileSize = size;
+    }
+
+    public String constructCompressionOutput(Long originalFileSize) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        double percentage = (1 - ((double)finalFileSize / originalFileSize)) * 100;
+        double BPC = ((double) (finalFileSize * 8) / (double)originalFileSize);
+        String out = "File compressed from " + originalFileSize + " to ";
+        out += finalFileSize + " bytes.\n";
+        out += decimalFormat.format(percentage) + "% compression.\n";
+        out += "Bits per character: " + decimalFormat.format(BPC);
+        return out;
     }
 }

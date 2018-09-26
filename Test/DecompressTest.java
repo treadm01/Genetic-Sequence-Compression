@@ -4,7 +4,6 @@
 import static org.junit.Assert.*;
 
 public class DecompressTest {
-    //TODO SLOWDOWN WITH MOVING DECOMPRESS METHOD TO RULE CLASS???
 
     @Test
     public void buildGrammar() {
@@ -237,7 +236,7 @@ public class DecompressTest {
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
-        String input = ie.getEncodedOutput();;//io.readFile("compressedFiles/compressTest.txt");
+        String input = ie.getEncodedOutput();
 
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, r.getSymbolString(r, r.isComplement));
@@ -249,7 +248,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
-        c.processInput(originalFile, false);
+        c.processInput(originalFile, true);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
@@ -280,11 +279,8 @@ public class DecompressTest {
         Decompress d = new Decompress();
         String originalFile = io.readFile("vaccg");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
         String input = ie.getEncodedOutput();
-        System.out.println(input);
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
@@ -341,7 +337,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
-        c.processInput(originalFile, false);
+        c.processInput(originalFile, true);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 

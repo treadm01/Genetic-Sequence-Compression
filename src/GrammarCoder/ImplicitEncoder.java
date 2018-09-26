@@ -5,21 +5,18 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class ImplicitEncoder {
-    int markerNum = 0; // todo set to 0 check if issue later...
-    public List<String> encodingSymbols; // list of symbols required to be encoded by arithmetic
-    List<Integer> adjustedMarkers; // for encoding index of rule created used rather than symbol
+    private int markerNum = 0;
+    private List<String> encodingSymbols; // list of symbols required to be encoded by arithmetic
+    private List<Integer> adjustedMarkers; // for encoding index of rule created used rather than symbol
     public int highestRule; // used for arithmetic coding highest rule will be the number of symbols needed
-    Rule grammar;
-    String encodedOutput;
+    private String encodedOutput;
     public Map<String, Integer> allSymbols = new HashMap<>();
-    static String PATH = System.getProperty("user.dir") + "/compressedFiles";
-    Set<Character> uniqueSymbols = new HashSet<>();
+    private static String PATH = System.getProperty("user.dir") + "/compressedFiles";
+    private Set<Character> uniqueSymbols = new HashSet<>();
 
     public ImplicitEncoder(Rule grammar) {
-        this.grammar = grammar;
         encodingSymbols = new ArrayList<>();
         adjustedMarkers = new ArrayList<>();
-        //hmmmm
         uniqueSymbols.add('*');
         uniqueSymbols.add('!');
         uniqueSymbols.add('?');
@@ -38,26 +35,13 @@ public class ImplicitEncoder {
             if (c.charAt(0) > highestRule) {
                 highestRule = c.charAt(0);
             }
-
-            // todo remove
-            if (allSymbols.containsKey(c)) {
-                Integer count = allSymbols.get(c);
-                allSymbols.put(c, count + 1);
-            }
-            else {
-                allSymbols.put(c, 1);
-            }
-
         }
-
-
-        System.out.println("ENCODED: " + encodedOutput +
-                "\nLENGTH: "
-                        + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
+//        System.out.println("ENCODED: " + encodedOutput +
+//                "\nLENGTH: "
+//                        + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
         writeToFile(encodedOutput);
     }
 
-    //TODO clean up
     public String encode() {
         String output = "";
         for (String s : getSymbolList()) {
@@ -67,28 +51,6 @@ public class ImplicitEncoder {
     }
 
     public void addEdits(List<Edit> editList) {
-//        //todo need to actually implement this method of reduced symbols
-//        if (editList.size() == 1) {
-//            encodingSymbols.add("*");
-//        }
-//        for (Edit e : editList) {
-//            // if edits greater than one just have * at beginning and end
-//            // different symbols, if one, just *
-//            // if more than one surround with two symbols
-//            if (editList.size() != 1) {
-//                encodingSymbols.add("`");
-//            }
-//            // but what if index is the same as logo
-//            // which is better? removing complements or *?
-//            //  encodingSymbols.add("*"); // has to be added each time for arithmetic coding
-//            encodingSymbols.add(String.valueOf(e.index));
-//            // if (!e.isComplement) {
-//            encodingSymbols.add(e.symbol);
-//            //}
-//        }
-//        if (editList.size() != 1) {
-//            encodingSymbols.add("`"); // has to be added each time for arithmetic coding
-//        }
         for (Edit e : editList) {
             encodingSymbols.add("*"); // has to be added each time for arithmetic coding
             encodingSymbols.add(String.valueOf((char)e.index));
@@ -98,7 +60,6 @@ public class ImplicitEncoder {
 
     // todo not getting a string anymore just applying the ... well strings to the list
     public void getNonTerminalString(int index, NonTerminal nt) {
-        // this here, but only really needs to be in the second seen nonterminal
         if (index > highestRule) {
             highestRule = index;
         }
@@ -143,9 +104,6 @@ public class ImplicitEncoder {
         }
     }
 
-    // length is often 2 so only add if not - REMOVED....
-    //todo just going to encode the length, will need to change arithmetic coder
-    //because youre not encoding the !... but using odd and even numbers...
     public void getEncodingSymbols(Symbol symbol) {
         Symbol current = symbol;
         while (!current.isGuard()) {
@@ -153,7 +111,6 @@ public class ImplicitEncoder {
                 NonTerminal nt = (NonTerminal) current;
                 if (nt.rule.timeSeen == 0) {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
-                    //separate method?
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
                     markerNum+=2;
@@ -184,7 +141,6 @@ public class ImplicitEncoder {
                 }
             }
             else {
-
                 if (uniqueSymbols.contains(current.toString().charAt(0))) {
                     encodingSymbols.add(String.valueOf((char)0));
                 }
@@ -203,7 +159,6 @@ public class ImplicitEncoder {
     }
 
     public void writeToFile(String output) {
-        //todo implement properly
         try (PrintWriter out = new PrintWriter(PATH + "/compressTest.txt")) {
             out.println(output);
         } catch (FileNotFoundException e) {

@@ -55,6 +55,7 @@ public class Compress {
     private void processWithEdits() {
         String sequence = getMainInput();
         ApproxRepeat approxRepeat = new ApproxRepeat(getFirstRule(), getMainInput());
+        long startTime = System.currentTimeMillis();
         for (int i = 1; i < sequence.length(); i++) {
             Symbol nextSymbol = new Terminal(sequence.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
@@ -64,6 +65,9 @@ public class Compress {
                 checkDigram(getFirstRule().getLast());
             }
         }
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        System.out.println("TIME " + elapsedTime);
     }
 
     private void processWithOutEdits() {
@@ -200,15 +204,15 @@ public class Compress {
     private void replaceRule(Symbol symbol) {
         if (symbol instanceof NonTerminal) { // if the symbol is a rule reduce usage
             NonTerminal nonTerminal = (NonTerminal) symbol;
-                nonTerminal.getRule().decrementCount();
-                nonTerminal.getRule().nonTerminalList.remove(nonTerminal);
-                if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
-                   // System.out.println("removing " + nonTerminal.getRule());
-                    digramMap.removeDigramsFromMap(symbol);
-                    digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
-                    nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
-                    checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
-                }
+            nonTerminal.getRule().decrementCount();
+            nonTerminal.getRule().nonTerminalList.remove(nonTerminal);
+            if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
+                // System.out.println("removing " + nonTerminal.getRule());
+                digramMap.removeDigramsFromMap(symbol);
+                digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
+                nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
+                checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
+            }
         }
     }
 

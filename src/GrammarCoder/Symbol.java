@@ -101,6 +101,7 @@ public class Symbol {
 
         reverse.isComplement = !currentSymbol.isComplement;
         reverse.complement = currentSymbol;
+        currentSymbol.complement = reverse;
 
         return reverse;
     }

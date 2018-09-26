@@ -5,92 +5,100 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class Decompress {
-    String PATH = System.getProperty("user.dir");
-    String SOURCE_PATH = PATH + "/sourceFiles";
-    String COMPRESSED_PATH = PATH + "/compressedFiles";
-    HashMap<Integer, NonTerminal> marker = new HashMap<>();
-    int position = 0; // for walking through the actual string, todo see if replaceable with for loop
-    String input;
-    //Compress c;
-    Rule grammar;
-    List<Integer> adjustedMarkers = new ArrayList<>();
-    Set<Character> pointerMarker = new HashSet<>();
-    Set<Character> symbolMarker = new HashSet<>();
+    private String PATH = System.getProperty("user.dir");
+    private String COMPRESSED_PATH = PATH + "/compressedFiles";
+    private HashMap<Integer, NonTerminal> marker = new HashMap<>();
+    private int position = 0; // for walking through the actual string, todo see if replaceable with for loop
+    private String input;
+    private Rule grammar;
+    private List<Integer> adjustedMarkers = new ArrayList<>();
+    private Set<Character> pointerMarker = new HashSet<>();
+    private Set<Character> symbolMarker = new HashSet<>();
+    private Set<Character> markerMarker = new HashSet<>();
+    private static int COMMON_RULE_LENGTH = 2;
+    private static int EVEN_RULE_NUMBER = 2;
+    private static char EDIT_SYMBOL = '*';
+    private static char STANDARD_MARKER = '#';
+    private static int UNIQUE_SYMBOL_INDICATOR = 0;
+    private static int HIGHEST_CHARACTER_SYMBOL = 128;
 
-    //todo if this works can remove the 2 marker thing, adaptive doesn't need to be as explicit
-    //todo rather than times 2 could start at 128, would still need * 2, but wouldn't have to sutract 128
-
-    //todo split this up
-    public Rule buildGrammar(String ruleString) {
-        pointerMarker.add('{');
-        pointerMarker.add('?');
-        pointerMarker.add('%');
-        pointerMarker.add('[');
-        symbolMarker.add('\'');
-        symbolMarker.add('!');
-        input = ruleString; //todo use by getter and setter
-        //c = new Compress();// todo split out the methods used by both
+    public Decompress() {
+        createSymbolSets();
         grammar = new Rule();
+    }
+
+    private void decompressRuleMarker() {
+        Rule r = new Rule();
+        if (input.charAt(position) == STANDARD_MARKER) {
+            r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
+        }
+        else {r.length = COMMON_RULE_LENGTH;}
+        addNonTerminal(r, false); // add nonterminal to rule
+        adjustedMarkers.add(marker.size() * EVEN_RULE_NUMBER); // add position of rule created to list which can then be used in place of the rule number iteself
+        marker.put(marker.size() * EVEN_RULE_NUMBER, (NonTerminal) grammar.getLast()); // add rule to hashmap
+    }
+
+    private void decompressPointer() {
+        Boolean isComplement = input.charAt(position) == '{' || input.charAt(position) == '%';
+        int pos;
+
+        if (input.charAt(position) == '{' || input.charAt(position) == '?') {
+            pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+        }
+        else {
+            pos = 1;
+        }
+
+        NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
+        adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
+        evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
+        addNonTerminal(nonTerminal.getRule(), isComplement);
+    }
+
+    private void decompressNonTerminal() {
+        Boolean isComplement = input.charAt(position) == '\'';
+        int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
+        addNonTerminal(marker.get(pos).getRule(), isComplement);
+    }
+
+    private void decompressEdit() {
+        // get the symbols and then add to the nonterimal edits
+        List<Edit> edits = new ArrayList<>();
+        int index = retrieveStringSegment();
+        Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)), false);
+        edits.add(e);
+        // if part of a sub rule need to add to head rule
+        grammar.getLast().setIsEdit(edits);
+        position++; // have to move past the symbol being edited
+    }
+
+    public Rule buildGrammar(String ruleString) {
+        input = ruleString;
         while (position < input.length()) {
-            if (input.charAt(position) == '#' || input.charAt(position) == '^') { // if a marker create rule for it and position it there
-                Rule r = new Rule();
-                if (input.charAt(position) == '#') {
-                    r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
-                }
-                else {r.length = 2;}
-                addNonTerminal(r, false); // add nonterminal to rule
-                adjustedMarkers.add(marker.size() * 2); // add position of rule created to list which can then be used in place of the rule number iteself
-                marker.put(marker.size() * 2, (NonTerminal) grammar.getLast()); // add rule to hashmap
+            if (markerMarker.contains(input.charAt(position))) { // if a marker create rule for it and position it there
+                decompressRuleMarker();
             }
             else if (pointerMarker.contains(input.charAt(position))) { // if a pointer deal with it and its rule
-                Boolean isComplement = false;
-
-                if (input.charAt(position) == '{' || input.charAt(position) == '%') {
-                    isComplement = true;
-                }
-                int pos = 1;
-                // if next symbol is a number, its a pointer so deal with that...
-                if (input.charAt(position) == '{' || input.charAt(position) == '?') {
-                    pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
-                }
-                NonTerminal nonTerminal = marker.get(adjustedMarkers.get(pos)); //get rule corresponding to the index of the marker
-                adjustedMarkers.remove(pos); // remove from the list, getting the actual nonterminal as it has the links?
-                evaluateRule(nonTerminal); // recursively go through any rules that might be within a rule
-                addNonTerminal(nonTerminal.getRule(), isComplement);
+                decompressPointer();
             }
             else if (symbolMarker.contains(input.charAt(position))) { // nonterminal symbol
-                Boolean isComplement = false;
-                // if not even then reverse complement, and referring to the rule below
-                if (input.charAt(position) == '\'') {
-                    isComplement = true;
-                }
-                int pos = retrieveStringSegment(); // get nonterminal to retrieve from hashmap
-                addNonTerminal(marker.get(pos).getRule(), isComplement);
+                decompressNonTerminal();
             }
-            else if (input.charAt(position) == '*') {
-                //todo needs to handle markernumber edits... no, should already be doing that
-                // get the symbols and then add to the nonterimal edits
-                List<Edit> edits = new ArrayList<>();
-                int index = retrieveStringSegment(); // todo would have to be if next is not symbol then complement
-                //todo GET EDIT OP FROM ENCODING
-                Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)), false);
-                edits.add(e);
-                // if part of a sub rule need to add to head rule
-                grammar.getLast().setIsEdit(edits);
-                position++; // have to move past the symbol being edited
+            else if (input.charAt(position) == EDIT_SYMBOL) {
+                decompressEdit();
             }
-            else if (input.charAt(position) == 0) {
+            else if (input.charAt(position) == UNIQUE_SYMBOL_INDICATOR) {
                 position++;
                 grammar.addNextSymbol(new Terminal(input.charAt(position)));
             }
             else {
-                if (input.charAt(position) < 128) { // if terminal add it to first rule
+                if (input.charAt(position) < HIGHEST_CHARACTER_SYMBOL) { // if terminal add it to first rule
                     grammar.addNextSymbol(new Terminal(input.charAt(position)));
                 }
             }
             position++; // increase position in string
         }
-        return grammar; // todo can't me using compress.....
+        return grammar;
     }
 
     /**
@@ -99,24 +107,10 @@ public class Decompress {
      * @return
      */
     public int retrieveStringSegment() {
-        String symbol = "";
         position++;
         return (int) input.charAt(position);
-//        if (input.charAt(position + 1) > 128) {
-//            return (int) input.charAt(position + 1);
-//        }
-//        while (input.charAt(position + 1) < 58 && input.charAt(position + 1) > 47) {
-//            symbol += input.charAt(position + 1);
-//            position++;
-//            if (position + 1 >= input.length()) { //todo if it reaches the end of the string then break
-//                //todo try to remove need to do this
-//                break;
-//            }
-//        }
-//        return Integer.valueOf(symbol);
     }
 
-    //todo or here to add if an edit...
     public void addNonTerminal(Rule rule, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
         nonTerminal.isComplement = isComplement;
@@ -127,12 +121,11 @@ public class Decompress {
      * recursively loop through rules and their lengths
      * @param nonTerminal
      */
-    //TODO clean up
     public void evaluateRule(NonTerminal nonTerminal) {
         if (!nonTerminal.getRule().compressed) {
             nonTerminal.getRule().compressed = true;
             // for the length of the rule add it's neighbours (what the rule refers to) to the rule
-            for (int z = 0; z < nonTerminal.rule.length; z++) {
+            for (int i = 0; i < nonTerminal.rule.length; i++) {
                 //sometimes a rule is not yet evaluated and this needs to be gone over
                 if (nonTerminal.getRight() instanceof NonTerminal) { // if next symbol is an uncompressed rule
                     NonTerminal nt = (NonTerminal) nonTerminal.getRight();
@@ -144,7 +137,6 @@ public class Decompress {
                 // move links around as symbols are added to rule
                 nonTerminal.assignRight(nonTerminal.getRight().getRight()); // assign next symbol in order
                 nonTerminal.getRule().addNextSymbol(nonTerminal.getRight().getLeft());
-                //System.out.println("GrammarCoder.Rule " + nonTerminal + " > " + nonTerminal.getRule().getRuleString());
             }
             // assign new right of terminals left to the nonterminal
             nonTerminal.getRight().assignLeft(nonTerminal);
@@ -157,17 +149,26 @@ public class Decompress {
      * @return
      */
     public String decompress(Rule rule) {
-        String output = rule.getSymbolString(rule, false);
-        return output;
+        return rule.getSymbolString(rule, false);
     }
 
     public void writeToFile(String output) {
-        //todo implement properly
         try (PrintWriter out = new PrintWriter(COMPRESSED_PATH + "/compressTest.txt")) {
             out.println(output);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createSymbolSets() {
+        pointerMarker.add('{');
+        pointerMarker.add('?');
+        pointerMarker.add('%');
+        pointerMarker.add('[');
+        symbolMarker.add('\'');
+        symbolMarker.add('!');
+        markerMarker.add('#');
+        markerMarker.add('^');
     }
 
 }

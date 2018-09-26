@@ -5,11 +5,11 @@ import java.util.*;
 public class Search {
     private DigramMap digramMap; // - digram points to digram via right hand symbol
     private Set<Rule> rulesFromGrammar = new HashSet<>();
-    Set<String> uniqueSymbols;
-    Rule mainRule;
-    Set<Symbol> matchingDigrams = new HashSet<>();
-    Set<String> uniqueTerminals = new HashSet<>();
-    Set<Rule> possibleNonTerminal = new HashSet<>();
+    private Set<String> uniqueSymbols;
+    private Rule mainRule;
+    private Set<String> uniqueTerminals = new HashSet<>();
+    private Set<String> checkedEncodings = new HashSet<>();
+    Boolean found = false;
 
     public Search(Rule firstRule) {
         mainRule = firstRule;
@@ -57,295 +57,261 @@ public class Search {
         return dm;
     }
 
-    public void checkDigramsToRule(Rule newRule, Boolean isLast) {
-        if (digramMap.containsDigram(newRule.getLast())) { //todo need a mehod to determine if a rule
-            Symbol oldSymbol = digramMap.getOriginalDigram(newRule.getLast());
-            if (digramMap.digramIsARule(oldSymbol)
-             || (newRule.getLast().getLeft().getLeft().isGuard() // is first
-                    && oldSymbol.getRight().isGuard())
-            || (isLast && !newRule.getLast().equals(oldSymbol) && oldSymbol.getRight().isGuard())) {
-                Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
-                Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
-                assignDigrams(rule, newRule, oldSymbol, isLast);
-            } else if (isLast && oldSymbol.getLeft().getLeft().isGuard()
-                    || (newRule.getLast().getLeft().getLeft().isGuard() && !newRule.getLast().equals(oldSymbol) && oldSymbol.getLeft().getLeft().isGuard())
-            ) {
-                Guard g = (Guard) oldSymbol.getLeft().getLeft(); // have to get guard and then rule from there
-                Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
-                assignDigrams(rule, newRule, oldSymbol, true);
-            }
-            //else if (isLast && )
-        }
-    }
-
-
-    public void assignDigrams(Rule rule, Rule newRule, Symbol oldSymbol, Boolean isLast) {
-        if (rule.representation != 0) {
-            NonTerminal nonTerminal = new NonTerminal(rule);
-            // needs to be from complement variable, but then need to assign each new symbol. maybe
-            nonTerminal.isComplement = !newRule.getLast().equals(oldSymbol); //true or alternate value, would have to alternate the nonterminal???
-
-            nonTerminal.assignRight(newRule.getLast().getRight());
-            nonTerminal.assignLeft(newRule.getLast().getLeft().getLeft());
-
-            newRule.getLast().getLeft().getLeft().assignRight(nonTerminal);
-            newRule.getLast().getRight().assignLeft(nonTerminal);
-
-            // todo not checking digrams works on some detracts on others
-            checkDigramsToRule(newRule, isLast);
-        }
-    }
 
      //get every instance of first digram
     public Boolean search(String searchString) {
-        Boolean found = false;
         uniqueTerminals.add("");
         //single letter search
         if (searchString.length() == 1) {
             found = uniqueTerminals.contains(searchString);
         }
-        else { // todo needs to be generic
-//            Rule newRule = createSearchRule(searchString);
-//            // if an existing digram found
-//          //  System.out.println(newRule.getRuleString());
-//            if (newRule.getRuleLength() == 1
-//                    || newRule.getRuleLength() == 1 && digramMap.containsDigram(newRule.getLast())) {
-//                found = true;
-//            }
-//            else if (newRule.getRuleLength() == 2 && checkDigramsAreConsecutive(newRule)) {
-//                found = true;
-//                System.out.println("found digram");
-//            }
-//            else { // create rule for digrams from search string
-//                StringBuilder reverseComplement = new StringBuilder();
-//                for (int j = 0; j < searchString.length(); j++) {
-//                    reverseComplement.append(Terminal.reverseSymbol(searchString.charAt(j)));
-//                }
-//                reverseComplement.reverse();
-//                List<String> allSearch = new ArrayList<>();
-//                allSearch.addAll(createSearchString(searchString));
-//                allSearch.addAll(createSearchString(reverseComplement.toString()));
-//
-//                //
-//                for (String s : allSearch) {
-//                    newRule = createSearchRule(s);
-//                    //System.out.println(newRule.getRuleString());
-//                    //System.out.println(newRule.getRuleString());
-//                    if (checkDigramsAreConsecutive(newRule)) {
-//                      //  System.out.println(s);
-//                        found = newRule.getSymbolString(newRule, false).contains(s); //todo safe to check for s ??? or do searchstring and reverse comple of searchstring
-//                    }
-//                }
-//            }
-//            // and if not, search by creating larger rules
-//        }
-//
-//        if (!found) {
-//            Rule newRule = new Rule();
-//            for (int i = 0; i < searchString.length(); i++) {
-//                newRule.addNextSymbol(new Terminal(searchString.charAt(i)));
-//            }
-//            checkByDigram(newRule);
-//            System.out.println(newRule.getRuleString());
-//            System.out.println(newRule.getRuleString());
-//            if (checkDigramsAreConsecutive(newRule)) {
-//                found = newRule.getSymbolString(newRule, false).contains(searchString); //todo safe to check for s ??? or do searchstring and reverse comple of searchstring
-//            }
-//        }
+        else {
+            Rule baseRule = new Rule();
+            baseRule.addNextSymbol(new Terminal(searchString.charAt(0)));
+            baseRule.addNextSymbol(new Terminal(searchString.charAt(1)));
+            SearchNode base = new SearchNode(baseRule, searchString.substring(2));
+            base.matchingDigrams = countMatchingDigrams(baseRule);
+            //two things search digram or add symbol new node for each
+            List<Rule> possibleRules = buildSearchTree(base, searchString);
 
-            StringBuilder reverseComplement = new StringBuilder();
-            for (int j = 0; j < searchString.length(); j++) {
-                reverseComplement.append(Terminal.reverseSymbol(searchString.charAt(j)));
-            }
-            reverseComplement.reverse();
-            List<String> allSearch = new ArrayList<>();
-            allSearch.add(searchString);
-            allSearch.add(reverseComplement.toString());
-            allSearch.addAll(createSearchString(searchString));
-            allSearch.addAll(createSearchString(reverseComplement.toString()));
-
-            //
-            for (String s : allSearch) {
-                Rule newRule = new Rule();
-                for (int i = 0; i < s.length(); i++) {
-                    newRule.addNextSymbol(new Terminal(s.charAt(i)));
-                }
-
-                checkByDigramRule(newRule);
-         //       System.out.println(newRule.getRuleString());
-                if (checkDigramsAreConsecutive(newRule)) {
-                    System.out.println(newRule.getSymbolString(newRule, false));
-                    found = newRule.getSymbolString(newRule, false).contains(searchString);
-                }
-                if (found) {
-                    break;
+            for (Rule r : possibleRules) {
+                for (String s : uniqueTerminals) {
+                    base = new SearchNode(r, s);
+                    buildSearchTree(base, "");
                 }
             }
         }
+
         return found;
     }
 
-    //todo need to be able to do by digrams too not each symbol
-    public void checkByDigramRule(Rule rule) {
-        Symbol first = rule.getFirst().getRight();
-        while (!first.isGuard()) {
-            if (digramMap.containsDigram(first)) {
-                Symbol check = digramMap.getOriginalDigram(first);
-                if (digramMap.digramIsARule(check)) { // if a rule update digrams
-                    createNonTerminal(((Guard)check.getRight()).getGuardRule(), first, check);
-                }
-                else if (first.equals(rule.getFirst().getRight())) {
-                    if (check.getRight().isGuard()) {
-                        createNonTerminal(((Guard)check.getRight()).getGuardRule(), first, check);
-                    }
-                    else {
-                        Symbol start = first;
+    public List<Rule> buildSearchTree(SearchNode base, String searchString) {
+        PriorityQueue<SearchNode> searchNodePriorityQueue
+                = new PriorityQueue<>(Comparator.comparingInt(SearchNode::numberOfMatchingDigrams));
+        searchNodePriorityQueue.add(base);
+        List<Rule> possibleRules = new ArrayList<>();
+        while (!searchNodePriorityQueue.isEmpty()) {
+            SearchNode searchNode = searchNodePriorityQueue.poll();
 
-                        //todo needs to be implemented for reverse complements too, notfindingreversecomplementtest
-                        // if a match but not an entire rule, check through the rest
-                        while (first.equals(check) && !first.isGuard() && !check.isGuard()) {
-                            first = first.getRight();
-                            check = check.getRight();
-                            // if reached the end of the rule and all equal
-                            //todo need to be able to stop if reaching end of rule being checked, and get rule from the remaining sequence
-                            if ((check.getRight().isGuard()) && first.equals(check)) {
-                                replaceSequence(((Guard)check.getRight()).getGuardRule(), start, first);
-                            }
-
-                        }
-                    }
-                    //check next digrams until - todo if nonterminal then what have to make that nonterminal..
+            if (searchNode.digramNodeLeft == null) {
+                //System.out.println("left getting " + searchNode.rule.getRuleString());
+                // create rule add to queue
+                buildLeftNode(searchNode);
+                if (!checkedEncodings.contains(searchNode.digramNodeLeft.rule.getRuleString())) {
+                    searchNode.digramNodeLeft.matchingDigrams = countMatchingDigrams(searchNode.digramNodeLeft.rule);
+                    searchNodePriorityQueue.add(searchNode.digramNodeLeft);
+                    checkedEncodings.add(searchNode.digramNodeLeft.rule.getRuleString());
+//                    System.out.println(" left returning " + searchNode.digramNodeLeft.rule.getRuleString());
                 }
-                else if (first.equals(rule.getLast())) { // if last
-                    if (!first.equals(check)) { // if reverse complement take rest of rule as if first
-                        if (check.getRight().isGuard()) {
-                            createNonTerminal(((Guard)check.getRight()).getGuardRule(), first, check);
-                        }
-                    }
-                    else { // else if normal take rest of rule as if first
-                        if (check.getLeft().getLeft().isGuard()) {
-                            createNonTerminal(((Guard) check.getLeft().getLeft()).getGuardRule(), first, check);
-                        }
+            }
+            if (searchNode.symbolNode == null) {
+                //System.out.println("add gettinf " + searchNode.rule.getRuleString());
+                buildSymbolNode(searchNode);
+                if (!checkedEncodings.contains(searchNode.symbolNode.rule.getRuleString())) {
+                    searchNode.symbolNode.matchingDigrams = countMatchingDigrams(searchNode.symbolNode.rule);
+                    searchNodePriorityQueue.add(searchNode.symbolNode);
+                    checkedEncodings.add(searchNode.symbolNode.rule.getRuleString());
+  //                  System.out.println("add returning " + searchNode.symbolNode.rule.getRuleString());
+                }
+
+            }
+            if (searchNode.digramNodeRight == null) {
+                //System.out.println("right getting " + searchNode.rule.getRuleString());
+                buildRightNode(searchNode);
+                if (!checkedEncodings.contains(searchNode.digramNodeRight.rule.getRuleString())) {
+                    searchNode.digramNodeRight.matchingDigrams = countMatchingDigrams(searchNode.digramNodeRight.rule);
+                    searchNodePriorityQueue.add(searchNode.digramNodeRight);
+                    checkedEncodings.add(searchNode.digramNodeRight.rule.getRuleString());
+    //                System.out.println("right returning " + searchNode.digramNodeRight.rule.getRuleString());
+                }
+            }
+            //todo added check for complete rules, need to do separate check and adds
+            if (searchNode.completeRule == null) {
+                buildCompleteRuleNode(searchNode);
+                if (!checkedEncodings.contains(searchNode.completeRule.rule.getRuleString())) {
+                    searchNode.completeRule.matchingDigrams = countMatchingDigrams(searchNode.completeRule.rule);
+                    searchNodePriorityQueue.add(searchNode.completeRule);
+                    checkedEncodings.add(searchNode.completeRule.rule.getRuleString());
+                }
+            }
+
+
+            if (searchNode.searchString.length() == 0) {
+                possibleRules.add(searchNode.rule);
+                if (checkDigramsAreConsecutive(searchNode.rule)) {
+                    if (searchNode.rule.getSymbolString(searchNode.rule, false).contains(searchString)) {
+                        found = true;
+                        break;
                     }
                 }
             }
 
-            // if a match move two right, if not one at a time
-            if (!first.isGuard()) {
-                first = first.getRight();
-            }
-
-            // all with reverse and not reverse
-            //if first is first do as above, take all rule if at the end
-
-            // if not first and found keep checking
-
-            // if last and found take rest of rule
         }
+        return possibleRules;
     }
 
-    public void replaceSequence(Rule rule, Symbol start, Symbol stop) {
+    // will have to take rest of search string too to create new terminals
+    public void buildLeftNode(SearchNode searchNode) {
+        SearchNode digram;
+        if (searchNode.searchString.length() >= 1) {
+            digram = new SearchNode(searchNode.rule, searchNode.searchString);
+        }
+        else {
+            digram = new SearchNode(searchNode.rule, "");
+        }
+        checkdigram(digram.rule.getFirst().getRight());
+        searchNode.digramNodeLeft = digram;
+    }
+
+    public void buildSymbolNode(SearchNode searchNode) {
+        //System.out.println(searchNode.rule.getRuleString());
+        SearchNode symbol;
+        if (searchNode.searchString.length() >= 1) {
+            symbol = new SearchNode(searchNode.rule, searchNode.searchString.substring(1));
+            symbol.rule.addNextSymbol(new Terminal(searchNode.searchString.charAt(0)));
+        }
+        else {
+            symbol = new SearchNode(searchNode.rule, "");
+        }
+
+        searchNode.symbolNode = symbol;
+    }
+
+    public void buildRightNode(SearchNode searchNode) {
+        SearchNode digram;
+        if (searchNode.searchString.length() >= 1) {
+            digram = new SearchNode(searchNode.rule, searchNode.searchString);
+        }
+        else {
+            digram = new SearchNode(searchNode.rule, "");
+        }
+        checkdigram(digram.rule.getLast());
+        searchNode.digramNodeRight = digram;
+    }
+
+    public void buildCompleteRuleNode(SearchNode searchNode) {
+        SearchNode digram;
+        //todo this check still needed?
+        if (searchNode.searchString.length() >= 1) {
+            digram = new SearchNode(searchNode.rule, searchNode.searchString);
+        }
+        else {
+            digram = new SearchNode(searchNode.rule, "");
+        }
+        checkIfCompleteRule(digram.rule.getLast());
+        searchNode.completeRule = digram;
+    }
+
+    public void replaceSequence(Rule rule, Symbol start, Symbol stop, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule);
-        start.getLeft().getLeft().assignRight(nonTerminal);
+        nonTerminal.isComplement = isComplement;
+        start.assignRight(nonTerminal);
         stop.getRight().assignLeft(nonTerminal);
-        nonTerminal.assignLeft(start.getLeft());
+        nonTerminal.assignLeft(start);
         nonTerminal.assignRight(stop.getRight());
     }
 
-    public void createNonTerminal(Rule rule, Symbol digram, Symbol previousDigram) {
-        if (rule.representation != 0) {
-            NonTerminal nonTerminal = new NonTerminal(rule);
-            // needs to be from complement variable, but then need to assign each new symbol. maybe
-            nonTerminal.isComplement = !digram.equals(previousDigram); //true or alternate value, would have to alternate the nonterminal???
-
-            nonTerminal.assignRight(digram.getRight());
-            nonTerminal.assignLeft(digram.getLeft().getLeft());
-
-            digram.getLeft().getLeft().assignRight(nonTerminal);
-            digram.getRight().assignLeft(nonTerminal);
-
-            //todo check new digrams here?
-            //System.out.println("FINDING " + nonTerminal.getLeft() + " " + nonTerminal);
-            if (digramMap.containsDigram(nonTerminal)) {
-                Symbol check = digramMap.getOriginalDigram(nonTerminal);
-                if (digramMap.digramIsARule(check)) {
-                    createNonTerminal(((Guard)check.getRight()).getGuardRule(), nonTerminal, digramMap.getOriginalDigram(nonTerminal));
-                }
+    private void checkIfCompleteRule(Symbol last) {
+        if (digramMap.containsDigram(last)) {
+            //loop through the rule, check not main rule etc
+            Symbol check = digramMap.getOriginalDigram(last);
+            //some reverse complements are the same forwards and backwards so has to be checked for both
+            if (last.equals(check)
+                    || digramMap.getOriginalDigram(last).equals(digramMap.getExistingDigram(last))) {
+                checkNormalRule(last, check);
             }
-            if (digramMap.containsDigram(nonTerminal.getRight())) {
-                Symbol check = digramMap.getOriginalDigram(nonTerminal.getRight());
-                if (digramMap.digramIsARule(check)) {
-                    createNonTerminal(((Guard)check.getRight()).getGuardRule(), nonTerminal.getRight(), digramMap.getOriginalDigram(nonTerminal.getRight()));
+            if (digramMap.getOriginalDigram(last).equals(digramMap.getExistingDigram(last))
+                    || !last.equals(check) ) {
+                checkReverseComplementRule(last, check);
+            }
+        }
+    }
+
+    private void checkNormalRule(Symbol last, Symbol check) {
+        Symbol stop = last;
+        if (check.getRight().isGuard()) { // has to be rule
+            Guard g = (Guard) check.getRight(); // get rule number with this
+            Rule r = g.getGuardRule();
+            if (r.getRepresentation() != 0) {
+                while (!last.getLeft().getLeft().isGuard()) {
+                    last = last.getLeft();
+                    check = check.getLeft();
+                    if (!last.equals(check)) { //todo reverse complements?
+                        break;
+                    } else if (check.getLeft().getLeft().isGuard()) {
+                        replaceSequence(r, last.getLeft().getLeft(), stop, false);
+                    }
                 }
             }
         }
-
     }
 
-//    public void checkByDigram(Rule rule) {
-//        Symbol first = rule.getFirst().getRight();
-//        for (int i = 2; i < rule.getRuleLength(); i++) {
-//            // if found replace with nonterminal - don't check new digrams till the end
-//            System.out.println(first.getLeft() + " " + first);
-//            if (digramMap.containsDigram(first) && digramMap.digramIsARule(digramMap.getOriginalDigram(first))) {
-//                // create new nonterminal with rule and assign the links
-//                System.out.println("why");
-//                NonTerminal nonTerminal = new NonTerminal(((Guard) digramMap.getOriginalDigram(first).getRight()).getGuardRule());
-//                nonTerminal.isComplement = !first.equals(digramMap.getOriginalDigram(first));
-//                first.getLeft().getLeft().assignRight(nonTerminal);
-//                first.getRight().assignLeft(nonTerminal);
-//                nonTerminal.assignLeft(first.getLeft().getLeft());
-//                nonTerminal.assignRight(first.getRight());
-//            }
-//            if (!digramMap.containsDigram(first)) {
-//                first = first.getRight();
-//                System.out.println("should ");
-//            }
-//            else {
-//                first = first.getRight().getRight();
-//            }
-//        }
-//    }
-//
-//    public Rule createSearchRule(String searchString) {
-//        Rule newRule = new Rule();
-//        newRule.addNextSymbol(new Terminal(searchString.charAt(0)));
-//      //  System.out.println("search " + searchString);
-//        for (int i = 1; i < searchString.length(); i++) {
-//            newRule.addNextSymbol(new Terminal(searchString.charAt(i)));
-//           // System.out.println(newRule.getRuleString());
-//            checkDigramsToRule(newRule, i == searchString.length()-1);
-//        }
-//        return newRule;
-//    }
+    private void checkReverseComplementRule(Symbol last, Symbol check) {
+        Symbol stop = last; // stop position taken from intitial last position
+        if (check.getLeft().getLeft().isGuard()) { // has to be rule
+            Guard g = (Guard) check.getLeft().getLeft(); // get rule number with this
+            Rule r = g.getGuardRule();
+            if (r.getRepresentation() != 0) {
+                while (!check.getRight().isGuard()) {
+                    last = last.getLeft();
+                    check = check.getRight();
+                    if (digramMap.containsDigram(last)) {
+                        if (!digramMap.getOriginalDigram(last).equals(check)) {
+                            break;
+                        }
+                        else if (check.getRight().isGuard()) {
+                            replaceSequence(r, last.getLeft().getLeft(), stop, true);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-    // check they all occur then check they're consecutively separately
-    //todo problem is they might not all occur
-//    public Boolean checkDigramsOccur(Rule rule) {
-//        Symbol first = rule.getFirst().getRight();
-//        Boolean found = false;
-//        while (!first.isGuard()) {
-//            if (digramMap.containsDigram(first)) {
-//                found = true;
-//            }
-//            else {
-//                found = false;
-//            }
-//            if (!found) {break;}
-//            first = first.getRight();
-//        }
-//        return found;
-//    }
+    private void checkdigram(Symbol digram) {
+        if (digramMap.containsDigram(digram)) {
+            Symbol oldSymbol = digramMap.getOriginalDigram(digram);
+            if (digramMap.digramIsARule(oldSymbol)) {
+                Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
+                Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
+                assignDigrams(rule, digram);
+            }
+        }
+    }
+
+    public void assignDigrams(Rule rule, Symbol digram) {
+            if (rule.representation != 0) {
+                NonTerminal nonTerminal = new NonTerminal(rule);
+                // needs to be from complement variable, but then need to assign each new symbol. maybe
+                nonTerminal.isComplement = !digram.equals(rule.getLast()); //true or alternate value, would have to alternate the nonterminal???
+
+                nonTerminal.assignRight(digram.getRight());
+                nonTerminal.assignLeft(digram.getLeft().getLeft());
+
+                digram.getLeft().getLeft().assignRight(nonTerminal);
+                digram.getRight().assignLeft(nonTerminal);
+
+                // todo not checking digrams works on some detracts on others
+                //checkdigram(nonTerminal);
+                //checkdigram(nonTerminal.getRight());
+            }
+        }
 
     public Boolean checkDigramsAreConsecutive(Rule rule) {
+        if (rule.getRuleLength() == 1) {
+            rule = ((NonTerminal)rule.getLast()).getRule();
+        }
         Symbol first = rule.getLast();
         Symbol check;
 
-        //System.out.println(rule.getRuleString());
-
         // check that last digram is correct
-        if (digramMap.containsDigram(first)) {
+        if (rule.getRuleLength() == 0) {
+            return false;
+        }
+        else if (digramMap.containsDigram(first)) {
+         //   System.out.println("should be ");
             if (rule.getRuleLength() == 2) {
+           //     System.out.println("here");
                 return true;
             }
             // get matching
@@ -379,11 +345,6 @@ public class Search {
             first = first.getLeft();
             check = check.getLeft();
         }
-
-        if (found) {
-            System.out.println("FOUND");
-            System.out.println(rule.getRuleString());
-        }
         return found;
     }
 
@@ -392,17 +353,44 @@ public class Search {
         //System.out.println(uniqueTerminals);
         for (String s : uniqueTerminals) {
             for (String s1 : uniqueTerminals) {
-                String s4 = s + searchString + s1;
+                String s5 = searchString + s + s1;
+                String s6 = s + s1 + searchString;
+                String s4 = s + s1 + searchString + s1 + s;
+                String s7 = s1 + s + searchString + s + s1;
+                String s8 = s + searchString + s1;
                 searchStrings.add(s4);
-                for (String s2 : uniqueTerminals) {
-                    for (String s3 : uniqueTerminals) {
-                        s4 = s + s1 + searchString + s2 + s3;
-                        searchStrings.add(s4);
-                    }
-                }
+                searchStrings.add(s5);
+                searchStrings.add(s6);
+                searchStrings.add(s7);
+                searchStrings.add(s8);
             }
         }
+
+//        for (String s : searchStrings) {
+//            System.out.println(s);
+//        }
         return searchStrings;
+    }
+
+    public int countMatchingDigrams(Rule rule) {
+        Symbol first = rule.getFirst().getRight();
+        int count = 0;
+        int consecutiveCount = 0;
+        while (!first.isGuard()) {
+            if (digramMap.containsDigram(first)) {
+                count++;
+                count += consecutiveCount;
+                consecutiveCount++;
+                if (digramMap.getRuleNumber(first) == 0) {
+                    count *= 2;
+                }
+            }
+            else {
+                consecutiveCount = 0;
+            }
+            first = first.getRight();
+        }
+        return count;
     }
 
 }

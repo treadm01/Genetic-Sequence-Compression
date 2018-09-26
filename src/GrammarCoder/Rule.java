@@ -59,12 +59,10 @@ public class Rule extends Symbol implements Comparable {
         }
     }
 
-    public void removeLastSymbol() {
-//        guard.left.assignRight(guard.left); // link to itself
-//        guard.left.assignLeft(guard.left); // link to itself
-        guard.left.left.assignRight(guard); // reassign second ffrom last to last
-        guard.assignLeft(guard.left.left);
-    }
+//    public void removeLastSymbol() {
+//        guard.left.left.assignRight(guard); // reassign second ffrom last to last
+//        guard.assignLeft(guard.left.left);
+//    }
 
     /**
      * add the two symbols from a digram to a nonTerminal

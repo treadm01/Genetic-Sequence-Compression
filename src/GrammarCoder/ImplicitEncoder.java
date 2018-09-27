@@ -39,7 +39,7 @@ public class ImplicitEncoder {
 //        System.out.println("ENCODED: " + encodedOutput +
 //                "\nLENGTH: "
 //                        + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
-        writeToFile(encodedOutput);
+        //writeToFile(encodedOutput);
     }
 
     public String encode() {

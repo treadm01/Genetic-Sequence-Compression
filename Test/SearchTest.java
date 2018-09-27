@@ -19,7 +19,7 @@ public class SearchTest {
     @Test
     public void findingDigrams() {
         Compress c = new Compress();
-        String compress = "ccctagtcaggttatgctccgggggtgtcgggaagag";
+        String compress = "ccctagtcaggttccgggg";
         c.processInput(compress, false);
         Search s = new Search(c.getFirstRule());
         assertTrue(s.search("ccctag")); //tcaggttatgctccgggggtgt
@@ -28,10 +28,10 @@ public class SearchTest {
     @Test
     public void findingDigramsSimple() {
         Compress c = new Compress();
-        String compress = "acgtttcgcg";
+        String compress = "acac";
         c.processInput(compress, false);
         Search s = new Search(c.getFirstRule());
-        assertTrue(s.search("acgt"));
+        assertTrue(s.search("gt"));
     }
 
     @Test
@@ -706,6 +706,9 @@ public class SearchTest {
                 if (search.length() > 1 && c.rules.size() > 1) {
                     System.out.println("nomral found " + input.contains(search) );
                     System.out.println("reverse complement found " + input.contains(reverseComplement) );
+                    if (s.search(search)) {
+                        assertTrue(input.contains(search) || input.contains(reverseComplement));
+                    }
                  //   assertEquals(input.contains(search) || input.contains(reverseComplement), s.search(search)); //
                 }
             }
@@ -731,9 +734,14 @@ public class SearchTest {
             }
             reverseComplement.reverse();
             if (search.length() != 0) {
-                System.out.println("nomral found " + input.contains(search) );
-                System.out.println("reverse complement found " + input.contains(reverseComplement) );
-                System.out.println(s.search(search));
+                //System.out.println("nomral found " + input.contains(search) );
+                //System.out.println("reverse complement found " + input.contains(reverseComplement) );
+                //System.out.println();
+
+                if (s.search(search)) {
+                    System.out.println("FOUND");
+                    assertTrue(input.contains(search) || input.contains(reverseComplement));
+                }
 //                assertEquals(input.contains(search) || input.contains(reverseComplement), s.search(search)); //
             }
             System.out.println();

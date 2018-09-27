@@ -184,11 +184,11 @@ import static org.junit.Assert.*;
         @Test
         public void mtpacga() {
             int old = 76925;
-            String fileName = "mtpacga";
+            String fileName = "MITO1";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
             String originalFile = io.readFile(fileName);
-            c.processInput(originalFile, false);
+            c.processInput(originalFile, true);
             ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
             String compare = ie.getEncodedOutput();
             System.out.println("File " + fileName);

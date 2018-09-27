@@ -61,6 +61,7 @@ public class Main extends Application {
             if (selectedFile != null) {
                 if (choiceBox.getValue() == "Compress" || choiceBox.getValue() == "Compress (With Edits)" ) {
                     Compress c = new Compress();
+                    long startTime = System.currentTimeMillis();
                     c.processInput(io.readFile(selectedFile), choiceBox.getValue() != "Compress");
                     ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
                     try {
@@ -70,6 +71,9 @@ public class Main extends Application {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
+                    long stopTime = System.currentTimeMillis();
+                    long elapsedTime = stopTime - startTime;
+                    System.out.println("time " + elapsedTime);
                 } else if (choiceBox.getValue() == "Decompress") {
                     try {
                         AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);

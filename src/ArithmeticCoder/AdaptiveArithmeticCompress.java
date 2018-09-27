@@ -58,7 +58,6 @@ public class AdaptiveArithmeticCompress {
         }
         gammaCode += "0"; // last stop bit
         gammaCode += ruleNumber;
-        System.out.println(gammaCode);
         for (int i = 0; i < gammaCode.length(); i++) {
             out.write(Integer.parseInt(gammaCode.substring(i, i + 1)));
         }

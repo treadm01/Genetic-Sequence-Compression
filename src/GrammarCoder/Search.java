@@ -99,6 +99,7 @@ public class Search {
                 buildLeftNode(searchNode);
                 if (!checkedEncodings.contains(searchNode.digramNodeLeft.rule.getRuleString())) {
                     searchNode.digramNodeLeft.matchingDigrams = countMatchingDigrams(searchNode.digramNodeLeft.rule);
+                    searchNode.digramNodeLeft.matchingDigrams += searchNode.matchingDigrams;
                     searchNodePriorityQueue.add(searchNode.digramNodeLeft);
                     checkedEncodings.add(searchNode.digramNodeLeft.rule.getRuleString());
 //                    System.out.println(" left returning " + searchNode.digramNodeLeft.rule.getRuleString());
@@ -109,6 +110,7 @@ public class Search {
                 buildSymbolNode(searchNode);
                 if (!checkedEncodings.contains(searchNode.symbolNode.rule.getRuleString())) {
                     searchNode.symbolNode.matchingDigrams = countMatchingDigrams(searchNode.symbolNode.rule);
+                    searchNode.symbolNode.matchingDigrams += searchNode.matchingDigrams;
                     searchNodePriorityQueue.add(searchNode.symbolNode);
                     checkedEncodings.add(searchNode.symbolNode.rule.getRuleString());
   //                  System.out.println("add returning " + searchNode.symbolNode.rule.getRuleString());
@@ -120,6 +122,7 @@ public class Search {
                 buildRightNode(searchNode);
                 if (!checkedEncodings.contains(searchNode.digramNodeRight.rule.getRuleString())) {
                     searchNode.digramNodeRight.matchingDigrams = countMatchingDigrams(searchNode.digramNodeRight.rule);
+                    searchNode.digramNodeRight.matchingDigrams += searchNode.matchingDigrams;
                     searchNodePriorityQueue.add(searchNode.digramNodeRight);
                     checkedEncodings.add(searchNode.digramNodeRight.rule.getRuleString());
     //                System.out.println("right returning " + searchNode.digramNodeRight.rule.getRuleString());
@@ -130,6 +133,7 @@ public class Search {
                 buildCompleteRuleNode(searchNode);
                 if (!checkedEncodings.contains(searchNode.completeRule.rule.getRuleString())) {
                     searchNode.completeRule.matchingDigrams = countMatchingDigrams(searchNode.completeRule.rule);
+                    searchNode.completeRule.matchingDigrams += searchNode.matchingDigrams;
                     searchNodePriorityQueue.add(searchNode.completeRule);
                     checkedEncodings.add(searchNode.completeRule.rule.getRuleString());
                 }

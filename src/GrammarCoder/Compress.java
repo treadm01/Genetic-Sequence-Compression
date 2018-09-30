@@ -2,12 +2,6 @@ package GrammarCoder;
 
 import java.util.*;
 
-// approximate repeats with sep mini grammar? problem is they would have to be new objects
-// todo seperate decode for each level rule string put in decode from grammar
-// todo currently decompress is more like an implicit decompress
-// todo sep approx repeat too
-// search in its own package?
-//todo are the nonterminals being kept properly in the set?
 public class Compress {
     private final static int USED_ONCE = 1; // rule used once
     private DigramMap digramMap;
@@ -49,13 +43,12 @@ public class Compress {
         // seperate method
         rules.add(getFirstRule()); //todo get with getter and setter
         generateRules(getFirstRule().getFirst());
-        debugGrammarOutput();
+        //debugGrammarOutput();
     }
 
     private void processWithEdits() {
         String sequence = getMainInput();
         ApproxRepeat approxRepeat = new ApproxRepeat(getFirstRule(), getMainInput());
-        long startTime = System.currentTimeMillis();
         for (int i = 1; i < sequence.length(); i++) {
             Symbol nextSymbol = new Terminal(sequence.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
@@ -65,9 +58,6 @@ public class Compress {
                 checkDigram(getFirstRule().getLast());
             }
         }
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-        System.out.println("TIME " + elapsedTime);
     }
 
     private void processWithOutEdits() {
@@ -77,11 +67,6 @@ public class Compress {
             nextSymbol.symbolIndex = i; // keeping index for edits
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
-            // seperate method
-//            rules.add(getFirstRule()); //todo get with getter and setter
-//            generateRules(getFirstRule().getFirst());
-//            System.out.println(printRules());
-
         }
     }
 
@@ -136,21 +121,8 @@ public class Compress {
 
         addNonTerminal(oldTerminal, oldSymbol); // update rule for first instance of digram
         addNonTerminal(newTerminal, symbol);// update rule for last instance of digram
-//
-//        System.out.println(newRule);
-//        System.out.println(oldSymbol.getLeft() + " " + oldSymbol);
-//        System.out.println(oldSymbol.getLeft().getLeft().getLeft());
-//        if (oldSymbol instanceof NonTerminal) {
-//            System.out.println(((NonTerminal) oldSymbol).getRule().getFirst());
-//        }
-//        // add the repeating digram to the new rule, which in turn is linked to the nonterminal
-//        System.out.println(newRule.count);
-        if (newRule.removed == null) {
-            newRule.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
-        }
-        else {
-            newRule.removed.addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
-        }
+
+        Objects.requireNonNullElse(newRule.removed, newRule).addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
         //check the symbols removed and deal with if they are rules
         //reduce rule count if being replaced or remove if 1
@@ -173,13 +145,12 @@ public class Compress {
 
     /**
      * already a rule for the digram found, replace it with that rule
-     * this needs looking into - TODO recursive here? consolidate with other method?
+     * this needs looking into -
      * takes the symbol being the latest digram of the main rule and
      * the already exsiting rule/nonterminal for that digram
      * @param symbol
      */
     private void existingRule(Symbol symbol, Symbol oldSymbol) {
-        //TODO could this be done more directly? - digram to nonterminal???
         Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule);
@@ -207,7 +178,6 @@ public class Compress {
             nonTerminal.getRule().decrementCount();
             nonTerminal.getRule().nonTerminalList.remove(nonTerminal);
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
-                // System.out.println("removing " + nonTerminal.getRule());
                 digramMap.removeDigramsFromMap(symbol);
                 digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
@@ -232,14 +202,6 @@ public class Compress {
         symbol.getRight().assignLeft(nonTerminal);
 
         nonTerminal.getRule().nonTerminalList.add(nonTerminal);
-//        if (symbol.getRight() instanceof NonTerminal) {
-//            System.out.println(symbol.getRight());
-//            ((NonTerminal) symbol.getRight()).getRule().nonTerminalList.add((NonTerminal) symbol.getRight());
-//        }
-//        if (symbol.getLeft().getLeft() instanceof NonTerminal) {
-//            System.out.println(symbol.getLeft().getLeft());
-//            ((NonTerminal) symbol.getLeft().getLeft()).getRule().nonTerminalList.add((NonTerminal) symbol.getLeft().getLeft());
-//        }
 
         checkNewDigrams(nonTerminal, nonTerminal.getRight(), nonTerminal);
     }
@@ -313,7 +275,7 @@ public class Compress {
     private String getMainInput() {return this.mainInput;}
 
 
-    public void debugGrammarOutput() {
+    private void debugGrammarOutput() {
         // debugging output
         System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
@@ -323,7 +285,6 @@ public class Compress {
         int longestRule = 0;
         int maxRepeat = 0;
         int lengthOfRulesOnly = 0;
-        //todo unclear if should include first rule
         for (Rule r : rules) {
             int ruleLength = r.getRuleLength();
             int symbolLength = r.getSymbolString(r, false).length();

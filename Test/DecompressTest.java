@@ -39,7 +39,6 @@ public class DecompressTest {
         assertEquals(compress, d.decompress(d.buildGrammar(input)));
     }
 
-
     @Test
     public void buildGrammar4() {
         Decompress d = new Decompress();
@@ -198,12 +197,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
         c.processInput(originalFile, false);
-        //todo have this called in process input
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
         String input = ie.getEncodedOutput();
-        System.out.println(input);
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }
@@ -218,14 +213,11 @@ public class DecompressTest {
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 
-        String input = ie.getEncodedOutput();//io.readFile("compressTest");
-        //System.out.println(input);
+        String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, r.getSymbolString(r, r.isComplement));
-        //20475
     }
 
-    //todo more terminals? can increase the length all you like but if only one...
     @Test
     public void humdystDE() {
         Compress c = new Compress();
@@ -322,11 +314,8 @@ public class DecompressTest {
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
         String input = ie.getEncodedOutput();
-        System.out.println(input);
         Rule r = d.buildGrammar(input);
         assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
     }

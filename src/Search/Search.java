@@ -1,4 +1,6 @@
-package GrammarCoder;
+package Search;
+
+import GrammarCoder.*;
 
 import java.util.*;
 
@@ -8,7 +10,7 @@ public class Search {
     private Set<String> uniqueTerminals = new HashSet<>();
     private Set<String> checkedEncodings = new HashSet<>();
     private Boolean found = false;
-    PriorityQueue<SearchNode> searchNodePriorityQueue;
+    private PriorityQueue<SearchNode> searchNodePriorityQueue;
 
     public Search(Rule firstRule) {
         rulesFromGrammar.add(firstRule);
@@ -50,8 +52,6 @@ public class Search {
         return dm;
     }
 
-
-     //get every instance of first digram
     public Boolean search(String searchString) {
         searchNodePriorityQueue = new PriorityQueue<>(Comparator.comparingInt(SearchNode::numberOfMatchingDigrams));
         uniqueTerminals.add("");
@@ -209,7 +209,7 @@ public class Search {
     private void checkdigram(Symbol digram) {
         if (digramMap.containsDigram(digram)) {
             Symbol oldSymbol = digramMap.getOriginalDigram(digram);
-            if (digramMap.digramIsARule(oldSymbol)) {
+            if (oldSymbol.isARule()) {
                 Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
                 Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
                 assignDigrams(rule, digram);
@@ -218,7 +218,7 @@ public class Search {
     }
 
     private void assignDigrams(Rule rule, Symbol digram) {
-            if (rule.representation != 0) {
+            if (rule.getRepresentation() != 0) {
                 NonTerminal nonTerminal = new NonTerminal(rule);
                 // needs to be from complement variable, but then need to assign each new symbol. maybe
                 nonTerminal.isComplement = !digram.equals(rule.getLast()); //true or alternate value, would have to alternate the nonterminal???
@@ -231,7 +231,7 @@ public class Search {
             }
         }
 
-    public Boolean checkDigramsAreConsecutive(Rule rule) {
+    private Boolean checkDigramsAreConsecutive(Rule rule) {
         if (rule.getRuleLength() == 1) {
             rule = ((NonTerminal)rule.getLast()).getRule();
         }
@@ -243,12 +243,9 @@ public class Search {
             return false;
         }
         else if (digramMap.containsDigram(first)) {
-         //   System.out.println("should be ");
             if (rule.getRuleLength() == 2) {
-           //     System.out.println("here");
                 return true;
             }
-            // get matching
             check = digramMap.getOriginalDigram(first);
         }
         else {
@@ -272,6 +269,7 @@ public class Search {
             else {
                 found = false;
             }
+
             if (!found) {
                 break;
             }

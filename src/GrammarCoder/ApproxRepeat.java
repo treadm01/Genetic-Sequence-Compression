@@ -30,7 +30,6 @@ public class ApproxRepeat {
                     Symbol nt = nonTerminalSet.getRight();
                     StringBuilder lastSequence = new StringBuilder();
 
-                    //todo need a way to check benefit here and roll back if one too many
                     // adding to list of symbols and the lastsequence string
                     while ((!nt.isGuard() && nt != matchingNonTerminal)
                             && lastSequence.length() < 30) {

@@ -1,4 +1,5 @@
 import GrammarCoder.*;
+import Search.Search;
 import org.junit.Test;
 
 import java.util.Random;

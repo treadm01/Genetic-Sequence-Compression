@@ -1,12 +1,26 @@
 package GrammarCoder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Terminal extends Symbol {
-    private long originalValue;
+    private long originalValue; // the original symbol from the input, representation is then assigned an odd number
+    private static final Map<Character, Character> COMPLEMENTS = new HashMap<>();
+    static {
+        COMPLEMENTS.put('a', 't');
+        COMPLEMENTS.put('t', 'a');
+        COMPLEMENTS.put('c', 'g');
+        COMPLEMENTS.put('g', 'c');
+        COMPLEMENTS.put('A', 'T');
+        COMPLEMENTS.put('T', 'A');
+        COMPLEMENTS.put('C', 'G');
+        COMPLEMENTS.put('G', 'C');
+    } //initialize values for reverse complements in map
 
     public Terminal(long representation) {
         originalValue = representation;
-        this.representation = (representation * 2) + 1;
-        left = new Symbol(); //todo having to add for equality check, not needed otherwise
+        this.representation = (representation * 2) + 1; //terminals assigned an odd number, nonterminals even
+        left = new Symbol();
     }
 
     @Override
@@ -16,48 +30,34 @@ public class Terminal extends Symbol {
 
     @Override
     public boolean equals(Object obj) {
-        //TODO add all checks
-        Symbol symbol = (Symbol) obj;
-
-        if (symbol.getLeft() instanceof NonTerminal) {
-            return ((representation == symbol.getRepresentation())
-                    && (left.representation == (symbol.left.getRepresentation()))
-                    && left.isComplement == symbol.left.isComplement
-            );
+        if (!(obj instanceof Terminal)) {
+            return false;
         }
         else {
-            return super.equals(obj);
+            Terminal symbol = (Terminal) obj;
+            if (symbol.getLeft() instanceof NonTerminal) {
+                // if digram contains a nonterminal on the left, additional checks for if it is a
+                // reverse complement are required
+                return ((representation == symbol.getRepresentation())
+                        && (left.representation == (symbol.getLeft().getRepresentation()))
+                        && left.isComplement == symbol.getLeft().isComplement
+                );
+            } else {
+                return super.equals(obj);
+            }
         }
     }
 
-    //returns complement of symbols  able to be complemented, else returns itself
-    //todo better to check if posisble?, nonterminal just returns complement
-    // possible that it could be used in other reverse type instances
+    /**
+     * Returns the complement symbol of the base symbols of a,c,g and t
+     * for upper and lower case or the original symbol if not applicable
+     * @param symbol - any of
+     * @return
+     */
     public static char reverseSymbol(char symbol) {
         char complement = symbol;
-        if (symbol == 'a') {
-            complement = 't';
-        }
-        else if (symbol == 'c') {
-            complement = 'g';
-        }
-        else if (symbol == 'g') {
-            complement = 'c';
-        }
-        else if (symbol == 't') {
-            complement = 'a';
-        }
-        else if (symbol == 'A') {
-            complement = 'T';
-        }
-        else if (symbol == 'C') {
-            complement = 'G';
-        }
-        else if (symbol == 'G') {
-            complement = 'C';
-        }
-        else if (symbol == 'T') {
-            complement = 'A';
+        if (COMPLEMENTS.containsKey(complement)) {
+            complement = COMPLEMENTS.get(complement);
         }
         return complement;
     }

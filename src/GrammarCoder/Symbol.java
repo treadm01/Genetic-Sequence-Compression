@@ -1,50 +1,24 @@
 package GrammarCoder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Symbol {
-    Symbol left, right;
-    long representation;
-    private static final long PRIME = 2265539; // from sequitur
-    public Boolean isComplement = false;
-    Boolean isEdited = false;
-    public Symbol complement;
+    Symbol left, right; // left and right links of symbols
+    long representation; // used throughout to compare symbol objects
+    private static final long PRIME = 2265539; //hashcode implementation from Java sequitur implementation available at http://www.sequitur.info/
+    public Boolean isComplement = false; // symbol is a reverse complement or not
+    Boolean isEdited = false; // symbol has been edited or is a nonterminal with one or more edits
+    public Symbol complement; // link to the symbols corresponding reverse complement
     int symbolIndex = 0; // to keep location of actual symbol for edit
-    List<Edit> editList = new ArrayList<>(); // todo this shouldn't be needed for each, at symbol level
+    List<Edit> editList; // list of possible edits
 
-    public void setIsEdit(List<Edit> edits) {
-        this.editList.addAll(edits);
-        isEdited = true;
-    }
-
+    /**
+     * method to quickly check if a symbol being checked is a guard
+     * for traversing rules, a Guard's representations is 0
+     * @return
+     */
     public Boolean isGuard() {
         return representation == 0;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(representation);
-    } //TODO convert to necessary symbol
-
-    @Override
-    public int hashCode() {
-        long code;
-        //from sequitur
-        long a = this.representation;
-        long b = left.representation; // switched check to look at left symbol rather than right
-        code = ((21599 * a) + (20507 * b));
-        code = code % PRIME;
-        return (int)code;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        //TODO add all checks
-        Symbol symbol = (Symbol) obj;
-        return ((representation == symbol.getRepresentation())
-                && (left.representation == (symbol.left.getRepresentation()))
-        );
     }
 
     public void assignLeft(Symbol left) {
@@ -67,32 +41,55 @@ public class Symbol {
         return representation;
     }
 
-    //todo creating a new each time, must be an alternative without links, just get current complement
-    public Symbol getReverseComplement() {
-        Symbol left = createReverseComplement(this);
-        Symbol right = createReverseComplement(this.getLeft()); // left and right symbols of reverse digram as it will be entered into the map
-
-        right.assignLeft(left);
-        left.assignRight(right);
-        left.assignLeft(new Terminal('!')); //todo for comparisons in hashmap, complement requires a left.left
-
-        return right;
-    }
-
+    /**
+     * check whether the symbol/digram being called from constitutes
+     * an entire sub-rule
+     * @return
+     */
     public Boolean isARule() {
         return this.getLeft().getLeft().isGuard()
                 && this.getRight().isGuard();
     }
 
-    public Boolean isNotOverlapping(Symbol symbol) {
+    /**
+     * Method to check that a digram is not overlapping an instance of itself
+     * that is a a a, where the two digrams are the same
+     * @param symbol
+     * @return
+     */
+    Boolean isNotOverlapping(Symbol symbol) {
         return this.getRight() != symbol
                 && this.getLeft() != symbol;
     }
 
+
+    /**
+     * callable from any symbol object to create the corresponding symbols
+     * for the reverse complement digram. Also assigns the links between the
+     * new symbols.
+     * @return
+     */
+    public Symbol getReverseComplement() {
+        Symbol left = createReverseComplement(this);
+        Symbol right = createReverseComplement(this.getLeft());
+        right.assignLeft(left);
+        left.assignRight(right);
+        left.assignLeft(new Terminal('!'));
+        return right;
+    }
+
+
+    /**
+     * Creates the reverse complement symbol for a symbol whether terminal or nonterminal
+     * assigning the link between the two complement symbols and the boolean
+     * isComplement value
+     * @param currentSymbol
+     * @return
+     */
     private Symbol createReverseComplement(Symbol currentSymbol) {
-        Symbol reverse = new Symbol(); // could it ever be guard? todo yes seems to be, setting guards needlessly
+        Symbol reverse = new Symbol();
         if (currentSymbol instanceof Terminal) { // right hand side of digram
-            reverse = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0))); //todo a better way to get char
+            reverse = new Terminal(Terminal.reverseSymbol(currentSymbol.toString().charAt(0)));
         }
         else if (currentSymbol instanceof NonTerminal) {
             reverse = new NonTerminal(((NonTerminal) currentSymbol).getRule());
@@ -104,5 +101,52 @@ public class Symbol {
         currentSymbol.complement = reverse;
 
         return reverse;
+    }
+
+    /**
+     * takes a list of edit objects gathered during grammar construction
+     * and assigns them to this particular symbol
+     * @param edits
+     */
+    void setIsEdit(List<Edit> edits) {
+        if (editList == null) {
+            // used to avoid instantiating
+            // an edit list for each symbol
+            // when not needed.
+            editList = edits;
+        }
+        else {
+            this.editList.addAll(edits);
+        }
+        isEdited = true;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(representation);
+    }
+
+    @Override
+    public int hashCode() {
+        long code;
+        //hashcode implementation from Java sequitur implementation available at http://www.sequitur.info/
+        long a = this.representation;
+        long b = left.representation;
+        code = ((21599 * a) + (20507 * b));
+        code = code % PRIME;
+        return (int)code;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Symbol)) {
+            return false;
+        }
+        else {
+            Symbol symbol = (Symbol) obj;
+            return ((representation == symbol.getRepresentation())
+                    && (left.representation == (symbol.left.getRepresentation()))
+            );
+        }
     }
 }

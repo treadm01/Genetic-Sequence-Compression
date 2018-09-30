@@ -1,6 +1,8 @@
-package GrammarCoder;
+package Search;
 
-public class SearchNode {
+import GrammarCoder.Rule;
+
+class SearchNode {
     Rule rule;
     SearchNode digramNodeLeft;
     SearchNode digramNodeRight;
@@ -10,13 +12,13 @@ public class SearchNode {
     String searchString;
     int matchingDigrams;
 
-    public SearchNode(Rule rule, String searchString) {
+    SearchNode(Rule rule, String searchString) {
         this.searchString = searchString;
         this.rule = new Rule();
         this.rule.addAllSymbols(rule.getFirst());
     }
 
-    public int numberOfMatchingDigrams() {
+    int numberOfMatchingDigrams() {
         return matchingDigrams;
     }
 }

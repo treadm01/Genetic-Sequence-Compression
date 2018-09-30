@@ -51,18 +51,7 @@ public class AdaptiveArithmeticDecompress {
                 break;
             }
 
-            //todo sep method
-            if (!SYMBOL_SET.contains((char)lastSymbol) && symbol >= 128) {
-                if (symbol % 2 == 0) {
-                    output.append("!").append((char) (symbol - 128));
-                }
-                else {
-                    output.append("\'").append((char) (symbol - 129));
-                }
-            }
-            else {
-                output.append((char) symbol);
-            }
+            output.append(getCorrectSymbol((char) lastSymbol, (char) symbol));
 
             freqs.set(symbol, freqs.get(symbol) + 10);
             if (SYMBOL_SET.contains((char)lastSymbol)) {
@@ -91,5 +80,21 @@ public class AdaptiveArithmeticDecompress {
             binaryRule.append(String.valueOf(in.read()));
         }
         return Integer.parseInt(binaryRule.toString(), 2);
+    }
+
+    private String getCorrectSymbol(char lastSymbol, char symbol) {
+        StringBuilder output = new StringBuilder();
+        if (!SYMBOL_SET.contains(lastSymbol) && symbol >= 128) {
+            if (symbol % 2 == 0) {
+                output.append("!").append((char)(symbol - 128));
+            }
+            else {
+                output.append("\'").append((char) (symbol - 129));
+            }
+        }
+        else {
+            output.append(symbol);
+        }
+        return output.toString();
     }
 }

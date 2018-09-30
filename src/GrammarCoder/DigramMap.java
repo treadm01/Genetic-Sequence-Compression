@@ -3,16 +3,14 @@ package GrammarCoder;
 import java.util.HashMap;
 import java.util.Map;
 
-
-//todo ## - figure out all the digrams and then compare them… possible.
 public class DigramMap {
-    public Map<Symbol, Symbol> digramMap; // - digram points to digram via right hand symbol
+    private Map<Symbol, Symbol> digramMap;
 
     public DigramMap() {
         digramMap = new HashMap<>();
     }
 
-    public void addToDigramMap(Symbol symbol) {
+    private void addToDigramMap(Symbol symbol) {
         digramMap.putIfAbsent(symbol, symbol);
     }
 
@@ -23,12 +21,6 @@ public class DigramMap {
     public void addNewDigrams(Symbol symbol) {
         addToDigramMap(symbol);
         addToDigramMap(symbol.getReverseComplement());
-    }
-
-    // should be in symbol really
-    public Boolean digramIsARule(Symbol symbol) {
-        return symbol.getLeft().getLeft().isGuard()
-                && symbol.getRight().isGuard();
     }
 
     public Symbol getExistingDigram(Symbol symbol) {
@@ -43,7 +35,7 @@ public class DigramMap {
     public Symbol getOriginalDigram(Symbol digram) {
         Symbol symbol = getExistingDigram(digram);
         // if digram was created as complement, should have no right hand symbol
-        if (symbol.getRight() == null) {//symbol.isComplement) { // can't really use is complement in this way as nonterminals might be part of a complement digram, but not a complement
+        if (symbol.getRight() == null) {
             symbol = getExistingDigram(symbol.getLeft().complement);
         }
         return symbol;
@@ -51,9 +43,7 @@ public class DigramMap {
 
     public void removeDigrams(Symbol digram) {
         digramMap.remove(digram);
-        //todo creating via getReveseComplement to remove, if created with the objects could add that way too
-        //todo removing complement, even if reverse still exists....
-        digramMap.remove(digram.getReverseComplement()); // can't just access the link?
+        digramMap.remove(digram.getReverseComplement()); // todo can't just access the link?
     }
 
 
@@ -93,19 +83,18 @@ public class DigramMap {
      * prints out all the digrams added to the digram map
      */
     public String printDigrams() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (Symbol s : digramMap.values()) {
-            output += s.getLeft() + " " + s + ", ";
+            output.append(s.getLeft()).append(" ").append(s).append(", ");
         }
-        return output;
+        return output.toString();
     }
 
     public long getRuleNumber(Symbol symbol) {
         while (!symbol.isGuard()) {
             symbol = symbol.getRight();
         }
-        long r = ((Guard) symbol).getGuardRule().getRepresentation();
-        return r;
+        return ((Guard) symbol).getGuardRule().getRepresentation();
     }
 
 }

@@ -1,11 +1,8 @@
 package GrammarCoder;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.*;
 
 public class Decompress {
-    private String PATH = System.getProperty("user.dir");
     private HashMap<Integer, NonTerminal> marker = new HashMap<>();
     private int position = 0;
     private String input;
@@ -143,13 +140,5 @@ public class Decompress {
      */
     public String decompress(Rule rule) {
         return rule.getSymbolString(rule, false);
-    }
-
-    public void writeToFile(String output) {
-        try (PrintWriter out = new PrintWriter(PATH + "/compressTest.txt")) {
-            out.println(output);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

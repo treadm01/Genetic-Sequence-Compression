@@ -3,10 +3,8 @@ package GUI;
 import ArithmeticCoder.AdaptiveArithmeticCompress;
 import ArithmeticCoder.AdaptiveArithmeticDecompress;
 import GrammarCoder.*;
+import Search.Search;
 import javafx.application.Application;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,10 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Main extends Application {
     private String PATH = System.getProperty("user.dir");
@@ -44,7 +40,7 @@ public class Main extends Application {
 
         BorderPane border = new BorderPane();
 
-        ChoiceBox choiceBox = new ChoiceBox();
+        ChoiceBox<String> choiceBox = new ChoiceBox<String>();
 
         choiceBox.getItems().add("Search");
         choiceBox.getItems().add("Decompress");
@@ -57,42 +53,40 @@ public class Main extends Application {
         compressButton.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile != null) {
-                if (choiceBox.getValue() == "Compress" || choiceBox.getValue() == "Compress (With Edits)" ) {
-                    Compress c = new Compress();
-                    long startTime = System.currentTimeMillis();
-                    c.processInput(io.readFile(selectedFile), choiceBox.getValue() != "Compress");
-                    ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-                    try {
-                        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
-                        textOutput.setText(aac.constructCompressionOutput(selectedFile.length()));
+                switch (choiceBox.getValue()) {
+                    case "Compress":
+                    case "Compress (With Edits)":
+                        Compress c = new Compress();
+                        c.processInput(io.readFile(selectedFile), !choiceBox.getValue().equals("Compress"));
+                        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+                        try {
+                            AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+                            textOutput.setText(aac.constructCompressionOutput(selectedFile.length()));
 
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                    long stopTime = System.currentTimeMillis();
-                    long elapsedTime = stopTime - startTime;
-                    System.out.println("time " + elapsedTime);
-                } else if (choiceBox.getValue() == "Decompress") {
-                    try {
-                        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
-                        Decompress d = new Decompress();
-                        // split into local variables
-                        d.writeToFile(d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
-                        textOutput.setText("File decompressed");
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-                else {
-                    //todo keep the rule returned from decompressing, when press search button init search
-                    try {
-                        // currently decompressing completely todo how to search accessed file
-                        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
-                        Decompress d = new Decompress();
-                        searchFileRule[0] = d.buildGrammar(aad.getImplicitEncoding());
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    case "Decompress":
+                        try {
+                            AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
+                            Decompress d = new Decompress();
+                            // split into local variables todo rename
+                            io.writeToFile(d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
+                            textOutput.setText("File decompressed");
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
+                    default:
+                        try {
+                            AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
+                            Decompress d = new Decompress();
+                            searchFileRule[0] = d.buildGrammar(aad.getImplicitEncoding());
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        break;
                 }
             }
         });

@@ -280,7 +280,6 @@ public class ReverseComplementTest {
 
     @Test
     public void decompressX2() {
-        //last cc creates two instances of g 16' -> creates new rule 18' (should it be complement?) no, if it werent it would be g cc rather than ggg
         String input = "agagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgcc";
         Compress c = new Compress();
         c.processInput(input, false);
@@ -288,7 +287,6 @@ public class ReverseComplementTest {
     }
 
 
-    //"agagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtgg";
     @Test
     public void decompressX3() {
         String input = "cagagattttgagcgtgatattattccaatggctaggcatttcggtatggccctcgccccatgggatgtcatgggaggtggaagatttcagagtaaaaaagcaatggaggaacggagga";

@@ -184,7 +184,7 @@ import static org.junit.Assert.*;
         @Test
         public void mtpacga() {
             int old = 76925;
-            String fileName = "MITO1";
+            String fileName = "mtpacga";
             Compress c = new Compress();
             InputOutput io = new InputOutput();
             String originalFile = io.readFile(fileName);

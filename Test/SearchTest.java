@@ -628,9 +628,6 @@ public class SearchTest {
         assertTrue(s.search("agcttataagaatggacttcatat"));
     }
 
-    // gggagaaagcgaggatcag - this string is constructed but not registered as found
-    // need to be built digram by digram
-    // if digram exists and its a full rule then continue up
     @Test
     public void humdyst() {
         Compress c = new Compress();
@@ -687,7 +684,6 @@ public class SearchTest {
             assertTrue(end <= input.length());
             assertTrue(end >= start);
             //genRand(rand.nextInt((10 - 1) + 1) + 1);
-            //todo generate random start and finsigh substring
             if (i % 2 == 0) {
                 search = input.substring(start, end);
             }

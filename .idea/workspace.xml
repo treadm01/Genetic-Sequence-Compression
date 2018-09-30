@@ -488,7 +488,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.CompressionTest.mtpacga">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -515,21 +515,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DecompressTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CompressionTest.mtpacga" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DecompressTest" />
+      <option name="MAIN_CLASS_NAME" value="CompressionTest" />
+      <option name="METHOD_NAME" value="mtpacga" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DecompressTest.buildGrammar" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DecompressTest" />
-      <option name="METHOD_NAME" value="buildGrammar" />
-      <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -571,18 +571,18 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.DecompressTest" />
-      <item itemvalue="JUnit.DecompressTest.buildGrammar" />
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.EditGrammarTest" />
       <item itemvalue="JUnit.SearchTest.humdystThree" />
+      <item itemvalue="JUnit.CompressionTest.mtpacga" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CompressionTest.mtpacga" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.SearchTest.humdystThree" />
         <item itemvalue="JUnit.DecompressTest" />
         <item itemvalue="JUnit.EditGrammarTest" />
-        <item itemvalue="JUnit.DecompressTest.buildGrammar" />
       </list>
     </recent_temporary>
   </component>

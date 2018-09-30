@@ -12,6 +12,15 @@ class ApproxRepeat {
         this.input = input;
     }
 
+    /**
+     * main method checking for edits, checks the following sequence
+     * of the current last nonterminal created to the seqeunces following all
+     * previous instances of the same nonterminal to find sequences that are
+     * approximate repeats
+     * todo might be ignoring exact matches that would be better than no edits.. needs refactoring
+     * @param symbol
+     * @return
+     */
     List<Symbol> checkApproxRepeat(Symbol symbol) {
         NonTerminal matchingNonTerminal;
         int bestEdit = 0;
@@ -23,14 +32,17 @@ class ApproxRepeat {
             Rule nonterminalRule = matchingNonTerminal.getRule();
             int matchingNonTerminalLength = nonterminalRule.getSymbolString(matchingNonTerminal.getRule(), false).length();
             for (NonTerminal nonTerminalSet : nonterminalRule.nonTerminalList) {
+                // has to be the same complement value and not the same object
                 if (matchingNonTerminal.getIsComplement() == nonTerminalSet.getIsComplement()
                         && matchingNonTerminal != nonTerminalSet) {
-                    // cache of strings?
+                    // list of the symbols that encode the previous sequences
                     List<Symbol> next = new ArrayList<>();
                     Symbol nt = nonTerminalSet.getRight();
+                    // sequence following previous instances of nonterminals
                     StringBuilder lastSequence = new StringBuilder();
 
-                    // adding to list of symbols and the lastsequence string
+                    // adding to list of symbols and the last sequence string
+                    //todo this needs to be dependent on the results rather than fixed length
                     while ((!nt.isGuard() && nt != matchingNonTerminal)
                             && lastSequence.length() < 30) {
                         next.add(nt);
@@ -38,6 +50,8 @@ class ApproxRepeat {
                         nt = nt.getRight();
                     }
 
+                    // if the two sequences do not overlap each other or the end of the string
+                    // process number of edits to see whether worth doing
                     if (symbol.symbolIndex + lastSequence.length() <= input.length()) {
                         String nextSequence = input.substring(symbol.symbolIndex, symbol.symbolIndex + lastSequence.length());
                         int editNumber = numberOfEdits(lastSequence.toString(), nextSequence);
@@ -56,6 +70,11 @@ class ApproxRepeat {
         return symbols;
     }
 
+    /**
+     *
+     * @param symbol
+     * @return
+     */
     private String getSymbolsString(Symbol symbol) {
         StringBuilder symbolString = new StringBuilder();
         if (symbol instanceof NonTerminal) {

@@ -12,10 +12,7 @@ The Software is provided "as is", without warranty of any kind, express or impli
  * https://github.com/nayuki/Reference-arithmetic-coding
  */
 
-import GrammarCoder.Rule;
-
 import java.io.*;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -35,7 +32,6 @@ public class AdaptiveArithmeticDecompress {
 		}
 	}
 
-	// To allow unit testing, this method is package-private instead of private.
 	public String decompress(BitInputStream in) throws IOException {
 	    int ruleSize = readGammaCode(in);
         FlatFrequencyTable initFreqs = new FlatFrequencyTable(ruleSize);
@@ -65,10 +61,6 @@ public class AdaptiveArithmeticDecompress {
         return output.toString();
     }
 
-    public String getImplicitEncoding() {
-	    return implicitEncoding;
-    }
-
 	private int readGammaCode(BitInputStream in) throws IOException {
         int count = 0;
         while (in.read() != 0) {
@@ -96,5 +88,9 @@ public class AdaptiveArithmeticDecompress {
             output.append(symbol);
         }
         return output.toString();
+    }
+
+    public String getImplicitEncoding() {
+        return implicitEncoding;
     }
 }

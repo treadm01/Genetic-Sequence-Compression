@@ -228,7 +228,7 @@ public class DecompressTest {
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
-        c.processInput(originalFile, true);
+        c.processInput(originalFile, false);
 
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
 

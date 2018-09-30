@@ -28,27 +28,31 @@ public class DigramMap {
     }
 
     /**
-     * when a digram has occured but was first entered as a reverse complement, ie never seen
+     * when a digram has occurred but was first entered as a reverse complement, ie never explicitly seen,
      * the original digram it was created from needs to be used for the correct links and location
      * @return
      */
     public Symbol getOriginalDigram(Symbol digram) {
         Symbol symbol = getExistingDigram(digram);
-        // if digram was created as complement, should have no right hand symbol
+        // if digram was created as complement, should have no right hand symbol..
         if (symbol.getRight() == null) {
             symbol = getExistingDigram(symbol.getLeft().complement);
         }
         return symbol;
     }
 
+    /**
+     * remove digram and corresponding reverse complement digram
+     * @param digram
+     */
     public void removeDigrams(Symbol digram) {
         digramMap.remove(digram);
-        digramMap.remove(digram.getReverseComplement()); // todo can't just access the link?
+        digramMap.remove(digram.getReverseComplement());
     }
 
 
     /**
-     * when nonterminals are added or removed the old digrams either side must be removed from the map
+     * when nonterminals are added or removed the old digrams either side must be removed from the map,
      * currently requires some extra checks for ensuring that the digrams being removed do not
      * correspond with the same digram that is overlapping
      * @param symbol
@@ -62,13 +66,14 @@ public class DigramMap {
             }
         }
 
-        if (!symbol.getRight().equals(symbol)) { // should this be getright.getrigh? both
-            removeDigrams(symbol.getRight());
 
-            // if removed a digram that was overlapping with itself //todo don't remove rather than re -add
+        if (!symbol.getRight().equals(symbol)) {
+            removeDigrams(symbol.getRight());
+            // todo don't remove rather than re-add
+            // if removed a digram that was overlapping with itself
             if (symbol.getRight().equals(symbol.getRight().getRight())) {
                 addToDigramMap(symbol.getRight().getRight());
-                // whenever adding, add reverse complement
+                // whenever re-adding, add reverse complement too
                 Symbol reverse = symbol.getRight().getRight().getReverseComplement();
                 addToDigramMap(reverse);
             }
@@ -80,7 +85,7 @@ public class DigramMap {
     }
 
     /**
-     * prints out all the digrams added to the digram map
+     * prints out all the digrams added to the digram map - used for debugging
      */
     public String printDigrams() {
         StringBuilder output = new StringBuilder();
@@ -90,6 +95,11 @@ public class DigramMap {
         return output.toString();
     }
 
+    /**
+     * return the representation of a rule a symbol occurs in
+     * @param symbol
+     * @return
+     */
     public long getRuleNumber(Symbol symbol) {
         while (!symbol.isGuard()) {
             symbol = symbol.getRight();

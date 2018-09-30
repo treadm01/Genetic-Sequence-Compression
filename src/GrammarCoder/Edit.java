@@ -1,7 +1,7 @@
 package GrammarCoder;
 
 public class Edit {
-    String symbol; //todo use character
+    String symbol;
     int index;
 
     Edit(int index, String symbol) {

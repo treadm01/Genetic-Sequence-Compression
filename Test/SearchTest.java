@@ -704,7 +704,7 @@ public class SearchTest {
                     reverseComplement.append(Terminal.reverseSymbol(search.charAt(j)));
                 }
                 reverseComplement.reverse();
-                if (search.length() > 1 && c.rules.size() > 1) {
+                if (search.length() > 1 && c.getRules().size() > 1) {
                     System.out.println("nomral found " + input.contains(search) );
                     System.out.println("reverse complement found " + input.contains(reverseComplement) );
                     if (s.search(search)) {

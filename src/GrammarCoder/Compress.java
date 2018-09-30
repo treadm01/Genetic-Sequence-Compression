@@ -3,13 +3,12 @@ package GrammarCoder;
 import java.util.*;
 
 public class Compress {
-    private final static int USED_ONCE = 1; // rule used once
+    private static final int USED_ONCE = 1; // rule used once
     private DigramMap digramMap;
-    private Rule firstRule; // main rule
-    public Set<Rule> rules; // rules used for output and encoding
+    private Rule firstRule;
+    private Set<Rule> rules; // rules used for output and encoding
     private String mainInput; // string of the input, used for edit rule indexes
-    private int streamIndex = 0;
-    public int numberOfEdits = 0;
+    private int streamIndex = 0; // indexes for edits
 
     /**
      * main constructor for compress, initialises, hash map and first rules.
@@ -23,13 +22,11 @@ public class Compress {
     }
 
     /**
-     * main method loops through the input and adds the latest symbol to the main rule
-     * calls check digram on for last two symbols
-     * method called depending on using edits or not
+     * method that calls main loop depending on use of edits or not
      * @param input
      */
     public void processInput(String input, Boolean withEdits) {
-        mainInput = input; //todo assign and set properly, getter and setter
+        mainInput = input;
         Symbol nextSymbol = new Terminal(input.charAt(0));
         getFirstRule().addNextSymbol(nextSymbol);
 
@@ -40,17 +37,19 @@ public class Compress {
             processWithOutEdits();
         }
 
-        // seperate method
-        rules.add(getFirstRule()); //todo get with getter and setter
-        generateRules(getFirstRule().getFirst());
         //debugGrammarOutput();
     }
 
+    /**
+     * loops through the input and adds the latest symbol to the main rule
+     * calls check digram on the last two symbols
+     */
     private void processWithEdits() {
         String sequence = getMainInput();
         ApproxRepeat approxRepeat = new ApproxRepeat(getFirstRule(), getMainInput());
+        Symbol nextSymbol;
         for (int i = 1; i < sequence.length(); i++) {
-            Symbol nextSymbol = new Terminal(sequence.charAt(i));
+            nextSymbol = new Terminal(sequence.charAt(i));
             nextSymbol.symbolIndex = i; // keeping index for edits
             for (Symbol s : approxRepeat.checkApproxRepeat(nextSymbol)) {
                 i = s.symbolIndex; // update the index for if there is a nonterminal added including a bunch of symbols
@@ -58,13 +57,14 @@ public class Compress {
                 checkDigram(getFirstRule().getLast());
             }
         }
+        alterEditIndex(getFirstRule().getFirst()); // indexes of edits changed relative to the nonterminal they are in
     }
 
     private void processWithOutEdits() {
         String sequence = getMainInput();
+        Symbol nextSymbol;
         for (int i = 1; i < sequence.length(); i++) {
-            Symbol nextSymbol = new Terminal(sequence.charAt(i));
-            nextSymbol.symbolIndex = i; // keeping index for edits
+            nextSymbol = new Terminal(sequence.charAt(i));
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
         }
@@ -72,7 +72,7 @@ public class Compress {
 
     /**
      * method that checks through the main options of latest two symbols
-     * if new digram not seen beofre, add to map
+     * if new digram not seen before, add to map
      * if seen before and already a rule, use that rule instead
      * if seen and not a rule, make a new rule
      * each new digram with the use of a rule must be checked also
@@ -100,8 +100,8 @@ public class Compress {
 
     /**
      * create the rule for a repeated digram, requires being done twice for both instances
-     * of the digram, rule has two instances, the nonterminal it represents only one
-     * takes the latest digram and the digram that occured earlier from the digram map
+     * of the digram, rule has two instances, the nonterminal it represents only one.
+     * takes the latest digram and the digram that occurred earlier from the digram map
      * @param symbol
      */
     private void createRule(Symbol symbol, Symbol oldSymbol) {
@@ -109,6 +109,7 @@ public class Compress {
         NonTerminal oldTerminal = new NonTerminal(newRule);
         NonTerminal newTerminal = new NonTerminal(newRule);
 
+        // update indexes of digrams, for use with edits only
         oldTerminal.symbolIndex = oldSymbol.getLeft().symbolIndex;
         newTerminal.symbolIndex = symbol.getLeft().symbolIndex;
 
@@ -124,8 +125,7 @@ public class Compress {
         Objects.requireNonNullElse(newRule.removed, newRule).addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
         //check the symbols removed and deal with if they are rules
-        //reduce rule count if being replaced or remove if 1
-
+        //reduce rule count if being replaced, or remove if 1
         if (oldSymbol instanceof NonTerminal) {
             if (((NonTerminal) oldSymbol).getRule().getRuleLength() == 0) {
                 ((NonTerminal) oldSymbol).getRule().removed = newRule;
@@ -138,13 +138,13 @@ public class Compress {
             }
         }
 
+        // check removed digrams for nonterminal removal, rule utility
         replaceRule(oldSymbol.getLeft());
         replaceRule(oldSymbol);
     }
 
     /**
      * already a rule for the digram found, replace it with that rule
-     * this needs looking into -
      * takes the symbol being the latest digram of the main rule and
      * the already exsiting rule/nonterminal for that digram
      * @param symbol
@@ -154,12 +154,11 @@ public class Compress {
         Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
         NonTerminal nonTerminal = new NonTerminal(rule);
         nonTerminal.symbolIndex = symbol.getLeft().symbolIndex;
-        // needs to be from complement variable, but then need to assign each new symbol. maybe
         nonTerminal.setIsComplement(!symbol.equals(oldSymbol));
 
         nonTerminal.updateEdits(symbol);
 
-        addNonTerminal(nonTerminal, symbol);// replace the repeated digram wtih rule
+        addNonTerminal(nonTerminal, symbol);// replace the repeated digram with rule
         replaceRule(rule.getLast().getLeft()); // check each removed symbol for rule usage
         replaceRule(rule.getLast());
     }
@@ -167,7 +166,7 @@ public class Compress {
     /**
      * if a digram is being replaced with a new nonterminal and either symbols of that
      * digram are a rule, their count/usage must be reduced
-     * if the count has reached one, then the rule is removed and it's occurence replaced with
+     * if the count has reached one, then the rule is removed and it's occurrence replaced with
      * the symbols it stood for
      * @param symbol
      */
@@ -186,7 +185,6 @@ public class Compress {
     }
 
     /**
-     * might not be needed you know... just work the links of the symbols??
      * replace an instance of a digram with a nonterminal
      * @param nonTerminal
      * @param symbol - the position of the digram to be replaced
@@ -222,35 +220,21 @@ public class Compress {
     }
 
     /**
-     *
-     * prints out the symbols corresponding to the generated rules
-     * @return
-     */
-    //todo this can use get symbol string from rule right?
-    public String printRules() {
-        String output = "";
-        for (Rule r : rules) {
-            output += r + " >" + r.getRuleString() + "\n";
-        }
-        return output;
-    }
-
-    /**
-     * works through the symbols and collects all the rules in a set
+     * iterate over the grammar for nonterminals with edits and
+     * update their index positions relative to the nonterminal they occur in.
+     * most efficient way of storing indexes
      * @param current
      */
-    public void generateRules(Symbol current) {
+    private void alterEditIndex(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
-                rules.add(rule);
                 if (current.getIsEdited()) {
                     for (Edit e : current.editList) {
                         e.index -= streamIndex;
-                        numberOfEdits++; // for debug output
                     }
                 }
-                generateRules(rule.getFirst());
+                alterEditIndex(rule.getFirst());
             }
             else {
                 streamIndex++; // keeps position for edit indexes
@@ -263,23 +247,28 @@ public class Compress {
         return digramMap;
     }
 
-    /**
-     * getter for the main rule nonterminal
-     * @return
-     */
     public Rule getFirstRule() {
         return this.firstRule;
     }
 
     private String getMainInput() {return this.mainInput;}
 
+    public Set<Rule> getRules() {
+        return rules;
+    }
 
+    /**
+     * debug output method, prints most of the results used to compare
+     * grammar construction, rules, etc
+     */
     private void debugGrammarOutput() {
-        // debugging output
+        rules.add(getFirstRule());
+        generateRules(getFirstRule().getFirst());
         System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());
         System.out.println("Rule number: " + rules.size());
-        System.out.println("Number of edits " + numberOfEdits);
+//        int numberOfEdits = 0; //
+//        System.out.println("Number of edits " + numberOfEdits);
         int lengthRHS = 0;
         int longestRule = 0;
         int maxRepeat = 0;
@@ -303,5 +292,37 @@ public class Compress {
         System.out.println("max repeat " + maxRepeat);
         System.out.println("length of just rules " + lengthOfRulesOnly);
         System.out.println();
+    }
+
+    /**
+     * works through the symbols and collects all the rules in a set
+     * only used for creating grammar output
+     * @param current
+     */
+    public void generateRules(Symbol current) {
+        while (!current.isGuard()) {
+            if (current instanceof NonTerminal) {
+                Rule rule = ((NonTerminal) current).getRule();
+                rules.add(rule);
+                generateRules(rule.getFirst());
+            }
+            else {
+                streamIndex++; // keeps position for edit indexes
+            }
+            current = current.getRight();
+        }
+    }
+
+    /**
+     * prints out the symbols corresponding to the generated rules
+     * used for debugging
+     * @return
+     */
+    public String printRules() {
+        String output = "";
+        for (Rule r : rules) {
+            output += r + " >" + r.getRuleString() + "\n";
+        }
+        return output;
     }
 }

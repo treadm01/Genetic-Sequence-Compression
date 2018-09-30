@@ -7,7 +7,7 @@ public class Rule extends Symbol{
     private Guard guard;
     static Integer ruleNumber = 0; // representation for all rules
     Set<NonTerminal> nonTerminalList; // for edits to check all linked nonterminals representing this rule
-    //todo only used in sequences with more than four symbol alphabet
+    //todo "removed" only used in sequences with more than four symbol alphabet
     Rule removed; // an additional rule used when creating rules that will be subsequently be removed
     Boolean compressed = false; // used in decompressing implicit stream to indicate whether more subrules need decoding
     // variables for implicit encoding...

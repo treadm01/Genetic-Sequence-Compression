@@ -38,26 +38,27 @@ public class AdaptiveArithmeticCompress {
     private static Set<Character> symbolMarker = Set.of('{', '?', '\'', '!', '#', '*');
 
     public AdaptiveArithmeticCompress(int numberOfSymbols, List<Character> encodingSymbols) throws IOException {
+        // final size of array relative to the largest nonterminal symbo generated
         tableSize = numberOfSymbols + NONTERMINAL_OFFSET;
-        File outputFile = new File(PATH + "/compressed.bin"); //todo name file
+        File outputFile = new File(PATH + "/compressed.bin");
         // Perform file compression
         try (BitOutputStream out = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(outputFile)))) {
             compress(encodingSymbols, out);
         }
-        setFinalFileSize(outputFile.length());
+        setFinalFileSize(outputFile.length()); // using details of compression size to give final output
     }
 
     public void compress(List<Character> symbols, BitOutputStream out) throws IOException {
         FlatFrequencyTable initFreqs = new FlatFrequencyTable(tableSize);
-        gammaCode(tableSize, out);
+        gammaCode(tableSize, out); // generate and write initial gamma code for array size
         FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
         ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
-        int lastSymbol = -1;
+        int lastSymbol = -1; // last symbol used to indicate how to interpret symbols following unique symbols
 
         for (Character s : symbols) {
-            // Read and encode one byte
             int symbol = getCorrectSymbol(lastSymbol, s);
 
+            // nonterminal indicators now written to file
             if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
                 enc.write(freqs, symbol);
                 freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best
@@ -78,17 +79,13 @@ public class AdaptiveArithmeticCompress {
         this.finalFileSize = size;
     }
 
-    public String constructCompressionOutput(Long originalFileSize) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.00");
-        double percentage = (1 - ((double)finalFileSize / originalFileSize)) * 100;
-        double BPC = ((double) (finalFileSize * 8) / (double)originalFileSize);
-        String out = "File compressed from " + originalFileSize + " to ";
-        out += finalFileSize + " bytes.\n";
-        out += decimalFormat.format(percentage) + "% compression.\n";
-        out += "Bits per character: " + decimalFormat.format(BPC);
-        return out;
-    }
-
+    /**
+     * generate a gamma code for the size of the required array table
+     * for use in encoding and decoding
+     * @param number
+     * @param out
+     * @throws IOException
+     */
     private void gammaCode(int number, BitOutputStream out) throws IOException {
         // encode number of rules
         String ruleNumber = Integer.toBinaryString(number);
@@ -103,8 +100,16 @@ public class AdaptiveArithmeticCompress {
         }
     }
 
+    /**
+     * if a nonterminal symbol processed, reassign its value
+     * to be odd or even depending on whether they are reverse complement
+     * or standard
+     * @param lastSymbol
+     * @param s
+     * @return
+     */
     private int getCorrectSymbol(int lastSymbol, char s) {
-        if (lastSymbol == '\'' || lastSymbol == '!') { // checking for hash symbol here breaks different, you need a proper solution
+        if (lastSymbol == '\'' || lastSymbol == '!') {
             if (lastSymbol == '\'') {
                 s += 129;
             }
@@ -113,5 +118,21 @@ public class AdaptiveArithmeticCompress {
             }
         }
         return s;
+    }
+
+    /**
+     * method that uses final details of compression to be returned in the GUI
+     * @param originalFileSize
+     * @return
+     */
+    public String constructCompressionOutput(Long originalFileSize) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        double percentage = (1 - ((double)finalFileSize / originalFileSize)) * 100;
+        double BPC = ((double) (finalFileSize * 8) / (double)originalFileSize);
+        String out = "File compressed from " + originalFileSize + " to ";
+        out += finalFileSize + " bytes.\n";
+        out += decimalFormat.format(percentage) + "% compression.\n";
+        out += "Bits per character: " + decimalFormat.format(BPC);
+        return out;
     }
 }

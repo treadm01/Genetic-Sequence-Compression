@@ -49,7 +49,7 @@ public class Compress {
         // seperate method
         rules.add(getFirstRule()); //todo get with getter and setter
         generateRules(getFirstRule().getFirst());
-        deubugGrammarOutput();
+        debugGrammarOutput();
     }
 
     private void processWithEdits() {
@@ -313,7 +313,7 @@ public class Compress {
     private String getMainInput() {return this.mainInput;}
 
 
-    public void deubugGrammarOutput() {
+    public void debugGrammarOutput() {
         // debugging output
         System.out.println(printRules());
         System.out.println("Length of grammar rule: " + getFirstRule().getRuleString().length());

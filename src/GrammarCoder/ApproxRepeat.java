@@ -83,7 +83,7 @@ public class ApproxRepeat {
         int indexInString = 0;
         for (Symbol s : next) {
             if (s instanceof NonTerminal) {
-                NonTerminal nonTerminalClone = new NonTerminal(((NonTerminal) s).getRule()); //todo symbol sindex?
+                NonTerminal nonTerminalClone = new NonTerminal(((NonTerminal) s).getRule());
                 String nonterminalString = ((NonTerminal) s).getRule().getSymbolString(((NonTerminal) s).getRule(), s.isComplement);
                 List<Edit> edits = new ArrayList<>();
                 for (int x = 0; x < nonterminalString.length(); x++) {

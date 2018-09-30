@@ -1,101 +1,82 @@
 package GrammarCoder;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.*;
 
 public class ImplicitEncoder {
     private int markerNum = 0;
-    private List<String> encodingSymbols; // list of symbols required to be encoded by arithmetic
+    private List<Character> encodingSymbols; // list of symbols required to be encoded by arithmetic
     private List<Integer> adjustedMarkers; // for encoding index of rule created used rather than symbol
     public int highestRule; // used for arithmetic coding highest rule will be the number of symbols needed
     private String encodedOutput;
     public Map<String, Integer> allSymbols = new HashMap<>();
-    private static String PATH = System.getProperty("user.dir") + "/compressedFiles";
-    private Set<Character> uniqueSymbols = new HashSet<>();
+    private Set<Character> uniqueSymbols = Set.of('*', '!', '?', '%', '[', '{', '\'', '^', '#');
 
     public ImplicitEncoder(Rule grammar) {
         encodingSymbols = new ArrayList<>();
         adjustedMarkers = new ArrayList<>();
-        uniqueSymbols.add('*');
-        uniqueSymbols.add('!');
-        uniqueSymbols.add('?');
-        uniqueSymbols.add('%');
-        uniqueSymbols.add('[');
-        uniqueSymbols.add('{');
-        uniqueSymbols.add('\'');
-        uniqueSymbols.add('^');
-        uniqueSymbols.add('#');
-
         getEncodingSymbols(grammar.getFirst());
-
         encodedOutput = encode();
 
-        for (String c : encodingSymbols) {
-            if (c.charAt(0) > highestRule) {
-                highestRule = c.charAt(0);
+        for (Character c : encodingSymbols) {
+            if (c > highestRule) {
+                highestRule = c;
             }
         }
-//        System.out.println("ENCODED: " + encodedOutput +
-//                "\nLENGTH: "
-//                        + getEncodedOutput().length() + "\nAMOUNT OF SYMBOLS " + encodingSymbols.size());
-        //writeToFile(encodedOutput);
     }
 
-    public String encode() {
-        String output = "";
-        for (String s : getSymbolList()) {
-            output += s;
+    private String encode() {
+        StringBuilder output = new StringBuilder();
+        for (Character s : getSymbolList()) {
+            output.append(s);
         }
-        return output;
+        return output.toString();
     }
 
-    public void addEdits(List<Edit> editList) {
+    private void addEdits(List<Edit> editList) {
         for (Edit e : editList) {
-            encodingSymbols.add("*"); // has to be added each time for arithmetic coding
-            encodingSymbols.add(String.valueOf((char)e.index));
-            encodingSymbols.add(e.symbol);
+            encodingSymbols.add('*'); // has to be added each time for arithmetic coding
+            encodingSymbols.add((char)e.index);
+            encodingSymbols.add(e.symbol.charAt(0));
         }
     }
 
-    // todo not getting a string anymore just applying the ... well strings to the list
-    public void getNonTerminalString(int index, NonTerminal nt) {
+    private void getNonTerminalString(int index, NonTerminal nt) {
         if (index > highestRule) {
             highestRule = index;
         }
 
-        String complementIndicator;
+        char complementIndicator;
         if (nt.rule.timeSeen == 1) { // from the stack of rules rather than the symbol needs separate indicator
             if (nt.isComplement) {
-                complementIndicator = "{";
+                complementIndicator = '{';
             }
             else { // if standard still needs an indicator
-                complementIndicator = "?";
+                complementIndicator = '?';
             }
 
             if (index == 1) {
                 if (nt.isComplement) {
-                    complementIndicator = "%";
+                    complementIndicator = '%';
                 }
                 else {
-                    complementIndicator = "[";
+                    complementIndicator = '[';
                 }
                 encodingSymbols.add(complementIndicator);
             }
             else {
                 encodingSymbols.add(complementIndicator);
-                encodingSymbols.add(String.valueOf((char)index));
+                encodingSymbols.add((char)index);
             }
         }
         else {
             if (nt.isComplement) {
-                complementIndicator = "'";
+                complementIndicator = '\'';
             }
             else { // if standard still needs an indicator
-                complementIndicator = "!";
+                complementIndicator = '!';
             }
             encodingSymbols.add(complementIndicator);
-            encodingSymbols.add(String.valueOf((char) index));
+            encodingSymbols.add((char) index);
         }
 
 
@@ -104,7 +85,7 @@ public class ImplicitEncoder {
         }
     }
 
-    public void getEncodingSymbols(Symbol symbol) {
+    private void getEncodingSymbols(Symbol symbol) {
         Symbol current = symbol;
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
@@ -113,14 +94,14 @@ public class ImplicitEncoder {
                     nt.rule.timeSeen++; // count for number of times rule has been seen
                     nt.rule.position = markerNum; // 'position' really an indicator of the marker assigne to it
                     adjustedMarkers.add(markerNum); // add number for index of list, when removed, corresponds with list
-                    markerNum+=2;
+                    markerNum += 2;
                     int length = nt.getRule().getRuleLength();
                     if (length == 2) {
-                        encodingSymbols.add("^");
+                        encodingSymbols.add('^');
                     }
                     else {
-                        encodingSymbols.add("#");
-                        encodingSymbols.add(String.valueOf((char)length));
+                        encodingSymbols.add('#');
+                        encodingSymbols.add((char)length);
                     }
 
                     // have to add edits for rules that are first time see with edits
@@ -142,9 +123,9 @@ public class ImplicitEncoder {
             }
             else {
                 if (uniqueSymbols.contains(current.toString().charAt(0))) {
-                    encodingSymbols.add(String.valueOf((char)0));
+                    encodingSymbols.add((char) 0);
                 }
-                encodingSymbols.add(current.toString());
+                encodingSymbols.add(current.toString().charAt(0));
             }
             current = current.getRight(); // move to next symbol
         }
@@ -154,16 +135,7 @@ public class ImplicitEncoder {
         return encodedOutput;
     }
 
-    public List<String> getSymbolList() {
+    public List<Character> getSymbolList() {
         return encodingSymbols;
     }
-
-    public void writeToFile(String output) {
-        try (PrintWriter out = new PrintWriter(PATH + "/compressTest.txt")) {
-            out.println(output);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

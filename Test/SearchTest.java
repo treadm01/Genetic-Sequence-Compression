@@ -657,7 +657,7 @@ public class SearchTest {
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile, false);
         Search s = new Search(c.getFirstRule());
-        assertTrue(s.search("atatgactttgcaaattca")); //ttcc
+        assertTrue(s.search("atatgactttgcaaattca"));
     }
 
     String genRand (int length) {

@@ -1,4 +1,5 @@
-package ArithmeticCoder;/*
+package ArithmeticCoder;
+/*
  * Reference arithmetic coding
  * Copyright © 2018 Project Nayuki. (MIT License)
 
@@ -30,89 +31,34 @@ import java.util.*;
  * decompressor have synchronized states, so that the data can be decompressed properly.</p>
  */
 public class AdaptiveArithmeticCompress {
-    int tableSize;
-    String PATH = System.getProperty("user.dir") + "/compressedFiles";
-    String compressionOutput;
-    Long finalFileSize;
+    private static int NONTERMINAL_OFFSET = 130;
+    private int tableSize;
+    private String PATH = System.getProperty("user.dir");
+    private Long finalFileSize;
+    private static Set<Character> symbolMarker = Set.of('{', '?', '\'', '!', '#', '*');
 
-    public AdaptiveArithmeticCompress(int numberOfSymbols, List<String> encodingSymbols) throws IOException {
-        tableSize = numberOfSymbols + 130; // 128 offset for symbols, + 1 for eof symbol
-        File outputFile = new File(PATH + "/compressed.bin"); //todo use previous filename?
-
+    public AdaptiveArithmeticCompress(int numberOfSymbols, List<Character> encodingSymbols) throws IOException {
+        tableSize = numberOfSymbols + NONTERMINAL_OFFSET;
+        File outputFile = new File(PATH + "/compressed.bin"); //todo name file
         // Perform file compression
         try (BitOutputStream out = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(outputFile)))) {
             compress(encodingSymbols, out);
         }
-
-
         setFinalFileSize(outputFile.length());
     }
 
-    // supect its ok initially but have to worry about byte completion when adding in middle of stream
-    public void gammaCode(int number, BitOutputStream out) throws IOException {
-        // encode number of rules
-        String ruleNumber = Integer.toBinaryString(number);
-        String gammaCode = "";
-        for (int i = 0; i < ruleNumber.length(); i++) {
-            gammaCode += "1";
-        }
-        gammaCode += "0"; // last stop bit
-        gammaCode += ruleNumber;
-        for (int i = 0; i < gammaCode.length(); i++) {
-            out.write(Integer.parseInt(gammaCode.substring(i, i + 1)));
-        }
-    }
-
-    // To allow unit testing, this method is package-private instead of private.
-    public void compress(List<String> symbols, BitOutputStream out) throws IOException {
+    public void compress(List<Character> symbols, BitOutputStream out) throws IOException {
         FlatFrequencyTable initFreqs = new FlatFrequencyTable(tableSize);
         gammaCode(tableSize, out);
         FrequencyTable freqs = new SimpleFrequencyTable(initFreqs);
         ArithmeticEncoder enc = new ArithmeticEncoder(32, out);
         int lastSymbol = -1;
-        Set<Character> symbolMarker = new HashSet<>();
-        symbolMarker.add('{');
-        symbolMarker.add('?');
-        symbolMarker.add('\'');
-        symbolMarker.add('!');
-        symbolMarker.add('#');
-        symbolMarker.add('*');
-        int changeFreq = 0;
-        for (String s : symbols) {
+
+        for (Character s : symbols) {
             // Read and encode one byte
-            int symbol;
-            changeFreq = 10;
+            int symbol = getCorrectSymbol(lastSymbol, s);
 
-            if (lastSymbol == '\'' || lastSymbol == '!') { // checking for hash symbol here breaks different, you need a proper solution
-                if (lastSymbol == '\'') {
-                    symbol = s.charAt(0) + 129;
-                    changeFreq = 2;
-                }
-                else {
-                    symbol = s.charAt(0) + 128;
-                    changeFreq = 8;
-                }
-            }
-            else {
-                symbol = s.charAt(0);
-            }
-
-//todo may be able to do the split streams with 0 for 2 -2 for all else
-//            if (lastSymbol == '#') {
-//                int length = s.charAt(0) - 2;
-//                gammaCode(length, out);
-//            }
-//            else if (lastSymbol == '?' || lastSymbol ==  '{') {
-//                if (s.charAt(0) == '1') {
-//                    out.write(0);
-//                    System.out.println("0");
-//                }
-//                else {
-//                    gammaCode(s.charAt(0) - 1, out);
-//                }
-//            }
-            //else
-                if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
+            if (symbol != '\'' && symbol != '!' || symbolMarker.contains((char)lastSymbol)) {
                 enc.write(freqs, symbol);
                 freqs.set(symbol, freqs.get(symbol) + 10); // having this above enc.write would be best
                 freqs.increment(symbol);
@@ -121,15 +67,14 @@ public class AdaptiveArithmeticCompress {
                 lastSymbol = -1;
             }
             else {
-                lastSymbol = s.charAt(0);
+                lastSymbol = s;
             }
         }
-
         enc.write(freqs, tableSize - 1);  // EOF
         enc.finish();  // Flush remaining code bits
     }
 
-    public void setFinalFileSize(Long size) {
+    private void setFinalFileSize(Long size) {
         this.finalFileSize = size;
     }
 
@@ -142,5 +87,31 @@ public class AdaptiveArithmeticCompress {
         out += decimalFormat.format(percentage) + "% compression.\n";
         out += "Bits per character: " + decimalFormat.format(BPC);
         return out;
+    }
+
+    private void gammaCode(int number, BitOutputStream out) throws IOException {
+        // encode number of rules
+        String ruleNumber = Integer.toBinaryString(number);
+        StringBuilder gammaCode = new StringBuilder();
+        for (int i = 0; i < ruleNumber.length(); i++) {
+            gammaCode.append("1");
+        }
+        gammaCode.append("0"); // last stop bit
+        gammaCode.append(ruleNumber);
+        for (int i = 0; i < gammaCode.length(); i++) {
+            out.write(Integer.parseInt(gammaCode.substring(i, i + 1)));
+        }
+    }
+
+    private int getCorrectSymbol(int lastSymbol, char s) {
+        if (lastSymbol == '\'' || lastSymbol == '!') { // checking for hash symbol here breaks different, you need a proper solution
+            if (lastSymbol == '\'') {
+                s += 129;
+            }
+            else {
+                s += 128;
+            }
+        }
+        return s;
     }
 }

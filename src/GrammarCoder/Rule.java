@@ -2,7 +2,7 @@ package GrammarCoder;
 
 import java.util.*;
 
-public class Rule extends Symbol implements Comparable {
+public class Rule extends Symbol{
     int count;
     private Guard guard;
     static Integer ruleNumber = 0;
@@ -18,7 +18,6 @@ public class Rule extends Symbol implements Comparable {
     int length; // length of compressed rule
 
     public Rule() {
-//        index = 0; // todo not sure this is used anymore
         this.representation = ruleNumber;
         ruleNumber += 2;
         guard = new Guard(this);
@@ -59,11 +58,6 @@ public class Rule extends Symbol implements Comparable {
         }
     }
 
-//    public void removeLastSymbol() {
-//        guard.left.left.assignRight(guard); // reassign second ffrom last to last
-//        guard.assignLeft(guard.left.left);
-//    }
-
     /**
      * add the two symbols from a digram to a nonTerminal
      * @param left
@@ -100,13 +94,13 @@ public class Rule extends Symbol implements Comparable {
      * @return
      */
     public String getRuleString() {
-        String symbols = "";
+        StringBuilder symbols = new StringBuilder();
         Symbol first = guard.getRight();
         while (!first.isGuard()) {
-            symbols += " " + first.toString();
+            symbols.append(" ").append(first.toString());
             first = first.getRight();
         }
-        return symbols;
+        return symbols.toString();
     }
 
     // retrieves rule length at nonterminal level, used in implicit encoding for length of implicit rule
@@ -126,7 +120,6 @@ public class Rule extends Symbol implements Comparable {
      * @param complement
      * @return
      */
-    //todo clean up, used by decompress... better position for pieces if split up
     public String getSymbolString(Rule rule, Boolean complement) {
         Symbol s;
         StringBuilder output = new StringBuilder();
@@ -152,7 +145,7 @@ public class Rule extends Symbol implements Comparable {
                     s = s.getRight();
                 }
             }
-            else { // IF NONTERMINAL //TODO IF EDIT, THEN GET THE STRING AND DO EDITS AFTERWARDS...
+            else {
                 int currentLength = output.length(); // length before start of edited rule
                 if (complement) {
                     output.append(getSymbolString(((NonTerminal) s).getRule(), !s.isComplement));
@@ -180,18 +173,6 @@ public class Rule extends Symbol implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        Rule r = (Rule) o;
-        if (r.representation > representation) {
-            return -1;
-        }
-        else if (r.representation < representation) {
-            return 1;
-        }
-        else {return 0; }
-    }
-
-    @Override
     public int hashCode() {
         long code;
         long a = this.representation;
@@ -205,13 +186,4 @@ public class Rule extends Symbol implements Comparable {
         Rule rule = (Rule) obj;
         return this.getRuleString().equals(rule.getRuleString());
     }
-
-//    @Override
-//    public String toString() {
-//        String s = String.valueOf(representation);
-//        if (isComplement) {
-//            s += "'";
-//        }
-//        return s;
-//    }
 }

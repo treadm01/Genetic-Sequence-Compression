@@ -6,36 +6,29 @@ import java.util.*;
 
 public class Decompress {
     private String PATH = System.getProperty("user.dir");
-    private String COMPRESSED_PATH = PATH + "/compressedFiles";
     private HashMap<Integer, NonTerminal> marker = new HashMap<>();
-    private int position = 0; // for walking through the actual string, todo see if replaceable with for loop
+    private int position = 0;
     private String input;
     private Rule grammar;
     private List<Integer> adjustedMarkers = new ArrayList<>();
-    private Set<Character> pointerMarker = new HashSet<>();
-    private Set<Character> symbolMarker = new HashSet<>();
-    private Set<Character> markerMarker = new HashSet<>();
+    private static Set<Character> POINTER_SET = Set.of('{', '?', '%', '[');
+    private static Set<Character> SYMBOL_SET = Set.of('\'', '!');
+    private static Set<Character> MARKER_SET = Set.of('#', '^');
     private static int COMMON_RULE_LENGTH = 2;
-    private static int EVEN_RULE_NUMBER = 2;
-    private static char EDIT_SYMBOL = '*';
-    private static char STANDARD_MARKER = '#';
-    private static int UNIQUE_SYMBOL_INDICATOR = 0;
-    private static int HIGHEST_CHARACTER_SYMBOL = 128;
 
     public Decompress() {
-        createSymbolSets();
         grammar = new Rule();
     }
 
     private void decompressRuleMarker() {
         Rule r = new Rule();
-        if (input.charAt(position) == STANDARD_MARKER) {
-            r.length = retrieveStringSegment(); // read in the length todo rename method, not just nonterminal
+        if (input.charAt(position) == '#') {
+            r.length = retrieveStringSegment(); // read in the length
         }
         else {r.length = COMMON_RULE_LENGTH;}
         addNonTerminal(r, false); // add nonterminal to rule
-        adjustedMarkers.add(marker.size() * EVEN_RULE_NUMBER); // add position of rule created to list which can then be used in place of the rule number iteself
-        marker.put(marker.size() * EVEN_RULE_NUMBER, (NonTerminal) grammar.getLast()); // add rule to hashmap
+        adjustedMarkers.add(marker.size() * COMMON_RULE_LENGTH); // add position of rule created to list which can then be used in place of the rule number iteself
+        marker.put(marker.size() * COMMON_RULE_LENGTH, (NonTerminal) grammar.getLast()); // add rule to hashmap
     }
 
     private void decompressPointer() {
@@ -75,24 +68,24 @@ public class Decompress {
     public Rule buildGrammar(String ruleString) {
         input = ruleString;
         while (position < input.length()) {
-            if (markerMarker.contains(input.charAt(position))) { // if a marker create rule for it and position it there
+            if (MARKER_SET.contains(input.charAt(position))) { // if a marker create rule for it and position it there
                 decompressRuleMarker();
             }
-            else if (pointerMarker.contains(input.charAt(position))) { // if a pointer deal with it and its rule
+            else if (POINTER_SET.contains(input.charAt(position))) { // if a pointer deal with it and its rule
                 decompressPointer();
             }
-            else if (symbolMarker.contains(input.charAt(position))) { // nonterminal symbol
+            else if (SYMBOL_SET.contains(input.charAt(position))) { // nonterminal symbol
                 decompressNonTerminal();
             }
-            else if (input.charAt(position) == EDIT_SYMBOL) {
+            else if (input.charAt(position) == '*') {
                 decompressEdit();
             }
-            else if (input.charAt(position) == UNIQUE_SYMBOL_INDICATOR) {
+            else if (input.charAt(position) == 0) {
                 position++;
                 grammar.addNextSymbol(new Terminal(input.charAt(position)));
             }
             else {
-                if (input.charAt(position) < HIGHEST_CHARACTER_SYMBOL) { // if terminal add it to first rule
+                if (input.charAt(position) < 128) { // if terminal add it to first rule
                     grammar.addNextSymbol(new Terminal(input.charAt(position)));
                 }
             }
@@ -106,12 +99,12 @@ public class Decompress {
      * retrieve the int value of all those digits
      * @return
      */
-    public int retrieveStringSegment() {
+    private int retrieveStringSegment() {
         position++;
         return (int) input.charAt(position);
     }
 
-    public void addNonTerminal(Rule rule, Boolean isComplement) {
+    private void addNonTerminal(Rule rule, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
         nonTerminal.isComplement = isComplement;
         grammar.addNextSymbol(nonTerminal); // add to main rule
@@ -121,7 +114,7 @@ public class Decompress {
      * recursively loop through rules and their lengths
      * @param nonTerminal
      */
-    public void evaluateRule(NonTerminal nonTerminal) {
+    private void evaluateRule(NonTerminal nonTerminal) {
         if (!nonTerminal.getRule().compressed) {
             nonTerminal.getRule().compressed = true;
             // for the length of the rule add it's neighbours (what the rule refers to) to the rule
@@ -153,22 +146,10 @@ public class Decompress {
     }
 
     public void writeToFile(String output) {
-        try (PrintWriter out = new PrintWriter(COMPRESSED_PATH + "/compressTest.txt")) {
+        try (PrintWriter out = new PrintWriter(PATH + "/compressTest.txt")) {
             out.println(output);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
-
-    private void createSymbolSets() {
-        pointerMarker.add('{');
-        pointerMarker.add('?');
-        pointerMarker.add('%');
-        pointerMarker.add('[');
-        symbolMarker.add('\'');
-        symbolMarker.add('!');
-        markerMarker.add('#');
-        markerMarker.add('^');
-    }
-
 }

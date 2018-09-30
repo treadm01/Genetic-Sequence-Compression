@@ -5,15 +5,12 @@ import java.util.*;
 public class Search {
     private DigramMap digramMap; // - digram points to digram via right hand symbol
     private Set<Rule> rulesFromGrammar = new HashSet<>();
-    private Set<String> uniqueSymbols;
-    private Rule mainRule;
     private Set<String> uniqueTerminals = new HashSet<>();
     private Set<String> checkedEncodings = new HashSet<>();
-    Boolean found = false;
+    private Boolean found = false;
+    PriorityQueue<SearchNode> searchNodePriorityQueue;
 
     public Search(Rule firstRule) {
-        mainRule = firstRule;
-        uniqueSymbols = new HashSet<>();
         rulesFromGrammar.add(firstRule);
         generateRules(firstRule.getFirst());
         this.digramMap = createDigramMap(firstRule);
@@ -21,7 +18,7 @@ public class Search {
 
     //todo deduplicate - slightly different to compress as doesn't have edits - give edits, in a sense will be finding approximate repeats
     // are edits retrieved?? should be if string is decompressedd in the same way in final check
-    public void generateRules(Symbol current) {
+    private void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
@@ -32,11 +29,7 @@ public class Search {
         }
     }
 
-
-    //todo search by rule, can do by length, ones too short don't bother
-    // create digram map too, search for reverse complement at the same time
-    // keep a cache
-    public DigramMap createDigramMap(Rule firstRule) {
+    private DigramMap createDigramMap(Rule firstRule) {
         DigramMap dm = new DigramMap();
         generateRules(firstRule.getFirst()); //todo needs unduplicating
         for (Rule r : rulesFromGrammar) {
@@ -60,6 +53,7 @@ public class Search {
 
      //get every instance of first digram
     public Boolean search(String searchString) {
+        searchNodePriorityQueue = new PriorityQueue<>(Comparator.comparingInt(SearchNode::numberOfMatchingDigrams));
         uniqueTerminals.add("");
         //single letter search
         if (searchString.length() == 1) {
@@ -71,77 +65,23 @@ public class Search {
             baseRule.addNextSymbol(new Terminal(searchString.charAt(1)));
             SearchNode base = new SearchNode(baseRule, searchString.substring(2));
             base.matchingDigrams = countMatchingDigrams(baseRule);
-            //two things search digram or add symbol new node for each
-            List<Rule> possibleRules = buildSearchTree(base, searchString);
-
-            for (Rule r : possibleRules) {
-                for (String s : uniqueTerminals) {
-                    base = new SearchNode(r, s);
-                    buildSearchTree(base, "");
-                }
-            }
+            buildSearchTree(base, searchString);
         }
 
         return found;
     }
 
-    public List<Rule> buildSearchTree(SearchNode base, String searchString) {
-        PriorityQueue<SearchNode> searchNodePriorityQueue
-                = new PriorityQueue<>(Comparator.comparingInt(SearchNode::numberOfMatchingDigrams));
+    private void buildSearchTree(SearchNode base, String searchString) {
         searchNodePriorityQueue.add(base);
-        List<Rule> possibleRules = new ArrayList<>();
+        SearchNode searchNode;
         while (!searchNodePriorityQueue.isEmpty()) {
-            SearchNode searchNode = searchNodePriorityQueue.poll();
-
-            if (searchNode.digramNodeLeft == null) {
-                //System.out.println("left getting " + searchNode.rule.getRuleString());
-                // create rule add to queue
-                buildLeftNode(searchNode);
-                if (!checkedEncodings.contains(searchNode.digramNodeLeft.rule.getRuleString())) {
-                    searchNode.digramNodeLeft.matchingDigrams = countMatchingDigrams(searchNode.digramNodeLeft.rule);
-                    searchNode.digramNodeLeft.matchingDigrams += searchNode.matchingDigrams;
-                    searchNodePriorityQueue.add(searchNode.digramNodeLeft);
-                    checkedEncodings.add(searchNode.digramNodeLeft.rule.getRuleString());
-//                    System.out.println(" left returning " + searchNode.digramNodeLeft.rule.getRuleString());
-                }
-            }
-            if (searchNode.symbolNode == null) {
-                //System.out.println("add gettinf " + searchNode.rule.getRuleString());
-                buildSymbolNode(searchNode);
-                if (!checkedEncodings.contains(searchNode.symbolNode.rule.getRuleString())) {
-                    searchNode.symbolNode.matchingDigrams = countMatchingDigrams(searchNode.symbolNode.rule);
-                    searchNode.symbolNode.matchingDigrams += searchNode.matchingDigrams;
-                    searchNodePriorityQueue.add(searchNode.symbolNode);
-                    checkedEncodings.add(searchNode.symbolNode.rule.getRuleString());
-  //                  System.out.println("add returning " + searchNode.symbolNode.rule.getRuleString());
-                }
-
-            }
-            if (searchNode.digramNodeRight == null) {
-                //System.out.println("right getting " + searchNode.rule.getRuleString());
-                buildRightNode(searchNode);
-                if (!checkedEncodings.contains(searchNode.digramNodeRight.rule.getRuleString())) {
-                    searchNode.digramNodeRight.matchingDigrams = countMatchingDigrams(searchNode.digramNodeRight.rule);
-                    searchNode.digramNodeRight.matchingDigrams += searchNode.matchingDigrams;
-                    searchNodePriorityQueue.add(searchNode.digramNodeRight);
-                    checkedEncodings.add(searchNode.digramNodeRight.rule.getRuleString());
-    //                System.out.println("right returning " + searchNode.digramNodeRight.rule.getRuleString());
-                }
-            }
-            //todo added check for complete rules, need to do separate check and adds
-            if (searchNode.completeRule == null) {
-                buildCompleteRuleNode(searchNode);
-                if (!checkedEncodings.contains(searchNode.completeRule.rule.getRuleString())) {
-                    searchNode.completeRule.matchingDigrams = countMatchingDigrams(searchNode.completeRule.rule);
-                    searchNode.completeRule.matchingDigrams += searchNode.matchingDigrams;
-                    searchNodePriorityQueue.add(searchNode.completeRule);
-                    checkedEncodings.add(searchNode.completeRule.rule.getRuleString());
-                }
-            }
-
+            searchNode = searchNodePriorityQueue.poll();
+            buildLeftNode(searchNode);
+            buildSymbolNode(searchNode);
+            buildCompleteRuleNode(searchNode);
+            buildRightNode(searchNode);
 
             if (searchNode.searchString.length() == 0) {
-                possibleRules.add(searchNode.rule);
                 if (checkDigramsAreConsecutive(searchNode.rule)) {
                     if (searchNode.rule.getSymbolString(searchNode.rule, false).contains(searchString)) {
                         found = true;
@@ -149,64 +89,58 @@ public class Search {
                     }
                 }
             }
-
         }
-        return possibleRules;
+    }
+
+    private void addNode(SearchNode searchNode, SearchNode newNode) {
+        if (!checkedEncodings.contains(newNode.rule.getRuleString())) {
+            newNode.matchingDigrams = countMatchingDigrams(newNode.rule);
+            newNode.matchingDigrams += searchNode.matchingDigrams;
+            searchNodePriorityQueue.add(newNode);
+            checkedEncodings.add(newNode.rule.getRuleString());
+        }
     }
 
     // will have to take rest of search string too to create new terminals
-    public void buildLeftNode(SearchNode searchNode) {
-        SearchNode digram;
-        if (searchNode.searchString.length() >= 1) {
-            digram = new SearchNode(searchNode.rule, searchNode.searchString);
+    private void buildLeftNode(SearchNode searchNode) {
+        if (searchNode.digramNodeLeft == null && searchNode.searchString.length() >= 1) {
+            searchNode.digramNodeLeft = new SearchNode(searchNode.rule, searchNode.searchString);
+            checkdigram(searchNode.digramNodeLeft.rule.getFirst().getRight());
+            addNode(searchNode, searchNode.digramNodeLeft);
         }
-        else {
-            digram = new SearchNode(searchNode.rule, "");
-        }
-        checkdigram(digram.rule.getFirst().getRight());
-        searchNode.digramNodeLeft = digram;
     }
 
-    public void buildSymbolNode(SearchNode searchNode) {
-        //System.out.println(searchNode.rule.getRuleString());
-        SearchNode symbol;
-        if (searchNode.searchString.length() >= 1) {
-            symbol = new SearchNode(searchNode.rule, searchNode.searchString.substring(1));
-            symbol.rule.addNextSymbol(new Terminal(searchNode.searchString.charAt(0)));
+    private void buildCompleteRuleNode(SearchNode searchNode) {
+        if (searchNode.completeRule == null && searchNode.searchString.length() >= 1) {
+            searchNode.completeRule = new SearchNode(searchNode.rule, searchNode.searchString);
+            checkIfCompleteRule(searchNode.completeRule.rule.getLast());
+            addNode(searchNode, searchNode.completeRule);
         }
-        else {
-            symbol = new SearchNode(searchNode.rule, "");
-        }
-
-        searchNode.symbolNode = symbol;
     }
 
-    public void buildRightNode(SearchNode searchNode) {
-        SearchNode digram;
-        if (searchNode.searchString.length() >= 1) {
-            digram = new SearchNode(searchNode.rule, searchNode.searchString);
+    private void buildSymbolNode(SearchNode searchNode) {
+        if (searchNode.symbolNode == null && searchNode.searchString.length() >= 1) {
+            searchNode.symbolNode = new SearchNode(searchNode.rule, searchNode.searchString.substring(1));
+            searchNode.symbolNode.rule.addNextSymbol(new Terminal(searchNode.searchString.charAt(0)));
+            addNode(searchNode, searchNode.symbolNode);
         }
-        else {
-            digram = new SearchNode(searchNode.rule, "");
-        }
-        checkdigram(digram.rule.getLast());
-        searchNode.digramNodeRight = digram;
     }
 
-    public void buildCompleteRuleNode(SearchNode searchNode) {
-        SearchNode digram;
-        //todo this check still needed?
-        if (searchNode.searchString.length() >= 1) {
-            digram = new SearchNode(searchNode.rule, searchNode.searchString);
+    private void buildRightNode(SearchNode searchNode) {
+        if (searchNode.digramNodeRight == null) {
+            SearchNode digram;
+            if (searchNode.searchString.length() >= 1) {
+                digram = new SearchNode(searchNode.rule, searchNode.searchString);
+            } else {
+                digram = new SearchNode(searchNode.rule, "");
+            }
+            searchNode.digramNodeRight = digram;
+            checkdigram(digram.rule.getLast());
+            addNode(searchNode, searchNode.digramNodeRight);
         }
-        else {
-            digram = new SearchNode(searchNode.rule, "");
-        }
-        checkIfCompleteRule(digram.rule.getLast());
-        searchNode.completeRule = digram;
     }
 
-    public void replaceSequence(Rule rule, Symbol start, Symbol stop, Boolean isComplement) {
+    private void replaceSequence(Rule rule, Symbol start, Symbol stop, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule);
         nonTerminal.isComplement = isComplement;
         start.assignRight(nonTerminal);
@@ -240,7 +174,7 @@ public class Search {
                 while (!last.getLeft().getLeft().isGuard()) {
                     last = last.getLeft();
                     check = check.getLeft();
-                    if (!last.equals(check)) { //todo reverse complements?
+                    if (!last.equals(check)) {
                         break;
                     } else if (check.getLeft().getLeft().isGuard()) {
                         replaceSequence(r, last.getLeft().getLeft(), stop, false);
@@ -283,7 +217,7 @@ public class Search {
         }
     }
 
-    public void assignDigrams(Rule rule, Symbol digram) {
+    private void assignDigrams(Rule rule, Symbol digram) {
             if (rule.representation != 0) {
                 NonTerminal nonTerminal = new NonTerminal(rule);
                 // needs to be from complement variable, but then need to assign each new symbol. maybe
@@ -294,10 +228,6 @@ public class Search {
 
                 digram.getLeft().getLeft().assignRight(nonTerminal);
                 digram.getRight().assignLeft(nonTerminal);
-
-                // todo not checking digrams works on some detracts on others
-                //checkdigram(nonTerminal);
-                //checkdigram(nonTerminal.getRight());
             }
         }
 
@@ -352,31 +282,7 @@ public class Search {
         return found;
     }
 
-    public Set<String> createSearchString(String searchString) {
-        Set<String> searchStrings = new HashSet<>();
-        //System.out.println(uniqueTerminals);
-        for (String s : uniqueTerminals) {
-            for (String s1 : uniqueTerminals) {
-                String s5 = searchString + s + s1;
-                String s6 = s + s1 + searchString;
-                String s4 = s + s1 + searchString + s1 + s;
-                String s7 = s1 + s + searchString + s + s1;
-                String s8 = s + searchString + s1;
-                searchStrings.add(s4);
-                searchStrings.add(s5);
-                searchStrings.add(s6);
-                searchStrings.add(s7);
-                searchStrings.add(s8);
-            }
-        }
-
-//        for (String s : searchStrings) {
-//            System.out.println(s);
-//        }
-        return searchStrings;
-    }
-
-    public int countMatchingDigrams(Rule rule) {
+    private int countMatchingDigrams(Rule rule) {
         Symbol first = rule.getFirst().getRight();
         int count = 0;
         int consecutiveCount = 0;
@@ -396,5 +302,4 @@ public class Search {
         }
         return count;
     }
-
 }

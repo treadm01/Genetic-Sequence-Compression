@@ -1,7 +1,7 @@
 package GrammarCoder;
 
 public class Edit {
-    String symbol;
+    String symbol; //todo use character
     int index; //to compare to each other use longest encoding first
     Boolean isComplement;
 

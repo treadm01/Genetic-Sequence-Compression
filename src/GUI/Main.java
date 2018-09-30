@@ -21,9 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Main extends Application {
-    String PATH = System.getProperty("user.dir");
-    String SOURCE_PATH = PATH + "/sourceFiles";
-    String COMPRESSED_PATH = PATH + "/compressedFiles";
+    private String PATH = System.getProperty("user.dir");
 
     public static void main(String[] args) {
         launch(args);

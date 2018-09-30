@@ -18,54 +18,45 @@ public class EditGrammarTest {
         d = new Decompress();
     }
 
-    //tcggtccatgaagacccc
     @Test
     public void negativeIndex() {
-        c.processInput("tcggtccatgaagacccc", false);
+        c.processInput("tcggtccatgaagacccc", true);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals("tcggtccatgaagacccc", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
     public void checkIndexes() { // check which digram is replaced
-        c.processInput("taactccttagctcctgtagtctc", false);
+        c.processInput("taactccttagctcctgtagtctc", true);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals("taactccttagctcctgtagtctc", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
     public void editDistance() { // check which digram is replaced
-        c.processInput("taatctaatg", false);
+        c.processInput("taatctaatg", true);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals("taatctaatg", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
     public void checkIndexesTwo() { // check which digram is replaced
-        c.processInput("aaabcabaaacaaabcabaaac", false);
+        c.processInput("aaabcabaaacaaabcabaaac", true);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals("aaabcabaaacaaabcabaaac", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
     @Test
     public void processMaDi() { // not an edit problem
-        c.processInput("tttcagatgggcttcaggcaacatt", false);
+        c.processInput("tttcagatgggcttcaggcaacatt", true);
         assertEquals("tttcagatgggcttcaggcaacatt", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
-    }
-
-
-    @Test
-    public void decompressX() {
-        Compress c = new Compress();
-        String compress = "gtgttcc";
-        c.processInput(compress, false);
     }
 
     @Test
     public void decompressX4() {
         Compress c = new Compress();
         String compress = "agagattttgagcgtgatattattccaatggctaggcattttcggtatggcc";
-        c.processInput(compress, false);
+        c.processInput(compress, true);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
@@ -74,40 +65,24 @@ public class EditGrammarTest {
     public void EditGrammarTest() { // approximate repeats with some extra symbols before
         Compress c = new Compress();
         String compress = "gttctctgcctcacttctctgactcac"; //cgattctgttctctgcctcacttctctgactcac
-        c.processInput(compress, false);
+        c.processInput(compress, true);
         assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
-    @Test
-    public void EditGrammarReverseComplementTest() {
-        Compress c = new Compress();
-        String compress = "cgtgatattattccaatggctaggcatttcggtatggccctcgcc";
-        c.processInput(compress, false);
-    }
-
-    @Test
-    // indexes corrected
-    public void EditGrammarCheckIndexes() {
-        Compress c = new Compress();
-        String compress = "tggctcacgcctgtaatcccagcac";
-        c.processInput(compress, false);
-    }
-
-
-    @Test
-    //todo example of multiple edits not being recorded
-    public void multipleEdits() {
-        Compress c = new Compress();
-        String compress = "gctcacgcctgtaatcccagcact"; //todo the a is being set as edited... c set to t, a should just be a....
-        c.processInput(compress, false);
-        assertEquals(" 2 t 4 c 2 6 12 c c 6' 12*2c0c", c.getFirstRule().getRuleString());
-    }
+//
+//    @Test
+//    public void multipleEdits() {
+//        Compress c = new Compress();
+//        String compress = "gctcacgcctgtaatcccagcact"; //todo the a is being set as edited... c set to t, a should just be a....
+//        c.processInput(compress, false);
+//        assertEquals(" 2 t 4 c 2 6 12 c c 6' 12*2c0c", c.getFirstRule().getRuleString());
+//    }
 
     @Test
     public void multipleEditsTwo() {
         Compress c = new Compress();
         String compress = "tggctcacgcctgtaatcccagcactttggg"; // need to find an example of this
-        c.processInput(compress, false);
+        c.processInput(compress, true);
         assertEquals(" 2 4 t 8 4 6 t 10 t 12 6' 8 10' 2 12'", c.getFirstRule().getRuleString());
     }
 
@@ -115,7 +90,8 @@ public class EditGrammarTest {
     public void multipleEditsLong() {
         Compress c = new Compress();
         String compress = "tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa";
-        c.processInput(compress, false);
+        c.processInput(compress, true);
+        assertEquals("tggctcacgcctgtaatcccagcactttgggaggctgaggcgggcggatcacaaggtcaggagatcgagaccatcctggctaacacggtgaaa", c.getFirstRule().getSymbolString(c.getFirstRule(), false));
     }
 
 
@@ -125,37 +101,33 @@ public class EditGrammarTest {
     public void EditGrammarTestJustRepeats() {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
-        c.processInput(compress, false);
+        c.processInput(compress, true);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        //assertEquals(" 20 20*7a", c.getFirstRule().getRuleString());
-        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
     public void DecompressApproxRepeat(){
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcac";
-        c.processInput(compress, false);
-        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
-    //todo worth considering , doesn't register as approx repeat...
-    // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaa
     @Test
     public void DecompressDoubleDigitIndex() {
         Compress c = new Compress();
         String compress = "aataacaataat";
-        c.processInput(compress, false);
-        //assertEquals(" 54 54*20a", c.getFirstRule().getRuleString());
-        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
     public void DecompressApproxRepeatOVERLAP(){
         Compress c = new Compress();
         String compress = "gcggaggccg";
-        c.processInput(compress, false);
-        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
@@ -163,20 +135,16 @@ public class EditGrammarTest {
     public void EditGrammarTestJustRepeatsDouble() {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgactcacttctctgcctcacttctctgactcac";
-        c.processInput(compress, false);
-        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
-    //todo example of second part of digram not matching.. suspect not worth doing
-    // approximate repeats like this couldn't be found so easily, had it working with method
-    // but, not sure, effectively like checking every symbol...
-    // no just if there is a 50% similarity between, approx repeats not added if
-    //both following symbols are different.....
     public void EditGrammarTestJustRepeatsSecondEdit() {
         Compress c = new Compress();
         String compress = "ttctctgcctcacttctctgcatcac";
-        c.processInput(compress, false);
+        c.processInput(compress, true);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
 
@@ -184,64 +152,60 @@ public class EditGrammarTest {
     public void checkApproxRepeat() {
         Compress c = new Compress();
         String compress = "cggtcccc";
-        c.processInput(compress, false);
+        c.processInput(compress, true);
+        assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
 
     @Test
     public void wrondDecoding() {
         Compress c = new Compress();
-        String compress = "taggtatag"; //its 02 again //HAD TO SPECIFY THAT THE LAST SYMBOL WAS ALSO A TERMINAL
-        c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        String compress = "taggtatag";
+        c.processInput(compress, true);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
     public void wrondDecodingLong() {
         Compress c = new Compress();
         String compress = "tcaatagtttgacgtgggagcgtaagattgccacgaattggcaccggggggccctcgc"; //its 02 again //HAD TO SPECIFY THAT THE LAST SYMBOL WAS ALSO A TERMINAL
-        c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
 
     @Test
     public void stringIndexOutofBounds() {
-        //subrules were being created with edits rather than passed on to new nonterminals
-        // now oldterminals and symbols are updated and symbols added to rules are wiped of edits
         Compress c = new Compress();
         String compress = "tcgggtctgatctgacagaa";
-        c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
     public void digramsOfeditedRulesRemoved() {
-        //subrules were being created with edits rather than passed on to new nonterminals
-        // now oldterminals and symbols are updated and symbols added to rules are wiped of edits
-        // have to remove digram from edited rules?
         Compress c = new Compress();
         String compress = "cattgtgtttcacgtg";
-        c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
 
-    @Test // not sure what is happening here
+    @Test
     public void wrongMatch() {
         Compress c = new Compress();
         String compress = "gtttgacttgcggaacgt";
-        c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     //
-    @Test // not sure what is happening here, disappearing subrule again?
+    @Test
     public void wrongMatchTwo() {
         Compress c = new Compress();
         String compress = "atttgatgttgctg";
-        c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(compress, true);
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     //todo keep a comparison to previous lengths for each example
@@ -250,26 +214,17 @@ public class EditGrammarTest {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
         String originalFile = io.readFile("humdyst");
-        c.processInput(originalFile, false);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(originalFile, true);
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
-    //humhdab - symbols getting lost?
-    //humghcs
-    //humhbb
-    //mtpacga - apparent improvement - 21594 - chunk of seqence not returned 32846
-    //chmpxx
-    //chntxx
-    //mpomtcg -
-    //vaccg - apparent improvement 58103 - not matching but only 2 symbols less..... 57640, 57631
-    //hehcmv
     @Test
     public void longerString() {
         Compress c = new Compress();
         InputOutput io  = new InputOutput();
         String originalFile = io.readFile("hehcmv");
-        c.processInput(originalFile, false);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(originalFile, true);
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
@@ -277,8 +232,8 @@ public class EditGrammarTest {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
-        c.processInput(originalFile, false);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        c.processInput(originalFile, true);
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
 
@@ -291,24 +246,19 @@ public class EditGrammarTest {
         return sb.toString();
     }
 
-    //cggtcccc - editing when a complement but they are not the same
-    //gtagcgtag - did have the terminal 2 error one time gcggagga , gcggaggccg
-    // taactccttagctcctgtagtctc
     //todo don't forget no input
     @Test
     public void decompressApproxTest() {
         Random rand = new Random();
         for (int i = 0; i < 100; i++) {
-            String input = genRand(rand.nextInt((191737 - 1) + 1) + 1);
-            System.out.println("INPUT: " + input);
+            String input = genRand(rand.nextInt((1000 - 1) + 1) + 1);
             Compress c = new Compress();
             Decompress d = new Decompress();
-            c.processInput(input, false);
+            c.processInput(input, true);
             ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
             String impEncode = ie.getEncodedOutput();
             Rule r = d.buildGrammar(impEncode);
-            Assert.assertEquals(input, r.getSymbolString(r, r.isComplement));
-            //Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+            Assert.assertEquals(input, r.getSymbolString(r, r.getIsComplement()));
         }
     }
 

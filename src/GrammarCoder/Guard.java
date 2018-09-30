@@ -3,10 +3,14 @@ package GrammarCoder;
 public class Guard extends Symbol {
     private Rule guardRule;
 
-    public Guard(Rule rule) {
+    Guard(Rule rule) {
         representation = 0;
         guardRule = rule;
     }
 
+    /**
+     * access to rule object via the guard
+     * @return
+     */
     public Rule getGuardRule() {return guardRule;}
 }

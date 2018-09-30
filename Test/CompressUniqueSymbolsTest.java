@@ -17,7 +17,7 @@ public class CompressUniqueSymbolsTest {
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
-        assertEquals(compress, r.getSymbolString(r, r.isComplement));
+        assertEquals(compress, r.getSymbolString(r, r.getIsComplement()));
     }
 
 
@@ -30,7 +30,7 @@ public class CompressUniqueSymbolsTest {
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
-        assertEquals(compress, r.getSymbolString(r, r.isComplement));
+        assertEquals(compress, r.getSymbolString(r, r.getIsComplement()));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CompressUniqueSymbolsTest {
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
         String input = ie.getEncodedOutput();
         Rule r = d.buildGrammar(input);
-        assertEquals(compress, r.getSymbolString(r, r.isComplement));
+        assertEquals(compress, r.getSymbolString(r, r.getIsComplement()));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class CompressUniqueSymbolsTest {
         String input = ie.getEncodedOutput();
         System.out.println(input);
         Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.isComplement));
+        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
     }
 
     String genRand (int length) {
@@ -83,7 +83,7 @@ public class CompressUniqueSymbolsTest {
             ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
             String impEncode = ie.getEncodedOutput();
             Rule r = d.buildGrammar(impEncode);
-            Assert.assertEquals(input, r.getSymbolString(r, r.isComplement));
+            Assert.assertEquals(input, r.getSymbolString(r, r.getIsComplement()));
             //Assert.assertEquals(input, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
         }
     }

@@ -6,62 +6,11 @@ public class Symbol {
     Symbol left, right; // left and right links of symbols
     long representation; // used throughout to compare symbol objects
     private static final long PRIME = 2265539; //hashcode implementation from Java sequitur implementation available at http://www.sequitur.info/
-    public Boolean isComplement = false; // symbol is a reverse complement or not
-    Boolean isEdited = false; // symbol has been edited or is a nonterminal with one or more edits
+    private Boolean isComplement = false; // symbol is a reverse complement or not
+    private Boolean isEdited = false; // symbol has been edited or is a nonterminal with one or more edits
     public Symbol complement; // link to the symbols corresponding reverse complement
     int symbolIndex = 0; // to keep location of actual symbol for edit
     List<Edit> editList; // list of possible edits
-
-    /**
-     * method to quickly check if a symbol being checked is a guard
-     * for traversing rules, a Guard's representations is 0
-     * @return
-     */
-    public Boolean isGuard() {
-        return representation == 0;
-    }
-
-    public void assignLeft(Symbol left) {
-        this.left = left;
-    }
-
-    public void assignRight(Symbol right) {
-        this.right = right;
-    }
-
-    public Symbol getLeft() {
-        return left;
-    }
-
-    public Symbol getRight() {
-        return right;
-    }
-
-    public long getRepresentation() {
-        return representation;
-    }
-
-    /**
-     * check whether the symbol/digram being called from constitutes
-     * an entire sub-rule
-     * @return
-     */
-    public Boolean isARule() {
-        return this.getLeft().getLeft().isGuard()
-                && this.getRight().isGuard();
-    }
-
-    /**
-     * Method to check that a digram is not overlapping an instance of itself
-     * that is a a a, where the two digrams are the same
-     * @param symbol
-     * @return
-     */
-    Boolean isNotOverlapping(Symbol symbol) {
-        return this.getRight() != symbol
-                && this.getLeft() != symbol;
-    }
-
 
     /**
      * callable from any symbol object to create the corresponding symbols
@@ -119,6 +68,72 @@ public class Symbol {
             this.editList.addAll(edits);
         }
         isEdited = true;
+    }
+
+    public Boolean getIsComplement() {
+        return isComplement;
+    }
+
+    public void setIsComplement(Boolean isComplement) {
+        this.isComplement = isComplement;
+    }
+
+    /**
+     * method to quickly check if a symbol being checked is a guard
+     * for traversing rules, a Guard's representations is 0
+     * @return
+     */
+    public Boolean isGuard() {
+        return representation == 0;
+    }
+
+    public void assignLeft(Symbol left) {
+        this.left = left;
+    }
+
+    public void assignRight(Symbol right) {
+        this.right = right;
+    }
+
+    public Symbol getLeft() {
+        return left;
+    }
+
+    public Symbol getRight() {
+        return right;
+    }
+
+    public long getRepresentation() {
+        return representation;
+    }
+
+    /**
+     * check whether the symbol/digram being called from constitutes
+     * an entire sub-rule
+     * @return
+     */
+    public Boolean isARule() {
+        return this.getLeft().getLeft().isGuard()
+                && this.getRight().isGuard();
+    }
+
+    /**
+     * Method to check that a digram is not overlapping an instance of itself
+     * that is a a a, where the two digrams are the same
+     * @param symbol
+     * @return
+     */
+    Boolean isNotOverlapping(Symbol symbol) {
+        return this.getRight() != symbol
+                && this.getLeft() != symbol;
+    }
+
+    public Boolean getIsEdited() {
+        return this.isEdited;
+    }
+
+    public void setIsEdited(Boolean isEdited) {
+        this.isEdited = isEdited;
     }
 
     @Override

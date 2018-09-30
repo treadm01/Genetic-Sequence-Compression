@@ -25,10 +25,38 @@ public class NonTerminal extends Symbol {
         return this.rule;
     }
 
+    /**
+     * add edits from merging nonterminals
+     * @param digramRight
+     */
+    void updateEdits(Symbol digramRight) {
+        if (digramRight.getIsEdited()) {
+            this.setIsEdit(digramRight.editList);
+        }
+        if (digramRight.getLeft().getIsEdited()) {
+            this.setIsEdit(digramRight.getLeft().editList);
+        }
+    }
+
+    /**
+     * returns a string representation of all edits to be included in the
+     * implicit stream
+     * @return
+     */
+    private String getEdits() {
+        String s = "";
+        if (getIsEdited()) {
+            for (Edit e : editList) {
+                s += "*" + e.index + e.symbol;
+            }
+        }
+        return s;
+    }
+
     @Override
     public String toString() {
         String s = String.valueOf(representation);
-        if (isComplement) {
+        if (getIsComplement()) {
             s += "'";
         }
         s += getEdits();
@@ -37,42 +65,24 @@ public class NonTerminal extends Symbol {
 
     @Override
     public boolean equals(Object obj) {
-        //TODO add all checks
-        Symbol symbol = (Symbol) obj;
-
-        if (symbol.getLeft() instanceof NonTerminal) {
-            return ((representation == symbol.getRepresentation())
-                    && (left.representation == (symbol.left.getRepresentation()))
-                    && this.isComplement == symbol.isComplement
-                    && left.isComplement == symbol.left.isComplement
-            );
+        if (!(obj instanceof NonTerminal)) {
+            return false;
         }
         else {
-            return ((representation == symbol.getRepresentation())
-                    && (left.representation == (symbol.left.getRepresentation()))
-                    && this.isComplement == symbol.isComplement
-            );
-        }
-    }
+            NonTerminal symbol = (NonTerminal) obj;
 
-    public void updateEdits(Symbol digramRight) {
-        if (digramRight.isEdited) {
-            this.setIsEdit(digramRight.editList);
-        }
-        if (digramRight.getLeft().isEdited) {
-            this.setIsEdit(digramRight.getLeft().editList);
-        }
-    }
-
-    public String getEdits() {
-        String s = "";
-        if (isEdited) {
-            for (Edit e : editList) {
-                s += "*" + e.index + e.symbol;
+            if (symbol.getLeft() instanceof NonTerminal) {
+                return ((representation == symbol.getRepresentation())
+                        && (left.representation == (symbol.getLeft().getRepresentation()))
+                        && this.getIsComplement() == symbol.getIsComplement()
+                        && left.getIsComplement() == symbol.getLeft().getIsComplement()
+                );
+            } else {
+                return ((representation == symbol.getRepresentation())
+                        && (left.representation == (symbol.getLeft().getRepresentation()))
+                        && this.getIsComplement() == symbol.getIsComplement()
+                );
             }
         }
-        return s;
     }
-
-
 }

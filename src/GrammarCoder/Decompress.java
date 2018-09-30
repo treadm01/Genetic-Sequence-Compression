@@ -55,7 +55,7 @@ public class Decompress {
         // get the symbols and then add to the nonterimal edits
         List<Edit> edits = new ArrayList<>();
         int index = retrieveStringSegment();
-        Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)), false);
+        Edit e = new Edit(index, String.valueOf(input.charAt(position + 1)));
         edits.add(e);
         // if part of a sub rule need to add to head rule
         grammar.getLast().setIsEdit(edits);
@@ -103,7 +103,7 @@ public class Decompress {
 
     private void addNonTerminal(Rule rule, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule); // get rule from hashmap
-        nonTerminal.isComplement = isComplement;
+        nonTerminal.setIsComplement(isComplement);
         grammar.addNextSymbol(nonTerminal); // add to main rule
     }
 

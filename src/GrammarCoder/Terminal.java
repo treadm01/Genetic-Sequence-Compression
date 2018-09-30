@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Terminal extends Symbol {
-    private long originalValue; // the original symbol from the input, representation is then assigned an odd number
+    long originalValue; // the original symbol from the input, representation is then assigned an odd number
     private static final Map<Character, Character> COMPLEMENTS = new HashMap<>();
     static {
         COMPLEMENTS.put('a', 't');
@@ -40,7 +40,7 @@ public class Terminal extends Symbol {
                 // reverse complement are required
                 return ((representation == symbol.getRepresentation())
                         && (left.representation == (symbol.getLeft().getRepresentation()))
-                        && left.isComplement == symbol.getLeft().isComplement
+                        && left.getIsComplement() == symbol.getLeft().getIsComplement()
                 );
             } else {
                 return super.equals(obj);

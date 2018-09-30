@@ -2,13 +2,11 @@ package GrammarCoder;
 
 public class Edit {
     String symbol; //todo use character
-    int index; //to compare to each other use longest encoding first
-    Boolean isComplement;
+    int index;
 
-    public Edit(int index, String symbol, Boolean isComplement) {
+    Edit(int index, String symbol) {
         this.index = index;
         this.symbol = symbol;
-        this.isComplement = isComplement;
     }
 
     @Override

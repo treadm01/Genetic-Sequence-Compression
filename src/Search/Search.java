@@ -142,7 +142,7 @@ public class Search {
 
     private void replaceSequence(Rule rule, Symbol start, Symbol stop, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule);
-        nonTerminal.isComplement = isComplement;
+        nonTerminal.setIsComplement(isComplement);
         start.assignRight(nonTerminal);
         stop.getRight().assignLeft(nonTerminal);
         nonTerminal.assignLeft(start);
@@ -220,8 +220,7 @@ public class Search {
     private void assignDigrams(Rule rule, Symbol digram) {
             if (rule.getRepresentation() != 0) {
                 NonTerminal nonTerminal = new NonTerminal(rule);
-                // needs to be from complement variable, but then need to assign each new symbol. maybe
-                nonTerminal.isComplement = !digram.equals(rule.getLast()); //true or alternate value, would have to alternate the nonterminal???
+                nonTerminal.setIsComplement(!digram.equals(rule.getLast()));
 
                 nonTerminal.assignRight(digram.getRight());
                 nonTerminal.assignLeft(digram.getLeft().getLeft());

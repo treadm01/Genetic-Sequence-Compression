@@ -7,7 +7,6 @@ class SearchNode {
     SearchNode digramNodeLeft;
     SearchNode digramNodeRight;
     SearchNode symbolNode;
-    SearchNode parent;
     SearchNode completeRule;
     String searchString;
     int matchingDigrams;

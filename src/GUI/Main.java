@@ -31,9 +31,7 @@ public class Main extends Application {
 
         // next to it is output for search
         TextArea textOutput = new TextArea();
-        textOutput.textProperty().addListener((observable, oldValue, newValue) -> {
-            textOutput.setText(newValue);
-        });
+        textOutput.textProperty().addListener((observable, oldValue, newValue) -> textOutput.setText(newValue));
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(PATH));
@@ -46,7 +44,6 @@ public class Main extends Application {
         choiceBox.getItems().add("Decompress");
         choiceBox.getItems().add("Compress (With Edits)");
         choiceBox.getItems().add("Compress");
-
         choiceBox.setValue("Compress");
 
         Button compressButton = new Button("Select File");
@@ -71,7 +68,6 @@ public class Main extends Application {
                         try {
                             AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
                             Decompress d = new Decompress();
-                            // split into local variables todo rename
                             io.writeToFile(d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
                             textOutput.setText("File decompressed");
                         } catch (IOException e1) {

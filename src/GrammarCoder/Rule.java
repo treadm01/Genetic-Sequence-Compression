@@ -3,23 +3,21 @@ package GrammarCoder;
 import java.util.*;
 
 public class Rule extends Symbol{
-    int count;
+    int count; // number of times this rule is used
     private Guard guard;
-    static Integer ruleNumber = 0;
-    Set<NonTerminal> nonTerminalList;
-    private static final long PRIME = 2265539;
-    // for decompressing
-    Boolean compressed = false;
-    Rule removed;
-
-    // for encoding...
-    int timeSeen = 0;
-    int position;
+    static Integer ruleNumber = 0; // representation for all rules
+    Set<NonTerminal> nonTerminalList; // for edits to check all linked nonterminals representing this rule
+    //todo only used in sequences with more than four symbol alphabet
+    Rule removed; // an additional rule used when creating rules that will be subsequently be removed
+    Boolean compressed = false; // used in decompressing implicit stream to indicate whether more subrules need decoding
+    // variables for implicit encoding...
+    int timeSeen = 0; // number of times the nonterminal for a rule has been seen
+    int position; // relative position for the nonterminal in implicit encoding
     int length; // length of compressed rule
 
     public Rule() {
-        this.representation = ruleNumber;
-        ruleNumber += 2;
+        this.representation = ruleNumber; // representation increased by the number of rules already created
+        ruleNumber += 2; // number will be even as opposed to symbols for terminals
         guard = new Guard(this);
         assignRight(guard);
         assignLeft(guard);
@@ -29,7 +27,7 @@ public class Rule extends Symbol{
     }
 
     /**
-     * adds a symbol to the last symbol
+     * adds a symbol to the last symbol of the rule
      * @param symbol
      */
     public void addNextSymbol(Symbol symbol) {
@@ -39,26 +37,6 @@ public class Rule extends Symbol{
         guard.assignLeft(symbol); // assign last to symbol
     }
 
-    // like a clone used in search
-    public void addAllSymbols(Symbol left) {
-        if (left == null) {
-            left = left.getRight();
-        }
-        while (left != null && !left.isGuard()) {
-            if (left instanceof Terminal) {
-                Terminal t = new Terminal(left.toString().charAt(0));
-                addNextSymbol(t);
-                left = left.getRight();
-            }
-            else if (left instanceof NonTerminal) {
-                NonTerminal nt = new NonTerminal(((NonTerminal) left).getRule());
-                nt.isComplement = left.isComplement;
-                addNextSymbol(nt);
-                left = left.getRight();
-            }
-        }
-    }
-
     /**
      * add the two symbols from a digram to a nonTerminal
      * @param left
@@ -66,8 +44,8 @@ public class Rule extends Symbol{
      */
     public void addSymbols(Symbol left, Symbol right) {
         // set the edits to false so subrule is generic
-        left.isEdited = false;
-        right.isEdited = false;
+        left.setIsEdited(false);
+        right.setIsEdited(false);
         this.addNextSymbol(left);
         this.addNextSymbol(right);
     }
@@ -86,7 +64,10 @@ public class Rule extends Symbol{
         return symbols.toString();
     }
 
-    // retrieves rule length at nonterminal level, used in implicit encoding for length of implicit rule
+    /**
+     * retrieves length of rule for the symbols it represents
+     * both terminals and nonterminals
+     */
     public int getRuleLength() {
         int ruleLength = 0;
         Symbol current = this.getGuard().getRight();
@@ -98,7 +79,9 @@ public class Rule extends Symbol{
     }
 
     /**
-     * returns a string of the symbols at the terminal level
+     * returns a string of the symbols at the terminal level for a rule
+     * sending the main rule as the first argument returns the original
+     * input sequence todo should be refactored more
      * @param rule
      * @param complement
      * @return
@@ -106,55 +89,95 @@ public class Rule extends Symbol{
     public String getSymbolString(Rule rule, Boolean complement) {
         Symbol s;
         StringBuilder output = new StringBuilder();
-        if (complement) {
-            s = rule.getLast();
-        }
-        else {
-            s = rule.getFirst();
-        }
+        s = getNextSymbol(complement, rule.getGuard());
         do {
             if (s instanceof Terminal) {
-                if (complement) {
-                    output.append(Terminal.reverseSymbol(s.toString().charAt(0)));
-                }
-                else {
-                    output.append(s.toString());
-                }
-
-                if (complement) {
-                    s = s.getLeft();
-                }
-                else {
-                    s = s.getRight();
-                }
+                output.append(getNextTerminal(complement, s));
+                s = getNextSymbol(complement, s);
             }
             else {
                 int currentLength = output.length(); // length before start of edited rule
+                // recursively loop back through nonterminals todo should work in its own method..
                 if (complement) {
-                    output.append(getSymbolString(((NonTerminal) s).getRule(), !s.isComplement));
+                    output.append(getSymbolString(((NonTerminal) s).getRule(), !s.getIsComplement()));
                 }
                 else {
-                    output.append(getSymbolString(((NonTerminal) s).getRule(), s.isComplement));
+                    output.append(getSymbolString(((NonTerminal) s).getRule(), s.getIsComplement()));
                 }
 
-                if (s.isEdited) {
+                // apply any edits from the nonterminal to the string
+                if (s.getIsEdited()) {
                     for (Edit e : (((NonTerminal)s).editList)) {
                         output.replace(currentLength + e.index, currentLength + e.index + 1, e.symbol);
                     }
                 }
-
-                if (complement) {
-                    s = s.getLeft();
-                }
-                else {
-                    s = s.getRight();
-                }
+                // move to next symbol
+                s = getNextSymbol(complement, s);
             }
-
         } while (!s.isGuard());
         return output.toString();
     }
 
+    /**
+     * get the next symbol of a rule depending on whether the current
+     * nonterminal representing it is a reverse complement or not
+     * @param complement
+     * @param symbol
+     * @return
+     */
+    private Symbol getNextSymbol(Boolean complement, Symbol symbol) {
+        Symbol nextSymbol;
+        if (complement) {
+            nextSymbol = symbol.getLeft();
+        }
+        else {
+            nextSymbol = symbol.getRight();
+        }
+        return nextSymbol;
+    }
+
+    /**
+     * get the next terminal string output depending on whether
+     * reverse complement or not
+     * @param complement
+     * @param s
+     * @return
+     */
+    private String getNextTerminal(Boolean complement, Symbol s) {
+        StringBuilder output = new StringBuilder();
+        if (complement) {
+            output.append(Terminal.reverseSymbol(s.toString().charAt(0)));
+        }
+        else {
+            output.append(s.toString());
+        }
+        return output.toString();
+    }
+
+
+    /**
+     * method to duplicate the symbols of a rule to be added to a new rule
+     * used in searching, needs improving
+     * @param left
+     */
+    public void addAllSymbols(Symbol left) {
+        if (left == null) {
+            left = left.getRight();
+        }
+        while (left != null && !left.isGuard()) {
+            if (left instanceof Terminal) {
+                Terminal t = new Terminal(left.toString().charAt(0));
+                addNextSymbol(t);
+                left = left.getRight();
+            }
+            else if (left instanceof NonTerminal) {
+                NonTerminal nt = new NonTerminal(((NonTerminal) left).getRule());
+                nt.setIsComplement(left.getIsComplement());
+                addNextSymbol(nt);
+                left = left.getRight();
+            }
+        }
+    }
 
     /**
      * return the last element
@@ -173,5 +196,4 @@ public class Rule extends Symbol{
     void incrementCount() { count++;}
 
     void decrementCount() { count--;}
-
 }

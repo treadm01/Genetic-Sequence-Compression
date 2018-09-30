@@ -3,7 +3,7 @@ package GrammarCoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApproxRepeat {
+class ApproxRepeat {
     private Rule mainRule;
     private String input;
 
@@ -12,7 +12,7 @@ public class ApproxRepeat {
         this.input = input;
     }
 
-    public List<Symbol> checkApproxRepeat(Symbol symbol) {
+    List<Symbol> checkApproxRepeat(Symbol symbol) {
         NonTerminal matchingNonTerminal;
         int bestEdit = 0;
         List<Symbol> symbols = new ArrayList<>();
@@ -23,7 +23,7 @@ public class ApproxRepeat {
             Rule nonterminalRule = matchingNonTerminal.getRule();
             int matchingNonTerminalLength = nonterminalRule.getSymbolString(matchingNonTerminal.getRule(), false).length();
             for (NonTerminal nonTerminalSet : nonterminalRule.nonTerminalList) {
-                if (matchingNonTerminal.isComplement == nonTerminalSet.isComplement
+                if (matchingNonTerminal.getIsComplement() == nonTerminalSet.getIsComplement()
                         && matchingNonTerminal != nonTerminalSet) {
                     // cache of strings?
                     List<Symbol> next = new ArrayList<>();
@@ -59,7 +59,8 @@ public class ApproxRepeat {
     private String getSymbolsString(Symbol symbol) {
         StringBuilder symbolString = new StringBuilder();
         if (symbol instanceof NonTerminal) {
-            symbolString.append(((NonTerminal) symbol).getRule().getSymbolString(((NonTerminal) symbol).getRule(), symbol.isComplement));
+            symbolString.append(((NonTerminal) symbol).getRule().getSymbolString(((NonTerminal) symbol).getRule(),
+                    symbol.getIsComplement()));
         } else if (symbol instanceof Terminal) {
             symbolString.append(symbol);
         }
@@ -83,17 +84,16 @@ public class ApproxRepeat {
         for (Symbol s : next) {
             if (s instanceof NonTerminal) {
                 NonTerminal nonTerminalClone = new NonTerminal(((NonTerminal) s).getRule());
-                String nonterminalString = ((NonTerminal) s).getRule().getSymbolString(((NonTerminal) s).getRule(), s.isComplement);
+                String nonterminalString = ((NonTerminal) s).getRule().getSymbolString(((NonTerminal) s).getRule(), s.getIsComplement());
                 List<Edit> edits = new ArrayList<>();
                 for (int x = 0; x < nonterminalString.length(); x++) {
                     int pos = indexInString + x;
                     if (lastSequence.charAt(pos) != nextSequence.charAt(pos)) {
-                        Boolean isComplement = lastSequence.charAt(pos) == Terminal.reverseSymbol(nextSequence.charAt(pos));
-                        edits.add(new Edit(symbol.symbolIndex + pos, String.valueOf(nextSequence.charAt(pos)), isComplement));
+                        edits.add(new Edit(symbol.symbolIndex + pos, String.valueOf(nextSequence.charAt(pos))));
                     }
                 }
                 nonTerminalClone.setIsEdit(edits);
-                nonTerminalClone.isComplement = s.isComplement;
+                nonTerminalClone.setIsComplement(s.getIsComplement());
                 newSymbols.add(nonTerminalClone);
                 indexInString += nonterminalString.length();
                 nonTerminalClone.symbolIndex = symbol.symbolIndex + indexInString - 1;
@@ -102,8 +102,7 @@ public class ApproxRepeat {
                 List<Edit> edits = new ArrayList<>();
                 Symbol terminal = new Terminal(lastSequence.charAt(indexInString));
                 if (lastSequence.charAt(indexInString) != nextSequence.charAt(indexInString)) {
-                    Boolean isComplement = lastSequence.charAt(indexInString) == Terminal.reverseSymbol(nextSequence.charAt(indexInString));
-                    edits.add(new Edit(symbol.symbolIndex + indexInString, String.valueOf(nextSequence.charAt(indexInString)), isComplement));
+                    edits.add(new Edit(symbol.symbolIndex + indexInString, String.valueOf(nextSequence.charAt(indexInString))));
                     terminal.setIsEdit(edits);
                 }
                 terminal.symbolIndex = symbol.symbolIndex + indexInString;

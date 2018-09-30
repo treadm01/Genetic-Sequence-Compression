@@ -47,7 +47,7 @@ public class ImplicitEncoder {
 
         char complementIndicator;
         if (nt.rule.timeSeen == 1) { // from the stack of rules rather than the symbol needs separate indicator
-            if (nt.isComplement) {
+            if (nt.getIsComplement()) {
                 complementIndicator = '{';
             }
             else { // if standard still needs an indicator
@@ -55,7 +55,7 @@ public class ImplicitEncoder {
             }
 
             if (index == 1) {
-                if (nt.isComplement) {
+                if (nt.getIsComplement()) {
                     complementIndicator = '%';
                 }
                 else {
@@ -69,7 +69,7 @@ public class ImplicitEncoder {
             }
         }
         else {
-            if (nt.isComplement) {
+            if (nt.getIsComplement()) {
                 complementIndicator = '\'';
             }
             else { // if standard still needs an indicator
@@ -80,7 +80,7 @@ public class ImplicitEncoder {
         }
 
 
-        if (nt.isEdited) {
+        if (nt.getIsEdited()) {
             addEdits(nt.editList);
         }
     }
@@ -105,7 +105,7 @@ public class ImplicitEncoder {
                     }
 
                     // have to add edits for rules that are first time see with edits
-                    if (nt.isEdited) {
+                    if (nt.getIsEdited()) {
                         addEdits(nt.editList);
                     }
 

@@ -188,7 +188,7 @@ import static org.junit.Assert.*;
             Compress c = new Compress();
             InputOutput io = new InputOutput();
             String originalFile = io.readFile(fileName);
-            c.processInput(originalFile, true);
+            c.processInput(originalFile, false);
             ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
             String compare = ie.getEncodedOutput();
             System.out.println("File " + fileName);

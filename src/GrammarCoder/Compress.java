@@ -112,8 +112,7 @@ public class Compress {
         oldTerminal.symbolIndex = oldSymbol.getLeft().symbolIndex;
         newTerminal.symbolIndex = symbol.getLeft().symbolIndex;
 
-        // can be refactored, replace digram needs the correct complements
-        newTerminal.isComplement = !symbol.equals(oldSymbol);
+        newTerminal.setIsComplement(!symbol.equals(oldSymbol));
 
         // pass on edits to nonterminals from symbols - not needed if not using edits...
         newTerminal.updateEdits(symbol);
@@ -156,7 +155,7 @@ public class Compress {
         NonTerminal nonTerminal = new NonTerminal(rule);
         nonTerminal.symbolIndex = symbol.getLeft().symbolIndex;
         // needs to be from complement variable, but then need to assign each new symbol. maybe
-        nonTerminal.isComplement = !symbol.equals(oldSymbol); //true or alternate value, would have to alternate the nonterminal???
+        nonTerminal.setIsComplement(!symbol.equals(oldSymbol));
 
         nonTerminal.updateEdits(symbol);
 
@@ -245,7 +244,7 @@ public class Compress {
             if (current instanceof NonTerminal) {
                 Rule rule = ((NonTerminal) current).getRule();
                 rules.add(rule);
-                if (current.isEdited) {
+                if (current.getIsEdited()) {
                     for (Edit e : current.editList) {
                         e.index -= streamIndex;
                         numberOfEdits++; // for debug output

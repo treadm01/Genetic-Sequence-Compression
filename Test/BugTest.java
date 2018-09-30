@@ -4,7 +4,6 @@ import org.junit.Test;
 
 public class BugTest {
 
-    //tagagcgagatgggaagttcccccgctcgcctcacacgctcttataatacacagacaatggctctttcctcagccattgttatgcggtcgtcgtagcgt
     @Test
     public void HeapLeak() {
         Compress c = new Compress();
@@ -12,21 +11,18 @@ public class BugTest {
         c.processInput(compress, false);
     }
 
-    //ccctcagggc - stack overflow cgggagtccc
-    // rule that has been implicitly added in an earlier reverse complement,
-    // two in a row equals the wrong link?? infinite loop //todo reordered remove rules and check digrams in replace rule... enough to fix?
     @Test
     public void StackOverflow() {
         Compress c = new Compress();
-        String compress = "ccctaggg"; // might be ordering of digram checking and overlapping
+        String compress = "ccctaggg";
         c.processInput(compress, true);
     }
 
     @Test
-    public void stackOverflowTwo() { // reverse complement issue...
-        Compress c = new Compress();String compress = "cgggagtccc"; // suspect reverse complement matching
+    public void stackOverflowTwo() {
+        Compress c = new Compress();String compress = "cgggagtccc";
         c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
@@ -36,14 +32,12 @@ public class BugTest {
         c.processInput(compress, false);
     }
 
-    //INPUT: atttctgacgcccgcgatcgtcgtctccgcgctctggatggcggtagttcta
-    // can't be cast to terminal guard
     @Test
     public void guardCantBeNonTerminal() {
         Compress c = new Compress();
         String compress = "aaggaagctt";
         c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
     @Test
@@ -51,18 +45,14 @@ public class BugTest {
         Compress c = new Compress();
         String compress = "aaagtcatcctttctcccgagccacattcgactgtagagttccagaaagcgtgttaatgggttcataacgattcgcacggggaacgatggagccaacggttacagagctgaatagtcagggcggggcgggtttgacgtcgcggcgcgtcattagatggcacttagcgacccgtctgggtctcctaaaccagatggggaatatctatgtgtacgacgcattgagttggatctaaaaaactcttagctttctgcataaggtatacttgcagagtgacatgaaactccagataagtcaagacacaaacggagtgcaattccgcttgaaaggactgatagcctgcgccaggttaaacaaaggtgatgttcgtagtttcgcaaccctggggccacggcggggactttaagcggataaaacaggtggagtattcaatatgtgagacagcacggattaccttcgcgtggtgccgaactttttaggttgcgtcgcgacctgtcatcgccggggcggtaacacaaggtctaacgggtttaggtatcatcagaaatctcagctaggagacgcctcctatcaa";
         c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 
-
-    //gcgtcgctctgggatcccagatctcattgcaatttcccagattatgctaacaa
-    //aaaccgtttgagatacggcggatcaaactt
-    //gaaaggtatacctttccctcgtacccccttcatt
     @Test
-    public void guardCantBeCastTerminal() { // might be same issue as above rule 6 > a
+    public void guardCantBeCastTerminal() {
         Compress c = new Compress();
         String compress = "aaaccgtttgagatacggcggatcaaactt";
         c.processInput(compress, false);
-        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().isComplement));
+        Assert.assertEquals(compress, c.getFirstRule().getSymbolString(c.getFirstRule(), c.getFirstRule().getIsComplement()));
     }
 }

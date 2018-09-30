@@ -71,7 +71,7 @@ class ApproxRepeat {
     }
 
     /**
-     *
+     * get symbol string for either individual terminal or nonterminals rule
      * @param symbol
      * @return
      */
@@ -87,6 +87,13 @@ class ApproxRepeat {
     }
 
 
+    /**
+     * count number of edits, different characters, between the two
+     * strings that have been constructed
+     * @param lastSequence
+     * @param nextSequence
+     * @return
+     */
     private int numberOfEdits(String lastSequence, String nextSequence) {
         int count = 0;
         for (int j = 0; j < lastSequence.length(); j++) {
@@ -97,6 +104,18 @@ class ApproxRepeat {
         return count;
     }
 
+    /**
+     * for any exact matches found, the next sequence following the last nonterminal
+     * of the current sequence is replaced with the edited symbols.
+     * terminals and nonterminals are taken from the list of those that make the last sequence
+     * string, duplicated and edits created for and applied to them
+     * todo needs refactoring..
+     * @param next
+     * @param lastSequence
+     * @param nextSequence
+     * @param symbol
+     * @return
+     */
     private List<Symbol> createNewSymbols(List<Symbol> next, String lastSequence, String nextSequence, Symbol symbol) {
         List<Symbol> newSymbols = new ArrayList<>();
         int indexInString = 0;

@@ -17,6 +17,7 @@ class SearchNode {
         this.rule.addAllSymbols(rule.getFirst());
     }
 
+    // used to pass number of relevant digrams in a rule to the rules next check
     int numberOfMatchingDigrams() {
         return matchingDigrams;
     }

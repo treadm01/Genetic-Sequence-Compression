@@ -5,7 +5,7 @@ import GrammarCoder.*;
 import java.util.*;
 
 public class Search {
-    private DigramMap digramMap; // - digram points to digram via right hand symbol
+    private DigramMap digramMap;
     private Set<Rule> rulesFromGrammar = new HashSet<>();
     private Set<String> uniqueTerminals = new HashSet<>();
     private Set<String> checkedEncodings = new HashSet<>();
@@ -18,8 +18,12 @@ public class Search {
         this.digramMap = createDigramMap(firstRule);
     }
 
-    //todo deduplicate - slightly different to compress as doesn't have edits - give edits, in a sense will be finding approximate repeats
-    // are edits retrieved?? should be if string is decompressedd in the same way in final check
+
+    /**
+     * rules created individually for grammar to more easily
+     * reconstruct digram map for each
+     * @param current
+     */
     private void generateRules(Symbol current) {
         while (!current.isGuard()) {
             if (current instanceof NonTerminal) {
@@ -31,9 +35,16 @@ public class Search {
         }
     }
 
+    /**
+     * create digram map from all rules in grammar
+     * also fills a set of the unique symbols that occur
+     * to search single values
+     * @param firstRule
+     * @return
+     */
     private DigramMap createDigramMap(Rule firstRule) {
         DigramMap dm = new DigramMap();
-        generateRules(firstRule.getFirst()); //todo needs unduplicating
+        generateRules(firstRule.getFirst());
         for (Rule r : rulesFromGrammar) {
             Symbol firstRight = r.getFirst().getRight();
             do {
@@ -52,25 +63,39 @@ public class Search {
         return dm;
     }
 
+    /**
+     * main search method returns boolean value if search string
+     * is found within the grammar, works for single characters
+     * and currently only certain length search strings that correspond
+     * to a retrievable encoding
+     * @param searchString
+     * @return
+     */
     public Boolean search(String searchString) {
-        searchNodePriorityQueue = new PriorityQueue<>(Comparator.comparingInt(SearchNode::numberOfMatchingDigrams));
         uniqueTerminals.add("");
         //single letter search
         if (searchString.length() == 1) {
             found = uniqueTerminals.contains(searchString);
         }
         else {
-            Rule baseRule = new Rule();
+            searchNodePriorityQueue = new PriorityQueue<>(Comparator.comparingInt(SearchNode::numberOfMatchingDigrams));
+            Rule baseRule = new Rule(); // a rule containing the initial digram of the search string
             baseRule.addNextSymbol(new Terminal(searchString.charAt(0)));
             baseRule.addNextSymbol(new Terminal(searchString.charAt(1)));
             SearchNode base = new SearchNode(baseRule, searchString.substring(2));
+            // count of how many of the rules digrams occur within the grammar - used for priority
             base.matchingDigrams = countMatchingDigrams(baseRule);
             buildSearchTree(base, searchString);
         }
-
         return found;
     }
 
+    /**
+     * build search tree of possible options for how the search string would
+     * be encoded within the grammar
+     * @param base
+     * @param searchString
+     */
     private void buildSearchTree(SearchNode base, String searchString) {
         searchNodePriorityQueue.add(base);
         SearchNode searchNode;
@@ -92,6 +117,12 @@ public class Search {
         }
     }
 
+    /**
+     * add node to the tree if hasn't been seen already, update
+     * the priority and add to the queue
+     * @param searchNode
+     * @param newNode
+     */
     private void addNode(SearchNode searchNode, SearchNode newNode) {
         if (!checkedEncodings.contains(newNode.rule.getRuleString())) {
             newNode.matchingDigrams = countMatchingDigrams(newNode.rule);
@@ -101,7 +132,7 @@ public class Search {
         }
     }
 
-    // will have to take rest of search string too to create new terminals
+    // checks the first digram of the rule for if it is a nonterminal
     private void buildLeftNode(SearchNode searchNode) {
         if (searchNode.digramNodeLeft == null && searchNode.searchString.length() >= 1) {
             searchNode.digramNodeLeft = new SearchNode(searchNode.rule, searchNode.searchString);
@@ -110,6 +141,7 @@ public class Search {
         }
     }
 
+    // checks whether the entire rule of the node is a rule itself
     private void buildCompleteRuleNode(SearchNode searchNode) {
         if (searchNode.completeRule == null && searchNode.searchString.length() >= 1) {
             searchNode.completeRule = new SearchNode(searchNode.rule, searchNode.searchString);
@@ -118,6 +150,7 @@ public class Search {
         }
     }
 
+    // adds the next symbol from the search string
     private void buildSymbolNode(SearchNode searchNode) {
         if (searchNode.symbolNode == null && searchNode.searchString.length() >= 1) {
             searchNode.symbolNode = new SearchNode(searchNode.rule, searchNode.searchString.substring(1));
@@ -126,6 +159,7 @@ public class Search {
         }
     }
 
+    // checks the last digram of the rule to see if it is itself an entire rule
     private void buildRightNode(SearchNode searchNode) {
         if (searchNode.digramNodeRight == null) {
             SearchNode digram;
@@ -140,6 +174,13 @@ public class Search {
         }
     }
 
+    /**
+     * when a number of symbols have been matched as rule, replace with a nonterminal
+     * @param rule
+     * @param start
+     * @param stop
+     * @param isComplement
+     */
     private void replaceSequence(Rule rule, Symbol start, Symbol stop, Boolean isComplement) {
         NonTerminal nonTerminal = new NonTerminal(rule);
         nonTerminal.setIsComplement(isComplement);
@@ -149,6 +190,12 @@ public class Search {
         nonTerminal.assignRight(stop.getRight());
     }
 
+    /**
+     * cycle through the symbols of a rule and compares them
+     * to the corresponding symbols of the grammar. If they all match
+     * then it matches the corresponding rule
+     * @param last
+     */
     private void checkIfCompleteRule(Symbol last) {
         if (digramMap.containsDigram(last)) {
             //loop through the rule, check not main rule etc
@@ -165,6 +212,7 @@ public class Search {
         }
     }
 
+    // whether a reverse complement or not affects the order the digrams must be checked in
     private void checkNormalRule(Symbol last, Symbol check) {
         Symbol stop = last;
         if (check.getRight().isGuard()) { // has to be rule
@@ -184,6 +232,7 @@ public class Search {
         }
     }
 
+    // attempting to match a reverse complement rule todo needs refactoring
     private void checkReverseComplementRule(Symbol last, Symbol check) {
         Symbol stop = last; // stop position taken from intitial last position
         if (check.getLeft().getLeft().isGuard()) { // has to be rule
@@ -206,43 +255,64 @@ public class Search {
         }
     }
 
+    /**
+     * check whether the digram occurs already in the digram map
+     * and process accordingly
+     * @param digram
+     */
     private void checkdigram(Symbol digram) {
         if (digramMap.containsDigram(digram)) {
             Symbol oldSymbol = digramMap.getOriginalDigram(digram);
             if (oldSymbol.isARule()) {
-                Guard g = (Guard) oldSymbol.getRight(); // have to get guard and then rule from there
-                Rule rule = g.getGuardRule(); // get rule using pointer to it in the guard
+                Guard g = (Guard) oldSymbol.getRight();
+                Rule rule = g.getGuardRule();
                 assignDigrams(rule, digram);
             }
         }
     }
 
+    /**
+     * creates new nonterminal for the found digram and reapplies the links
+     * within the rule
+     * @param rule
+     * @param digram
+     */
     private void assignDigrams(Rule rule, Symbol digram) {
-            if (rule.getRepresentation() != 0) {
-                NonTerminal nonTerminal = new NonTerminal(rule);
-                nonTerminal.setIsComplement(!digram.equals(rule.getLast()));
+        if (rule.getRepresentation() != 0) {
+            NonTerminal nonTerminal = new NonTerminal(rule);
+            nonTerminal.setIsComplement(!digram.equals(rule.getLast()));
 
-                nonTerminal.assignRight(digram.getRight());
-                nonTerminal.assignLeft(digram.getLeft().getLeft());
+            nonTerminal.assignRight(digram.getRight());
+            nonTerminal.assignLeft(digram.getLeft().getLeft());
 
-                digram.getLeft().getLeft().assignRight(nonTerminal);
-                digram.getRight().assignLeft(nonTerminal);
-            }
+            digram.getLeft().getLeft().assignRight(nonTerminal);
+            digram.getRight().assignLeft(nonTerminal);
         }
+    }
 
+
+    /**
+     * once rule has been formed that encodes the search string
+     * have to check that the digrams occur consecutively within
+     * the grammar, that is a sequence that does actually occur
+     * todo needs refactoring
+     * @param rule
+     * @return
+     */
     private Boolean checkDigramsAreConsecutive(Rule rule) {
+        // if rule is fully encoded within one nonterminal, check the sequence it represents
         if (rule.getRuleLength() == 1) {
             rule = ((NonTerminal)rule.getLast()).getRule();
         }
-        Symbol first = rule.getLast();
+
+        Symbol first = rule.getLast(); // start from the end of rule and work backwards - avoids overlap
         Symbol check;
 
-        // check that last digram is correct
-        if (rule.getRuleLength() == 0) {
+        if (rule.getRuleLength() == 0) { // todo shouldn't be getting 0 length rules now
             return false;
         }
         else if (digramMap.containsDigram(first)) {
-            if (rule.getRuleLength() == 2) {
+            if (rule.getRuleLength() == 2) { // if found and entire length, then found
                 return true;
             }
             check = digramMap.getOriginalDigram(first);
@@ -279,6 +349,13 @@ public class Search {
         return found;
     }
 
+    /**
+     * iterate over digrams in rule and cound all those that occur and
+     * are consecutive to increase priority for those more likely to
+     * be a part of the grammar
+     * @param rule
+     * @return
+     */
     private int countMatchingDigrams(Rule rule) {
         Symbol first = rule.getFirst().getRight();
         int count = 0;

@@ -18,38 +18,44 @@ import java.io.IOException;
 
 public class Main extends Application {
     private String PATH = System.getProperty("user.dir");
+    private static final int WIDTH = 560;
+    private static final int HEIGHT = 250;
+    private static final int SPACING = 10;
+    private static final int WIDTH_BUFFER = 12;
+    private static final int HEIGHT_BUFFER = 15;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    //todo needs breaking down into separate methods for correct gui code
     @Override
     public void start(Stage primaryStage) {
-        final Rule[] searchFileRule = new Rule[1];
-        primaryStage.setTitle("ProjectGC");
-        InputOutput io = new InputOutput();
+        final Rule[] searchFileRule = new Rule[1]; // array used to store and output search results
+        primaryStage.setTitle("ProjectGC"); // set window title
+        InputOutput io = new InputOutput(); // new io for reading and writing necessary files
 
-        // next to it is output for search
+        // text window for compression and search output
         TextArea textOutput = new TextArea();
         textOutput.textProperty().addListener((observable, oldValue, newValue) -> textOutput.setText(newValue));
 
+        // file selection button
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(PATH));
 
-        BorderPane border = new BorderPane();
-
+        // drop down options for compression, search, decompress etc
         ChoiceBox<String> choiceBox = new ChoiceBox<String>();
-
         choiceBox.getItems().add("Search");
         choiceBox.getItems().add("Decompress");
         choiceBox.getItems().add("Compress (With Edits)");
         choiceBox.getItems().add("Compress");
         choiceBox.setValue("Compress");
 
+        // button to select file in relation to option above
         Button compressButton = new Button("Select File");
         compressButton.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
-            if (selectedFile != null) {
+            if (selectedFile != null) { //todo needs handling for different file types
                 switch (choiceBox.getValue()) {
                     case "Compress":
                     case "Compress (With Edits)":
@@ -74,7 +80,7 @@ public class Main extends Application {
                             e1.printStackTrace();
                         }
                         break;
-                    default:
+                    default: // file selected for search
                         try {
                             AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(selectedFile);
                             Decompress d = new Decompress();
@@ -87,11 +93,11 @@ public class Main extends Application {
             }
         });
 
-        // search bar
+        // search bar for input and button
         TextField searchField = new TextField();
-
         Button searchButton = new Button("Search");
 
+        // perform search
         searchButton.setOnAction(value ->  {
             if (searchFileRule[0] != null) {
                 Search s = new Search(searchFileRule[0]);
@@ -99,21 +105,24 @@ public class Main extends Application {
             }
         });
 
+
+        // layout of gui elements, positioning of search bar, buttons etc
+        BorderPane border = new BorderPane();
         HBox hBox = new HBox(choiceBox, compressButton, searchField, searchButton);
-        hBox.setPadding(new Insets(15, 12, 15, 12));
-        hBox.setSpacing(10);
+        hBox.setPadding(new Insets(HEIGHT_BUFFER, WIDTH_BUFFER, HEIGHT_BUFFER, WIDTH_BUFFER));
+        hBox.setSpacing(SPACING);
         border.setTop(hBox);
 
         HBox fileAndOutput = new HBox(textOutput);
-        fileAndOutput.setSpacing(10);
+        fileAndOutput.setSpacing(SPACING);
 
         VBox vBox = new VBox(fileAndOutput);
-        vBox.setPadding(new Insets(0, 12, 15, 12));
-        vBox.setSpacing(10);
+        vBox.setPadding(new Insets(0, WIDTH_BUFFER, HEIGHT_BUFFER, WIDTH_BUFFER));
+        vBox.setSpacing(SPACING);
 
         border.setCenter(vBox);
 
-        Scene scene = new Scene(border, 560, 250);
+        Scene scene = new Scene(border, WIDTH, HEIGHT);
 
         primaryStage.setScene(scene);
         primaryStage.show();

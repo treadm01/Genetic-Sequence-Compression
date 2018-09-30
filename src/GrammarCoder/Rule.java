@@ -6,8 +6,8 @@ public class Rule extends Symbol{
     int count;
     private Guard guard;
     static Integer ruleNumber = 0;
-    Set<NonTerminal> nonTerminalList = new LinkedHashSet<>();
-    private static final long PRIME = 2265539; // from sequitur
+    Set<NonTerminal> nonTerminalList;
+    private static final long PRIME = 2265539;
     // for decompressing
     Boolean compressed = false;
     Rule removed;
@@ -25,6 +25,7 @@ public class Rule extends Symbol{
         assignLeft(guard);
         guard.assignRight(guard);
         guard.assignLeft(guard);
+        nonTerminalList = new LinkedHashSet<>();
     }
 
     /**
@@ -70,24 +71,6 @@ public class Rule extends Symbol{
         this.addNextSymbol(left);
         this.addNextSymbol(right);
     }
-
-    /**
-     * return the last element
-     * @return
-     */
-    public Symbol getLast() {
-        return guard.left;
-    }
-
-    public Symbol getFirst() {return getGuard().getRight();}
-
-    public Guard getGuard() { return guard; }
-
-    public int getCount() { return count; }
-
-    public void incrementCount() { count++;}
-
-    public void decrementCount() { count--;}
 
     /**
      * get string of the rule at nonterminal and terminal level, used in printing rules
@@ -172,18 +155,23 @@ public class Rule extends Symbol{
         return output.toString();
     }
 
-    @Override
-    public int hashCode() {
-        long code;
-        long a = this.representation;
-        code = (21599 * a) ;
-        code = code % PRIME;
-        return (int)code;
+
+    /**
+     * return the last element
+     * @return
+     */
+    public Symbol getLast() {
+        return guard.left;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Rule rule = (Rule) obj;
-        return this.getRuleString().equals(rule.getRuleString());
-    }
+    public Symbol getFirst() {return getGuard().getRight();}
+
+    public Guard getGuard() { return guard; }
+
+    public int getCount() { return count; }
+
+    void incrementCount() { count++;}
+
+    void decrementCount() { count--;}
+
 }

@@ -67,8 +67,8 @@ public class Compress {
             nextSymbol = new Terminal(sequence.charAt(i));
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
-        //    debugGrammarOutput();
-        //    System.out.println(getDigramMap().printDigrams());
+//            debugGrammarOutput();
+//            System.out.println(getDigramMap().printDigrams());
         }
     }
 
@@ -183,8 +183,10 @@ public class Compress {
             nonTerminal.getRule().decrementCount();
             nonTerminal.getRule().nonTerminalList.remove(nonTerminal);
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
-                digramMap.removeDigramsFromMap(symbol);
-                digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
+                //System.out.println("removing rule used once " + nonTerminal.getRule().getLast().getLeft() + nonTerminal.getRule().getLast().getLeft());
+                digramMap.removeDigramsFromMap(symbol); // removes left and right
+                //todo removed below as not necessary
+                //digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
             }
@@ -197,9 +199,9 @@ public class Compress {
      * @param symbol - the position of the digram to be replaced
      */
     private void addNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
-       // System.out.println("add nonterminal " + symbol.getLeft() + symbol);
+        //System.out.println("add nonterminal " + symbol.getLeft() + symbol);
         digramMap.removeDigramsFromMap(symbol);
-        //System.out.println("after removal " + getDigramMap().printDigrams());
+       // System.out.println("after removal " + getDigramMap().printDigrams());
 
         nonTerminal.assignRight(symbol.getRight());
         nonTerminal.assignLeft(symbol.getLeft().getLeft());
@@ -220,10 +222,13 @@ public class Compress {
      * @param nonTerminal
      */
     private void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
+//        System.out.println("left " + left + " right " + right);
+//        System.out.println("nonterminal " + nonTerminal.getRight() + " left: " + nonTerminal.getLeft());
         if (!nonTerminal.getRight().isGuard()) {
             checkDigram(right);
         }
         if (!nonTerminal.getLeft().isGuard()) {
+       //     System.out.println("digram " + left.getLeft() + left);
             checkDigram(left);
         }
     }

@@ -37,7 +37,7 @@ public class Compress {
             processWithOutEdits();
         }
 
-        //debugGrammarOutput();
+        debugGrammarOutput();
     }
 
     /**
@@ -67,6 +67,8 @@ public class Compress {
             nextSymbol = new Terminal(sequence.charAt(i));
             getFirstRule().addNextSymbol(nextSymbol);
             checkDigram(getFirstRule().getLast());
+        //    debugGrammarOutput();
+        //    System.out.println(getDigramMap().printDigrams());
         }
     }
 
@@ -94,6 +96,7 @@ public class Compress {
             }
         }
         else { // digram not been seen before, add to digram map
+           // System.out.println(symbol.getLeft() + " " + symbol);
             digramMap.addNewDigrams(symbol);
         }
     }
@@ -121,9 +124,13 @@ public class Compress {
 
         addNonTerminal(oldTerminal, oldSymbol); // update rule for first instance of digram
         addNonTerminal(newTerminal, symbol);// update rule for last instance of digram
-
+        //todo ??
+       // System.out.println("old " + oldSymbol.getLeft().getLeft().getLeft() + oldSymbol.getLeft().getLeft() + oldSymbol.getLeft() + oldSymbol);
+        //Symbol s = oldSymbol.getLeft().getLeft();
         Objects.requireNonNullElse(newRule.removed, newRule).addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
+        //System.out.println("after links " + getDigramMap().printDigrams());
+        //System.out.println("old " + s.getLeft() + s);
         //check the symbols removed and deal with if they are rules
         //reduce rule count if being replaced, or remove if 1
         if (oldSymbol instanceof NonTerminal) {
@@ -190,7 +197,9 @@ public class Compress {
      * @param symbol - the position of the digram to be replaced
      */
     private void addNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
+       // System.out.println("add nonterminal " + symbol.getLeft() + symbol);
         digramMap.removeDigramsFromMap(symbol);
+        //System.out.println("after removal " + getDigramMap().printDigrams());
 
         nonTerminal.assignRight(symbol.getRight());
         nonTerminal.assignLeft(symbol.getLeft().getLeft());

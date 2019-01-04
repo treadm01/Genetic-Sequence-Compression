@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="GeneticCompression:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="cleaning up code, trying to add all comments">
+    <list default="true" id="fca0c291-ce16-4b9a-9bf8-7a9bfaa0a993" name="Default" comment="removed a few bits">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/CompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/CompressTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test/DecompressTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Test/DecompressTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Compress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GrammarCoder/Rule.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,209 +22,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="772640652">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="55" />
-          <entry key="project.open.time.1" value="37" />
-          <entry key="project.open.time.16" value="7" />
-          <entry key="project.open.time.17" value="7" />
-          <entry key="project.open.time.18" value="3" />
-          <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.20" value="1" />
-          <entry key="project.opened" value="56" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="abc" value="361" />
-          <entry key="book" value="2" />
-          <entry key="java" value="96361" />
-          <entry key="txt" value="2656" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="96361" />
-          <entry key="PLAIN_TEXT" value="3019" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="15000" value="1" />
-          <entry key="abc" value="5" />
-          <entry key="book" value="1" />
-          <entry key="checkSize" value="1" />
-          <entry key="chntxx" value="1" />
-          <entry key="compressTest" value="2" />
-          <entry key="hehcmv" value="2" />
-          <entry key="humdyst" value="4" />
-          <entry key="humghcs" value="2" />
-          <entry key="humhdab" value="1" />
-          <entry key="humprtb" value="3" />
-          <entry key="java" value="99" />
-          <entry key="mpomtcg" value="1" />
-          <entry key="mtpacga" value="3" />
-          <entry key="txt" value="1" />
-          <entry key="vaccg" value="5" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="99" />
-          <entry key="PLAIN_TEXT" value="33" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-634010523">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="50" />
-          <entry key="project.open.time.1" value="41" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.16" value="2" />
-          <entry key="project.open.time.17" value="5" />
-          <entry key="project.open.time.2" value="5" />
-          <entry key="project.open.time.3" value="2" />
-          <entry key="project.opened" value="57" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="MITO" value="1" />
-          <entry key="abc" value="6" />
-          <entry key="book" value="2" />
-          <entry key="comp" value="1" />
-          <entry key="fastatest" value="1" />
-          <entry key="fxml" value="1" />
-          <entry key="humdyst" value="13" />
-          <entry key="humdyst_humghcs" value="1" />
-          <entry key="humghcs" value="1" />
-          <entry key="java" value="333" />
-          <entry key="mito" value="2" />
-          <entry key="txt" value="1" />
-          <entry key="vaccg" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="333" />
-          <entry key="PLAIN_TEXT" value="30" />
-          <entry key="XML" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="abc" value="641" />
-          <entry key="comp" value="292" />
-          <entry key="fastatest" value="12" />
-          <entry key="humdyst" value="10" />
-          <entry key="java" value="133809" />
-          <entry key="txt" value="1729" />
-          <entry key="vaccg" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="133809" />
-          <entry key="PLAIN_TEXT" value="2685" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FavoritesManager">
     <favorites_list name="projectGCG" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="298" column="44" lean-forward="true" selection-start-line="298" selection-start-column="44" selection-end-line="298" selection-end-column="44" />
-              <folding>
-                <element signature="e#9841#9842#0" expanded="true" />
-                <element signature="e#9873#9874#0" expanded="true" />
-                <element signature="e#10670#10671#0" expanded="true" />
-                <element signature="e#10697#10698#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="137" column="1" lean-forward="true" selection-start-line="137" selection-start-column="1" selection-end-line="137" selection-end-column="1" />
-              <folding>
-                <element signature="docComment;class#AdaptiveArithmeticCompress#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Search/Search.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Search/SearchNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="19" column="80" selection-start-line="19" selection-start-column="80" selection-end-line="19" selection-end-column="80" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ApproxRepeat.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="657" column="24" lean-forward="true" selection-start-line="657" selection-start-column="24" selection-end-line="657" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
+        <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="30" column="73" selection-start-line="30" selection-start-column="73" selection-end-line="30" selection-end-column="73" />
+            <state relative-caret-position="88">
+              <caret line="304" column="5" lean-forward="true" selection-start-line="304" selection-start-column="5" selection-end-line="304" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -222,17 +39,83 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="4176">
+              <caret line="239" selection-start-line="239" selection-end-line="262" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
+        <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+            <state relative-caret-position="3258">
+              <caret line="189" column="34" selection-start-line="189" selection-start-column="34" selection-end-line="189" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="70" column="10" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="53" column="16" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/DigramMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="223">
+              <caret line="87" column="13" selection-start-line="87" selection-start-column="13" selection-end-line="87" selection-end-column="13" />
+              <folding>
+                <element signature="e#4577#4578#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="89" column="24" selection-start-line="89" selection-start-column="16" selection-end-line="89" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="326" column="32" lean-forward="true" selection-start-line="326" selection-start-column="32" selection-end-line="326" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sourceFiles/abc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="19" selection-start-column="19" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="97">
+              <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -250,36 +133,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>debugG</find>
-      <find>humdystt</find>
-      <find>standard_ma</find>
-      <find>unique_sy</find>
-      <find>highest</find>
-      <find>addal</find>
-      <find>uni</find>
-      <find>uniques</find>
-      <find>syste</find>
-      <find>controller</find>
-      <find>represe</find>
-      <find>true</find>
-      <find>c.getFirstRule().isComplement</find>
-      <find>r.isComplement</find>
-      <find>false</find>
-      <find>humg</find>
-      <find>posi</find>
-      <find>alls</find>
-      <find>high</find>
-      <find>highestr</find>
-      <find>overla</find>
       <find>generater</find>
       <find>withed</find>
       <find>mi</find>
-      <find>debug</find>
       <find>printru</find>
       <find>rulesfrom</find>
       <find>uniqueter</find>
       <find>humdyst</find>
       <find>unique</find>
+      <find>gaattcctgggcctggggctgtggcagctgcctcgtcccttcacctcctggcttattctctccctccatatcttagcaatttcttcatgggaatgtccccaattagaaatttctattataccattatattaccaacatatatatatatacctggccgggcgcggtggctcatgcctgtaatcccagcattttggtaggccaaggcgggtcggatcacctgaggtcaggagttcgagggccagcctgatgaccatggtgaaaccccatctctactaaaaatacaaaattaatcgggcatggtggcacatgcctgtaatcccagctactcgggaggctgaggcaggagaatcgcttaaacccaggaagtggaggtttcagtgagctgagattgtgccattgcactccagcctgggtaacaagagcaaaactccatcaaaaaaaataatatatgtatatatatattacaattttatatatatatacacattatgtaattttttttaccattttatatatatacattacgtaatggtaaatgttttctctgccccccagtagattgttagctccagaagagaaggatcatgtctttggtttatctagatatgtccatcggcctggtacagtctctggcccatgttataggcaacaactacttgtagaatcggtgaatgcatgaatagaagaatgagtgaatgaatgaatagacgaaaggcagaaatccagcctcaggccgggcgtgggtggctcacacctgtaatcccagcactttgggaggccgaggcgggtggatcacaagatcaagagatggagaccaacctggctaacacagtgaaaccccgtctctactaaaaatacaaaacattagccgggcatggcggtaggctcctgtagtccgagctactagggagcctgaggcaggagaatggcatgaacccaggggggcggacgttgcagtgagccaagatcgcgccactgcactccagcctgggcgacagagcaagactcggtctcaaaaaaaaaaaaaaaagaaatccagcctcaaagagcttacagtctggtaagaggaataaaatgtctgcaaatagccacaggacaggtcaaaggaaggagaggctatttccagctgagggcaccccatcaggaaagcaccccagacttcctacaattactagacacatctcgatgcttttcacttctctatcaatggatcgtctccctggagaataatccccaatgtgaaattacttagcacgtcaagttaggtagatccttgtgtacttcttggttgttcagagatcatcaccagtgcaacatcccccatcatacacagcagtgtcttgcccctctcctccccaagccttccgaggcccttcctccgtgcctgaaccccctggacatatcatgtggcaaactgaagggtccaacgagatacaggaagtgaaacacgatgtacactgaaacgtgcaatacaaatatgcagcatgaagtgcctcggttcactaacccgagctatgctgggtgcttcttttctaccactttccttaatgcctatggacacctcattctgtggctgaagttccttgtgttcaattccccccatcttcattgaacatcctctgtgcagggacttgacccctgtcctgctagctttgcactgaggcaagttttgtccatgcctagtagtgccacatctttactagatgaggtttctaaagagcttggcatggaaggaaagcctggggggccttagaagccatcacttaggaactgggagagctccaggcaagccaccttatctctttgggcctcagtatcctcactcacatccccatggtcagtagagtgccaagcacatggtggacacgcagaagtattgatcatcttcctcacctcccctaggagagcccttggaatccccatataatattctctgaagacctcaatccaatgagccgagtaattgactcggtagcaaactcatggaaaggacattagaagccaaaaggaggtagagtatgtcccagtacaataaccagcctctgatctcaaggaagaaagaacagagctgcaggtgagaagtgtgcgcctcaaatcaccaaagtgagagtggaaggagcacccaccagtcccttggaggcgatccctaagaccggtgagaatggcttcgaaaaatgtgatcgtcctcaaccccacagtcttgaacctaacaggagatcttgaagcctgaaagacaccactttaggatcaacagcagatctgtgactttccacagcaggcacacagaaccctagagttagtcgaggttggacataggaagggcttccaaacacacagagaaattcatggatcctaaattataaagggaggttctttaaaagaaccaagatgattctgagatttatcctgagctttttttttttttttttttttggatgcagagtctcgctctgtcgcccaggctggagtgcagtggcgtgatctcggctaactgcaacctccacctcgcgggttcaagcaattccctgcctcggcctcctgaatagctgggattacaggcgcctgccaccacacctggctaatttttgtatttttagcagagacgggatttcaccatcttggccaggctggtcttgaactcctgatctcatgatccacccaccttggcctccctaagtggtgggattacaggcgtgtgcccaacttttcctgagccttttgaggctgacaccagaggtagaagcccagcctctccccactggccatgtggggagaggctccagcctgcagcaaccagggatctggcctcaagtgatgccccaacagtgggcgacttcccagtactgttaggagaatcccaagtctaattcaaagttgattttttactagcaattaatgatagacatggtctccattgctcaaggctctgggaagatctagactagagaaaacgatcaccgacttctaccacacctgtgggcctcagttcttccctctggtccatggttaccacagtaaccccttgtaaaggtgtttccccaggggtccctagagtcctctgagtcaccataattctgggtcaacagaaatggagaggtaagaggagacactcccctgccctggctggtcccacgtgttcatggcagtaacctgtctggggagcctcgccacccctgtgtccacctgcagagttatgcagtggtccccaactagggcccctgccaccctcattcctaagggaggctggagacttcttccatggccgaaaatccacatctaagtccccggcactagcaaaaaggccctgtcatgggggctccctgccccagttgagattggaggaacatggaagaagctaaaataactaaataactcagtagcatcacactacctgctctggagaaaaaaaaatttaatattattattttttgttttttgagatggagttctgctctgctgcacaggctggagtgcagtggcgcaatcttggctcacggcaacctctgcctcctgagggttcaagtgattctcccgcctcagcctcccgagtagttgggattacagctcatgccaccacgcccagctaatttttgtacttttagtagagatggagttttgccatgttggctagtctggccttgaactcctgacctcaagtgatccacccacctcaaagccacccaaagtttggggattacaagcgtgagccactgtgtccggcctggagaaaggactttaaatgacgcaatgtaggaagagcaaggttgtggagatctgctgccctggctgaggtagctcatgcaatcagtctctctgagccacagtctcttgatctgtgaaatcggaagaaaataatacctccttcacaagacaagtggcaggtcagatgtgagaatgcacaggcaggccctcggcaactggaaaagctctatacagatctgaaaaggaggaggagaaaaaagaggaggggcttccatggctggacagggcatctttctttttctttttctttttttttttttttttttttttgaggtggagtcttgctctgttgccaaggttggagtgcagcagcacgatctccgctcactgcaagctctgcctcccggattcacgccattctcctgcctcagcctcccgagtagctgggaatacacggtccgccactacgcccagctaacttttttgcatttttagtacagagtggatttcacctggttagccaagatggtcttgatctactgacctcgtgatccgcccgcctcggcctcccaaagtgctgggattacaggcatgagccaccgcgcccagcctgatagagcatctttcggcgtgatgtgttctgagttccaaagctgaggaagagactcaaatcttcaagagctcttctaactttgagattctctgatggtttcagggctatgggaggaagagcttgtggtccgtgtctgctcccgggatttctgtttcttggtttgtgtctctgctgcaagtccaaggagctggggcaataccttgagtctgggttcttcgtccccagggacctgggggagccccagcaatgctcagggaaaggggagagcaaagtgtggggttggttctctctagtggtcagtgttggaactgcatccagctgactcaggctgacccaggagtcctcagcagaagtggaattcaggactgaatcgtgctcacaacccccacaatctattggctgtgcttggccccttttcccaacacacacattctgtctggtgggtggaggttaaacatgcggggaggaggaaagggataggatagagaatgggatgtggtcggtagggggtctcaaggactggctatcctgacatccttctccgcgttcaggttggccaccatggcctgcggccagagggcacccacgtgacccttaaagagaggacaagttgggtggtatctctggctgacactctgtgcacaaccctcacaacactggtgacggtgggaagggaaagatgacaagccagggggcatgatcccagcatgtgtgggaggagcttctaaattatccattagcacaagcccgtcagtggccccatgcataaatgtacacagaaacaggtgggggcaacagtgggagagaaggggccaggtataaaaagggcccacaagagaccagctcaaggatcccaaggcccaactccccgaaccactcagggtcctgtggacagctcacctagcggcaatggctacaggtaagcgcccctaaaatccctttgggcacaatgtgtcctgaggggagaggcagcgacctgtagatgggacgggggcactaaccctcaggtttggggcttctgaatgtgagtatcgccatgtaagcccagtatttggccaatctcagaaagctcctggtccctggagggatggagagagaaaaacaaacagctcctggagcagggagagtgctggcctcttgctctccggctccctctgttgccctctggtttctccccaggctcccggacgtccctgctcctggcttttggcctgctctgcctgccctggcttcaagagggcagtgccttcccaaccattcccttatccaggctttttgacaacgctatgctccgcgcccatcgtctgcaccagctggcctttgacacctaccaggagtttgtaagctcttggggaatgggtgcgcatcaggggtggcaggaaggggtgactttcccccgctgggaaataagaggaggagactaaggagctcagggtttttcccgaagcgaaaatgcaggcagatgagcacacgctgagtgaggttcccagaaaagtaacaatgggagctggtctccagcgtagaccttggtgggcggtccttctcctaggaagaagcctatatcccaaaggaacagaagtattcattcctgcagaacccccagacctccctctgtttctcagagtctattccgacaccctccaacagggaggaaacacaacagaaatccgtgagtggatgccttctccccaggcggggatgggggagacctgtagtcagagcccccgggcagcacagccaatgcccgtccttcccctgcagaacctagagctgctccgcatctccctgctgctcatccagtcgtggctggagcccgtgcagttcctcaggagtgtcttcgccaacagcctggtgtacggcgcctctgacagcaacgtctatgacctcctaaaggacctagaggaaggcatccaaacgctgatgggggtgagggtggcgccaggggtccccaatcctggagccccactgactttgagagctgtgttagagaaacactgctgccctctttttagcagtcaggccctgacccaagagaactcaccttattcttcatttcccctcgtgaatcctccaggcctttctctacaccctgaaggggagggaggaaaatgaatgaatgagaaagggagggaacagtacccaagcgcttggcctctccttctcttccttcactttgcagaggctggaagatggcagcccccggactgggcagatcttcaagcagacctacagcaagttcgacacaaactcacacaacgatgacgcactactcaagaactacgggctgctctactgcttcaggaaggacatggacaaggtcgagacattcctgcgcatcgtgcagtgccgctctgtggagggcagctgtggcttctagctgcccgggtggcatccctgtgacccctccccagtgcctctcctggccctggaagttgccactccagtgcccaccagccttgtcctaataaaattaagttgcatcattttgtctgactaggtgtccttctataatattatggggtggaggggggtggtatggagcaaggggcaagttgggaagacaacctgtagggcctgcggggtctattcgggaaccaagctggagtgcagtggcacaatcttggctcactgcaatctccgcctcctgggttcaagcgattctcctgcctcagcctcccgagttgttgggattccaggcatgcatgaccaggctcagctaatttttgtttttttggtagagacggggtttcaccatattggccaggctggtctccaactcctaatctcaggtgatctacccaccttggcctcccaaattgctgggattacaggcgtgaaccactgctcccttccctgtccttctgattttaaaataactataccagcaggaggacgtccagacacagcataggctacctgccatgcccaaccggtgggacatttgagttgcttgcttggcactgtcctctcatgcgttgggtccactcagtagatgcctgttgaattcctgggcctagggctgtgccagctgcctcgtcccgtcaccttctggcttcttctctccctccatatcttagctgttttcctcatgagaatgttccaaattcgaaatttctatttaaccattatatatttacttgtttgctattatctctgcccccagtagattgttagctccagaagagaaaggatcatgtcttttgcttatctagatatgcccatctgcctggtacaatctctggcacatgttacaggcaacaactacttgtggaattggtgaatgcatgaatagaagaatgagtgaatgaatgaatagacaaaaggcagaaatccagcctcaaagaacttacagtctggtaagaggaataaaatgtctgcaaatagccacaggacaggtcaaaggaaggaggggctatttccagctgagggcaccccatcaggaaagcaccccagacttcctacaactactagacacatctcgatgcttttcacttctctatcaatggatcgtctccctggagaataatccccaaagtgaaattacttagcacgtccagttaggtagatccttgtgtacttcttggttgttcagagatcatcaaccagtgcaaacaatccccccatcaatacacagcagtgcctgcccctctccccccgaggtcttccgaggcccttcctccgtgcctgaaccccctggacatatcatatggcaaactgaagtgtccaacgagatataggaagtgaaacacgatgtacactgaaacgtgcaatacaaatatgcagcatgaagtgcctcggttcactaacccgagctacgctgggtgcttcttttctaccactttccttaatgcctatggacacctcattctgtggctgaagttccttgtgttcaattccccccatcttcactgaacatcctgtgtagggacctcacccctgtcctgctagctttgcactgaggcaagttctgtccatgcctagtagtgccaccacctttactagatgagacttctaaagagcttggcatggaaggaaagcccgggggccttggaagccatcacttagaaactgggagagctccaggcaagccacctcatctctttgagcctcagtatcctcactcacatccctatggtcagtagagtgccaagcacatggtggacacgcagaagtattgatcatcttcctcacctcccctaggagagcccttgggaatccccatataatattctctgaagacctcaatccaatgagccaagtaattgactcggtagcaaactcatggaaaggacattagaagccaaaaggaggtagagtatgtcccagtacaataaccagcctctgatctcaaggaagaaagaacagagctgcaggtgagaagtgtgcgcctcaaatcaccaaagtgagagtggaaggagcacccaccagtcccttggaggcgatccctaagaccggtgagaatggcttcgaaaaatgtgatcgtcctcaaccccacagtcttgaacctaacaggagatcttgaagcctgaaagacaccactttaggatcaacagcagatctgtgactttccacagcaggcacacagaaccctagagttagtcgaggttggacataggaagggcttccaaacacacagagaaattcatggatcctaaattataaaggcaggttctttaaaagaaccaagatgattgtgagattacgtagagtttttttttgtttttcttgatacagagtctcgctctgttgcccaggcaggagtgcagtggcatgatctcagctcgctacaacctccacctcccgggttcaagcaattccctgccacagccacctcgagtagctgggattacaggcacctaccaccatgcgcagctaatttttctatttctagtagagacgggatttcaccatcttgaccaggttggtcttgaactcctgacctcatgatccacccaccctggcctcccaaagtggtgggattacaggcatgagccactgcgcccggcctattctgagccttttgaagctgacgccagaggcggaagcccagcctctccccactggccatgtggaggctctccctgagtagtctctcagcctgcaggagccaaggatctggacccaagtgatgccccaacagtgggcaacttcccagtactgttaggagaatcccaagtctaatgcaaagttgattttttaccagcaatgaatcgatagacatggtctccattgctcaaggctctgggaagatctagactagagaaaacgatcatcgacttctacccacacctgagggcctcagttcttccctctggtccatggctgccatggtaaccccttataaaggtgtttccccaggggtccctagagtcctctgagtcaccataattctggggtcaacagaagtggagaggtgagaggagacactcccctgccctggctggtcccacgtgttcctggcagtaacctgtctggggagcctcgccacccctgtgcccactgcggagttatgcagtgtccccaactagggcccctgccaccctcattcctaaaggaggctggagacttcttccatggccgaaaatccacatctaagtccccagcactggctaaaaggccctgtcatgggggctccctgtcccagctgacattggaggaaggatggtgggggaggcagggaccttcttctacttggagctcagggaccctcttccattcgcacctggctcctcctctttgctggtgctggaaggagcaggggaaagtggtgactccaccctcccttggccccatatttttcggagctggtatcatcgatgacacccctcttggatcctcacacaggcctgcctggagaacagctcacagcacagtgccctcccagcaggtgatgagtctggggtgctggtccggtaatgcttcaggagtgacggcagaaaaaggagctctgtcttcccctctgaaagtagggagatggcagggccccagcattcacatcctaggccacaggggtgtgggtgttcaatgttggttgccaacaccacagccaatcacttctagaagcatttgcttgtttgcttgcttgtgtttctacagtgtcaagtgctacatgctcttaaactcagggtgggggaagatttcaccactggagagggtggtctttcctgctcttatccctgggggcatctgatgcttgtgacttccagatggtatggaaatagccccaaccctgggcaccaggagacaggaggctcagtcctggccttctccgcctcagccttgtcctgctgtgaggtttccacaaggcaccccatgccactgggccattctcacctgggaattgagaaagaacaatctgccccttatggaaagacaaaatgaggcaaagggcccctgtgttgggggcaggatccctgcactcagagggatttagaagctgaaataactgggttgggggcggtgactcacgccagtaatctaagtacttagagaggccagggagggtggatcccctaaagtcaagagttcgagaccagcctggccaacatagtgaaaccccgtctctactaaaaaagtacaaaatttagcctggcgtggtggcgggcgactgtaatcccagctactaaacagggtgaggcaggagaatcacttgaacccaggaggtggaggttgctgtgaggcaacatcatgccactgcactccagcctgggtgacagaatgagactccaactgaaaaaaaagaaagaaagagagagagagagacaaagaggaaggaaagaaagaaagaaagaaagagaaagaaagaaagaaagaaaaggaaaggaggaaggaaagaaaaagaaaaagaaagaaagagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaactaaaataactaaataactgagtaacaccacactacctgttctggagaaaggacttttttcttgttgttgtggttgttgaaatggagtcacactctgtcgcccaggctggagtggagtggcgcgatcttggctcacagcaacctctgcctcctggattcaagtgattctaccacctcacctccggagtaactgggattaccagttccgccaccacacacagctacttttgtatttctagagagttggtgttttgccatgttggctagtctggccttgaactcctgacctcaagtgatccacccacctcagcctcccaaagtgctgggattacaggcatgagccacgtgcccggcctggagaaaggactttaaatgacacaaagtgggaagagcaaggctgtggagatctgctgccctggctgaggtagctcatgcaatcagtctctctgagcctcagtctcctgatatgtgaaatgggatgatactcatacctcctacacaagacaagtggcaggtcagacgtgagaatgcacaggcaggcccttcgcaactggataggctctatacaggtgtggaaaggaggaggagaaaaaagaggacgggcttccatggatggatagggcatctttcggcgtgatgtgttttgagttccaaagctggggaagagattcaaatcttcaagagctcttccaactttgagattctctgatggtttcagggctatgggaggaagcgcttgtggtccgtgtctgttcccgggatttcggtttcttggtttgtgtctctgctgcaggtccagggagctggggcaataccttgagagtctgagttcttcgtccccagtgacctgggggagccccccacccaacccccccccccctccgccccgccccaaggctcagggaaaggggagatcaaagtgtggggttggttccctctagtggtcagtgttagcactgcatccagctgactcaggtgggcccaggagtcgtcagcagaagtggaattcaggactgaatcatgctcacaacccccacaatctattggctgtgcttggccccttttcccaacacacacattctgtctggtgggtggaggttaaacatgcggggaggaggaaaggaataggatagagagtgggatgtggtcgataggggtctcaaggactggctatcctgacatccttctccgcattcaggttggccaccatggcctgctgccagagggcacccacctgaaccttaaagagaggacaagttgggtggtgtctgtggttgacactctgtgcacaaccctcacaacgctggtgacggtgggaagggaaagatgacaagccaggggacatgatgccagcatgtgtgggaggagcttccaaattatccattagcacaagcccgtcagtggccccatgcataaatgtgcacagaaacaggtgggggcaacagcgagagagaaggggccagggtataaaaagggcccacaagagaccagctccagcatcccaaggcccgactccccgcaccactcagggtcctgtggacagctcacctagcggcaatggctgcaggtaagcgcccctaaaatccctttgggcacaacgtgtcctgaggggagaggcggcgccctgcagatgggacgggggcactaacctcaggtttggggcttctgaatgtgaatatcgccatctaaggccagatatttggccaatctctgaatgttcctggtccctggagggatggagagagagaaaaagaaaacagctcctggaacagggagagtgctggcctcttgctctgcggctcccttcttgccctccggtttctccccaggctcccggacgtccctgctcctggcttttgccctgctctgcctgccctggcttcaagaggctggtgccgtccaaaccgttcccttatccaggctttttaaagaggctatgctccaagcccatcgcgcacaccagctggccattgacacctaccaggagtttataagctcttggggaatgggtgcgggtcaggggtggcaagaaggggtgactttcccccactggggaagtaatgggaggagactaaggagctcagggttgttttctgaagcgaaaatgcaggcagatgagcataggctgagccaggttcccagaagagtaacagtgggagctggtctccagcatagaaagcagtggtccttcttggtggggggtccttcccctaggaagaagcctatatcacaaaggaacagaagtattcattcctgcatgactcccagacctccttctgcttctcagactctattccgacatcctccaacatggaggaaacgcagcagaaatccgtgagtggatgctgtctcctaggcggggatgggggagacctgtggtcagagcccccgggcagcacagccactgccggtccttcccctgcagaacttagagctgctccacatctccctgctgctcatcgagtcgcggctggagcccgtgcggttcctcaggagtaccttcaccaacaacctggtgtatgacacctcggacagcgatgactatcacctcctaaaggacctagaggaaggcatccaaatgctgatgggggtgagggtggcaccaggggtccccaatcctggaagcccactggcttcgagggctgggggagagaaacactgctgccctcttttcagcagtcaggcgctgacccaagagaactcaccatattcttcatttcccctcgtgaatcctccaggcctttctctacacctgaaggggaaggaggaaaatggataaatgagagagggagggaacagtgcccaagcgcttggtctctccttctcttgcttcactttgcagaggctggaagacggcagccacctgactgggcagaccctcaagcagacctacagcaagtttgacacaaactcgcacaaccatgacgcactgctcaagaactacgggctgctccactgcttcaggaaggacatggacaaggtcgagacattcctgcgcatggtgcagtgccgctctgtggagggcagctgtggcttctaggggcccgcgtggcatcctgtgacccctccccagtgcctctcctggccctgaaggtgccactccagtgcccaccagccttgtcttaataaaattaagttgtattgtttcatctgactaggtgtccttctataatattatggggtggaaggtggtggtatggagcaaggggtaggtgggaagacgacctggagggccttcagggtctattgggaactaggccactgaaatataagaggtttggctgttcctgggccagaaaaaggctgacatatcactgctgtctattactcactaaggccattccaccagctcagtggtcccagcttgctggtcatagctcattggtcatcccagagatgacttgaaggcatttcttcctcccccaccatcaccagcaacaccaaacctagccccccaggagcgggaagaaatgaaaacaagatgggctattaagtgcagaggcaaaaactccccaacaggtgaggaaacaatggcatagaattacttgtgttcggaagaattttaagatgaatattccttaagcccaactactctcgggaaatgagaacaatgcaaaaatgagtttgagacatatggttccagagcatttggaatctgaattagggcaagggaagtggaagagagattttatttgcgggttgtaaatgcagtgccaacaggtgccaggtagataacaacgtaagcaatgagggctggatggcaggggataaatcccagatgacactcgcttccttcaggggatgcaacacagaagggtgggaaccagcacaatctgcagaactcaagcccctgctgaggtgggacccagcccgcctgtcaccatcaggactgcagggacacggcttccagaccttctgattctttgagacagccaggacatccagactgttacgggaaatctaatatttaaataatggcaacacatactgaaaatcttttaagggcaaaaattaacccaaacacacatggtctccaagctgtctgtgagcaattttgttctaagagatgttgattggggtaacttggtgtaagggaaagaatcagaaagatttgggctgtatgcaatttagtgtcgctgaataaattacttgaccaagctgagataataatatattgctttacaaggattatgtgaggattaaatgcaatggtatttttgacatattatagtactgaagaaattgtagttatttctgcattgaatttttggatgttttataataataataaacatctgagatgtttattatttccaaataagcactaaagagcggtggttagttaagagtttactctcccaagcaccttggctaagtgactggtgacctaaatctatactaagatgctcacaggaactctagtatccaaaaatgatttcatgaagtcaggaattattttacaatgcaaataatcaaccccctaattaatcttctttagaagttctgattcttatgtgccataatgaatttttttgataacgagacccacttgtgttcatttttggctattttgcagttaataactcagtccttgggaagtggttcaaagctgaactaatcagaactctagagctgctgcatttctcagctcagaagacattcctgcatcttacgttgttcttctactattggaatttaaaattacggcattttggagttagaagggcctcataagtcagtctagtttcttctactttgggaatcttatcctacagcgtccattacagtcagtattccaattacaagtgtgtagcactagaaccaagggaatccctttcacaaggctcttcattctaataaaccactctcattgcagaaaactatttcttgcacaaagctggaatcaatattcctgcaatgtccttcatttggccttaaaattatttagaaatctcagtctttagaagtcgatggaatgagcacaattataattatctctcggcttgcgtgttttaaaaggaaatgtgagccatcttaataagtatttgttgaatgcacgtgacagtggaatgacaatgtccagcgcctacttgggtggctaagagggttctaaagtggggtggtcataacatataactgaactgcagggggagccacacgccagagactgtccacccagctcccctcgggtataggagaatccactcaaccactgctggttgagaattagaaagatactacctgactttgcacattttagaatataaaaagaccttaaagaccatctgctttaaactctttgatttacctactgttagtctacctttcagctcatcaacttggtgtggacggcaatttccgctgcaaatttgagatgcctagggtgttttctaaacgatgcattcgtgagccctcactccctgagattctgatataattagcctggaatgtggtccaggcaagagtagtttgaaaactttcccaggtgattctatcatgtaaacaaggttgagaaccactgtgttagggaccgcaaagatgagacccatgtgttcacagctgttgtattggtggaacagggaaaacggagaaaaaggagacgagaggcctgggccagttgtggtgccacctgctcctaattccaaccagtcatctaaaaagtgtttatcgtgagccagtcacagaaagacaaatactctctgattccagttagatgaggtactcagagcagtcaaattcgtagagacaaaaagtaggatggtggctgccagtggctgtggggagggatggaatagggagccatttaacgagcacagggtttcagctgtgcaagatgaaaagggttctggagatggttggtggtgagggttgcatgacgatgtcaatgtacttgacgtgaccgaactgtacacgtaaaatggttaagatggaaatgtttatatcttctcacaactaaaaattgttaatagtttcttttgtttttgtttttgtttttgagacagaggctggagtgcagtggtgggatcttggctcactgcaacctccgcctcctcccgggttcaagtgattctcatgcctcagcctcctgagtagctgggattataagtgtgcaccaccacacagggcagatttttgtatttttggtaaagacagggtttcgccatgttggccaggctggtctcaaactcctggcctcaggtgatccaccctccttggcctcccaaagtgataggattacaggcgggagccaccaggcctggcccttaatggtattttctaatgaaaactcttcctgaagataagattatcgagactcgcacagggaagagttcagcaggcagagctccagtcatccttgacccctggcataatgttttactgactctgtcatttttttgaatttaccctaacctaaaatgaccacttctgaatatcttccatgagcattgttgaaatacacatggttggttttgtccctttatacacagttgagagcagaactgaccccttcctttttcttctgaattgtagggtctgggcttctcagccaagacaagctgacactttgcctggatgcttctttaattcagaaggccctggagtgctgaggcacacaatgagtacctctgggattagggtcaccaactcgtcctggtttgcaggagactttctcaatgtcaacactgaaagtcccacgttccttccagaatccctcagctcaatgcaaactcagctcacaggactggtcaccctattagtagtcctaaatcttagggcaccaaactggggggaaagtaggggaaggagcaagaaaaagactagaaaaaccggaaagctgtgcacagtgtatatgacctttgatggccctcatggttatcatggatttctgattcttgctttgagtttactgtgattataatgatgtgcttaattaccactagaattatcagtgtaataataaaaaccaacaaatgtgaacacatgtctccagcaccatgctagtttattacaagtattatgtcatttctttctaactataattctctaaggtaaatactattattaatcctatggtaagaagtcccactaacgatgtaacttatgctttctcaggtctagagagaaagacaccagaatgtcaccctgaccatccttgagagcataaatggccaggcactgtggctcacgccagtaatctcagcactttggagggctgaggcgggaggaggtcacaagttcgagataagcctggccaacatggtggcaccccgtctcttactaaaaaatacaaaaattagccaggtgtggtggtgcacacctgtattcccagctacgaaggcatgagaatcgcttgagcccgggaggcagtgttgggctgggcccatcatgccactgcactccagctgggtggctgaggaagattctctctcaaaaataataagaaagaagataaaattttggagtattaaaggccactcttcctctggagataatcaaggtagctgcaatttaagtatgagctggttgctttaatgttcagaaagaatatgatcaaaaccatttagagggtggggcctcctcctatagacaatgaaggcaactacccttagaagctctattatactggaaaagagatatgagatccttcttgctttaagaatcaatgaagccgggcgtggtgactcactcctgtaatcccagcactttgggaggccgaggtgggcagatcacctgaggtcaggagtttgagaccagcctggccaacatgacgaaatcctgtttctactaataacacaaaaattagccaggtgtggtggtgcacacctgtaatcccagctactccagaggctgaggtaggaaaattgcttgaagccaggaggcagaaattgcagtgagccgaggtcgtgccactgcattccagcctgggagacagagccgagactccgtctccaaaaaaaaaaaaagaatcaatgagaaaggcctgcctgatctctggttgtgtggatccttcgggaaggaaagtgaacagaggttccaagtctacaagggaaaaagcccagcctactctgaagagctttgcgggacggctcatccaaactactgagctctaagaactggaaagctggaaaccccagcaagaggacacctgcagagctggaccaggccccgaagaagcagatcatcctccctcagagatctacagcaggtgggaacccagatctgcagacccgcttggtttgagggtactgtgtgggaccatctgtcaacactgacaccctgtagcagtgagaagcaaaggcagcagccggctgagcctccaggctcgccctgctggaactagaaagtccaagtggcccccttcttcctccctttttggttttgtttgcttttgtttttgttttgttcaagatggggtctcgctttgttgcccaggctggagtgcaatggcacgatctcagatcactgcaacttctgcctcccacagtcaagcgattctcctgcctcagcctccccagtagctgggattacaggtgcacaccaccatgcctggctcattttccccttccttgttggattcgctgtgcttcaaggcactgaggccatgaggcagggtttgcagatacaggatatctacagccctgatgcgactgatcctgacaccaaaatggctgtggatccctgcatggtgtggctgtatactcctgtctcttaaacctgcttcttaacttacttccccaaatgctcaattcagggaaggtggatgatttatattagactcacatgatgaaggagcagtagctccacctagtggaaacattgaggttgaaaaggtcatgttccgggatgatgctattttataaagtcaagatatttcgtgtccctccaggaagccttccttgattcgagttatgctttctcttaacaatctgttttcccagtcataggagttcatgcacaaatgtaatctcctacttgtttgtcttgctttcctaataaatttgtggaagccaggaacaatgttttgttcaccactgtatccccactgccttgtatgtggtgaaaccaaagggttacttttacacttaatctatagcaccagactcaggggaggtctgggaagaatgggaaaacgttttccctctgctgtctgatgccatggttttttctagctggtatctgcaatttggaaagctatggacctctctctatctggaagtctgaactttagcttttctttttgcttgtgtttcctttgttttgcttttgagacagggtctggctatgtcacccaggctggagtgcagtgcatgatctcaactcgctgcaaccctccacctcccgcgcccaagtgatcctcccacctcagactctcaagtagctgggactacaggcacgtgccactatacctggctaagttttgtgttttttgtagaaatggggtttgccatgttgcccaggctattcgcaaactctggggctcaagtgattcgcccgcctcagcctcccaaagtgctgggattacacgctgagccaccgccccggcctgaatttcagttttgaaagcagtttacataggctgccaccctgagctaatgcaccccctgccccgggctggttgtttatgctatcaacacggtattttttccttagaaattgtacttaaagttataaaatgcagccgggagcggtggctcatacctgtaatcccagactttagaaggccgaagtgggtggatcacgagatcaggacttcaagaccagcctggccaagatggtgaaaccctgtctctactaaaaatacaaaaaattatctgggcatggtgatgggcacctgtaatcccagctacttgggaggctgaggcagagaaatccttgaacccaggaggtagaggtggaagtgagccaaaatcacgccattgcactccagcctgggcaatagagcgagactgcatctgaaaaaaaaaaaaagtgataaaatgcaaccatttgacataacaagagctttcagcaatgacacagaagggaagggaactgcatttggacatcataaaaccacttttatttttaccatagcaacattccagtgaacatttcttgactgacttgggagaaaatatctggttttgtgattcctcacgccttctccgagggtgaatatactctttccgaaggacagggaaggaggctgaaccataaaatcatatgaacattttcacaagaggattcctcttgaagcttcaaggaaattgtttacagtcagaagaaaatatgcacttcttgatgaaaacagagagtaaacattgcaactctaacctagacacctatatgggtaaaaaaaagaaaactggcaaatgcgaactcacagttgatcactctatgaaaaggaattcagagatgtttggagctcttaacctaagaggccaatttcatggaagaactctaccttctacttcagagacagaacactgggctagatacgatgcttgtctggcccgaagtggaatttcttaccatctgtatactcccccaagacccacaacagatggttactgagttgcagcttgccactgatccttaatgatgtcaacaagctcagctctgggagctggcactccagaagcccaggtcaggggagcaagggaaagtggagatgggaacagagctctgattcctagccccatatttgatacttactcccttcaaagtcctgtccatggactacaaatttagctcccagttagtaatcaaaaacccatgaaatatgagttgtatttctaagatatgcctgactgtagtatgatgtttaagagaaaagggcagtgagaaccatgaagaaacggcaagatcttttctttttttttttggatctaagagtggactgatgaagcacctggcaaggagcaagaggccttcttacaaatcaaacattgagactgagattcctaatgactagggtgagctctaaagagaaaggtggctgggcgcggtggctcacacctgtaatcccagcattttggggggccaaggtgggcggatcacttgaggtcaggagtttgagaacagcctagccaacatggtgaaaccccatctctacgaaaaatacaaaaattagacaggcatggtggtatgcacctgtaatctcagctactggggaggctgaggcaggagaatcacctgaaccaggaggctgaagttgcagtgagcgagatcgcatcattgcatccagcctaggcgacaacagtgagactccatctcaaaaaaaaaaaagagagagagagagaatggtgagattgtggacatattggacacacaggacatggggcatgggggcctgaaacaccgttttacaggacagatgtacacaaataggaatgcagcctgccattgtgtttcttcctttctcctctatcccttctcccatccctgggaaaccacagtagcagaagtctcattcaatcaaatagctgtcaattatatgagttgtacttttctcttcctgaacagcaaatggctttcctcctctttgtcctcctctttctgcctgtagagcaatttcctcctgtctactttgcagggccgatagctcaaatacagtgctatggtgatgacacccgactccaagggcaacggtaataatgacaaagagggtagagctgattccttcatccagtcctgcccaagcacagaagatagagttaggaaagtctgagagtacaaagatcacccaccccagcccacaggcccacttctgagtctcattcttcccaacctagtagaatctttcttattttcatgcttggataagaatcccaaacccctgaggtttccatcctgggcctggcagcagggcagcaaaggttaccttgaacaatgacagcaatgtctttgctgacagagcccagctggttagtggctgtgcgagcagtaggttccagtgtggttctgggttgccttctgtggcacttcaaggtcaaagacaccccattccaggtacacaccaaggctggagctgggtttccctttggacgcaggcgagcgtgtgttccatcccttccagccaggtctgtttggcagagcaactggattcctctaaccatggcttgtctgcaaaaacagtttcccaaagagctgaagttcagtgcaccacactccctccctaccttcaccccctgctccctctcctcccctcacccaaatgctgtccccttcactcaacagctttccttcccaagggagcactagcagctccctgctttgagccaactcttctttcccactttccgtatgggcagggagtcccagatgaaacctagggtgttcttatggatttggactaaaatataatgctgctctgtccatggtggccctggggcccctgcttcccatgtttgtttctcggtgggtaaggagctaggtaacagtgaactcagagatgaggatttttctacttttctttttggttttttcgttgttttgtttgtttctttctttgtttgtttgcttgtttttgagacaagtcagtctcacttcttcgccctggctggagtgcagtagtgtgatctcggctcatgacaacctctgcctcccgggttcaagcaattctcgtgcctcagccgctccagtaactaggattatcggcaaatgccaccacccccgctaatttttctatttttagtagagatcagtttcacctgttggccacgctggtctcaaactcctgacttcagtgatccacatgtctcagcctcccaaatgttgggattacagcatgagccaccacgccggcctatcctgagccttttgaagctgacgccagaggtgcaaagcgcagcctctccccactggccacgtagaggctcttgttgggtagtctctcagcctgcagcagccagggatctggcctcaagtgatgccccaacagtgagcgacttcccagtactgtcaggggaatcccaagtctaattcaaagttgattttttaccagcaatgaatgatagacatggtctccattgctcaaggctctgggaagatctagactagagaaaatgatcattgacttctacccacacctgtgggcctcagttcttccctctggtccatggttggcatggtaaccccttacaaaggtgtttccccaggggttcctagagtcctctgagtcaccataattctgcggtcaacagaaatggagaggtgagaggagacactcccctgccctggcagtcccacatgttcctggcagtaacctgcatggggagcctcgccacccgtgtgcccactgcggagttatgtagtggtccccaactagggcccctgccaccctctttcctaagggaggctgcagacttcttccatggccaaaaatccacatctaagtccccagcactggctaaaagaccctgtcatgggggctccctgtcccagctgacattggaggaaggatggtgggggaggcagggaccctcttctacttggagctcagggaccctcttccattcccacctggctcctcctctttgctggtgctggaaggagcaggggaaagtggtgactccaccctcccttgaccccatatttctcagagctggtatcatcgatgacacccctcttggatcctcctacaggcctgcctggagaacagctcacagcacagtgccctcccagcagatgatgagtctggggtgctagtccagtaatgcttcaggaatgacggcagaaaaaggagctctgttttctgctctgaaagtggggagatggcagggccccagcattcacatcctaggccacaggggtgtgggtgttcaatgttggttgccaacaccactgccaaccacttctggaagcgtttgcctgtttgtttgcttgtgtttctacagagtcaagtgctagatgctcttaaactcaggggggaagatttcaccactagagagggtcgtctttcctgctgccatctctgggggcatctgatgcttgtgacctccagattatattgaaatagccccaactctgggcaccaggagacaggaggctcagtcctggccttctctgccttcaccttttcctgctgtgaggtttccacaaggcaccccatgccactgggccattctcacctgagaattgagaaagaacaatctgccccttatggaaagacaaaatcaggcaaagggccccttgtgttgggggcaggatccctgcactcagagggatatagaagctgaaataactgggttgggagcggtggctcatgccagtaatctcagtactttgggaggccagggagggtggatcacctaaagtcaagagctcgagaccagcctggccaacatagtgaaaccccgtctctacttaaaaagtacaaaacttagcccggcatagtggcgggcgcctgtaatcccagctactagggaggctgaggcgggagaatcactggaacccaggaggtggaggttgctgtgaggcaacatcatgccactgcactccagcctcggagacagaatgagactccatcaaaaacaagaaagaaagaaagacaaagagagaaagaaagaaagaaagaaagaaagaaagagagagagagagagagagagagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaagaaggaaagaaagaaaggaaactaaaataactaaataactgagtagcaccacaccacctgctctggagaaaggacttttgttgttgttgttgttgttgttgtcgttgttgtggttgttgaaatggagtctcactctggcgcccaggctggagtgccatggcccaatcttggctcacggcaacctctgcgtcctgggttcaagcgattctacctcctcaccctccggagtaactgggattgcaggcttctgccaccacacacagctacttttgtatttttaagagatggagttttgccatgttggctagtctggccttgaactcctgacctcaagtgatccacccacctcagtcttccaaagtgctgggattacaggcatgagccaccatgcccggcctggagaaaggactttaaatgacgcaatgtgggaagagccaggttgtggagatctgctgccctggctgaggtagctcatgcaatcagtctctctgagcctcagtctcctgatctgtgaaatgggatgatactcatacctcctacacaagacaagttgcaggtcagacgtgagaatgcacaggcaggcctttgacaactggataagctctacacaggtctggaaaggaggaagagacaaaagaggacgggcttccatggctggatagggcctctttcggcgtgatgtgttctgagttttaaagctggggaagagactcaaatcttcaagagctcttccaactttgagattctctgttggtttcaggactatgggaggaagcgcttgtggtccgtgtctgttcccgggatttctgtttcttggtttgtatctctgctacaggtccaaggagctggggcaataccttgagtctgggttattcgtccccagggacctgggggagccccaccgcctccgccccaaggttcagggaaaggggagagcaatgtgtggggttggttctctctagtggtcagtgttagcactgcatccagctgactcaggtgggcccaggagtcatcagcaaaagtggaattcaggactcaatggtgctcagaacccccacaatctattggctgtgcttggccccttttcccaacacacacattctgtctggtgggtggaagttaaacacgcggggaggaggaaaggaataggatagagagtggaatggggtcggtaggggtctcaaggactggctatcctgacagccttccccgcgttcaggttgaccaacatggcctgcagccagagggcacccacctgacccttaaagagaggacaagttgggtggagtctgtggctgacactctgtgcacaatccttacaacactggtgatggtgagaagggaaagacgacaagccagggggcatgatcccagcatgtgtgggaggagcttctaaattatccactagcacaagcccgtcagtggccccatgcataaatgtacacagaaacaggtggggtcaagcagggagagagaactggccagggtataaaaagggcccacaagagaccggctctaggatcccaaggcccaactccccgaaccactcagggtcctgtggacagctcacctagtggcaatggctccaggtaagcgcccctaaaatccctttgggcacaacgtgtcctgaggggagaggcagcgccctgtagatgggacgggggcactaaccctcaggtttggggcttatgaatgtgagtatcgccatctaaggccagatatttggccaatctctgaatgttcctggtctctggagggatggagagagagaaaaaaaacaaacagctcctggagcagggagagcgctggcctcttcctctccggctccctccattgccctccggtttctccccaggctcccggacgtccctgctcctggcttttgccctgctctgcctgccctggcttcaagaggctggtgccgtccaaaccgttccgttatccaggctttttgaccacgctatgctccaagcccatcgcgcgcaccagctggccattgacacctaccaggagtttgtaagttcttggggaatgggtgcgggtcaggggtggcaagaaggggtgactttcccccactgggaagtaatgggaggagactaaggagctcagggttgttttctgaagcgaaaatgcaggcagatgagcataggctgagccaggttcccagaaaagcaacaatgggagctggtctccagcatagaaaccagcagtccttcttggtggggggtccttctcctaggaagaaacctatatcccaaaggaccagaagtattcattcctgcatgactcccagacctccttctgcttctcagactctattccgacaccctccaacatggaggaaacgcaacagaaatccgtgagtggatgccgtctccctaggcggggatgggggagacctgtggtcagggctcccgggcagcacagccactgccggtccttcccctgcagaatctagagctgctccgcatctccctgctgctcatcgagtcgtggctggagcccgtgcggttcctcaggagtatgttcgccaacaacctggtgtatgacacctcggacagcgatgactatcacctcctaaaggacctagaggaaggcatccaaacgctgatgggggtgagggtggcgccaggggtcaccaatcctggaaccccactggcttcgagggctgggggagagaaatactgctgccctctttttagcagtaaggcgctgacccaagagaactcaccttattcttcatttcgcctggtgaatcctccaggcctttctctacaccctgaagggagggaggaaaatggataaatgagagaggggagggaacagtgcccaagcgcttggacctctccttctcttccttcactttgcagaggctggaagacggcagccgccggactgggcagatcctcaagcagacctacagcaagtttgacacaaactcgcacaaccatgacgcactgctcaagaactacgggctgctctactgcttcaggaaggacatggacaaggtcgagacattcctgcgcatggtgcagtgccgctctgtggagggcagctgtggcttctaggtgcccgagtagcatcctgtgacccctccccagtgcctctcctggccctgaaggtgccactccagtgcccaccagccttgtcctaataaaattaagttgtatcatttcatctgactaggtgtcattctataatattatggggtggaaggtggtggtatggagcaaggggtaggtggaaagaagacctggagggccttcaaggtctattgggaactaggccactgaaatataagaggtttggctgttcctgggccagaaaaaagctgacacatcactgctgtctattactcactaaggccattccaccagctcagtggtcccagcttcgggttcacacgtcattggtcatctcagagatgacttgaaggcatttcttcctcccccaccatcaccagcaacaccaaacctagccccccaggagcgggaagaaatgaaaacaagatgggctattaagtgcagaggcaaaaaagtccccaacaggtgaggaaacaatggcatagaattacttgtgttcggaagaattttaagatgagtattccttaagcccaactactctcgggaaatgagaacaatgcaaaaatgagtttgagacatacagaaccagagcatttggaatctgaattagggcaagggaagtggaagagagattttatttggggttgtaaatgcagtgccaacaggttccaggtagataacaatgtaagcaatgagggctggatgggagggataaatcccagatgacactcgcttccttcgggggatgcaacacagaggggtgggaaccagcacaatctgcagaactcaggcccctgctgaggtgggacccacccagcctgtcaccatcaggactgcagggacacggcttccagaccttctgaccttttgagacagccaggacatccagacttttacaggaattctaacatttaaacactggcaacacatattgaaaatcttttaagggcaaaaattaacccaaacacacatggtctccaagctgtctgtgagcaattttgttctaagagatgttgattggggtaacttggtgtaagggaaagaatcagaaagatttgggctgtatgtaatttagtgcccccgaataaattacttgaccaagctgagataataatatattgctttacaaggattatgtgaggactaaatgcaatggtatttttgatatattatagtactcaagaaattctagctatttctgcattgaatttttggatgttttgtgttttctgatggagtgtctaaatacctgtagtgaaattatattgttttcctaatgacaattaggaaataataaacatctcagatgtttattatttccaaataagcactaaagagcggtggttagttaagagtttgctctcccaagcaccttggctaagtgactggtgacctataaatcgatgctaagatgctcacaggaactctagtatccaaaaatgatttcataaagtcaggaattgttttgcaatgcaaataatcaaccccccaattaatcttctttagaagttcgattcttaaatgctataatgaattttcttgataatgagacccacttgtattcatttttggctattttaccattaataactcagtccttgggaagtggttgaaagttgaactaaacagaattctggagctgctgcatttctcagctcagaagccattcctgcatcttgcattgttcttctactatcgggctttaaaattatggcattttggagttagaagggcctcataagtcagcctagtttcttctactttgggaatcttatcctacaacatccattacagtcagtattccatttacgagtgtgtagcactagaaccaagggaatcactttcacaaggctcctcattctattaaaccactctcattgcaaaaaactatttcttgcacgaagctggaatcaatattcctgcaatgtccttcatttggccttaaaattatttagaaatctcagtctttagaagttgatggaatgagcacaattataattatctctcggcttgcgtgttttaaaaggaaatgtgagccatcttaataagtatttgttgaatgcacgtgacagtggaatgacaatgtccagcgcctacttgggtggctaagagggttctaaagtggggtggtcataacatgtaactgaactgcaggcggagccacactccagagactgtccacccagctcccctcgggtataggaaactccactcaaccactgctggttgagaattagaaagatactaccaactttgcacattttaaaatataaaaagaccttaaagaccatctactttaaactctttgatttacccactgttagtctacatttcagctcatcaacttggtgtggacggcaattccgctgcaaatttgagatgcctagggtgttttctaaacgatgcattcgtgagccctcactccctgagattctgatataattagactggaatgtggtccaggcaagagtaatttgaaaactttcccaggtgattctaacatgtaaacaaggttgagaaccaccgtgttagggaccgcaaagatgagacccatgtgttcacagctgttgtactggtggaacagggaaaacagagaaaaaggagatgagaaaaaggagaaaaaggagatggcagttgtggtgccacctgctcctaattccaaccagtcatctaaagtgtttatcgtgagccagtcacaaaaagacaaatactctccgattccagtcagatgaggtactcagagcagtcaaattcatagagacaaaaagtaggatggtggctgccagtggctgtggggagggatggaatagggagctatttaatgagcacagggtttcagctgtgcaagatgaaaagggttctggagatggttggtggtgagggttgcatgacgatgtcaatgtacttgacatgactgaactgcacaggcaaaatggttaagatggaaacgtttatatcttctcacaactaaaaattgttaatagtttctttttgttttgtttttgtttttgtttttgagacagaggctggagtgcagtggtgggatcttggctcactgcaacctccgcctcctcccgggttcaagtgattctcatgcctcagcctcctgagtagctgggattataagtgtgcaccaccacacagggcagatttttgtatttttggtaaagacagggtttcgccatgttggccaggctggtctcaaactcctggcctcaggtgatccacccaccttggcctcccaaagtgataggatcataggcaggagccaccaggcctggcccttaatggtattttctatcgaaaactcttcctgaagataagattagtgagactcgcacagggaagagttcagcaggcagagctccagtcatccttgacccctggcataatgttttactgactctgtcattttttttgaatttaccctaacctaaagtgaccaattctgaatttcttccatgagcattgtcgaaatacacatggtgggttttgtccctttatacacagttgagagcagaactgaccccttcccttttcttctgaattacagggtctgggcttctaggccaagacaagctgacattttgcctggctgcttctttaattcagaaggccctgaagtgctgtggcacacaatgagcaccgctgggattagggttaccaactcgtcctagtttgcaggagactttctcaatgtcaacactgaaagtcccacgttccttccagggatccctcagctgaatgaacactcagctaacaggactggtcaccctattagtagtcctaaatcttagggtaccaaactgtggggaaagtaggggaaggagcaagaaaaagactagaaaaaccggaaagctgtgctcggtgtatatgacctttgatggccctcatggttatcatggatttctgattcttgctttgagtttactgtgattataatgatgtgcttaattaccactagaattatcagtgtaataataaaaaacaactaatgtgaacacatatctccagcaccatgctagtttattacatgtattgtgtcatttctttctaattataattctctaaggtaaatactattattaatcctatggtaagaagtcccactaacgatgtaacttatgctttctcaggtctagagagaaagacaccagaatgtcaccctgaccatccttgagaggataaacggccaggcacggtggctcacgccagttatctcagcactttggagggctgaggcgggaggaggtcacaagttcgagacaagcctggccaacatggtggcaccccgtctcttactaaaaatacaaaaattaccaggtgtgatggtgcacacctgtattcccagctactgaggcgcgagaatcacttgagcccaggaggcagagttgcactgagcccatcatgccactgccctccagctggatggctgagcaagattctctctcaaaaatagtaagaaagagggtaaacttttggagtattaaaggccactcttcctctggagataatcaaggtagctgcaatttaagcataagctggttgctttaatgttcagaaagaatatgatcaaaaccatttagagggtggggcctcctcttatagacaatgaggcagctacccttagaagctctattatactggaaaagagatatgagacccttcctactttaagaatcaatgaagccgggtgtggtggctcacgcctgtactcccagcattttgagaggccaagctgggcagatcacctgaggtcaggagtttgagaccagcctagccaacatgatgaaatcctgtttctactaataacacaaaaattagccgggtgtggtggcgcacatctggaatcccagctactccagaggctgaggcaggaaaattgcttgaagctgggaagcagaagttgcagtgagccgagattgcgccactgcactccagcctgggagacagagcgagactctgtctccaaaaaaaaaaaaaaaagaaaagaaaaaaaagaatcaatgagaaggggctgcctgcctgaccactggttgtgtggatccttcgggaaggaaagcgaacagaggttccaagtctacaagggaaacagcccagcctactctgaagagctttgcgggacggctcatccaaactactgagctctaagaactggaaccctggaaaccccagcaagaggacacccgcagctggaccaggccccgaagaagcagatcatcctccctcagagatccacagcagctgggaacccggatctgcagacccgcttggtttgagggtactgtgtgggaccatctgtcaacactgacaccctgtggcagtgagaagcaaaggcagcagccggctaagcctccaggatctccctgctggaactagaaagtccaagtggcccccttcttccctcttttttttgttttgtttgttttgttttttgtttgtttgcttttgtttttgttttcttcaagatggggtgtcactctgttgcccaggctggagtgcaatggtgcaatcttggctcactgcaacctcagtatcccaggttcaagcgattcttctgcctcagcctccccagtagctgggattacaggtgcacaccggcatgcctggctcatttttcccttcctttttggattcgctgtgccttcaaggcactgaggccatgaggcagggtttgcagatacagggtaactacagccctgatgcgactgatcctgacaccaaaatggctgtggatccctgcatggtgtggctgtatactcctgtctcttaaacctgcttcttaacttacttccccaaatgctcaattcagggaaggtggatgatttatattagactcacatgatgaagagcagtagctcacctagtggaaacattgaggttgaaaagttcatgttccgggatgatgctattttacaaagtcaagatatttcgtgtcctccgggaagccttccttgatccgagttatgctttctcttaacaatctgttttcccagtcataggagttcatgcacaaatgtaatctcctacttgtttgtctagctttcctaatatatttttggaagccaggaacaatgttttgttcaccactgtatccccactgccttgtatgtggtgaaaccaaagggttacttttacacttaatctataacaccagactcaggggaggtctgggaagaatgggaaaacgttttccctctgctgtctgatgccatggttttttctagctggtatctgcaatttggaaggctatggacctctctctatctggaagtctgacctttagctttcatttttgttcctttattttgcttttgagacagggcctggctccgttgcccaggctggagtgcagtgcatgatctcaactcgctgcaaccctccacctcccgttgctcaagtgatcctcccacctcagacttctcaagtagctgggactacatgcatgtggccactatacctggctaagttttatgttttttgtagaaatggggttttgccatgttgccaggctattcgcaaaactccagggctcaagtgattcacctgcctcagcctcccaaatgctgggattacaggcgtgagccaccacaccagcctgaatttcagttttgaaagcaggtcaaataggctgctgccctcagttaatgcacccccggccctgggctggttgtttatgctatcaacacggtattttttccttagaaattgtacttaaagttataaaatgcagccgggagtgatggctcaggcctgtaatcccagcactttagaaggccgaggtgggtagatcacgaggtcgggacttcaagatcagcctggccaaggtggtgaaaccctgtctctactaaaaatacaaaaaattagctggtcatggtggtgggcgcctgtaatcccagctactcttaatctatagaggctgaggcagagaattgcttcaacccgggggtggagtttgaagtggactgaaatcacaccactgcactccagcctaggcaaagagcgagactccatctaaaaaaaaaagttataaaatgcagccatttgacataagagcttttagcaatgacacagaagggaagggaactgcatttggacatcataaaaccacttttatttttaccatagcaacattccagtgaacatttcttgactgatttgggagaaaacatctggttctgtgattcctcacgccttctccgagggtgaatatactctttcccaaggacagggaaagaagctgaaacataaaatcatatgaacattttcacaagaagattcctcttgaagcttcaaggaaattgtttacagacagaagaaagtatgcacttgattgatgaaaagggagagtaaagattggaactttaacctagatgcccatatgggtaaaaaaaagaaaactggcaaatgcgaactcacagttgatcactctatgaaaagaattcagagatgtttggagctcttaacctatgaggccaatttcatggaagaactctaccttctccttcagagacagaatactgagctagataggatgcccgtctggcccgaagtggaatttcttaccatctgtatactcccccaagacccgcaacagatggttactgagttgaagcttgccactgatccttaatgatgtcaacaagctcagctctgggagctggccctccagaagcccaggtcaggggagcaagggaaagtggagatgggaacagagctctgattcctggccccatatttgatacttactcccttcaaagtcctgtccttggactacagatttagttcccagttagtaatcagaaaaccatgaaatatgagttgtatttctaagatatgcctgactttagtatgatgtttaagagaaaagggcagtgagaaccatgaagaaacggcaagatcttttctttttttttttttttttttggatctaagagtggactgatgatgcactggcaaggagcaagaggccttcttacaaatcaaacattgagactgagattcctaatgaatagagtgagctctaaagagaaaggtggctgggcgcggtggctcacacctgtaatcccagcactttgggaggccaaggtgggcatcattgaggtcaggagtcccgagacagcccagcccaacatggtgaaaccccatctctacgaaaaatacaaaaattagacaggcatggtggtgtgcacctgtaatcccagctactggggaggctgaggcaagagaatcacctgaacccgggaagctgaagttgcagtgagcccgagatcgcatcattgcatccagcctagggcacaacagcgagactccatctcaaaaaaaaaaaaagagacagagagagaaaggtgagcttgtggacatattggacacacaggacatggggcatgggggcctgaaacaccgttttacaggacagacgtacacaaaggggaatgcagcctgccattgtgtttcttcctttctcctctatcccttcttccctccctgggaaaccacagtagccagaagtctcattcaatcaaatagctgtcaattatatgagttgtacttttctcttcctgaacagcaaatggctttcctcctctttgtcctcctctttctgcctatagagcaatttgcctcctgtccactttgcagggccgatagctcaaatacagtgctatggtgatgacacccactccaagggcaacggtaataatgacaaagagggtagagctgattccttcatccagtcctgcccaagcacagaagatagagttaggaaagtctgagagtacaaggatcacccaccccagcccacaggcccacttctgagtctcattcttcccaacctagtagaatctttcttattttcatgcttggataagaatcccaaacccctgaggtttccatcctgggcctggcagcagggcagcaaaggttaccttgaacaatgacagcaatgtctttgctgacagagcccagctggttagtggctgtgtagcggtaggttccagtgtggttctaggttgccttctgtggcacttcaaggtcaaagacaccccattccaggtacacaccaaggctggagctgggtttccctttgggacgcaggcgagcgtgtgttccatcccttccagccaggtctgtttggcagagcaactggattcctctaaccgtggttggtctgcagaaacagtatcccaaggagctgagttcagtgcaccacactccctccctaccttcacccctgctccctctcctcccctcacccaaatgctgtccccttcacccaacagctttccttcccaagggagcactagcagctcctgctttgagccaactcttctttcccactttccgtatgggcagggagtcccagatgaaacctagggtgttcttatggatttggactaaatgataaccctgctctgtccatggtggccctggggccctgcttcccatgtttgcttctcggtgggtaaggagctaggtaacggtgaactcagagatgaggatttttctacttttctttttggttttttttggttgtttgtttgttttggagacaaagtcagtctcactccttcgcccagggtggagtgcagtggcgcgatctcggctcatgacaactctgcctcccaggttcaagcaattcttgtgcctcagccgctccagtaactaggattacaagcgcatgccaccacacccggctaatttttctatttttagtagagatcagtttcaccatgttggccacgctggtctcaaactcctgacttcaggtgatccagcatgtctcagcctcccaaagtgttgggattacaggcatgagccaccacgccggcctatcctgagccttttgaagctgacgccagaggtgcaaagcgcagcctctccccattggccatgtggaggctcttgttgggtactctctcagcctgcaggagccagggatctggcctcaagtgatgccccaacagtgggcgacctcccagtactgtcaggggaatcccaagtctaattcaaagatgattttttactagcaatgaatgatggatgtggtctccattgctcaaggctctgggaagatctagactagagaaaatgatcattgacttctacacacctgtgggcctcagttcttccctctggtccatggttaccatggtaatcccttataaaggtgtttccccaggggtccctagagtcctctgagtcaccataattctggggtcaacagaagtggagaggtgagaggagacactcccctgccccggctggtcccacgtgttgctgtcagtaacctgcctggggagccttgccacccctgtgcccacctgcggagttatgcagtggtccccaactagggcccctgccaccctcattcctaagggaggctggagacttcttccatggccgaaaatccacatcgaagtccccagaactggctaaaaggacctgtcatgggggctccctgtcccagctgacattggaggaaggatggtgggggaggcagaaagctacatggagctcagggaccctcttccattcccacctagctcctcctctttgctggtgctggaaggagcaggggaaagtggtgactccaccctcccttggccacatatttctcagagctggtatcattgatgacacccctcttggatcctcacacaggcgggcctggagaacagcccacagcacagtgccctcccagcaggtgatgagtctggggtgctggtccgataatgtttcaggaatgatggcagaaaatggagctctgtcttccgctctgaaagtggggagatggcagggccccagcattcacatcctaggccacaggggtgtgggttttcaatgttggttgccaacaccacagccaaccacttctagaagcatttgcttgtttgcttgcttgtgtttctacagagtcaagtgctagatgctcttaaactcaggggggaagatttcaccactagagagggtgctctttcctgctgtcatctctgggggcatctgatgcttgtgacctccagattatattgaaatagccccaaccctgggcaccaggagacaggaggctcagtcctggccttctctgccttcaccttgtcctgctgtgaggtttccacaaggcaccccatgccactgggccattctcacctgagaattgagaaagaacaatctgccccttatggaaagacaaaatgaggcaaagggccccttgtgttgggggcaggatccctgcactcagagggatatagaagctgaaataactgggttgggagcagtggctcacgcaagtaatctcagtactttgggaggccagggagggtggatcacctaaagtcaagagttcgagaccagcctggccaacatagtgaaacccccgtctctactaaaaaagtgcaaatcttagcccggcatagtggtggacgcctgtaatcccagctacttgggaggctgaggcgagagaatcaccggaacccaaaggtggaggttgctgtgaagcaacatcatgccactgaactccagcctgggtgacagaatgagactccatctcaaaaaaaaaaaaaaaaggaaatgaagctaaaataactaaataactgagtagcaccacactacgtgctctggagaaaggattttttttttttttttttttgagatgtagactcgctctgtcatccaggctggagtgcagtggcgcaatcttggctcacagcaacctctgcctcctgggttcaagcgattctcctgcctcagcctcccaagtagctgggattacgggctcgtgccaccatgaccagctaatttttgtatttttaggagagatggagttttgccatgtgggttagcctggtcttgcactcctgaccttaagtgatccacccacctcagcctcccaaagtgctgggattataggcatgagccaccgtgcccggcctggagaaaggactttaaatgacgcaatgtgggaagagcaaggttgtgaagatctgctgccctggctgaggtagctcatgtaatcagtctctctgagcctcagtctcctgatctgtgaaatgggatgatagtcatagctcctacacaagacaagtggcaggtcagacgtgagaatgcacaggcaggcccttggcaactggataagctctacacaggtctggaaaggaggagacaaaagaggaggggcttccatggctggatagggcgtcttttggcgtgatgtgttctgagttttaaagctggggaagagactcaaatcttcaagagctcttccaactttgagattctctgttggtttcaggactatgggaggaagcgcttgtggtccgtgtctgttcccgggatttctgtttcttggtttgtatctctgctagaggtccaaggagctggggcaataccttgagtctgggttattcgtccccagggacctgggggagccccccccccccacacccacacccacccccacccccacccccatccccacgccccgcccccgcccccgccccaaggctcaggtaaaggggagagcaaagtgtggagtttgttccctctagtggtcagtattagcactgcatccaggcgggcctgtctcagacgagcccaggaggagtcagcaaaagtggaattcagcactgaatcatgcccagaacccccgcaatctattggctgtgctttggccccttttcccaacacacacattctgtctggtgggtggaggggaaacatgcggggaggaggaaaggaataggatagagagtgggatggggtcggtaggggtctcaaggactggctatcctgacatccttctccgcgttcaggttggccaccatggcctgctgccagagggcacccacgtgacccttaaagagaggacaagttgggtggtatctctgctgacattctgtgcacaaccctcacaacgctggtgatggtgggaagggaaagatgacaagtcagggggcatgatcccagcatgtgtgggaggagcttctaaattatccattagcacaagcccgtcagtggccccaggcctaaacatgcagagaaacaggtgaggagaagcagcgagagagaaggggccaggtataaaaagggcccacaagagaccagctcaaggatcccaaggcccaactccccgaaccactcagggtcctgtggacagctcacctagcggcaatggctgcaggtaagcgcccctaaaatccctttgggcacaatgtgtcctgaggggagaggcggcgtcctgtagatgggacgggggcactaaccctcaggtttggggcttatgaatgttagtatcgccatctaagcccagtatttggccaatctctgaatgttcctggtccctggagggaggcagagagagagagagagaaaaaaaaaacccagctcctggaacagggagagcgctggcctcttgctctccagctccctctgttgcctccggtttctccccaggctcccggacgtccctgctcctggcttttggcctgctctgcctgtcctggcttcaagagggcagtgccttcccaaccattcccttatccaggctttttgacaacgctatgctccgcgcccgtcgcctgtaccagctggcatatgacacctatcaggagtttgtaagctcttgggtaatgggtgcgcttcagaggtggcaggaaggggtgaatttcccccgctgggaagtaatgggaggagactaaggagctcagggttgttttctgaagtgaaaatgcaggcagatgagcatacgctgagtgaggttcccagaaaagtaacaatgggagctggtctccagcatagaccttggtgggcggtccttctcctaggaagaagcctatatcctgaaggagcagaagtattcattcctgcagaacccccagacctccctctgcttctcagagtctattccaacaccttccaacagggtgaaaacgcagcagaaatctgtgagtggatgccttctccccaggtgggatggggtagacctgtggtcagagcccccgggcagcacagccactgccggtccttcccctgcagaacctagagctgctccgcatctccctgctgctcatccagtcatggctggagcccgtgcagctcctcaggagcgtcttcgccaacagcctggtgtatggcgcctcggacagcaacgtctatcgccacctgaaggacctagaggaaggcatccaaacgctgatgtgggtgagggtggcaccagggatcccaatcctggggccccactggcttccagggactggggagagaaacactgctgccctctttttagcagtcaggcgctgacccaagagaactcaccgtattcttcatttcccctcgtgaatcctccaggcctttctctacaacctggaggggagggaggaaaatggatgaatgagagagggagggaacagtgcccaagcgcttggcctctccttctcttccttcactttgcagaggctggaagatggcagcccccggactgggcagatcttcaatcagtcctacagcaagtttgacacaaaatcgcacaacgatgacgcactgctcaagaactacgggctgctctactgcttcaggaaggacatggacaaggtcgagacattcctgcgcatcgtgcagtgccgctctgtggagggcagctgtggcttctagctgcccgggtggcatccctgtgacccctccccagtgcctctcctggtcgtggaaggtgctactccagtgcccaccagccttgtcctaataaaattaagttgcatcattttgtttgactaggtgtccttgtataatattatggggtggaggcgggtggtatggagcaaggggcaggttgggaagacaacctgtagggccttcagggtctattgggaaccaggctggagtgcagtggcacgatcttggctcgctgcaatctccgcctcctgggttcaagcgattctcctgcctcagtctcccgaatagttgggattccaggcatgcacgaccaggctcagctaatttttgtatttttggtagagacggggtttcaccatattggccagtctggtctccatctcctgacctcaggtaatccgcccgcctcggcctcccaaattgctgggattacaggtatgagccactgggcccttccctgtcctgtgattttaaaataattataccagcagaaggacgtccagacacagcatgggctacctggccatgcccagccagttggacatttgagttgtttgcttggcactgtcctctcatgcattgggtccactcagtagatgcttgttgaattcctgggcctggggctgtgtcagctgcctcgtcccatcaccttctggcttattctctccctccgtatcttagctttttacttcatgggaatgtttccaattcgaaatttctattttaccgttatatatttacttttttgctgttttctcggcccccagtagattgttagctccagaagagaaaggatcatgtcttttgtttatctagatatgcccatctgcctggtacaatctctggcacatgttataggcaacaactacttgtggaattggtgaatgcacgaatagaagaatgagtgaatgaatgaatagacgaaaggcagaattccagcctcaggcagggcgcggtggctcacgcctgtaatcccagcactttgggaggtcgaggcaggtggatcacgaggtcaggagttcgagaccatcctggctaacacagtgaaaccccacctctaaaaatacaaaaaaattagctgggcaaggtggcgggcgcctgtactcccagctactcgggaggctgaggcaggagaatgtcatgaaccccagggggcagagcttgcagtgagccgagatcgcgccactgcactccagcctgggtgacagagcaagactcggtctcaaaaaaaaagaaagaaagaaatccagcctcaaagagcttacagtctggtaaggggaataaaaatgtctgcaaatagccacaggacaggtcaaaggaaggagaggctatttccagctgagggcaccccatcaggaaagcaccccagacttcctacaactactagacacatctcgatgcttttcacttctctatcaatggattgtctccctggagaataatccccaaagtgaaattacttagcacgtcaggttaggtagatccttgtgtacttcttggttgttcagagatcatcaaccagtgcaaacaatccccccatcaatacacagcggtgcctgccccttgcctccccagaccttccgaggcccttcctccgtgcctgaaccccctggacatatcatgtggcaaactgaagggtccaacgacatacaggaagcgaaacacgatgtacactgaaacgtgcaatacaaatatgcagcatgaagtgcctcggttcactaacccgagctacgttgggtgcctcttttctaccacttttcttaatgcctatggacacctcattctgtggctgaagttccttgtgttcaattccccccatcttcattgaacatcctctgtgcagggacttgacccctgtcctgctagctttgcactgaggcaagttctgtccatgcctattagtgccaccatctttactagatgaggtttctaaagagcttggcatggaaggaagcccaggggccttggaagccattacttaggaactgggagagctccaggcaaaccatcttatctctttgggcctcagtatccctcactcacatccctatggtcagtagatgccaagcacatggtggacacacagaagtattgatcatcttcctcacctcccctaggagagcccttgggaatccccacataatattctctgaagacctcaatccaatgagccgagtaattgactcagtagcaaactcatagaaaggacattagaagccaaaaggaggtagagtatgcccagtacaataaccagcctctgatctcaaggaagaaagaacagagctgcaggtgagaagtgtgcgcctcaaatcaccaaagtgagagtggaaggagcacccaccagtccctcggaggcgattcctgagaccggtgagaatggcttcgaaaaatgtgatcgtcctcaaccccacagtcttgaacctaacaggagatcttgaagcctgaaagacaccactttaggatcaacagcagatctgtgactttccacagcaggcacacagaaccctagagttagtcgaggttggacataggaagggcttccaaacacacagataaattcatggatcctaaattataaagggaggttccttaaaagaagcaagatgattgtgagattatcatcagcttttttttttctcttgatacagagtcttactctgtcacccaggctggagtgcagtggcatgatctcggctcgctacaacctccacctcccgggttcaagcaattccctgccacagcgacctgatgagtagctcggattacatgcgcctgccaccacgcgcagctaatttttgtatttttagtagagacgggatttcaccatcttgaccaggtttggtcttaaactcctgaccctaatgatccacccaccttggcctcccaaagtggtgggattacaggtgtgagccaacgcacccgacctatccagagccttttgaggctgatgctagaggtacaaagcccagcctctccccactggccatgtggaggctcttgttgggtagtctttcagcctgcagcagcgagggatctggcctaagtgatgccccaacagtgggcaacttcccagtactgtcaggagaatcccaagtctaattcaaagttgattttttactagcaatgaatgatagacatggtctccattgctcaagggaagatctagactagagaaaaggatcaccaacttctacccacacctgtgggcctcagttcttccctctggtccatggttgccatggtaaccccttataaaggtgtttccccaggggtccctaacgtcctctgagtcactataactctggggtcaacagaagtggagaggtgagaggagacactccccttccctggctggtcccacatgttcctggcagtaacctcggcacccctgtgcccacctgtggagttatgcagtagtccccagctagagcccctgcccccctcattcctaagggaggcttcccttacgaatggccaaaaatccacatctaagtccccagaactggctaaaaggtcctgtcatgggggctccctgtcccagctgacattggaggaaggatggtgagggaggcagggaccctcttctacttggagctcagggacccacttccattcccacctggctcctcctctttgctggtgctgggaggagcaggggaaagtggtgacaccaccctcccttgaccccatatttctcagagctggtatcattgatgacacccctcttggatcctcacacaggcttccctggagaacagcccacagcacagtgccctcccagcaggtgatgagtctgtggtgctggtccggtaatgcttcaggaatgatggcaaaaaaaggagctctgtcttccgctctgaaagtggggagatggcagggccccagcattcacatcctaggccacaggggtgtgggttttcaatgttggttgccaacaccacagccaaccacttctagaagcatttgcctgtttgcttgcttgtgtttctacagcgtcaagtgctacatgctcttaaactcagggtgggagaagatttcaccactacagagggtgttctttcctgctctcatctctgggggcatctgatgcttgtgacctccaggtggtatggaaatagccccaaccctgggcaccaggagacaggaggctcagtcctggccttctctgccttcaccttgtcctgctacgaggtttccacaaggcaccccatgccactgggccattctcacctgggaattgagaaagaacaatctgccccttatggaaagacaaaatcaggcaaagggccccttgtgttgggggcaggatccctgcactcagagagatttagaagctgaaataactgggttgggggcggtgactcacgccagtaatctcagtactttgggaggccagggagggtggatcacctaaagtcaagagttcgagaccagcctggccaacatagtgaaaccccgtctctactaaaaaagtacaaaacttagcccggcatagtggtgggcacctgtaatcccagctacttgggaggctgaggcgggagaatcactggaacccaggaggtggaggttgcagtgaggcaagatcatgccactgcactccagcctgggagacagaatgagactccatcaaaaacaagaaagaaagaaagaaggaaggaaggaaagaaggaaggaaggaaggaagaaaggaaggaaggaaagaaagaaagaaagaaaaagaaagaaagaaggaaggaaggaaagaaggaaggaaggaagaaaggaaggaaggaaagaaagaaagaaagaaaaagaaagaaagaaagagaaagaaaaaggaaagcaagaaagaaaagaaagaaagaaagaaaaagaaagaaggaaagaaaagaaactaaaataactaaataactgagtagcaccacaccacctgctctggagaaaggacttttgttgttgttgttgttgttgtcgttgttgtggttgttgttgaaatggagtctcactctggcacccaggctggagtgccatggcccaatcttggctcacggcaacctctgcgtcctgggttcaagcgattctacctcctcaccctccggagtaactgggattgcaggcttctgccgaccacacacagctacttttgtacttttaagagatggagttttgccatgttggctagtctggccttgaactgacctcaagtgatccacccacctcagtcttccaaagtgctgggattacaggcatgagccaccgtgcccggcctggagaaaggactttaaatgatgcaatgtgggaagaggcaaggttgtggagatctgctgccctggctgaggtagctcatgcaatcagtctctctgagcctcagtctcctgatctgtgaaatgggatgatagtcatagctcctacacaagataagtggcaggtcagacgtgagaatgcacaggcaggcctttgacaactggataagctctacacaggtctggaaaggaggaagagacaaaagaggacgggcttccatggctggatagggcctctttcggcatgatgtgttctgagttccaaagctgggaagagactcaaatcttcttttttttttctttttttttaattattattattcttttactttaagttttagggtacatgtgcacaatgtgcaggttagttacatgtgtatacctgtgccatgctggtgtgctgcacccattaacttgtcatttagcattaggtatatctcctaaagctatccctccccctccccccaccccacaacagtctccagagtatgatgttcccctgagactcaaatattcaagagctcttccaaccttgagattctctgatggtttcagggctgtgggaggaagcgcttgtggtccgtgtctgttcccgggatttctgtttcttggtttgtgtctctgctacaggtccaaggagctgaggcaataccttgagtctgggttcttcgtccccagtgacctgggggagccccaccgcctccgccccaaggttcagggaaaggggagagcaatgtgtggggttggttctctctagtggtcagtgttagcactgcatccagctgactcaggtgggcccaggagtcatcagcaaaagtggaattcaggactcaatggtgctcagaacccccacaatctattggctgtgcttggccccttttcccaacacacacattctgtctggtgggtggaagttaaacacgcggggaggaggaaaggaataggatagagagtggaatggggtcggtaggggtctcaaggactggctatcctgacagccttccccgcgttcaggttgaccaacatggcctgcagccagagggcacccacctgaccctcaaagagaggacaagttgggtggagtctgtggctgacactctgtgcacaatccttacaacactggtgatggtgagaagggaaagacgacaagccagggggcatgatcccagcatgtgtgggaggagcttccaaattatccattagcacaagcccgtcagtggccccatgcataaatgtacacagaaacaggtggggtcaagcagggagagagaactggccagggtataaaaagggcccacaagagaccggctctaggatcccaaggcccaactccccgaaccactcagggtcctgtggacagctcacctagcggcaatggctgcaggtaagcgcccctaaaatcctttgggcacaacgtgtcctgaggggagaggcagcgccctgtagatgggacgggggcactaaccctcaggtttggggcttatgaatgtgagcatcgccatctaaggccagatatttggccaatctctgaatgttcctggtctctggagggatggagagagagaaaaaaacaaacagctcctggagcagggagagcgctggcctcttcctctccggctccctccattgccctccggtttctccccaggctcccggacgtccctgctcctggcttttgccctgctctgcctgccctggcttcaagaggctggtgccgtccaaaccgttccgttatccaggctttttgaccacgctatgctccaagcccatcgcgcgcaccagctggccattgacacctaccaggagtttgtaagttcttggggaatgggtgcgggtcaggggtggcaagaaggggtgacttccccactggggaagtaatgggaggagactaaggagctcagggttgttttctgaagcgaaaatgcaggcagatgagcataggctgagccaggttcccagaaaagcaacaatgggagctggtctccagcatagaaaccagcagtccttcttggtggggggtccttctcctaggaagaaacctatatcccaaaggaccagaagtattcattcctgcatgactcccagacctccttctgcttctcagactctattccgacaccctccaacatggaggaaacgcaacagaaatccgtgagtggatgccgtctcccctaggcggggatgggggagacctgtggtcagggctcccgggcagcacagccactgccggtccttcccctgcagaatctagagctgctccgcatctccctgctgctcatcgagtcgtggctggagcccgtgcggttcctcaggagtatgttcgccaacaacctggtgtatgacacctcggacagcgatgactatcacctcctaaaggacctagaggaaggcatccaaacgctgatgggggtgagggtggcgccaggggtcgccaatcctggaaccccactggcttagagggctgggggagagaaacatgctgccctctttgtagcagtcaggcgctgacccaagagaactcaccttattcttcatttcgcctggtaatcctccaggcccttctctacaccctgaaggggagggaggaaaatggatgaatgagagagggagggaacagtgcccaagcgcttggcctctccttctcttccttcactttgcagaggctggaagacggcagccgccggactgggcagatcctcaagcagacctacagcaagtttgacacaaactcacacaaccatgacgcactgctcaagaactacgggctgctctactgcttcaggaaggacatggacaaggtcgagacattcctgcgcatggtgcagtgccgctctgtagagggtagctgtggcttctaggtgcccgcgtggcatcctgtgaccgacccctccccagtgcctctcctggccctggaaggtgccactccagtgcccatcagccttgtcctaataaaattaagttgtatcatttcatctgactaggtgtcattctataatattatggggtggaaggtggtggtatggagcaaggggtaggtggaaagaagacctggagggccttcaagatctattgggaactaggccgctgaaatataagaggcttggctgttcctgggccagaaaaaggctgacacatcaccgctattactcactaaggccattccaccagctcagtggtcccagcttgctgtcacagctcattggtcatcccagagatgacttgaaggcatttcttcctcccccaccatcaccagcaacaccaaacctagccctccaggagcgggaagaaatgaaaacaagatgggctattaagtgcagagacaaaaactccccaacaggtgaggaaacaatggcatagaattacttgtgttcagaagaattttaggatgaatattccttaagcccactactctcgggaaatgagaacaatgcaaaaatgagtttgagacatacagaaccagagcatttggaatctgaattagggcaagggaagtggaagagtgattttatttggggttgtaaatgcagtgccaacagtgccaggtagataacaacgtaagcaatgagggctggatgggaggggataaatcccagatgacactcgcttcccttcaggggatgcaacacagaggggtgggaaccagcacaatctgcagaactcaagcccctgctgaggtgggacccacccagcctgtcaccatcaggactgaagggacacggcttccagaccttctgattctttgagacagccaggacatccagacttttacaggaattctaacatttaaacactggcaacacatattgaaaatcttttaagggcaaaaattaacccaaacacacatggtctccaagctgtctgtgagcaattttattctaagagatgttgattggggtaacttggtgtaagggaaagaatcagaaagatttgggctgtatgtaatttagtgccgctgaataaattacttgaccaagctgagataataatatattgctttacaaggattatgtgaggataaatgcaatggtatttttgacatattatagtactcaagaaattgtagttatttctgcattgaatttttggatgttttgtgttttctgatggagtgtctaaatacctgtagtgaaattatattgttttcctaatgacaattaggaaatagtaaacatctgagatgtttattatttccaaataagcactaaagagcggtggttagttaagagtttgctctcccaagcaccttggctaagtgactggtgacctataaatcgatgctaagatgctcacaggaactctagtatccaaaaatgatttcatgaagtcaggaattgttttgcaatgcaaataatcaaccccctaattaatcttctttagaagttctgattcttatgtgctatcatgaattttcttgataacgagaaccacttgtgttcatttttggctattttacagttaataactcagtccttgggaagtggttgaaagttgaaataatcagaactctagagctgctgcatttctcagctcagaagacatttcttcatcttacatcattcttctactatcgggctttaaaattatggtattttggagttagaagggcctcataagtcagtctagtttcttctactttgggaatcttatcctacggcgtccattacagtcagtattccaattatgagtgtgtagcactagaaccaaaggaatcactttcacaaggctcctcattctattaaaccactctcattgcaaaaaactatttcttgcacaaagctggaatcaatattcctgcaacgtccttcatttggccttaaaattatttagaaatctcagtctttagaagtcgatggaatgagcacaattataattatctctcagcttgcgtgttttaaaaggaattgtgagccatcttaataagtatttgttgaatgcacgtgacagtggaatgacaatgctccagcgcctacttgggtggctaagggggttctaaagtggggtggtgatgacatataactgaactgcagggggagccacacgccagagactgtccacccagctcccctcgggtgtaggagaatccactcaaccactgctggttgagaattagatactagctgactttgcacattttagaatataaaaagaccttaaagaccatctactttaaactctgatttacccactgttagtctacatttcagctcatcaacttggtgtggacggcaatttctcctgcaaatttgagatgcctaggatgttttctaaacgatgcatacgtgagccctcactccctgagattctgatataattagactggaatgtggtccaggcaagagtagtttgaaaactttcccaggtgattctaacatgtaaacaaggttgagaaccactgtgttagggaccgcaaagatgagacccatgtgttcacagctgttgtactggtggaatagggaaaaaggagaaaaaggagatgagaggcctgggccagttgtggtgccacctgctcctaattccaaccagtcatctaaaaagtgtttatcatgagccagtcacaaaaagacaaatactctccgattccagtcagatgaggtactcagagcagtcaaattcatagagacaaaaagtaggatggtggctgccagtggctgtggggagggatggaatagggagctatttaatgagcacagggtttcagctgtgcaagatgaaaagggttctggagatggatggtggtgagggttgcatgacgatgtcaatgtacttgacatgactgaactgtacacgtaaaatggttaagatggaaacgtttatatcttctcacaactaaaaattgttaatactttatttttgtttttgtttttgagacagaggctggagtgcagtggtgggatcttggctcactgcaacctccgcctcctcccgggttcaagtgattctcatgcctcagcctcctgagtagctgggattataagcgtgcacacagggcagatgtttttatttttggtaaagacagggtttcgccatgttggccaggctggtctcaaactcctggcctcaggtgatccacccttcttggcctcccaaagtgataggattacaggcgggagccaccaggcctggctcttattggtattttctaatgaaaactcttcctgaagataagattagcaagactcacacaaggaagagttcagcaggcagagctccagtcatccttgacccctggcataatgttttactgactctgtcattttttttgaatttaccctaacctaaaatgaccacttctgaatttcttccatgagcattgtcgaaatacacatggtgggttttgtccctttatacacagttgagagcagaactgaccccttcccttttcttctgaattacagggtctgggcttctaggccaagacaagctgacactttgcctggatgcttctttaattcagaaggccctggagtgctgaggcacacaatgagcaccgctgggattagggtcaccaactcgtcctggtttgcaggagactttctcaatgtcaacactggaagtcccacattccttccaggaatccctcagctcaatgcaaactcagctcacaggactggtcaccctattagtagtcctaaatcttaggggaccaaactggggggaaagtaggggaaggagcaagaaaaagagtagaaaaatcagaaagctgcgcacggtgtatatgacttttgatggtgctcaaggttaccatggatttctgattcttgctttgagtttactgtgattataatgatgtgcttaattaccaccagaattatcagtgtaatcacaaaaaccaacaaatgtaaacacatgtctccagcaacatgctagtttattgcaagtattatgtgatttctttctaagtataatcttctaaggtaaatactattattaatcctatggtaagaagtcccactaaagatgtaacttactctttctcaggtctaaagacaaagacgccagaatgtcaccctgaccatccttgagaggataaactgccaggcacagtggctcaagccagtaatctcagcactttgggaggccgaggcgggaggagatcaggagttcaagacaagcctggccaaaatgatggcaccccgtctctactaaaaatacaaaaattagccaggtgtggtggtgcacacctgtattcccagctactgaggcacgagaatcgcttgagcccgggaggcagagttgcgctgagcccatcatgccactgcactccagctgggtggctgagcaagattctctctcaaaaataataagaaagaggataaaattttggagtattaaaggccactcttcctctggagataatcaagatacctgcaatttaagcgtgagctggttgctttaatgttcagaaagaatacgatcaaaatcatttaggggtggggcctcctcctatagacaatgaggcagctacccttagaagctctatcatactggaaaagagatatgagacccttcctgctttcagaatcaatgaagccagcgtggtgactcacgcctgtactcccagcacattgggaggccaaggtgggcagatcacctgaggtcaggagtttgagaccagcctggccaacatgatgaaaccctgtctctactaataacacaaaaattagccgggtgtggtggcagacacctgtaatcccagctactctagaggttgaggcaggaaaattgcttgaagccgggaagcagaagttgcagtgagccgagattgcgccactgcactccagcctgggagacagagcgagactctgtctccaaaaaaaataaaaagaaaagaaaaaaaaagaatcaatgagaaggggctgcctgcctgaccactggttgtgtggatccttcgggaaggaaagcgaacagaggttccaagtctacaagggaaacagcccagcctactctgaagagctttgcgggacggctcatccaaactactgagctctaagaactggaaccctggaaaccccagcaagaggacacccgctgctggaccaggccccgaagaagcagatcatcctccctcagagatccacagcaggtaggaacccagatctgcagacccgcttggtttgagggtactgtgtgggaccatctgtccacactgacaccctgtggcagtgagaagcaaaggcagcagccggctgagcctccaggatctccctgctggaactagaaagtccaagtggcccccttcttccctctttttttggttttgtcttgttttttgtttgtttgcttttgtttttgttttcttcaagatggggtgtcactctgttgcccaggctggagtgcaatggcacgatctcggctcactgcaactctgcctcccaggttcaagcgattctcctgcctcagcctccccagtagctgggattacaggtgcacaccggcatgcctggctcatttttcccttcctttttgaattcgctgtgcttcaaggcactgaggccatgaggcaagggtttgcagatacaaggtaactatagccttgatgtggctgatcctgacaccgaaactgtctgtggatccctgcatggggcagctctatactcctgtctcttaaacctgcttcttaacttacttccccaaatgctcaattcagggaaggtggatgatttatattagactcacatgatgagagagcagtagctccacctagtggaaacattgaggttgaaaaggtcatgttccgggatgatgctattttacaaagtcaagatatttcgtgtccctccaggaagccttccttgatccgagttatgctttctcttaacaatctgttttcccagtcataggagttcatgctcaaatgtaatgaacttttttgttcattacatacttgtcttgctttcctaataaatttgtggaagccagggacatgttttgttcaccactgtatccccactgccttgtatgtggtgaaacgaaaagcttattattttttttcttttttctttttttggagacggactcttgctctgtccccaggctggagtgcagcagagcgatctcggctcactgcaagctctgctcccgggttcacgccattctcctgactcagcctcccgagtagctgggactacagtgtccaccaccatgcccagctaatttttttgtatttttagtagagacggggtttcaccgtgttagccaggctggtctcgatctcctaaccttgtgatccgccccccttggcctccgaaagtgctgggattacagcatgagccaccgtgcctggccttccaaagggttatttttatacttaatctataacaccagacttaggggaggtctgggaagaatggaaaaacattttccctctgctgtctgatgccatggtttttcctagctagtatctgcaatttggaaggctatggacctctctctatctggaagtctgaactttagtttttgtttttgtttcctttgttttgtttttgagacagggtctggctctgtcgcccaggctggagtgcagtgcatgatctcaacttgctgcaaccctccatctcctgtgctcaagtgatcctcccacctcagactctcaagtagctgggactacaggcacgtgccagtatacctggcctagttttgtattttttatagaaatggggttttgccatgttgcccaggctattcgcaaactccggggctcaagtgattcacctgcctcagcctcccaaagtctgggattacaggcgtgagccactgcccccggcctgaatttcagttttgaaagcaggtcaaataggctgctgccctgagctaatgcaccccctgccctgagctggttgtttatgctatcaacacggtattttttccttagaaattgtacttaaagttataaaatgcagccgagagcggtgctcacgccagtaataccagcactttaggaggccaaggtgggtggatcgcgaggtcaggacttcaagactagcctagtcaagatggtgaaaccctgtctctactaaaaatacaaaaaattagctggtcatggcggtgggtgcctgtaatcccagctactcgggaggctgaggcagagaattgcttgaaactgggaggtggaggttgaagtgagccgaaatcgcgccactgcactccagcctgggcaacagagtgagactccatctaaaaaaaaaaaaagaaaaagttataaaatgcaaccatttgacataataagagctttcagcggccaggcacagtggctcacgcctgtaatccagccactttgggaggcccaggtgggcgaatcaagtcaggagatcaagaccatactggctaacacagtgaaaccctgtctctgctaaaaatacaaaaaattagcccggcatggtggcatgtgcctatagtcccagctacttgggaggctgagacaggagaatggtgtgaacccaggaggcggagcttgcagtgagccgagatcgtgccacggcactccagcctgggcgacagagcaagactctgtcttaaaataaataaataaataaataaataaataagaggtttcagcaatgacacagaagggaagggaactgcatttggacatcataaaaccacttttatttttaccatagcaacattccagtgaacatttcttgactgatttgggagaaaagatctggtttggtgattcctcacgccttctctgagggtgaatatactctttcccaaggacagggaaggaagcagaatcataaaatcatatgaacattttcacaagaggattcttcttgaagcttcaaggaaattgcttacagacagaagaaaatatgtccttattgatgaaaagggagagtaaacattggcaactctaacctagacacccacatgggtaaaaaaaaaaaactgacaaatgcgaactcacaggttgatcactctatgaaaaggaattcagagatgtttggagctcttaacctatgaggccaatttcatggaagaactctaccttctacttcagagacagaacactgggctagataggatgcttgtctggcccgaagtggaatttcttaccatctgtatactcccccaagacccacaacagatggttactgagttgaagcttgccactgatccttaatgatgtcaacaagctcagctctgggagctggccctccagaagcccaggtcaggggagcaagggaaagtggagatgggaacagagctctgattcctagccccatatttgatacttactcccttcaaagtcctgtccctggactacaaatttagttcccagttagtaatcagaaaaccatgaaatatgagttgcatttctaagatgtgcctgactttagtatgatgtttaagagaaaagggcagtggaaaccataaagaaacagcaggatcttttttttgtatctaagagtggactgatgaagcacctggcaaggagcaagaggccttcttacaaatcaaacattgagactgagattcttaatgactagagtgagctctaaagagaaaggtggctgggtgcagtggctcacacctgtaatcccagcattttgggaggccaaggtgggcggatcacttgaggtcaggagtttgagaccagcctggtcaacatggtgaaaccccatctctacgaaaaatacaaaaattagacaggagttgtggtgtgcacctgtaatcccagctgccagggaggctgaggcaggagaatcacctgaacccgggaagctgaagttgcagtgagccgagatcgcatcattgcactccagcctaggcgacaacagcgagactccatctcaaaaaaaaaaaaagagacagagagagaaaggtgagcttgtggacatattggacacacaggacatggggcatgggggcctgaaacaccgttttacaggacagacgtacacaaaggggaatgcagcctgccattgtgtttcttcctttctcctctatcccttcttccctccctgggaaaccacagtagcagaagtctcattcaatcaaacagttgtcaattatatgagttgtacttttctcttcctgaacagcaaactggctttcctcctctttgtcctcctctttctgcctatagagcaatttcctcctgtccactttgcagggccgatagctcaaatacagtgctatggtgatgacacccactccaagggcaacggtaataatgacaaagagggtagagcttattccttcatccagtcctgcccaagcacagaagatagagttaggaaagtctgagagtacaaggatcacccaccccagcccaccaggcccacttctgagtctcattcttcccaacctagtagaatctttcttattttcatgcttagataagaatcccaaactcctgaggggtttccatcctgggcctggcagcagggcagcaaaggttaccttgaacaatgacagcaatgtctttgctgacagagcccagctggttagtggctgtgtagcggtaggttccagtgtggttctaggttgccttctgtggcacttcaaggtcaaagaccaccccattccaggtacacaccaaggctggagctgggtttccctttgggacgcaggcgagcgtgtgttccatcccttccagccaggtctgtttgccagggcaactggattcctctaactgtggcttgcctgcaaaaacagtttcccaaagagctgagttcagtgcaccacactccctccctaccttcaccccctgctccctctcctcccctcacccaaatgctgtcccctccacccaacagctttccttcccaagggagcactagcagctccctgctttgagccaactcttctttcccaccttctctatcggtagggagtcccagatgaaacctagggtgttttttttgttcgtttgtttgttttgagatggagtcttgctctgtcgccaagctggagtatgtacagtggcgcgatctcagctcactgtaacctccacctcccaggttcaagcgattctcctgcctcagtttccagagtagctgggactacaggcatgtgcccccatgcccagctaatttctgtatctgtagtagagatagtgtttcaccatgttggccaggatggtctcgatctcttgacctcatgatccgcccgccttgaccttccaaagtgttgggattacaggcgtgagtcaccagccccgccaaaacctagggtgtttttacaggattcagactacatgataaccctgctctgtccatggtggccctggggcccctgcttcccatctttgcttctcagtgggtaaggagctaggtaacggtgaactcagagatgaggattttttcttttcttttttttttttttttttttgagacgaagtctcgctttgtcatccaggctagaatgcagtggcgtgatctcagctcactgccacctccgcctcccaggtttcaagcaattctcctgcctcagcctcctgagtagctggaattacaggcacccacgatcatgcctggctaatatctgtatttttagtaggagacagggtttcatcatgttggtcaggctgctcttgaactcctgaccgctagccatccacccgcctcagcctcccaaagtgctgggattacaggcgtaagccaccgcacctggcctattttctctactcttcaaaatagaaatgtgtatatggaatttttggaaatttcccttttcagcataaactcccactatcacttcctttgttctcctcggccatcgacccttaattaatattgcctgatcactttaactcctttcctttatgttcccaatttcccctcatctggttccccacttgctttcccgggagtaaggtaagctttccttttattttctcctttgatttttttttttaatgagaaaaatgtggcaactgtaataatgaagcactgctggccaagaagctctctagaaatgggaaaataatatccttattttgacaagaaagatcaggcctccactcacataggatatggagctggatcacagtggttttcatcaaccgctgaccctgcaccaccaaagaggcctagcaggagaaatttcagccatcatcttcctccctggcagtaagtagaagccaggcaggctccccagcagggaggtctggggctccctgaagccgaagagtagggctgggtgatgttaatacatgccctgagcaggtcacattaatgtcagtccctgccaatgggtatgattcttttagctccaggattggtggagggaagcctataaggaaaggaaaaggagaaccagacacatttctcaaaactagcagacacttctgcactcttgctgctggtaaaagcccttgggaaggcagacaacaggggaaagattttggataccattgcttcttctgtaaaagctgaagaaagaatgaggtggtttggggattcaagagcttctcttatgcatgcacacatttagtctatgcttcgctgcaaggactgcaagatgtcttttcatcttacagctttcctcctcacctcaaataagtgtttctaagaagtagttcagggcatccacaatcactctgtaagcaggatagcctaagaaactggggatgaaggctggaaagaactactgtagcccatgtccccaatctgcctgcatttaccagagaaagatgaagactcatgttcacttgagagcatacccagcaaagggcagcagggatgtctacagccgaatcaccaacccgttactctgtgttttcagcagcagagaacccgtatgaaaaaggaagagccaggccacttattgtagctatgcactagctttcttgtcttctgttccattgcacccagagatgcaaagcaagacagttcctgatcaccagcctccatggtccgaatggtagcattggcccatgctgtgtccccctcccaggaaaggaaggagctcagctcttggtcttccaggaacatgtggaacataacttctttggctggaaacaccctagccacctcgcagctcacagtctccgccatcccagcctccaaaagggaagagacccagatgtggggactctgagagaattctgccaaaaaaatgaggacaagaagagaaaggagaaaagccatgataaatcacatatcatgcaggacccttcaaggtaggaagggagtggggctaaaatgtctctcttccgcagggtgagtttaaagctcaagcaaaggtggagctcagttactctcacatcctcaccctaaaccccgtgagaacttagtcccaaaggccaaggcaagatgagccccaggattcctcctgcacttgagttctgactcaccaaagatccggactattctgatgggtgagctgccttgaaagagcctcccaccttgcaaactcaagtccagttctgcatggcaggaagaattgcatctgtcattctccttttgggctctgacactgatgatgacttcagctctttgggaggccacagcaagctcgtaaagttctttctatgcagttcttggttaccctggagaagggcaagggtgagactctccaagggtgctacactgggtacatgacacttcactgtgaaggcttcgtccacggccacccaggcaggctgcagctccaggatcacttgctctggtggctctttaagacaaaaaggcaggacttgatgagcatgccacccacctctccagaaagaaacagcataggacagaaagatgaggtgatacaaatcacagaaggtgactgccacccttaaaccatctgatcagcaatgtcagctttctgccatccctgccctagatggggtgagttagtcttctggctcttcttcttcgcatcaaaagtggctatggccatagcaaagaagagtgactgctgagggagagtcccttgctttgactgttgctgccattctggaaagcattgatctcttaccagaggggcttcagaggcaagagcagcttccgggggctccttagcatcacataaaatctatactgtagcaggccaggtgcagtggctcacgctgtaatcccagtactttgggaggccaaggcaagcggatcacttgaggtcaggagttccagaccagccaggccaagatggtgaaacccagtctctactaaaaatacaaaaattagccaggtgtggtggcaagtgctgtaatcccagctgctcgggaggctgaggcagagaattgcttgaacccgggaggcagaggttgcagtgagccaagattgtgctactgcactccagcctgggcaacagagcaagactccatctcaaaacaaacaaacaaacaaaccaaactatagctaaccaagttctgaccccatagagaccacatttgctttcgtgccatatctttgtccatgttatttgcccacctgaaaggccttcctcacctgtccccttcaattcaaaccctaactatcctgggggagggcagtgcaggagcctcctctaccatggagccttctcaggctgccccagctcacaaaaacccttctctctccaatctctgtttattccaagagcttgtagcaaacaattcagcattaatttcatactttttttttttaagagacaggatcccactctgttgcccaggctggagtgcagtggtgtgatcatagatcactgcaggcttgaacttctaggctccggggatcctcccaccttagcctcccaagtagctgggaccacaggtgcacgccactatgcctggctaattttaaaaacttcttttgtagaaacagaggtctcactgtgtttctcaagctggtctgaaactcctggcctcaagtgatcctcctgccttggcctcccaaagtgctgggattaaagcatgaaccactgtggccaggctaatcttatactttttggtaatttaaccataaacattattagcatatgtttcctgtattgaagatattttcaagcacagataatctggatgctctctatggtctgctcctaatttaaaactcagaagaaagcctacatcaaagggaagtagaagtgggcccggctcacttctacttgctggacttgaggtggctcacacctgtaatcccagcactttgggaggctgaggcagatagatcacttcaggtcaggagttcaagaccagcctggccaacatggtgaaacccctgtctctactaaaaaaaatacaaaaattagccaggcatggtggtggctgcctgtagtcccagctactggggaggctgaggcaggagaattgcttgaacccaggtggaggctgcagttagctgagatcacaccactgcactctagcctgagcaatagagcaagattccatctcaaaaaaaaaaaataaatgaaaaaggtgattggatctagaatccctacagtatgccagaaatctttattaagggccttaattatctcccctaattagaaacatttgtcccatccttccctaaataagacatgttcatgtttccccattcctcctttccatccccctgcccccagccctcagccctactcacgatacacagtgatgccaaggcttgtgtccttttgaatccctgcacaagagaagaagcactgcaggatggaattc</find>
+      <find>0</find>
+      <find>debugg</find>
+      <find>esw</find>
+      <find>addnon</find>
+      <find>removedi</find>
+      <find>addnont</find>
+      <find>system.</find>
+      <find>sys</find>
+      <find>processin</find>
+      <find>isno</find>
+      <find>lld tt</find>
+      <find>removing</find>
+      <find>after links</find>
+      <find>addnonter</find>
+      <find>assignle</find>
+      <find>abc</find>
+      <find>checkdigr</find>
+      <find>syste</find>
+      <find>debug</find>
+      <find>humdy</find>
+      <find>system</find>
     </findStrings>
     <replaceStrings>
       <replace>T</replace>
@@ -327,39 +210,39 @@
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/FlatFrequencyTable.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/FrequencyTable.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/SimpleFrequencyTable.java" />
-        <option value="$PROJECT_DIR$/Test/CompressTest.java" />
         <option value="$PROJECT_DIR$/sourceFiles/fastatest" />
         <option value="$PROJECT_DIR$/sourceFiles/humdyst_humghcs" />
         <option value="$PROJECT_DIR$/sourceFiles/humdyst" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/SearchNode.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Search.java" />
         <option value="$PROJECT_DIR$/src/HuffmanCoder/Encoder.java" />
-        <option value="$PROJECT_DIR$/Test/ReverseComplementTest.java" />
         <option value="$PROJECT_DIR$/Test/CompressUniqueSymbolsTest.java" />
         <option value="$PROJECT_DIR$/Test/BugTest.java" />
-        <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Guard.java" />
         <option value="$PROJECT_DIR$/Test/EditGrammarTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Terminal.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Symbol.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/NonTerminal.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Rule.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/Edit.java" />
         <option value="$PROJECT_DIR$/Test/HuffmanCoder/EncoderTest.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/InputOutput.java" />
-        <option value="$PROJECT_DIR$/sourceFiles/abc" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Decompress.java" />
-        <option value="$PROJECT_DIR$/Test/SearchTest.java" />
-        <option value="$PROJECT_DIR$/Test/DecompressTest.java" />
-        <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java" />
         <option value="$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java" />
         <option value="$PROJECT_DIR$/src/GrammarCoder/ApproxRepeat.java" />
         <option value="$PROJECT_DIR$/src/Search/SearchNode.java" />
         <option value="$PROJECT_DIR$/src/Search/Search.java" />
         <option value="$PROJECT_DIR$/src/GUI/Main.java" />
+        <option value="$PROJECT_DIR$/Test/CompressionTest.java" />
+        <option value="$PROJECT_DIR$/Test/ReverseComplementTest.java" />
+        <option value="$PROJECT_DIR$/Test/SearchTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Decompress.java" />
+        <option value="$PROJECT_DIR$/sourceFiles/abc" />
+        <option value="$PROJECT_DIR$/Test/CompressTest.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Rule.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/Compress.java" />
+        <option value="$PROJECT_DIR$/src/GrammarCoder/DigramMap.java" />
+        <option value="$PROJECT_DIR$/Test/DecompressTest.java" />
       </list>
     </option>
   </component>
@@ -381,7 +264,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -434,29 +317,24 @@
               <item name="projectGCG" type="462c0819:PsiDirectoryNode" />
               <item name="Test" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="projectGCG" type="b2602c69:ProjectViewProjectNode" />
-              <item name="projectGCG" type="462c0819:PsiDirectoryNode" />
-              <item name="Test" type="462c0819:PsiDirectoryNode" />
-              <item name="HuffmanCoder" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546560392538" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -488,40 +366,15 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CompressionTest.mtpacga">
-    <configuration default="true" type="Applet" factoryName="Applet">
+  <component name="RunManager" selected="JUnit.DecompressTest.vaccgDE">
+    <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GUI.Main" />
-      <module name="GeneticCompression" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="GUI.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CompressionTest.mtpacga" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="GeneticCompression" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CompressionTest" />
-      <option name="METHOD_NAME" value="mtpacga" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -535,20 +388,44 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EditGrammarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.buildGrammar5" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="EditGrammarTest" />
+      <option name="MAIN_CLASS_NAME" value="DecompressTest" />
+      <option name="METHOD_NAME" value="buildGrammar5" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SearchTest.humdystThree" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DecompressTest.humdystDE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="GeneticCompression" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="SearchTest" />
-      <option name="METHOD_NAME" value="humdystThree" />
+      <option name="MAIN_CLASS_NAME" value="DecompressTest" />
+      <option name="METHOD_NAME" value="humdystDE" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DecompressTest.humhbbDE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DecompressTest" />
+      <option name="METHOD_NAME" value="humhbbDE" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DecompressTest.vaccgDE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GeneticCompression" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DecompressTest" />
+      <option name="METHOD_NAME" value="vaccgDE" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -561,7 +438,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
+    <configuration default="true" type="TestNG">
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
@@ -571,18 +448,18 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.DecompressTest" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.EditGrammarTest" />
-      <item itemvalue="JUnit.SearchTest.humdystThree" />
-      <item itemvalue="JUnit.CompressionTest.mtpacga" />
+      <item itemvalue="JUnit.DecompressTest.humhbbDE" />
+      <item itemvalue="JUnit.DecompressTest.buildGrammar5" />
+      <item itemvalue="JUnit.DecompressTest.humdystDE" />
+      <item itemvalue="JUnit.DecompressTest.vaccgDE" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CompressionTest.mtpacga" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.SearchTest.humdystThree" />
+        <item itemvalue="JUnit.DecompressTest.vaccgDE" />
+        <item itemvalue="JUnit.DecompressTest.humhbbDE" />
         <item itemvalue="JUnit.DecompressTest" />
-        <item itemvalue="JUnit.EditGrammarTest" />
+        <item itemvalue="JUnit.DecompressTest.humdystDE" />
+        <item itemvalue="JUnit.DecompressTest.buildGrammar5" />
       </list>
     </recent_temporary>
   </component>
@@ -860,21 +737,11 @@
       <workItem from="1537966111875" duration="26177000" />
       <workItem from="1538042218286" duration="13378000" />
       <workItem from="1538081391956" duration="1908000" />
-      <workItem from="1538296130999" duration="40414000" />
-    </task>
-    <task id="LOCAL-00261" summary="trying to refactor">
-      <created>1534593052932</created>
-      <option name="number" value="00261" />
-      <option name="presentableId" value="LOCAL-00261" />
-      <option name="project" value="LOCAL" />
-      <updated>1534593052932</updated>
-    </task>
-    <task id="LOCAL-00262" summary="trying to refactor">
-      <created>1534594022337</created>
-      <option name="number" value="00262" />
-      <option name="presentableId" value="LOCAL-00262" />
-      <option name="project" value="LOCAL" />
-      <updated>1534594022337</updated>
+      <workItem from="1538296130999" duration="40649000" />
+      <workItem from="1539110487174" duration="1235000" />
+      <workItem from="1539115166495" duration="5922000" />
+      <workItem from="1540899894723" duration="214000" />
+      <workItem from="1541795419738" duration="139000" />
     </task>
     <task id="LOCAL-00263" summary="refactoring reverse complement methods">
       <created>1534605495803</created>
@@ -1205,43 +1072,57 @@
       <option name="project" value="LOCAL" />
       <updated>1538346602060</updated>
     </task>
-    <option name="localTasksCounter" value="310" />
+    <task id="LOCAL-00310" summary="cleaning up code, trying to add all comments">
+      <created>1538347612542</created>
+      <option name="number" value="00310" />
+      <option name="presentableId" value="LOCAL-00310" />
+      <option name="project" value="LOCAL" />
+      <updated>1538347612542</updated>
+    </task>
+    <task id="LOCAL-00311" summary="removed a few bits">
+      <created>1538347820573</created>
+      <option name="number" value="00311" />
+      <option name="presentableId" value="LOCAL-00311" />
+      <option name="project" value="LOCAL" />
+      <updated>1538347820573</updated>
+    </task>
+    <option name="localTasksCounter" value="312" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="DecompressTest - 2018.09.30 at 21h 53m 47s.xml">
+    <history-entry file="DecompressTest - 2019.01.03 at 21h 50m 12s.xml">
       <configuration name="DecompressTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest - 2018.09.30 at 21h 54m 15s.xml">
+    <history-entry file="DecompressTest_humhbbDE - 2019.01.03 at 21h 50m 28s.xml">
+      <configuration name="DecompressTest.humhbbDE" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_humhbbDE - 2019.01.03 at 23h 30m 42s.xml">
+      <configuration name="DecompressTest.humhbbDE" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest_humhbbDE - 2019.01.03 at 23h 41m 56s.xml">
+      <configuration name="DecompressTest.humhbbDE" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="DecompressTest - 2019.01.03 at 23h 42m 24s.xml">
       <configuration name="DecompressTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest - 2018.09.30 at 21h 57m 13s.xml">
-      <configuration name="EditGrammarTest" configurationId="JUnit" />
+    <history-entry file="DecompressTest_humhbbDE - 2019.01.04 at 00h 02m 34s.xml">
+      <configuration name="DecompressTest.humhbbDE" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest - 2018.09.30 at 22h 00m 49s.xml">
+    <history-entry file="DecompressTest - 2019.01.04 at 00h 03m 13s.xml">
       <configuration name="DecompressTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="EditGrammarTest - 2018.09.30 at 22h 01m 14s.xml">
-      <configuration name="EditGrammarTest" configurationId="JUnit" />
+    <history-entry file="DecompressTest_humhbbDE - 2019.01.04 at 00h 04m 27s.xml">
+      <configuration name="DecompressTest.humhbbDE" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="DecompressTest - 2018.09.30 at 22h 06m 27s.xml">
-      <configuration name="DecompressTest" configurationId="JUnit" />
+    <history-entry file="DecompressTest_humhbbDE - 2019.01.04 at 00h 05m 48s.xml">
+      <configuration name="DecompressTest.humhbbDE" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SearchTest_humdystThree - 2018.09.30 at 22h 07m 53s.xml">
-      <configuration name="SearchTest.humdystThree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_humdystThree - 2018.09.30 at 23h 05m 53s.xml">
-      <configuration name="SearchTest.humdystThree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_humdystThree - 2018.09.30 at 23h 06m 40s.xml">
-      <configuration name="SearchTest.humdystThree" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="SearchTest_humdystThree - 2018.09.30 at 23h 26m 42s.xml">
-      <configuration name="SearchTest.humdystThree" configurationId="JUnit" />
+    <history-entry file="DecompressTest_vaccgDE - 2019.01.04 at 00h 06m 10s.xml">
+      <configuration name="DecompressTest.vaccgDE" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2505339000" />
+    <option name="totallyTimeSpent" value="2513084000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1256,15 +1137,17 @@
     <frame x="-1" y="-11" width="1368" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49878347" visible="true" weight="0.20151515" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49878347" visible="true" weight="0.21969697" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24963397" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" sideWeight="0.50121653" side_tool="true" weight="0.33939394" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.36180124" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.35968992" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3990964" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -1280,16 +1163,15 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Maven" order="9" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="searching through all possibles first" />
     <MESSAGE value="slightly closer to implementing.... search" />
     <MESSAGE value="trying to clean up .." />
     <MESSAGE value="trying to improve speed of search" />
@@ -1314,28 +1196,10 @@
     <MESSAGE value="time improvements for search" />
     <MESSAGE value="cleaning up code, adding more comments" />
     <MESSAGE value="cleaning up code, trying to add all comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaning up code, trying to add all comments" />
+    <MESSAGE value="removed a few bits" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed a few bits" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/LevenshteinDistance.java" />
-    <entry file="file://$PROJECT_DIR$/Test/LevenshteinDistanceTest.java" />
-    <entry file="file://$PROJECT_DIR$/sourceFiles/book">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticCoderBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticDecoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="3" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/ArithmeticEncoder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -1385,24 +1249,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="350" column="42" selection-start-line="350" selection-start-column="42" selection-end-line="350" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sourceFiles/fastatest">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sourceFiles/humghcs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="66441" selection-start-column="66441" selection-end-column="66441" />
         </state>
       </provider>
     </entry>
@@ -1437,51 +1287,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/ReverseComplementTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="213" column="8" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/CompressUniqueSymbolsTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/GuardTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/BugTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="190" column="46" selection-start-line="190" selection-start-column="46" selection-end-line="190" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller.java" />
+    <entry file="file://$PROJECT_DIR$/Test/GuardTest.java" />
     <entry file="file://$PROJECT_DIR$/src/HuffmanCoder/Encoder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -1500,17 +1307,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="initializer##0;class#Terminal#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1528,21 +1324,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/sample.fxml">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/sample.fxml" />
     <entry file="file://$PROJECT_DIR$/Test/HuffmanCoder/EncoderTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
           <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sourceFiles/abc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="31" selection-start-column="31" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1560,97 +1346,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-          <folding>
-            <element signature="e#5048#5049#0" expanded="true" />
-            <element signature="e#5079#5080#0" expanded="true" />
-            <element signature="e#5125#5126#0" expanded="true" />
-            <element signature="e#5163#5164#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="121" column="31" lean-forward="true" selection-start-line="121" selection-start-column="31" selection-end-line="121" selection-end-column="31" />
-          <folding>
-            <element signature="method#isARule#0;class#Symbol#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/DigramMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Decompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="175" column="1" lean-forward="true" selection-start-line="175" selection-start-column="1" selection-end-line="175" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="298" column="44" lean-forward="true" selection-start-line="298" selection-start-column="44" selection-end-line="298" selection-end-column="44" />
-          <folding>
-            <element signature="e#9841#9842#0" expanded="true" />
-            <element signature="e#9873#9874#0" expanded="true" />
-            <element signature="e#10670#10671#0" expanded="true" />
-            <element signature="e#10697#10698#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="137" column="1" lean-forward="true" selection-start-line="137" selection-start-column="1" selection-end-line="137" selection-end-column="1" />
-          <folding>
-            <element signature="docComment;class#AdaptiveArithmeticCompress#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ApproxRepeat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1661,27 +1360,167 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="657" column="24" lean-forward="true" selection-start-line="657" selection-start-column="24" selection-end-line="657" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Search/Search.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/BugTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-735">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/SymbolTest.java" />
+    <entry file="file://$PROJECT_DIR$/sourceFiles/humghcs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="66441" selection-end-column="66495" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/EncodingTechniqueTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="136" selection-start-line="136" selection-end-line="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/NonTerminalTest.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/ReverseComplementTest.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/SearchTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Decompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1854">
+          <caret line="105" column="10" selection-start-line="105" selection-start-column="10" selection-end-line="105" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/ImplicitEncoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="72" column="12" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticDecompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourceFiles/S288C_chrIII_BK006937.2">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="846">
+          <caret line="47" column="60" selection-start-line="47" selection-start-column="60" selection-end-line="47" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourceFiles/humhbb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="73308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ArithmeticCoder/AdaptiveArithmeticCompress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="828">
+          <caret line="51" column="52" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CompressUniqueSymbolsTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/EditGrammarTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4176">
+          <caret line="239" selection-start-line="239" selection-end-line="262" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CompressionTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3258">
+          <caret line="189" column="34" selection-start-line="189" selection-start-column="34" selection-end-line="189" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="30" column="73" selection-start-line="30" selection-start-column="73" selection-end-line="30" selection-end-column="73" />
+        <state relative-caret-position="97">
+          <caret line="65" column="35" selection-start-line="65" selection-start-column="35" selection-end-line="65" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CompressTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="326" column="32" lean-forward="true" selection-start-line="326" selection-start-column="32" selection-end-line="326" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Symbol.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="89" column="24" selection-start-line="89" selection-start-column="16" selection-end-line="89" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sourceFiles/abc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Rule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="53" column="16" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/Compress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="70" column="10" selection-start-line="70" selection-start-column="10" selection-end-line="70" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GrammarCoder/DigramMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="87" column="13" selection-start-line="87" selection-start-column="13" selection-end-line="87" selection-end-column="13" />
+          <folding>
+            <element signature="e#4577#4578#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test/DecompressTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="304" column="5" lean-forward="true" selection-start-line="304" selection-start-column="5" selection-end-line="304" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1691,10 +1530,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>GeneticCompression:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1743,7 +1584,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

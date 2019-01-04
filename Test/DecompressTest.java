@@ -1,20 +1,62 @@
+import ArithmeticCoder.AdaptiveArithmeticCompress;
+    import ArithmeticCoder.AdaptiveArithmeticDecompress;
     import GrammarCoder.*;
+    import org.junit.Assert;
     import org.junit.Test;
 
-import static org.junit.Assert.*;
+    import java.io.File;
+    import java.io.IOException;
+    import java.util.Random;
+
+    import static org.junit.Assert.*;
 
 public class DecompressTest {
 
     @Test
-    public void buildGrammar() {
+    public void buildGrammar() throws IOException {
         Decompress d = new Decompress();
         Compress c = new Compress();
-        String compress = "agtcgcaatttagacaacagccaa";
+        String compress = "ACAGAGATTTTGAGCGTGATATTATTCCAATGGCTAGGCATTTCGGTATGGCCCTCGCCC\n" +
+                "CATGGGATGTCATGGGAGGTGGAAGATTTCAGAGTAAAAAAGCAATGGAGGAACGGAGGA\n" +
+                "AGAATGGAGAGGGTATTCGTTCTTTCGTTGGCGCCTCCGAACAAACAGATGCAGAAATCA\n" +
+                "AGATTAGTGAAGCATTGGCCAAGATTGCTGAGGAACATGGCACTGAGTCTGTTACTGCTA\n" +
+                "TTGCTATTGCCTATGTTCGCTCTAAGGCGAAAAATTTTTTTCCGTCGGTTGAAGGAGGAA\n" +
+                "AAATTGAGGATCTCAAAGAGAACATTAAGGCTCTCAGTATCGATCTAACGCCAGACAATA\n" +
+                "TAAAATACTTAGAAAGTATAGTTCCTTTTGACATCGGATTTCCTAATAATTTTATCGTGT\n" +
+                "TAAATTCCTTGACTCAAAAATATGGTACGAATAATGTTTAGATAATTTTTCAGTAATCAA\n" +
+                "CTACGCAAGTAAAGCAGTAAATACGTTACTGCTGGTATTAATGTCATGTATTGAGGCAAT\n" +
+                "GATGCTATGCTCTTAACGACATGTAGCTTACAAAACGTTCCTATGGTTTTACTGCATGGT\n" +
+                "ATTTACAAATTAGATAGCAGTTCCATCCGCCCTTGACATATTATTATTCAGACAAGGTGT\n" +
+                "ATATGAGCATAAATATGTATATATGCACATGAGGTTTGTATTAACCTTGCAACTGTACCA\n" +
+                "AAATACAATCTTCTTTGCTGCTATTTAACGGCGTATGTGCAGTTCATAAATGCGTGTTCT\n" +
+                "GTATAGTACATCCGCGCACATTCTTCCTAGCGGAAGACATATTAACGTAGCCCGTACGCC\n" +
+                "CTGGTTAAGACTTGGTATAGTTCCAATAATTGGAATATTACTGCATAGTGGTCCAATAGC\n" +
+                "AGGATTTAGCATAAACATGATAATATTTAGAGATGCTTTCATCCCTCTGACGAAGGTGGT\n" +
+                "AGAGAACAAGAAAATGAATAACATTATATCATATTCCTATATATATATATATATATATAT\n" +
+                "ATATATCATATAACGGTGGAAAATCCCGGCGATATTACAGATAAACATTACACCCGCATG\n" +
+                "AATGTGAGCCACTACTATATTATAACTTAGTGAATAAAGAGTGTTACAATAGTGAGGTGC\n" +
+                "ATATTATTCTAATGTAAGGTCTGTATAAGTACGAAATATTCTGAAGTGGCATCCAGTCAA\n" +
+                "GCAAATGGTAATATTAAGGAACTTTTAAGTTAATGACGTCATGGTAGTGCTCGTACTTCA\n" +
+                "AGTCAAAGTGTTTATGTATTATGGTTGAAGAATAGAATATTTTTATGTTTAGGTGATTTT\n" +
+                "AGTGGTGATTTTTCTGTAATATTGACATAAGTGTATATAAATTAAGTGGTTAGTATACGG\n" +
+                "TGAAAAAGAGGTATAACGTATGTATTAAGGGAATTTATACGATATTTGGGCCCGCCGAAT\n" +
+                "GAGATATAGATATTAAAATGTGGATAATCGTGGGCTTTATGGGTAAATGGCACAGGGTAT\n" +
+                "AGACCGCTGAGGCAAGTGCCGTGCATAATGATGTGGGTGCATTTGGTACTGATTTAGTGA\n" +
+                "GAATGGGCCATGGATTGGAGTGTGAGAGTAGGGTAACTTGAGAGTGGTATATACTGTAGC\n" +
+                "ATCCGTGTGCGTATGCCCCATCAATATAAGTGAAGGTGAGTATGGCATGTGGTGGTGGTA\n" +
+                "TAGAGTGGTAGGGTAAGTATGTATGTATTATTTACGATCATTTGTTAACGTTTCAATATG\n" +
+                "GTGGGTGAACAACAGTACAGTGAGTAGGACATGGTGGATGGTAGGGTAATAGTAGGGTAA\n" +
+                "GTGGTGGTGGAGTTGGATATGGGTAATTGGAGGGTAACGGTTATGATGGGCGGTGGATGG\n" +
+                "TGGTAGTAAGTAGAGAGATGGATGGTGGTTGGGAGTGGTATGGTTGAGTGGGGCAGGGTA\n" +
+                "ACGAGTGGGGAGGTAGGGTAATGTGAGGGTAGGTTTGGAGACAGGTAAAATCAGGGTTAG\n" +
+                "AATAGGGTAGTGTTAGGGTAGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGTGTGGGTGTG\n" +
+                "GTGTGTGTGGGTGTGGTGTGTGGGTGTGGGTGTGTGGGTGTGGTGGGTGTGGTGTGTGTG";
         c.processInput(compress, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(compress, r.getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(compress, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
@@ -154,173 +196,210 @@ public class DecompressTest {
 
 
     @Test
-    public void buildGrammar12() {
-        Decompress d = new Decompress();
+    public void buildGrammar12() throws IOException {
         Compress c = new Compress();
-        String compress = "abc";
-        c.processInput(compress, false);
+        Decompress d = new Decompress();
+        InputOutput io = new InputOutput();
+        String originalFile = io.readFile("S288C_chrIII_BK006937.2");
+        c.processInput(originalFile, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        String input = ie.getEncodedOutput();
-        assertEquals(compress, d.decompress(d.buildGrammar(input)));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
+        io.writeToFile(d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void chntxxDE() {
+    public void chntxxDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chntxx");
         c.processInput(originalFile, false);
-        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule()); // this has to be done to encode and write - should be done with a write to file thing
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        //Rule r = d.buildGrammar(input);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
 
     @Test
-    public void chmpxxDE() {
+    public void chmpxxDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("chmpxx");
         c.processInput(originalFile, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        //Rule r = d.buildGrammar(input);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void hehcmvDE() {
+    public void hehcmvDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("hehcmv");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, r.getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        //Rule r = d.buildGrammar(input);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void humdystDE() {
+    public void humdystDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humdyst");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
-        String input = ie.getEncodedOutput();
-
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, r.getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        //Rule r = d.buildGrammar(input);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void humghcsDE() {
+    public void humghcsDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humghcs");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, r.getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
+    //removing a digram when it shouldn't. might be different for longer string with binary compression
+    // so where is removal being called etc
     @Test
-    public void humhbbDE() {
+    public void humhbbDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhbb");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+      //  String input = ie.getEncodedOutput();
+      //  Rule r = d.buildGrammar(input);
+     //   assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void vaccgDE() {
+    public void vaccgDE() throws IOException {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
         Decompress d = new Decompress();
         String originalFile = io.readFile("vaccg");
         c.processInput(originalFile, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void mtpacgaDE() {
+    public void mtpacgaDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mtpacga");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void mpomtcgDE() {
+    public void mpomtcgDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("mpomtcg");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void humprtbDE() {
+    public void humprtbDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humprtb");
         c.processInput(originalFile, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
-    public void humhdabDE() {
+    public void humhdabDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
         String originalFile = io.readFile("humhdab");
         c.processInput(originalFile, false);
-
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
+    }
 
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+    String genRand (int length) {
+        Random rand = new Random();
+        String possibleLetters = "acgt";
+        StringBuilder sb = new StringBuilder(length);
+        for(int i = 0; i < length; i++)
+            sb.append(possibleLetters.charAt(rand.nextInt(possibleLetters.length())));
+        return sb.toString();
+    }
+
+    @Test
+    public void decompressApproxTest() throws IOException {
+        Random rand = new Random();
+        for (int i = 0; i < 10000; i++) {
+            String input = genRand(rand.nextInt((350 - 1) + 1) + 1);
+            Compress c = new Compress();
+            Decompress d = new Decompress();
+            c.processInput(input, false);
+            ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
+//            String impEncode = ie.getEncodedOutput();
+//            Rule r = d.buildGrammar(impEncode);
+//            Assert.assertEquals(input, r.getSymbolString(r, r.getIsComplement()));
+            AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+            File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+            AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+            assertEquals(input, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
+        }
     }
 
     @Test

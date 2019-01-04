@@ -332,7 +332,7 @@ public class CompressTest {
     public void humprtb() {
         Compress c = new Compress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("humprtb");
+        String originalFile =    io.readFile("humprtb");
         c.processInput(originalFile, false);
     }
 

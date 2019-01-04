@@ -46,6 +46,7 @@ public class DigramMap {
      * @param digram
      */
     public void removeDigrams(Symbol digram) {
+      //  System.out.println("removing digram "+ digram);
         digramMap.remove(digram);
         digramMap.remove(digram.getReverseComplement());
     }
@@ -57,24 +58,54 @@ public class DigramMap {
      * correspond with the same digram that is overlapping
      * @param symbol
      */
+    //TODO proper implementation of removing and managing the digram map when doing so for left and right
+    // dirgrams are removed for each digram being checked
+    // need to check left and right for each - break in to two, one for left and right
     public void removeDigramsFromMap(Symbol symbol) {
         // don't remove digram if of an overlapping digram
-        if (digramMap.containsKey(symbol.getLeft())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
-            Symbol existing = digramMap.get(symbol.getLeft());
-            if (existing == symbol.getLeft()) {
-                removeDigrams(symbol.getLeft());
+        //todo it is in abc example, tt to left removed although tt overlap
+        Symbol leftDigram = symbol.getLeft();
+        Symbol rightDigram = symbol.getRight();
+//        System.out.println("ld " + leftDigram.getLeft() +  leftDigram);
+//        System.out.println("lld " + leftDigram.getLeft().getLeft() + leftDigram.getLeft());
+//        System.out.println(leftDigram.equals(leftDigram.getLeft()));
+
+        // is digram in map
+        // if it's overlapping and not the one in map then don't remove
+        // if its overlapping and the one in map then remove and add the overlap
+
+        //&& !leftDigram.equals(leftDigram.getLeft())
+        if (digramMap.containsKey(leftDigram)){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
+            Symbol existing = digramMap.get(leftDigram);
+            //&& !symbol.getLeft().equals(symbol.getLeft().getLeft())
+            if (leftDigram.equals(leftDigram.getLeft())) {
+                if (existing == leftDigram) {
+                    removeDigrams(leftDigram);
+                    addNewDigrams(leftDigram.getLeft());
+                }
+            }
+            else {
+                removeDigrams(leftDigram);
             }
         }
 
+//        if (digramMap.containsKey(symbol.getRight()) && !symbol.getRight().equals(symbol.getRight().getRight())){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
+//            Symbol existing = digramMap.get(symbol.getRight());
+//            //&& !symbol.getLeft().equals(symbol.getLeft().getLeft())
+//            if (existing == symbol.getRight() ) {
+//                removeDigrams(symbol.getRight());
+//            }
+//        }
 
-        if (!symbol.getRight().equals(symbol)) {
-            removeDigrams(symbol.getRight());
+        if (!rightDigram.equals(symbol)) {
+            //System.out.println("RIGHT");
+            removeDigrams(rightDigram);
             // todo don't remove rather than re-add
             // if removed a digram that was overlapping with itself
-            if (symbol.getRight().equals(symbol.getRight().getRight())) {
-                addToDigramMap(symbol.getRight().getRight());
+            if (rightDigram.equals(rightDigram.getRight())) {
+                addToDigramMap(rightDigram.getRight());
                 // whenever re-adding, add reverse complement too
-                Symbol reverse = symbol.getRight().getRight().getReverseComplement();
+                Symbol reverse = rightDigram.getRight().getReverseComplement();
                 addToDigramMap(reverse);
             }
         }

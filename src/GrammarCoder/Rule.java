@@ -46,8 +46,12 @@ public class Rule extends Symbol{
         // set the edits to false so subrule is generic
         left.setIsEdited(false);
         right.setIsEdited(false);
+//        System.out.println("s " + left.getLeft().getLeft() + left.getLeft() + left + right);
+//        Symbol s = left.getLeft();
         this.addNextSymbol(left);
         this.addNextSymbol(right);
+//        System.out.println("s " + left.getLeft().getLeft() + left.getLeft() + left + right);
+//        System.out.println("well " + s.getLeft() + s);
     }
 
     /**
@@ -95,7 +99,7 @@ public class Rule extends Symbol{
                 output.append(getNextTerminal(complement, s));
                 s = getNextSymbol(complement, s);
             }
-            else {
+            else if (s instanceof NonTerminal) {
                 int currentLength = output.length(); // length before start of edited rule
                 // recursively loop back through nonterminals todo should work in its own method..
                 if (complement) {

@@ -96,7 +96,6 @@ public class Compress {
             }
         }
         else { // digram not been seen before, add to digram map
-           // System.out.println(symbol.getLeft() + " " + symbol);
             digramMap.addNewDigrams(symbol);
         }
     }
@@ -124,15 +123,12 @@ public class Compress {
 
         addNonTerminal(oldTerminal, oldSymbol); // update rule for first instance of digram
         addNonTerminal(newTerminal, symbol);// update rule for last instance of digram
-        //todo ??
-       // System.out.println("old " + oldSymbol.getLeft().getLeft().getLeft() + oldSymbol.getLeft().getLeft() + oldSymbol.getLeft() + oldSymbol);
-        //Symbol s = oldSymbol.getLeft().getLeft();
+        //todo - ensures rule to be removed is created if used before fully through the system
         Objects.requireNonNullElse(newRule.removed, newRule).addSymbols(oldSymbol.getLeft(), oldSymbol); // add symbols to the new rule/terminal
 
-        //System.out.println("after links " + getDigramMap().printDigrams());
-        //System.out.println("old " + s.getLeft() + s);
         //check the symbols removed and deal with if they are rules
         //reduce rule count if being replaced, or remove if 1
+        //todo - remove duplicate code
         if (oldSymbol instanceof NonTerminal) {
             if (((NonTerminal) oldSymbol).getRule().getRuleLength() == 0) {
                 ((NonTerminal) oldSymbol).getRule().removed = newRule;
@@ -183,10 +179,7 @@ public class Compress {
             nonTerminal.getRule().decrementCount();
             nonTerminal.getRule().nonTerminalList.remove(nonTerminal);
             if (nonTerminal.getRule().getCount() == USED_ONCE) { // if rule is down to one, remove completely
-                //System.out.println("removing rule used once " + nonTerminal.getRule().getLast().getLeft() + nonTerminal.getRule().getLast().getLeft());
                 digramMap.removeDigramsFromMap(symbol); // removes left and right
-                //todo removed below as not necessary
-                //digramMap.removeDigrams(symbol); // when being removed have to remove the actual digram too not just left and right digrams
                 nonTerminal.removeRule(); // uses the rule method to reassign elements of rule
                 checkNewDigrams(nonTerminal.getLeft().getRight(), nonTerminal.getRight(), nonTerminal);
             }
@@ -199,9 +192,7 @@ public class Compress {
      * @param symbol - the position of the digram to be replaced
      */
     private void addNonTerminal(NonTerminal nonTerminal, Symbol symbol) {
-        //System.out.println("add nonterminal " + symbol.getLeft() + symbol);
         digramMap.removeDigramsFromMap(symbol);
-       // System.out.println("after removal " + getDigramMap().printDigrams());
 
         nonTerminal.assignRight(symbol.getRight());
         nonTerminal.assignLeft(symbol.getLeft().getLeft());
@@ -222,13 +213,11 @@ public class Compress {
      * @param nonTerminal
      */
     private void checkNewDigrams(Symbol left, Symbol right, NonTerminal nonTerminal) {
-//        System.out.println("left " + left + " right " + right);
-//        System.out.println("nonterminal " + nonTerminal.getRight() + " left: " + nonTerminal.getLeft());
+        //todo look through this code and provide comments as to exactly what is happening
         if (!nonTerminal.getRight().isGuard()) {
             checkDigram(right);
         }
         if (!nonTerminal.getLeft().isGuard()) {
-       //     System.out.println("digram " + left.getLeft() + left);
             checkDigram(left);
         }
     }

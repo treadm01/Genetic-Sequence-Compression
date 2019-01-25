@@ -31,7 +31,7 @@ import java.util.*;
  * decompressor have synchronized states, so that the data can be decompressed properly.</p>
  */
 public class AdaptiveArithmeticCompress {
-    private static int NONTERMINAL_OFFSET = 130;
+    private static int NONTERMINAL_OFFSET = 131;
     private int tableSize;
     private String PATH = System.getProperty("user.dir");
     private Long finalFileSize;
@@ -110,12 +110,7 @@ public class AdaptiveArithmeticCompress {
      */
     private int getCorrectSymbol(int lastSymbol, char s) {
         if (lastSymbol == '\'' || lastSymbol == '!') {
-            if (lastSymbol == '\'') {
-                s += 129;
-            }
-            else {
-                s += 128;
-            }
+            s += (lastSymbol == '\'') ? 129 : 128;
         }
         return s;
     }

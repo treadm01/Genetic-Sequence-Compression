@@ -43,6 +43,7 @@ public class AdaptiveArithmeticDecompress {
             // Decode and write one byte
             int symbol = dec.read(freqs);
 
+            //todo this needs commenting - unclear
             if (symbol == ruleSize - 1) {  // EOF symbol
                 break;
             }
@@ -69,7 +70,7 @@ public class AdaptiveArithmeticDecompress {
 
         StringBuilder binaryRule = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            binaryRule.append(String.valueOf(in.read()));
+            binaryRule.append(in.read());
         }
         return Integer.parseInt(binaryRule.toString(), 2);
     }

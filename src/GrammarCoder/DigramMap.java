@@ -64,48 +64,33 @@ public class DigramMap {
     public void removeDigramsFromMap(Symbol symbol) {
         Symbol leftDigram = symbol.getLeft();
         Symbol rightDigram = symbol.getRight();
-//        System.out.println("ld " + leftDigram.getLeft() +  leftDigram);
-//        System.out.println("lld " + leftDigram.getLeft().getLeft() + leftDigram.getLeft());
-//        System.out.println(leftDigram.equals(leftDigram.getLeft()));
-//
-//        // is digram in map
-//        // if it's overlapping and not the one in map then don't remove
-//        // if its overlapping and the one in map then remove and add the overlap
-//        System.out.println("before " + printDigrams());
-        //&& !leftDigram.equals(leftDigram.getLeft())
+
+        //todo refactor duplicate code
         if (digramMap.containsKey(leftDigram)){ // if it's in there and its not overlapping with a rule that you would want to keep, then remove it
             Symbol existing = digramMap.get(leftDigram);
-            if (leftDigram.equals(leftDigram.getLeft()) || leftDigram.equals(symbol)) {
-                if (existing == leftDigram) {
-                    removeDigrams(leftDigram);
+            if (leftDigram.equals(leftDigram.getLeft()) || leftDigram.equals(symbol)) { // if the digram overlaps itself or one to the left
+                if (existing == leftDigram) { // if the digram to the left is the one in the map
+                    removeDigrams(leftDigram); // reset the digram in the map to the one not being removed
                     addNewDigrams(leftDigram.getLeft());
                 }
             }
             else {
-                removeDigrams(leftDigram);
+                removeDigrams(leftDigram); // otherwise just remove digram
             }
         }
 
-//        System.out.println("after left " + printDigrams());
-////
-//        System.out.println("rd " + rightDigram.getLeft() + rightDigram);
-//        System.out.println("rrd " + rightDigram + rightDigram.getRight());
         if (digramMap.containsKey(rightDigram)) {
             Symbol existing = digramMap.get(rightDigram);
             if (rightDigram.equals(rightDigram.getRight()) || rightDigram.equals(symbol)) {
                 if (existing == rightDigram) {
-            //        System.out.println("forst removal");
                     removeDigrams(rightDigram);
                     addNewDigrams(rightDigram.getRight());
                 }
             }
             else {
-          //      System.out.println("second");
                 removeDigrams(rightDigram);
             }
         }
-
-        //System.out.println("after right " + printDigrams());
     }
 
     public int getSize() {

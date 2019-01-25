@@ -285,27 +285,23 @@ public class DecompressTest {
         assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
-    //removing a digram when it shouldn't. might be different for longer string with binary compression
-    // so where is removal being called etc
-    //todo humhbb working on grammar, not binary
-    // still bugs in abc, 30000 examples
-    // cc not showing/been removed 8 > t c c should match a c c
-    // when cc goes to tcc, cc is lost from map
+
     @Test
     public void humhbbDE() throws IOException {
         Compress c = new Compress();
         Decompress d = new Decompress();
         InputOutput io = new InputOutput();
-        String originalFile = io.readFile("humhbb"); //"abc" "30000"
+        String originalFile = io.readFile("abc"); //"abc" "30000"
         c.processInput(originalFile, false);
         ImplicitEncoder ie = new ImplicitEncoder(c.getFirstRule());
-        String input = ie.getEncodedOutput();
-        Rule r = d.buildGrammar(input);
-        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
-//        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
-//        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
-//        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
-//        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
+//        String input = ie.getEncodedOutput();
+//        Rule r = d.buildGrammar(input);
+//        assertEquals(originalFile, c.getFirstRule().getSymbolString(r, r.getIsComplement()));
+        AdaptiveArithmeticCompress aac = new AdaptiveArithmeticCompress(ie.highestRule, ie.getSymbolList());
+        File f = new File(System.getProperty("user.dir") + "/compressed.bin");
+        AdaptiveArithmeticDecompress aad = new AdaptiveArithmeticDecompress(f);
+        //assertEquals(ie.getEncodedOutput(), aad.getImplicitEncoding());
+        assertEquals(originalFile, d.decompress(d.buildGrammar(aad.getImplicitEncoding())));
     }
 
     @Test
@@ -390,8 +386,8 @@ public class DecompressTest {
     @Test
     public void decompressApproxTest() throws IOException {
         Random rand = new Random();
-        for (int i = 0; i < 10000; i++) {
-            String input = genRand(rand.nextInt((400 - 1) + 1) + 1);
+        for (int i = 0; i < 100; i++) {
+            String input = genRand(rand.nextInt((1000 - 1) + 1) + 1);
             Compress c = new Compress();
             Decompress d = new Decompress();
             c.processInput(input, false);
